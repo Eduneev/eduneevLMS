@@ -1,0 +1,167 @@
+﻿
+@{
+    ViewBag.Title = "RRQDashboard";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+@using MyLMS.Models;
+@section scripts{
+    <script src="~/Scripts/AngularControllers/RRQDashboardController.js"></script>
+}
+@{
+    DashboardData DashBoard = new DashboardData();
+    DashBoard = (DashboardData)ViewBag.VBDashboard;
+}
+
+<div ng-controller="RRQDashboardCntrl">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            RRQ-101
+            <small>View dashboard for RRQ-101</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+            <li><a href="#">Manage Course</a></li>
+            @*<li class="active">Add Course</li>*@
+        </ol>
+    </section>
+    <!-- Form Body (Page body)-->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#fa-icons" data-toggle="tab">Dashboard 1</a></li>
+                        <li><a href="#glyphicons" data-toggle="tab">Dashboard 2</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <!-- Tab 1 -->
+                        <div class="tab-pane active" id="fa-icons">
+                            <section id="new">
+                                <div>
+                                    <div class="callout callout-warning">
+                                        <div>
+                                            <button type="button" id="{{Q.QID}}" ng-click="GetQuestionAndOptions(Q.QID)" ng-repeat="Q in RRQQuestions" class="btn btn-outline btn-circle btn-xl">
+                                                Q-{{$index+1}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <!-- AREA CHART -->
+                                            <div class="box box-primary">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">Degree of Difficulty</h3>
+                                                    <div class="box-tools pull-right">
+                                                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                            <i class="fa fa-minus"></i>
+                                                        </button>
+                                                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                                    </div>
+                                                </div>
+                                                <div class="box-body chart-responsive">
+                                                    @for (int i = 0; i < DashBoard.DAFHistory.Rows.Count; i++)
+                                                    {
+                                                        <div id="@DashBoard.DAFHistory.Rows[i]["C_NO"]" class="demo" data-width="@DashBoard.DAFHistory.Rows[i]["PERCENTAGE"]" data-background="#2196F3">Q-@DashBoard.DAFHistory.Rows[i]["C_NO"] (@DashBoard.DAFHistory.Rows[i]["PERCENTAGE"]%)</div>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <!-- DONUT CHART -->
+                                            <div class="box box-danger">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">Question and Options</h3>
+                                                    <div class="box-tools pull-right">
+                                                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                            <i class="fa fa-minus"></i>
+                                                        </button>
+                                                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                                    </div>
+                                                </div>
+                                                <div class="box-body chart-responsive">
+                                                    <div class="chart" id="sales-chart" style="height: 300px; position: relative;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <!-- LINE CHART -->
+                                            <div class="box box-info">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">Question and Options</h3>
+                                                    <div class="box-tools pull-right">
+                                                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                            <i class="fa fa-minus"></i>
+                                                        </button>
+                                                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                                    </div>
+                                                </div>
+                                                <div class="box-body chart-responsive">
+                                                    <table class="table table-hover table-bordered">
+                                                        <tbody ng-repeat="Q in QuestionList">
+                                                            <tr>
+                                                                <td>
+                                                                    <span><strong>{{Q.Question.QuestionText}}</strong></span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="3">
+                                                                    <div style="margin-left:10px;" ng-repeat="O in Q.Options">
+                                                                        {{$index+1}}. {{O.OptionText}}
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <!-- BAR CHART -->
+                                            <div class="box box-success">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">Top 10 Students</h3>
+                                                    <div class="box-tools pull-right">
+                                                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                            <i class="fa fa-minus"></i>
+                                                        </button>
+                                                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                                    </div>
+                                                </div>
+                                                <div class="box-body chart-responsive">
+                                                    <table class="table table-hover table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Sl No.</th>
+                                                                <th>Student Name</th>
+                                                                <th>Center Name</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody ng-repeat="Stud in Top10Students">
+                                                            <tr>
+                                                                <td>
+                                                                    {{$index+1}}
+                                                                </td>
+                                                                <td>
+                                                                    <span><strong>{{Stud.StudentName}}</strong></span>
+                                                                </td>
+                                                                <td>
+                                                                    <span><strong>{{Stud.CenterName}}</strong></span>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- Tab 2 -->
+                        <div class="tab-pane" id="glyphicons">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

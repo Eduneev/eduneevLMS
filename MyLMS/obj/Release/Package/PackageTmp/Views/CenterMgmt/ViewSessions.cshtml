@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "ViewSessions";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+
+@section scripts{
+    <script src="~/Scripts/AngularControllers/SessionController.js"></script>
+    <script src="~/Scripts/AngularControllers/ModalDirective.js"></script>
+}
+<div data-ng-controller="SessionCntrl" data-ng-init="GetSessions()">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            View Sessions
+            <small>View session details</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+            <li><a href="#">View Session</a></li>
+        </ol>
+    </section>
+
+    <!-- Form Body (Page body)-->
+    <section class="content">
+        <div class="box box-default">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Sl No.</th>
+                                    <th>Session No.</th>
+                                    <th>Session Date</th>
+                                    <th>Scheduled / Actual Time</th>
+                                    <th>Course &amp; Subject</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="Session in SessionsList | filter: CourseFilter">
+                                    <td>
+                                        {{$index+1}}.
+                                    </td>
+                                    <td>
+                                        <span>{{Session.SessionNo}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{Session.SessionDate}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{Session.StartTime}} / <strong>{{Session.ActualStartTime}}</strong></span> - <span>{{Session.EndTime}} / <strong>{{Session.ActualEndTime}}</strong></span>
+                                    </td>
+                                    @*<td>
+                                           <span>{{Session.ActualStartTime}}</span> - <span>{{Session.ActualEndTime}}</span>
+                                        </td>*@
+                                    <td>
+                                        <span>{{Session.CourseName}}</span> :: <span>{{Session.SubjectName}}</span>
+                                    </td>
+                                    <td>
+                                        <div ng-if="Session.SessionStatus == 'Started'">
+                                            <span class="label label-success">{{Session.SessionStatus}}</span>
+                                        </div>
+                                        <div ng-if="Session.SessionStatus == 'End'">
+                                            <span class="label label-danger">{{Session.SessionStatus}}</span>
+                                        </div>
+
+                                    </td>
+                                    <th>
+                                        &nbsp;
+                                        <span ng-click="SurveyAttemptReport(Survey.SURVEY_ID)" style="cursor:pointer;" class="fa fa-pencil-square-o"></span>&nbsp;
+                                    </th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+

@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LogonLayout.cshtml";
+}
+    <!-- iCheck -->
+@*<link rel="stylesheet" href="~/Template/plugins/iCheck/square/blue.css">*@
+<div class="login-box" ng-controller="LoginCntrl">
+    <div class="login-box-body">
+        <p class="login-box-msg" style="color:brown;">Sign in to start your session</p>
+
+        <div class="form-group has-feedback">
+            <input type="email" ng-model="UserName" class="form-control" placeholder="Email">
+            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+            <input type="password" ng-model="Password" class="form-control" placeholder="Password">
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <div class="row">
+            @*<div class="col-xs-8">
+                <div class="checkbox icheck">
+                    <label>
+                        <input type="checkbox"> Remember Me
+                    </label>
+                </div>
+            </div>*@
+            <!-- /.col -->
+            <div class="col-xs-4">
+                <button type="submit" ng-click="ValidateUser()" class="btn btn-primary btn-block btn-flat">Sign In</button>
+            </div>
+            <!-- /.col -->
+        </div>
+        <br>
+        <a href="register.html" class="text-center">{{Test}}</a>
+    </div>
+</div>
+    <!-- iCheck -->
+@*<script src="~/Template/plugins/iCheck/icheck.min.js"></script>
+<script>
+  $(function () {
+    $('input').iCheck({
+      checkboxClass: 'icheckbox_square-blue',
+      radioClass: 'iradio_square-blue',
+      increaseArea: '20%' // optional
+    });
+  });
+</script>*@
+

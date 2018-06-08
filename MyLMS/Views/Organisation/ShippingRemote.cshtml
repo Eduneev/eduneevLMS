@@ -1,0 +1,121 @@
+﻿
+@{
+    ViewBag.Title = "ShippingRemote";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+
+@section scripts{
+    <script src="~/Scripts/AngularControllers/OrganisationController.js"></script>
+}
+<div ng-controller="RemoteCntrl">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Remote Shipping
+            <small>View all shipped remotes</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+            <li><a href="#">Remote Shipping</a></li>
+            @*<li class="active">Add Course</li>*@
+        </ol>
+    </section>
+
+    <!-- Form Body (Page body)-->
+    <section class="content">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <div class="pull-left">
+                    <label>
+                        <select class="form-control" id="drpEntityName" style="width: 100%;" data-ng-model="EntityID" data-ng-options="c.EntityID as c.EntityName for c in EntityList" data-ng-change="GetRemotesList()">
+                            <option value="">{{EntityTextToShow}}</option>
+                        </select>
+                    </label>
+                    <button type="button" class="btn btn-dropbox btn-sm" id="btnAddRemote" data-toggle="modal" data-target="#AddRemote"><i class="glyphicon glyphicon-plus"> </i> Add Remote</button>
+                </div>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Sl No.</th>
+                                    <th>Entity Name</th>
+                                    <th>Remote Serial No</th>
+                                    <th>Remote Model</th>
+                                    <th>Shipment Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="Remote in RemotesList | filter: CourseFilter">
+                                    <td>
+                                        {{$index+1}}.
+                                    </td>
+                                    <td>
+                                        <span>{{Remote.EntityName}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{Remote.RemoteSerialNo}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{Remote.RemoteModel}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{Remote.OrgShipmentDate}}</span>
+                                    </td>
+
+                                    @*<th>
+                                              <span ng-click="SurveyAttemptReport(Survey.SURVEY_ID)" style="cursor:pointer;" class="fa fa-file-text-o"></span>&nbsp;
+                                        </th>*@
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @* Popup to Show Program Window *@
+    <div class="modal" id="AddRemote" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="text-info">Add Remote</h3>
+                </div>
+                <div class="modal-body" style="margin:0px 10px 0px 10px;">
+                    <form class="form-horizontal" name="AddRemoteForm">
+                        <div class="form-group">
+                            <label class="text-info"> Select Entity</label>
+                            <select class="form-control" id="drpEntityName" style="width: 100%;" data-ng-model="SelectedEntityID" data-ng-options="c.EntityID as c.EntityName for c in EntityList">
+                                <option value="">{{EntityTextToShow}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-info"> Remote Serial No</label>
+                            <input type="text" name="ReceiverSerialNo" ng-model="RemoteSerialNo" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter remote serial no...">
+                        </div>
+                        <div class="form-group">
+                            <label class="text-info"> Model No</label>
+                            <input type="text" name="ReceiverModel" ng-model="RemoteModel" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter model no...">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" ng-click="SaveRemote()" id="btnUpdate" data-dismiss="modal">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @* Popup to Show Program Window *@
+</div>
+
+
+

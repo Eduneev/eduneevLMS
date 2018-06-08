@@ -1,0 +1,118 @@
+﻿
+@{
+    ViewBag.Title = "CreateCenter";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+
+@section scripts{
+    <script src="~/Scripts/AngularControllers/CenterController.js"></script>
+}
+<div ng-controller="CenterCntrl">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            New Center
+            <small>Create new center</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+            <li><a href="#">New Center</a></li>
+            @*<li class="active">Add Course</li>*@
+        </ol>
+    </section>
+
+    <!-- Form Body (Page body)-->
+    <section class="content">
+        <div class="box box-default">
+            @*<div class="box-header with-border">
+                @*<div class="pull-left">
+                    <button type="button" class="btn btn-success" id="btnViewCenters"><i class="glyphicon glyphicon-list"> </i>&nbsp; View Centers</button>
+                </div>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>*@
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Center Name</label>
+                            <input type="text" ng-model="CenterName" name="CenterName" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter center name...">
+                        </div>
+                        <div class="form-group">
+                            <label>Center Code</label>
+                            <input type="text" ng-model="CenterCode"  name="CenterCode" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter center code...">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                <input type="email" ng-model="Email" class="form-control" placeholder="Email">
+                            </div>
+                        </div>
+                        </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Landline 1</label>
+                            <input type="text" ng-model="Landline1" name="CenterName" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter center name...">
+                        </div>
+                        <div class="form-group">
+                            <label>Landline 2</label>
+                            <input type="text" ng-model="Landline2" name="CenterName" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter center name...">
+                        </div>
+                        <div class="form-group">
+                            <label>Mobile</label>
+                            <input type="text" ng-model="Mobile" name="CenterName" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter center name...">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Pin Code</label>
+                            <input type="text" ng-model="PinCode" name="CenterName" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter center name...">
+                        </div>
+                        <div class="form-group">
+                            <label>Address</label>
+                            <textarea class="form-control" ng-model="Address" rows="4" placeholder="Enter ..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer">
+                <button type="submit" ng-click="SaveCenter()" class="btn btn-primary">Create Center</button>
+                <button type="submit" class="btn btn-default">Cancel</button>
+            </div>
+        </div>
+    </section>
+
+    @* Popup to Show Program Window *@
+    <div class="modal" id="AddProgram" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="text-info">Add Program</h3>
+                </div>
+                <div class="modal-body" style="margin:0px 10px 0px 10px;">
+                    <form class="form-horizontal" name="UpdateEmployeeForm">
+                        <div class="form-group">
+                            <label class="text-info"> Program Name</label>
+                            <input type="text" name="ProgramName" ng-model="ProgramName" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter program name...">
+                        </div>
+                        <div class="form-group">
+                            <label class="text-info"> Program Code</label>
+                            <input type="text" name="ProgramCode" ng-model="ProgramCode" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter program code...">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" ng-click="SaveProgram()" id="btnUpdate" data-dismiss="modal">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @* Popup to Show Program Window *@
+    </div>
+

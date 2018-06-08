@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "AddRRQ";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+
+@section scripts{
+    <script src="~/Scripts/AngularControllers/SessionController.js"></script>
+}
+
+<div ng-controller="SessionCntrl">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Add RRQ
+            <small>Create New Session</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+            <li><a href="#">New Student</a></li>            
+        </ol>
+    </section>
+
+   <section class="content">
+        <div class="row">
+            <div class="col-md-6">
+                <!-- DONUT CHART -->
+                <div class="box box-danger">
+                    <div class="box-body chart-responsive">
+                        <div class="form-group">
+                            <label>RRQ No.</label>
+                            <input type="text" ng-model="RRQNo" name="SessionNo" style="font-weight:bold; color:coral;" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Active from</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" ng-model="ActiveFromDate" class="form-control pull-right" id="datepicker">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Active to</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" ng-model="ActiveToDate" class="form-control pull-right" id="datepicker2">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" ng-click="CreateRRQ()" class="btn btn-primary">Add Questions</button>
+                        <button type="submit" class="btn btn-default">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </div>
+<script src="~/Template/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+<script>
+    $(function () {
+        //Date picker
+        $('#datepicker').datepicker({
+            autoclose: true
+        });
+
+        $('#datepicker2').datepicker({
+            autoclose: true
+        });
+    });
+
+    //Timepicker
+    $(".timepicker").timepicker({
+        showInputs: false
+    });
+</script>
+

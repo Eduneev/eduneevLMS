@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewBag.Title = "AddQuestionsToRRQ";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+@section scripts{
+    <script src="~/Scripts/AngularControllers/QuestionBankController.js"></script>
+}
+<div data-ng-controller="QuestionCntrl" data-ng-init="GetQuestionDetails()">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Question Bank
+            <small>View all questions</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+            <li><a href="#">Manage Course</a></li>
+        </ol>
+    </section>
+
+    <!-- Form Body (Page body)-->
+    <section class="content">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <div class="pull-left">
+                    <button type="button" class="btn btn-dropbox" id="btnAddProgram" data-toggle="modal" data-target="#AddProgram"><i class="glyphicon glyphicon-plus"> </i> Add to RRQ</button>
+                </div>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width:5px;">#</th>
+                                    <th>Questions & Options</th>
+                                    <th style="width:150px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-repeat="Q in QuestionList | startFrom:currentPage*pageSize | limitTo:pageSize">
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" name="r2" ng-model="selectedObjs" value="{{Q.Question.QID}}"
+                                               ng-checked="Qselection.indexOf(Q.Question.QID) > -1"
+                                               ng-click="toggleParentQSelection($event, Q.Question.QID)">
+                                    </td>
+                                    <td>
+                                        <span><strong>{{Q.Question.QuestionText}}</strong></span>
+                                    </td>
+                                    <td>
+                                        <span ng-click="SurveyAttemptReport(Survey.SURVEY_ID)" style="cursor:pointer;" class="fa fa-edit"></span>
+                                        <span ng-click="SurveyAttemptReport(Survey.SURVEY_ID)" style="cursor:pointer;" class="fa fa-times-circle-o"></span>
+                                        <span ng-click="SurveyAttemptReport(Survey.SURVEY_ID)" style="cursor:pointer;" class="fa fa-star"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <div style="margin-left:50px;" ng-repeat="O in Q.Options">
+                                            {{$index+1}}. {{O.OptionText}}
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn btn-flat" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+                            Previous
+                        </button>
+                        {{currentPage+1}}/{{numberOfPages()}}
+                        <button class="btn btn-flat" ng-disabled="currentPage >= data.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+                            Next
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
