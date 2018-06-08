@@ -44,14 +44,28 @@ namespace MyLMS.Controllers
             return JSONString;
         }
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
+        [Route("api/{controller}/getRRQ/{sessionId:int}")]
+        public string GetRRQ(int sessionId)
         {
+            string rrqId;
+
+            // TODO connect to database and get RRQ
+
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(rrqId);
+            return JSONString;
         }
 
-        // DELETE api/<controller>/5
-        public void Delete(int id)
+        [Route("api/{controller}/getQid/{sessionId:int}/{rrqId:int}")]
+        public string GetQid(int sessionId, int rrqId)
         {
+            string qId;
+
+            // TODO complete function
+
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(qId);
+            return JSONString;
         }
     }
 }
