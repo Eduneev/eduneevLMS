@@ -47,7 +47,7 @@ namespace MyLMS.Controllers
         [Route("api/{controller}/getRRQ/{sessionId:int}")]
         public string GetRRQ(int sessionId)
         {
-            string rrqId;
+            string rrqId = "";
 
             // TODO connect to database and get RRQ
 
@@ -59,7 +59,7 @@ namespace MyLMS.Controllers
         [Route("api/{controller}/getQid/{sessionId:int}/{rrqId:int}")]
         public string GetQid(int sessionId, int rrqId)
         {
-            string qId;
+            string qId = "";
 
             // TODO complete function
 
