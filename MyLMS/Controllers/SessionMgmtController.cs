@@ -127,7 +127,7 @@ namespace MyLMS.Controllers
         public void SaveSession(string SessionName, DateTime SessionDate, string StartTime, string EndTime, int StudioID, int ProgID, int CourseID, int SubjectID, string TopicID, int FacultyID, string PlannedCoverage)
         {
             SessionModel SessionObj1 = new SessionModel();
-            SqlParameter[] SParam = new SqlParameter[10];
+            SqlParameter[] SParam = new SqlParameter[11];
 
             SParam[0] = new SqlParameter("@SessionName", SqlDbType.VarChar);
             SParam[0].Value = SessionName;
@@ -149,6 +149,11 @@ namespace MyLMS.Controllers
             SParam[8].Value = FacultyID;
             SParam[9] = new SqlParameter("@CreatedBy", SqlDbType.Int);
             SParam[9].Value = Convert.ToInt32(Session["USER_ID"]);
+
+            // Create session stream key
+            string streamKey = createRandomKey();
+            SParam[10] = new SqlParameter("@Key", SqlDbType.VarChar);
+            SParam[10].Value = streamKey;
             try
             {
                 SessionObj1.SaveSession(SParam);
@@ -243,6 +248,21 @@ namespace MyLMS.Controllers
             string JSONString = string.Empty;
             JSONString = JsonConvert.SerializeObject(QuestionsPrcnt);
             return JSONString;
+        }
+
+        private string createRandomKey()
+        {
+            string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            char[] stringChars = new char[8];
+            Random random = new Random();
+
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[random.Next(chars.Length)];
+            }
+
+            string finalString = new String(stringChars);
+            return finalString;
         }
     }
 }
