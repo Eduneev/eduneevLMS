@@ -17,7 +17,7 @@ namespace MyLMS
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            GlobalConfiguration.Configure(WebApiConfig.Register);
+            GlobalConfiguration.Configure(WebApiConfig.Register); // Register the web api config file
         }
 
         protected void Application_Error(object sender, EventArgs e)
