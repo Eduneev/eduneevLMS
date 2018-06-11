@@ -22,7 +22,7 @@ namespace MyLMS.Controllers
         public int GetSession(string macid)
         {
             // TODO: add MacAddr to classroom and get the session id based on if Macaddress matches
-            
+            return 0;
         }
 
         [Route("api/{sessionId:int}/getStream/{type:int}")]
