@@ -22,7 +22,7 @@ namespace MyLMS.Controllers
         public int GetSession(string macid)
         {
             // TODO: add MacAddr to classroom and get the session id based on if Macaddress matches
-            return 0;
+            
         }
 
         [Route("api/{sessionId:int}/getStream/{type:int}")]
@@ -52,7 +52,7 @@ namespace MyLMS.Controllers
             {
                 for (int i = 0; i < keys.Rows.Count; i++)
                 {
-                    string temp = Convert.ToString(Convert.IsDBNull(keys.Rows[i]["Key"]) ? "-1" : keys.Rows[i]["Key"]);
+                    string temp = Convert.ToString(Convert.IsDBNull(keys.Rows[i]["StreamKey"]) ? "-1" : keys.Rows[i]["StreamKey"]);
                     if (string.Equals(temp, key))
                         check = true;
                     else
