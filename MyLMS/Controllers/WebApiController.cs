@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using MyLMS.Models;
 using Newtonsoft.Json;
 using UtilityClass;
 
@@ -22,7 +23,12 @@ namespace MyLMS.Controllers
         public int GetSession(string macid)
         {
             // TODO: add MacAddr to classroom and get the session id based on if Macaddress matches
-            return 0;
+            int SessionId;
+            SqlParameter[] SParam = new SqlParameter[1];
+            SParam[0] = new SqlParameter("@MACAddr", SqlDbType.VarChar);
+            SParam[0].Value = macid;
+
+            return SessionId;
         }
 
         [Route("api/{sessionId:int}/getStream/{type:int}")]
@@ -44,9 +50,11 @@ namespace MyLMS.Controllers
             Boolean check=false;
 
             // TODO: Check if Key in session if correct and if so, return True
-            SqlParameter[] SParam = new SqlParameter[1];
-            SParam[0] = new SqlParameter("@SessionId", SqlDbType.Int);
+            SqlParameter[] SParam = new SqlParameter[2];
+            SParam[0] = new SqlParameter("@SessionID", SqlDbType.Int);
             SParam[0].Value = sessionId;
+            SParam[1] = new SqlParameter("@Key", SqlDbType.VarChar);
+            SParam[1].Value = key;
             DataTable keys = DAL.GetDataTable("GetKey", SParam);
             if (keys.Rows.Count > 0)
             {
@@ -69,12 +77,20 @@ namespace MyLMS.Controllers
         [HttpGet]
         public string GetRRQ(int sessionId)
         {
-            string rrqId = "";
+            SqlParameter[] SParam = new SqlParameter[2];
+            SParam[0] = new SqlParameter("@SessionID", SqlDbType.Int);
+            SParam[0].Value = sessionId;
+            DataTable val = DAL.GetDataTable("GetSessionsRRQ", SParam);
+            RRQ r = new Models.RRQ();
 
-            // TODO connect to database and get RRQ
-
+            for (int i = 0; i < val.Rows.Count; i++)
+            {
+                r.RRQId = Convert.ToInt32(Convert.IsDBNull(val.Rows[i]["RRQ_ID"]) ? "-1" : val.Rows[i]["RRQ_ID"]);
+                r.RRQNo = Convert.ToString(Convert.IsDBNull(val.Rows[i]["RRQNo"]) ? "-1" : val.Rows[i]["RRQNo"]);
+                r.SessionId = Convert.ToInt32(Convert.IsDBNull(val.Rows[i]["SessionId"]) ? "-1" : val.Rows[i]["SessionId"]);
+            }
             string JSONString = string.Empty;
-            JSONString = JsonConvert.SerializeObject(rrqId);
+            JSONString = JsonConvert.SerializeObject(r);
             return JSONString;
         }
 

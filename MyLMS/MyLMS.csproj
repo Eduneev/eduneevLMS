@@ -181,6 +181,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CenterModel.cs" />
+    <Compile Include="Models\RRQ.cs" />
     <Compile Include="Models\CourseModel.cs" />
     <Compile Include="Models\DashboardData.cs" />
     <Compile Include="Models\EntityModel.cs" />
