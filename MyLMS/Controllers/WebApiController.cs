@@ -28,7 +28,14 @@ namespace MyLMS.Controllers
             SParam[0] = new SqlParameter("@MACAddr", SqlDbType.VarChar);
             SParam[0].Value = macid;
 
-            return SessionId;
+            // Current Logic
+            // Link classroom with session. When classroom joins session, this value gets set.
+            // Current logic. Link classroom with MACAddr. Each classroom has a macaddr, which is set when classroom registers.
+            // When api is called, we check is macaddr exists in CenterName database and then retrieve the session Id associated
+            //DataTable rooms = DAL.GetDataTable("getSession")
+
+            //return SessionId;
+            return 0;
         }
 
         [Route("api/{sessionId:int}/getStream/{type:int}")]
