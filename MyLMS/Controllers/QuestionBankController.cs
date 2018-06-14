@@ -169,5 +169,22 @@ namespace MyLMS.Controllers
             JSONString = JsonConvert.SerializeObject(CO);
             return JSONString;
         }
+
+        [HttpPost]
+        public static void SaveQuestionResponse (int RRQId, int QId, int studentId, int optionSeq) // response could be A,B,C,D or E
+        {
+            SqlParameter[] SParam = new SqlParameter[4];
+
+            // how do we map from response to optionId? Mapping to OptionSeq instead
+            SParam[0] = new SqlParameter("@RRQ_ID", SqlDbType.Int);
+            SParam[0].Value = RRQId;
+            SParam[1] = new SqlParameter("@QID", SqlDbType.Int);
+            SParam[1].Value = QId;
+            SParam[2] = new SqlParameter("@StudentID", SqlDbType.Int);
+            SParam[2].Value = studentId;
+            SParam[3] = new SqlParameter("@OptionSeq", SqlDbType.Int);
+            SParam[3].Value = optionSeq;
+
+        }
     }
 }

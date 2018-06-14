@@ -113,5 +113,32 @@ namespace MyLMS.Controllers
             JSONString = JsonConvert.SerializeObject(qId);
             return JSONString;
         }
+
+        [Route("api/{sessionId:int}/{rrqId:int}/saveRRQResponse/{QId:int}/{remoteId}/{response}")]
+        [HttpGet]
+        public void SaveRRQResponse(int sessionId, int rrqId, int QId, string remoteId, string response)
+        {
+            // first get the studentId
+            // Also, can this be done in one go rather than first get the studenId?
+            SqlParameter[] SParam = new SqlParameter[1];
+            SParam[0] = new SqlParameter("@RemoteID", SqlDbType.VarChar);
+            SParam[0].Value = remoteId;
+            DataTable val = DAL.GetDataTable("GetStudentIdFromRemoteAllocation", SParam);
+            int studentId = -1;
+            studentId = Convert.ToInt32(Convert.IsDBNull(val.Rows[0]["StudentID"]) ? "-1" : val.Rows[0]["StudentID"]);
+
+            int optionSeq = -1;
+            if (response.Equals("A"))
+                optionSeq = 1;
+            else if (response.Equals("B"))
+                optionSeq = 2;
+            else if (response.Equals("C"))
+                optionSeq = 3;
+            else if (response.Equals("D"))
+                optionSeq = 4;
+
+            if (studentId != -1 && optionSeq != -1)
+                QuestionBankController.SaveQuestionResponse(rrqId, QId, studentId, optionSeq);
+        }
     }
 }
