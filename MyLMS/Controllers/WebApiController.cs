@@ -35,7 +35,7 @@ namespace MyLMS.Controllers
             DataTable keys = DAL.GetDataTable("GetSession", SParam);
             if (keys.Rows.Count == 1)
             {
-                SessionId = Convert.ToInt32(keys.Rows[1]["SessionID"]);
+                SessionId = Convert.ToInt32(keys.Rows[0]["SessionID"]);
             }
             else
             {
@@ -56,8 +56,29 @@ namespace MyLMS.Controllers
         [HttpGet]
         public string GetStream(int sessionId, int type)
         {
-            string url = "";
-            // TODO: have a url associated with session
+            string url = string.Empty;
+
+            //Workflow: Send in streamKey and MacAddr to get sessionId, pass in sessionId along with type to get stream
+            SqlParameter[] SParam = new SqlParameter[2];
+            SParam[0] = new SqlParameter("@SessionID", SqlDbType.Int);
+            SParam[0].Value = sessionId;
+            SParam[1] = new SqlParameter("@Type", SqlDbType.Int);
+            SParam[1].Value = type;
+
+            DataTable keys = DAL.GetDataTable("GetStream", SParam);
+            if (keys.Rows.Count > 0)
+            {
+                url = Convert.ToString(Convert.IsDBNull(keys.Rows[0]["Stream"]) ? string.Empty : keys.Rows[0]["Stream"]);
+            }
+            else
+            {
+                SParam[1].Value = 1; //get default stream
+                DataTable keys2 = DAL.GetDataTable("GetStream", SParam);
+                if (keys2.Rows.Count > 0)
+                {
+                    url = Convert.ToString(Convert.IsDBNull(keys2.Rows[0]["Stream"]) ? string.Empty : keys2.Rows[0]["Stream"]);
+                }
+            }
 
             string JSONString = string.Empty;
             JSONString = JsonConvert.SerializeObject(url);
