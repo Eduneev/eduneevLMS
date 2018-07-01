@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -23,7 +24,7 @@ namespace MyLMS.Controllers
         public string GetSession(string macid, string streamKey)
         {
             // TODO: add MacAddr to classroom and get the session id based on if Macaddress matches
-            int SessionId;
+            int SessionId=-1;
             SqlParameter[] SParam = new SqlParameter[2];
             SParam[0] = new SqlParameter("@MACAddr", SqlDbType.VarChar);
             SParam[0].Value = macid;
@@ -39,7 +40,9 @@ namespace MyLMS.Controllers
             }
             else
             {
-                JSONString = JsonConvert.SerializeObject("Too many sessions contain this StreamKey or MacAddr");
+                Debug.WriteLine("0 or Too many sessions contain this StreamKey or MacAddr");
+                
+                JSONString = JsonConvert.SerializeObject(-1);
                 return JSONString;
             }
             // Current Logic

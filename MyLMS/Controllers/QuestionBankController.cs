@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Web.Mvc;
 using UtilityClass;
 
@@ -185,6 +186,14 @@ namespace MyLMS.Controllers
             SParam[3] = new SqlParameter("@OptionSeq", SqlDbType.Int);
             SParam[3].Value = optionSeq;
 
+            try
+            {
+                DataTable val = DAL.GetDataTable("SaveQuestionResponse", SParam);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
         }
     }
 }
