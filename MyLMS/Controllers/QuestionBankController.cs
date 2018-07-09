@@ -172,7 +172,7 @@ namespace MyLMS.Controllers
         }
 
         [HttpPost]
-        public static void SaveQuestionResponse (int RRQId, int QId, int studentId, int optionSeq) // response could be A,B,C,D or E
+        public static bool SaveQuestionResponse (int RRQId, int QId, int studentId, int optionSeq) // response could be A,B,C,D or E
         {
             SqlParameter[] SParam = new SqlParameter[4];
 
@@ -189,11 +189,14 @@ namespace MyLMS.Controllers
             try
             {
                 DataTable val = DAL.GetDataTable("SaveQuestionResponse", SParam);
+                return true;
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
+                return false;
             }
+            return false;
         }
     }
 }

@@ -124,7 +124,7 @@ namespace MyLMS.Controllers
 
         [Route("api/{sessionId:int}/getRRQ")]
         [HttpGet]
-        public string GetRRQ(int sessionId)
+        public RRQ GetRRQ(int sessionId)
         {
             // Add an active bit. When RRQ finish, turn active bit off. 
             SqlParameter[] SParam = new SqlParameter[2];
@@ -139,9 +139,7 @@ namespace MyLMS.Controllers
                 r.RRQNo = Convert.ToString(Convert.IsDBNull(val.Rows[i]["RRQNo"]) ? "-1" : val.Rows[i]["RRQNo"]);
                 r.SessionId = Convert.ToInt32(Convert.IsDBNull(val.Rows[i]["SessionId"]) ? "-1" : val.Rows[i]["SessionId"]);
             }
-            string JSONString = string.Empty;
-            JSONString = JsonConvert.SerializeObject(r);
-            return JSONString;
+            return r;
         }
 
         [Route("api/{sessionId:int}/{rrqId:int}/getQid")]
@@ -159,7 +157,7 @@ namespace MyLMS.Controllers
 
         [Route("api/{sessionId:int}/{rrqId:int}/saveRRQResponse/{QId:int}/{remoteId}/{response}")]
         [HttpGet]
-        public void SaveRRQResponse(int sessionId, int rrqId, int QId, string remoteId, string response)
+        public bool SaveRRQResponse(int sessionId, int rrqId, int QId, string remoteId, string response)
         {
             // first get the studentId
             // Also, can this be done in one go rather than first get the studenId?
@@ -181,7 +179,11 @@ namespace MyLMS.Controllers
                 optionSeq = 4;
 
             if (studentId != -1 && optionSeq != -1)
-                QuestionBankController.SaveQuestionResponse(rrqId, QId, studentId, optionSeq);
+            {
+                if (QuestionBankController.SaveQuestionResponse(rrqId, QId, studentId, optionSeq))
+                    return true;
+            }
+            return false;
         }
     }
 }
