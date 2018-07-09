@@ -139,6 +139,10 @@ namespace MyLMS.Controllers
                 optionSeq = 3;
             else if (response.Equals("D"))
                 optionSeq = 4;
+            else if (response.Equals("E"))
+                optionSeq = 5;
+            else if (response.Equals("F"))
+                optionSeq = 6;
 
             if (studentId != -1 && optionSeq != -1)
             {
