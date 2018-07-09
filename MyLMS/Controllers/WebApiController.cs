@@ -21,7 +21,7 @@ namespace MyLMS.Controllers
          **/ 
         [Route("api/getSession/{streamKey}/{macid}")]
         [HttpGet]
-        public string GetSession(string macid, string streamKey)
+        public int GetSession(string macid, string streamKey)
         {
             // TODO: add MacAddr to classroom and get the session id based on if Macaddress matches
             int SessionId=-1;
@@ -41,9 +41,8 @@ namespace MyLMS.Controllers
             else
             {
                 Debug.WriteLine("0 or Too many sessions contain this StreamKey or MacAddr");
-                
-                JSONString = JsonConvert.SerializeObject(-1);
-                return JSONString;
+
+                return -1;
             }
             // Current Logic
             // Link classroom with session. When classroom joins session, this value gets set.
@@ -51,8 +50,7 @@ namespace MyLMS.Controllers
             // When api is called, we check is macaddr exists in CenterName database and then retrieve the session Id associated
             //DataTable rooms = DAL.GetDataTable("getSession")
 
-            JSONString = JsonConvert.SerializeObject(SessionId);
-            return JSONString;
+            return SessionId;
         }
 
         [Route("api/{sessionId:int}/getStream/{type:int}")]
@@ -83,43 +81,7 @@ namespace MyLMS.Controllers
                 }
             }
 
-            string JSONString = string.Empty;
-            JSONString = JsonConvert.SerializeObject(url);
-            return JSONString;
-        }
-
-
-        //TODO: Need to check the key somehow. Then if the key exists and the macaddr is also correct, get back session. 
-        // Start the RRQ App based on session and get the session active RRQID.
-
-        [Route("api/{sessionId:int}/checkKey/{key}")]
-        [HttpGet]
-        public string CheckKey(int sessionId, string key)
-        {
-            Boolean check=false;
-
-            // TODO: Check if Key in session if correct and if so, return True
-            SqlParameter[] SParam = new SqlParameter[2];
-            SParam[0] = new SqlParameter("@SessionID", SqlDbType.Int);
-            SParam[0].Value = sessionId;
-            SParam[1] = new SqlParameter("@Key", SqlDbType.VarChar);
-            SParam[1].Value = key;
-            DataTable keys = DAL.GetDataTable("GetKey", SParam);
-            if (keys.Rows.Count > 0)
-            {
-                for (int i = 0; i < keys.Rows.Count; i++)
-                {
-                    string temp = Convert.ToString(Convert.IsDBNull(keys.Rows[i]["StreamKey"]) ? "-1" : keys.Rows[i]["StreamKey"]);
-                    if (string.Equals(temp, key))
-                        check = true;
-                    else
-                        check = false;
-                }
-            }
-
-            string JSONString = string.Empty;
-            JSONString = JsonConvert.SerializeObject(check);
-            return JSONString;
+            return url;
         }
 
         [Route("api/{sessionId:int}/getRRQ")]
