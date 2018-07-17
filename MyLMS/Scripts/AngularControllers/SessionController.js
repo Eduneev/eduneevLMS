@@ -71,6 +71,25 @@
     };
 
 
+    $scope.GetSessionsForCenter = function () {
+        $http.get('/SessionMgmt/GetSessionsForCenter')
+            .then(function (result) {
+                $scope.SessionsList = result.data;
+            });
+    };
+
+    $scope.StartChat = function (SessionID, CenterID) {
+        debugger;
+
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.action = "http://localhost:55082/Chat.aspx?SessionID=" + SessionID + "&CenterID=" + CenterID;
+        form.target = "_blank";
+        document.body.appendChild(form);
+        form.submit();
+    };
+
+
     $scope.SaveSession = function () {
         debugger;
         var _SessionName = $scope.SessionName;
