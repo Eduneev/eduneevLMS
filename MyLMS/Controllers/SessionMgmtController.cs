@@ -164,6 +164,19 @@ namespace MyLMS.Controllers
             }
         }
 
+        [HttpGet]
+        public string GetSessionsForCenter()
+        {
+            SqlParameter[] CenterSessionObj = new SqlParameter[1];
+            CenterSessionObj[0] = new SqlParameter("@UserID", SqlDbType.Int);
+            CenterSessionObj[0].Value = Convert.ToInt32(Session["USER_ID"]);
+            DataTable SessionsList = DAL.GetDataTable("GetSessionsForCenter", CenterSessionObj);
+
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(SessionsList);
+            return JSONString;
+        }
+
         [HttpPost]
         public void StartStopSession(int SessionID, string Status)
         {
