@@ -78,12 +78,36 @@
             });
     };
 
+    $scope.GetCenterNameFromSession = function (CenterID) {
+        $http.get('/SessionMgmt/GetCenterNameFromSession')
+            .then(function (result) {
+                $scope.CenterName = result.data;
+            });
+    };
+
+    $scope.GetStudioNameFromSession = function (StudioID) {
+        $http.get('/SessionMgmt/GetStudioNameFromSession')
+            .then(function (result) {
+                $scope.StudioName = result.data;
+            });
+    };
     $scope.StartChat = function (SessionID, CenterID) {
         debugger;
 
         var form = document.createElement("form");
         form.method = "POST";
         form.action = "http://localhost:55082/Chat.aspx?SessionID=" + SessionID + "&CenterID=" + CenterID;
+        form.target = "_blank";
+        document.body.appendChild(form);
+        form.submit();
+    };
+
+    $scope.StartStudioChat = function (SessionID, StudioID) {
+        debugger;
+
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.action = "http://localhost:55082/StudioChat.aspx?SessionID=" + SessionID + "&StudioID=" + StudioID;
         form.target = "_blank";
         document.body.appendChild(form);
         form.submit();
