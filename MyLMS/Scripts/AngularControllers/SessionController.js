@@ -70,13 +70,6 @@
             });
     };
 
-    function GetStudioNameFromSession(StudioID) {
-        $http.get('/SessionMgmt/GetStudioNameFromSession/' + StudioID)
-            .then(function (result) {
-                return  result.data;
-            });
-    };
-
     $scope.GetSessions = function () {
         $http.get('/SessionMgmt/GetSessions')
         .then(function (result) {
