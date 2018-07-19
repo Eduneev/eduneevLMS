@@ -196,19 +196,6 @@ namespace MyLMS.Controllers
             return centerName;
         }
 
-        [HttpGet]
-        public string GetStudioNameFromSession(int id)
-        {
-            SqlParameter[] StudioNameObj = new SqlParameter[1];
-            StudioNameObj[0] = new SqlParameter("@StudioID", SqlDbType.Int);
-            StudioNameObj[0].Value = id;
-
-            DataTable list = DAL.GetDataTable("GetStudioName", StudioNameObj);
-            string studioName = list.Rows[0]["StudioName"].ToString();
-            return studioName;
-
-        }
-
         [HttpPost]
         public void StartStopSession(int SessionID, string Status)
         {
