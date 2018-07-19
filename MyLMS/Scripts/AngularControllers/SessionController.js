@@ -63,6 +63,20 @@
         });
     }
 
+    function GetCenterNameFromSession(CenterID) {
+        return $http.get('/SessionMgmt/GetCenterNameFromSession/' + CenterID)
+            .then(function (result) {
+                return result.data;
+            });
+    };
+
+    function GetStudioNameFromSession(StudioID) {
+        $http.get('/SessionMgmt/GetStudioNameFromSession/' + StudioID)
+            .then(function (result) {
+                return  result.data;
+            });
+    };
+
     $scope.GetSessions = function () {
         $http.get('/SessionMgmt/GetSessions')
         .then(function (result) {
@@ -78,36 +92,26 @@
             });
     };
 
-    $scope.GetCenterNameFromSession = function (CenterID) {
-        $http.get('/SessionMgmt/GetCenterNameFromSession')
-            .then(function (result) {
-                $scope.CenterName = result.data;
-            });
-    };
 
-    $scope.GetStudioNameFromSession = function (StudioID) {
-        $http.get('/SessionMgmt/GetStudioNameFromSession')
-            .then(function (result) {
-                $scope.StudioName = result.data;
-            });
-    };
     $scope.StartChat = function (SessionID, CenterID) {
         debugger;
-
-        var form = document.createElement("form");
-        form.method = "POST";
-        form.action = "http://localhost:55082/Chat.aspx?SessionID=" + SessionID + "&CenterID=" + CenterID;
-        form.target = "_blank";
-        document.body.appendChild(form);
-        form.submit();
+        var promise = GetCenterNameFromSession(CenterID).then(function (response) {
+            var url = "http://localhost:55082/Chat.aspx?SessionID=" + SessionID + "&CenterName=" + response;
+            var form = document.createElement("form");
+            form.method = "POST";
+            form.action = url;
+            form.target = "_blank";
+            document.body.appendChild(form);
+            form.submit();
+        });
     };
 
-    $scope.StartStudioChat = function (SessionID, StudioID) {
+    $scope.StartStudioChat = function (SessionID, StudioName) {
         debugger;
-
+        var url = "http://localhost:55082/StudioChat.aspx?SessionID=" + SessionID + "&StudioName=" + StudioName;
         var form = document.createElement("form");
         form.method = "POST";
-        form.action = "http://localhost:55082/StudioChat.aspx?SessionID=" + SessionID + "&StudioID=" + StudioID;
+        form.action = url;
         form.target = "_blank";
         document.body.appendChild(form);
         form.submit();
