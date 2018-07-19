@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -175,6 +176,37 @@ namespace MyLMS.Controllers
             string JSONString = string.Empty;
             JSONString = JsonConvert.SerializeObject(SessionsList);
             return JSONString;
+        }
+
+        [HttpGet]
+        public string GetCenterNameFromSession(int id)
+        {
+            SqlParameter[] CenterNameObj = new SqlParameter[1];
+            CenterNameObj[0] = new SqlParameter("@CenterID", SqlDbType.Int);
+            CenterNameObj[0].Value = id;
+
+            DataTable list = DAL.GetDataTable("GetCenterName", CenterNameObj);
+
+            if (list.Rows.Count == 0)
+            {
+                Debug.WriteLine("Something went wrong while getting center name!!");
+                return "center";
+            }
+            string centerName = list.Rows[0]["CenterName"].ToString();
+            return centerName;
+        }
+
+        [HttpGet]
+        public string GetStudioNameFromSession(int id)
+        {
+            SqlParameter[] StudioNameObj = new SqlParameter[1];
+            StudioNameObj[0] = new SqlParameter("@StudioID", SqlDbType.Int);
+            StudioNameObj[0].Value = id;
+
+            DataTable list = DAL.GetDataTable("GetStudioName", StudioNameObj);
+            string studioName = list.Rows[0]["StudioName"].ToString();
+            return studioName;
+
         }
 
         [HttpPost]
