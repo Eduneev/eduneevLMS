@@ -9,7 +9,7 @@
     <script src="~/Scripts/AngularControllers/SessionController.js"></script>
     <script src="~/Scripts/AngularControllers/ModalDirective.js"></script>
 }
-<div data-ng-controller="SessionCntrl" data-ng-init="GetSessions()">
+<div data-ng-controller="SessionCntrl" data-ng-init="GetSessionsForCenter()">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
@@ -55,8 +55,8 @@
                                         <span>{{Session.StartTime}} / <strong>{{Session.ActualStartTime}}</strong></span> - <span>{{Session.EndTime}} / <strong>{{Session.ActualEndTime}}</strong></span>
                                     </td>
                                     @*<td>
-                                           <span>{{Session.ActualStartTime}}</span> - <span>{{Session.ActualEndTime}}</span>
-                                        </td>*@
+           <span>{{Session.ActualStartTime}}</span> - <span>{{Session.ActualEndTime}}</span>
+        </td>*@
                                     <td>
                                         <span>{{Session.CourseName}}</span> :: <span>{{Session.SubjectName}}</span>
                                     </td>
@@ -68,6 +68,9 @@
                                             <span class="label label-danger">{{Session.SessionStatus}}</span>
                                         </div>
 
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" id="addColor" ng-click='StartChat(Session.SessionID, Session.CenterID)'>Start Chat</button>
                                     </td>
                                     <th>
                                         &nbsp;

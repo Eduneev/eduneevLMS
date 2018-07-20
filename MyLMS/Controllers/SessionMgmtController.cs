@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -162,6 +163,37 @@ namespace MyLMS.Controllers
             {
 
             }
+        }
+
+        [HttpGet]
+        public string GetSessionsForCenter()
+        {
+            SqlParameter[] CenterSessionObj = new SqlParameter[1];
+            CenterSessionObj[0] = new SqlParameter("@UserID", SqlDbType.Int);
+            CenterSessionObj[0].Value = Convert.ToInt32(Session["USER_ID"]);
+            DataTable SessionsList = DAL.GetDataTable("GetSessionsForCenter", CenterSessionObj);
+
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(SessionsList);
+            return JSONString;
+        }
+
+        [HttpGet]
+        public string GetCenterNameFromSession(int id)
+        {
+            SqlParameter[] CenterNameObj = new SqlParameter[1];
+            CenterNameObj[0] = new SqlParameter("@CenterID", SqlDbType.Int);
+            CenterNameObj[0].Value = id;
+
+            DataTable list = DAL.GetDataTable("GetCenterName", CenterNameObj);
+
+            if (list.Rows.Count == 0)
+            {
+                Debug.WriteLine("Something went wrong while getting center name!!");
+                return "center";
+            }
+            string centerName = list.Rows[0]["CenterName"].ToString();
+            return centerName;
         }
 
         [HttpPost]

@@ -63,11 +63,51 @@
         });
     }
 
+    function GetCenterNameFromSession(CenterID) {
+        return $http.get('/SessionMgmt/GetCenterNameFromSession/' + CenterID)
+            .then(function (result) {
+                return result.data;
+            });
+    };
+
     $scope.GetSessions = function () {
         $http.get('/SessionMgmt/GetSessions')
         .then(function (result) {
             $scope.SessionsList = result.data;
         });
+    };
+
+
+    $scope.GetSessionsForCenter = function () {
+        $http.get('/SessionMgmt/GetSessionsForCenter')
+            .then(function (result) {
+                $scope.SessionsList = result.data;
+            });
+    };
+
+
+    $scope.StartChat = function (SessionID, CenterID) {
+        debugger;
+        var promise = GetCenterNameFromSession(CenterID).then(function (response) {
+            var url = "http://localhost:55082/Chat.aspx?SessionID=" + SessionID + "&CenterName=" + response;
+            var form = document.createElement("form");
+            form.method = "POST";
+            form.action = url;
+            form.target = "_blank";
+            document.body.appendChild(form);
+            form.submit();
+        });
+    };
+
+    $scope.StartStudioChat = function (SessionID, StudioName) {
+        debugger;
+        var url = "http://localhost:55082/StudioChat.aspx?SessionID=" + SessionID + "&StudioName=" + StudioName;
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.action = url;
+        form.target = "_blank";
+        document.body.appendChild(form);
+        form.submit();
     };
 
 

@@ -75,7 +75,7 @@
                             <tbody>
                                 <tr ng-repeat="Session in SessionsList | filter: CourseFilter">
                                     <td>
-                                        <input type="radio" value="No" class="minimal" ng-click="SelectSession(Session.SessionID)" id="SelectionRadio" name="SelectionRadio"/>
+                                        <input type="radio" value="No" class="minimal" ng-click="SelectSession(Session.SessionID)" id="SelectionRadio" name="SelectionRadio" />
                                     </td>
                                     <td>
                                         {{$index+1}}.
@@ -90,8 +90,8 @@
                                         <span>{{Session.StartTime}} / <strong>{{Session.ActualStartTime}}</strong></span> - <span>{{Session.EndTime}} / <strong>{{Session.ActualEndTime}}</strong></span>
                                     </td>
                                     @*<td>
-                                       <span>{{Session.ActualStartTime}}</span> - <span>{{Session.ActualEndTime}}</span>
-                                    </td>*@
+           <span>{{Session.ActualStartTime}}</span> - <span>{{Session.ActualEndTime}}</span>
+        </td>*@
                                     <td>
                                         <span>{{Session.CourseName}}</span> :: <span>{{Session.SubjectName}}</span>
                                     </td>
@@ -105,7 +105,10 @@
                                         <div ng-if="Session.SessionStatus == 'End'">
                                             <span class="label label-danger">{{Session.SessionStatus}}</span>
                                         </div>
-                                        
+
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" id="addColor" ng-click='StartStudioChat(Session.SessionID, Session.StudioName)'>Start Chat</button>
                                     </td>
                                     <th>
                                         &nbsp;
