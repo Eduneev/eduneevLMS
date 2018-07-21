@@ -359,7 +359,7 @@
 		<section class="right">
 			<div class="chat-head">
 				<div class="chat-name" style="padding-left:20px">
-					<h1 class="font-name">Studio</h1>
+					<h1 class="font-name" id="studio-name"></h1>
 					<p id="statusBar" class="font-online">Connecting</p>
 				</div>
 				<i class="fa fa-times fa-lg" aria-hidden="true" id="close-contact-information"></i>
@@ -376,7 +376,10 @@
 			</div>
 		</section>
 	</div>
-		
+	<script>
+        var e = document.getElementById("studio-name");
+        e.innerHTML = STUDIONAME;
+	</script>
 
 </body>
 </html>

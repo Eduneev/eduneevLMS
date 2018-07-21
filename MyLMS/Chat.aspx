@@ -20,7 +20,7 @@
 	var urlParams = parseURLParams(window.location.href);
 	console.log(urlParams);
 	var SESSION;
-	var NAME;
+	var CENTERNAME;
 
 	if ("SessionID" in urlParams) {
 		SESSION = urlParams["SessionID"][0];
@@ -31,12 +31,12 @@
 	console.log(SESSION);
 
 	if ("CenterName" in urlParams) {
-		NAME = urlParams["CenterName"][0];
+		CENTERNAME = urlParams["CenterName"][0];
 	} else {
-		NAME = "puneetCenter";
+		CENTERNAME = "puneetCenter";
 		console.log("Exception: Unable to read Session from URL");
 	}
-	console.log(NAME);
+	console.log(CENTERNAME);
 
 
 	const GENERAL = "general";
@@ -107,7 +107,7 @@
 			ws.send(JSON.stringify({
 				session: SESSION,
 				type: "centerAdd",
-				name: NAME
+				name: CENTERNAME
 			}));
 			statusBar.textContent = "Connected!";
 		}
@@ -381,7 +381,7 @@
 		<section class="right">
 			<div class="chat-head">
 				<div class="chat-name" style="padding-left:20px">
-					<h1 class="font-name">Center</h1>
+					<h1 class="font-name" id="center-name"></h1>
 					<p id="statusBar" class="font-online">Connecting</p>
 				</div>
 				<i class="fa fa-times fa-lg" aria-hidden="true" id="close-contact-information"></i>
@@ -397,7 +397,11 @@
 				</div>
 			</div>
 		</section>
-	</div>	
+	</div>
+    <script>
+        var e = document.getElementById("center-name");
+        e.innerHTML = CENTERNAME;
+    </script>
 </body>
 </html>
 
