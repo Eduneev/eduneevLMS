@@ -16,7 +16,8 @@ namespace MyLMS.Controllers
     public class WebApiController : ApiController
     {
         /** Get session Id
-         *  Parameters: MAC ID
+         *  Parameters: Auth ID
+         *              StreamKey
          *  Output: Session ID
          **/ 
         [Route("api/getSession/{streamKey}/{auth}")]

@@ -1,15 +1,12 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Chat.aspx.cs" Inherits="MyLMS.Chat" %>
-
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-	<meta charset="UTF-8" />
-	<title>Chat</title>
-	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css" />
+﻿<!DOCTYPE html><html class=''>
+<html lang="en">
+<head> 
+	<meta charset="UTF-8">
+	<title>Center</title>
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<script src="https://use.fontawesome.com/1c6f725ec5.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="Chat.css" type="text/css" />
+	<link rel="stylesheet" href="chat.css">
 	<script>
 	var messagesPanel, typedMessage, first = true, ws;
 	
@@ -20,23 +17,22 @@
 	var urlParams = parseURLParams(window.location.href);
 	console.log(urlParams);
 	var SESSION;
-	var CENTERNAME;
+	var NAME;
 
 	if ("SessionID" in urlParams) {
 		SESSION = urlParams["SessionID"][0];
 	} else {
-		SESSION = "00001";
 		alert("Exception: Unable to read Session from URL");
 	}
 	console.log(SESSION);
 
 	if ("CenterName" in urlParams) {
-		CENTERNAME = urlParams["CenterName"][0];
+		NAME = urlParams["CenterName"][0];
 	} else {
-		CENTERNAME = "puneetCenter";
-		console.log("Exception: Unable to read Session from URL");
+		NAME = "Center";
+		console.log("Exception: Unable to read Center name from URL");
 	}
-	console.log(CENTERNAME);
+	console.log(NAME);
 
 
 	const GENERAL = "general";
@@ -107,7 +103,7 @@
 			ws.send(JSON.stringify({
 				session: SESSION,
 				type: "centerAdd",
-				name: CENTERNAME
+				name: NAME
 			}));
 			statusBar.textContent = "Connected!";
 		}
@@ -143,11 +139,9 @@
 		ws.onclose = function() {
 			statusBar.textContent = 'Connection lost';
 			typedMessage.disabled = true;
-        };
-
+		};
 		typedMessage.onkeydown = function(e) {
-            if (e.keyCode === 13 && !e.shiftKey) {
-                // Add Message
+			if (e.keyCode === 13 && !e.shiftKey) {
 				if (typedMessage.value.length) {
 					typedMessage.value = typedMessage.value.substring(0, 512);
 					var messageWrapper = {'type': 'me', 'data': typedMessage.value};
@@ -175,8 +169,6 @@
 							data: typedMessage.value
 						}));
 						addMessage(typedMessage.value, false);
-						document.getElementById(currentStudentId).className = "contact";
-						currentStudentId = null;
 						messages[PRIVATE].push(messageWrapper);
 					}
 					
@@ -307,6 +299,7 @@
 				document.getElementById(currentId).className = "new-message-contact"; 
 				currentId = id;
 				console.log("Current id: " + currentId);
+				typedMessage.value = "";
 				messagesPanel.innerHTML = "";
 				var messageList = messages[id];                    
 			}
@@ -344,10 +337,6 @@
 		messageBox.textContent = message;
 		flexBox.appendChild(messageBox);
 		flexBox.appendChild(timeShow);
-	//	if (messages.length == 50) {
-	//		messagesPanel.removeChild(messages.shift());
-	//	}
-	//	messages.push(flexBox);
 		setTimeout(function() {
 			messageBox.className = "show";
 		}, 10);
@@ -357,6 +346,7 @@
 		if (wereBottomScrolled) {
 			messagesPanel.scrollTop = messagesPanel.scrollHeight;
 		}
+		typedMessage.value = "";
 	}
 	</script>
 		
@@ -372,7 +362,7 @@
 			<div class="wrap-search">
 				<div class="search">
 					<i class="fa fa-search fa" aria-hidden="true"></i>
-					<input type="text" class="input-search" placeholder="Search" />
+					<input type="text" class="input-search" placeholder="Search">
 				</div>
 			</div>
 			<div class="contact-list" id="contacts"></div>
@@ -381,7 +371,7 @@
 		<section class="right">
 			<div class="chat-head">
 				<div class="chat-name" style="padding-left:20px">
-					<h1 class="font-name" id="center-name"></h1>
+					<h1 class="font-name">Center</h1>
 					<p id="statusBar" class="font-online">Connecting</p>
 				</div>
 				<i class="fa fa-times fa-lg" aria-hidden="true" id="close-contact-information"></i>
@@ -393,15 +383,10 @@
 			<div class="wrap-message">
 				<i class="fa fa-smile-o fa-lg" aria-hidden="true"></i>
 				<div class="message">
-					<input type="text" id="typedMessage" class="input-message" placeholder="Type Message" />
+					<input type="text" id="typedMessage" class="input-message" placeholder="Type Message">
 				</div>
 			</div>
 		</section>
-	</div>
-    <script>
-        var e = document.getElementById("center-name");
-        e.innerHTML = CENTERNAME;
-    </script>
+	</div>		
 </body>
 </html>
-
