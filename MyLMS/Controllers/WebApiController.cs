@@ -19,16 +19,15 @@ namespace MyLMS.Controllers
          *  Parameters: MAC ID
          *  Output: Session ID
          **/ 
-        [Route("api/getSession/{streamKey}/{macid}")]
+        [Route("api/getSession/{streamKey}/{auth}")]
         [HttpGet]
-        public int GetSession(string macid, string streamKey)
+        public int GetSession(string auth, string streamKey)
         {
-            // TODO: add MacAddr to classroom and get the session id based on if Macaddress matches
             int SessionId=-1;
             SqlParameter[] SParam = new SqlParameter[2];
-            SParam[0] = new SqlParameter("@MACAddr", SqlDbType.VarChar);
-            SParam[0].Value = macid;
-            SParam[1] = new SqlParameter("@StreakKey", SqlDbType.VarChar);
+            SParam[0] = new SqlParameter("@Auth", SqlDbType.VarChar);
+            SParam[0].Value = auth;
+            SParam[1] = new SqlParameter("@StreamKey", SqlDbType.VarChar);
             SParam[1].Value = streamKey;
 
             string JSONString = string.Empty;
@@ -40,16 +39,10 @@ namespace MyLMS.Controllers
             }
             else
             {
-                Debug.WriteLine("0 or Too many sessions contain this StreamKey or MacAddr");
+                Debug.WriteLine("0 or Too many sessions contain this StreamKey or Auth key");
 
                 return -1;
             }
-            // Current Logic
-            // Link classroom with session. When classroom joins session, this value gets set.
-            // Current logic. Link classroom with MACAddr. Each classroom has a macaddr, which is set when classroom registers.
-            // When api is called, we check is macaddr exists in CenterName database and then retrieve the session Id associated
-            //DataTable rooms = DAL.GetDataTable("getSession")
-
             return SessionId;
         }
 
