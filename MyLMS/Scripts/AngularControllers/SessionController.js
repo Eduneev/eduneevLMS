@@ -165,8 +165,15 @@
         }).then(function (result) {
             $scope.GetSessions();
             $('#pop').modal('show')
-        });
+            });
+       
     };
+
+    $scope.ShowStreamKey = function (streamKey) {
+        $scope.header = "Stream key";
+        $scope.body = streamKey;
+        $('#pop').modal('show')
+    }
 
     $scope.CreateRRQ = function () {
         debugger;
