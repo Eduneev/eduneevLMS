@@ -89,7 +89,7 @@
     $scope.StartChat = function (SessionID, CenterID) {
         debugger;
         var promise = GetCenterNameFromSession(CenterID).then(function (response) {
-            var url = "http://localhost:55082/Chat.aspx?SessionID=" + SessionID + "&CenterName=" + response;
+            var url = "http://localhost:55082/Chat.aspx?SessionID=" + SessionID + "&CenterName=" + response + "&CenterID=" + CenterID;
             var form = document.createElement("form");
             form.method = "POST";
             form.action = url;
