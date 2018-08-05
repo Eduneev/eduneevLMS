@@ -111,6 +111,29 @@ namespace MyLMS.Controllers
             return JSONString;
         }
 
+        [Route("api/{sessionId:int}/{centerId:int}/getAttendingStudents")]
+        [HttpGet]
+        public StudentModel[] GetAttendingStudents(int sessionId, int centerId)
+        {
+            SqlParameter[] SParam = new SqlParameter[2];
+            SParam[0] = new SqlParameter("@SessionID", SqlDbType.Int);
+            SParam[0].Value = sessionId;
+            SParam[1] = new SqlParameter("CenterID", SqlDbType.Int);
+            SParam[1].Value = centerId;
+            DataTable val = DAL.GetDataTable("GetAttendingStudents", SParam);
+            StudentModel[] result = new StudentModel[val.Rows.Count];
+
+            for (int i = 0; i < val.Rows.Count; i++)
+            {
+                StudentModel s = new StudentModel();
+                s.StudentID = Convert.ToInt32(Convert.IsDBNull(val.Rows[i]["StudentID"]) ? "-1" : val.Rows[i]["StudentID"]);
+                s.StudentName = Convert.ToString(Convert.IsDBNull(val.Rows[i]["StudentName"]) ? "-1" : val.Rows[i]["StudentName"]);
+                s.StudentImageURL = Convert.ToString(Convert.IsDBNull(val.Rows[i]["StudentImageURL"]) ? "-1" : val.Rows[i]["StudentImageURL"]);
+                result[i] = s;
+            }
+            return result;
+        }
+
         [Route("api/{sessionId:int}/{rrqId:int}/saveRRQResponse/{QId:int}/{remoteId}/{response}")]
         [HttpGet]
         public bool SaveRRQResponse(int sessionId, int rrqId, int QId, string remoteId, string response)
