@@ -28,7 +28,7 @@
 	    console.log(SESSION);
 
         if ("CenterID" in urlParams) {
-            CenterID = urlParamas["CenterID"][0];
+            CenterID = urlParams["CenterID"][0];
         } else {
             alert("Exception: Unable to read CenterID from URL");
         }
@@ -235,34 +235,39 @@
 	    }
 
 	    function addStudents(){
-		    list = document.getElementById("contacts");
-		    var hardcoded = [
-			    ["Bob", "https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg"],
-			    ["Ross", "https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_02.jpg"],
-			    ["Max", "https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_03.jpg"],
-			    ["Claire", "https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_04.jpg"]
-		    ];
+            list = document.getElementById("contacts");
+            const url = "http://localhost:55082/api/" + SESSION + "/" + CenterID + "/getAttendingStudents";
+		    var xhr = new XMLHttpRequest();
+		    xhr.onreadystatechange = function() {
+			    if (xhr.readyState == XMLHttpRequest.DONE) {
+				    var students = xhr.response;
+				    console.log(students);
+				    for (let i=0; i < students.length; i++){
+					    var data = students[i];
+					    var student = document.createElement('div');
+					    student.className = 'contact';
+					    student.id = data['StudentID'];
+					    var image_placeholder = document.createElement("img");
+					    image_placeholder.src = data['StudentImageURL'];
+					    image_placeholder.id = "image";
 
-		    for(i=0;i<hardcoded.length;i++){
-			    var student = document.createElement("div");
-			    student.className = "contact";
-			    student.id = hardcoded[i][0];
-			    var image_placeholder = document.createElement("img");
-			    image_placeholder.src = hardcoded[i][1];
-			    image_placeholder.id = "image";
+					    var text = document.createElement("span");
+					    text.className = "contact-text2";
+					    text.id = "text";
+					    text.textContent = data['StudentName'];
+					
+					    student.appendChild(image_placeholder);
+					    student.appendChild(text);
 
-			    var text = document.createElement("span");
-			    text.className = "contact-text2";
-			    text.id = "text";
-			    text.textContent = hardcoded[i][0];
-			
-			    student.appendChild(image_placeholder);
-			    student.appendChild(text);
+					    student.onclick = setCurrentStudentId;
 
-			    student.onclick = setCurrentStudentId;
-
-			    list.appendChild(student);					
+					    list.appendChild(student);
+				    }
+			    }
 		    }
+		    xhr.responseType='json';
+		    xhr.open('GET', url, true);
+		    xhr.send(null);
 	    }
 
 	    function addUnread(id){

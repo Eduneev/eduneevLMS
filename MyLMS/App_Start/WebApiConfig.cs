@@ -9,8 +9,8 @@ namespace MyLMS
     {
         public static void Register(HttpConfiguration config)
         {
+            config.EnableCors();
             config.MapHttpAttributeRoutes();
-
 /*            config.Routes.MapHttpRoute(
                 name: "webapi",
                 routeTemplate: "api/{controller}/{id}",
