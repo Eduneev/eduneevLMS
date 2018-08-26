@@ -82,7 +82,7 @@ myapp.controller('AllocateRemoteCntrl', function ($scope, $http) {
     GetProgramsList();
 
     function GetProgramsList() {
-        $http.get('/CourseMgmt/GetProgramsForCenter')
+        $http.get('/CourseMgmt/GetCourseDetails')
         .then(function (result) {
             $scope.ProgramsList = result.data;
         });
