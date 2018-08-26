@@ -82,10 +82,11 @@ myapp.controller('StudioCntrl', function ($scope, $http) {
         var _StudioName = $scope.StudioName;
         var _StudioLocation = $scope.StudioLocation;
         var _Remarks = $scope.Remarks;
+        var _Channel = $scope.ChannelName;
         $http({
             method: 'POST',
             url: '/Entity/SaveStudio',
-            data: { StudioName: _StudioName, StudioLocation: _StudioLocation, Remarks: _Remarks }
+            data: { StudioName: _StudioName, StudioLocation: _StudioLocation, Remarks: _Remarks, ChannelName: _Channel }
         }).then(function (result) {
             GetStudios();
         });

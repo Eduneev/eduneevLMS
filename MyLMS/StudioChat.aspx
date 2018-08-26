@@ -97,7 +97,7 @@
 					var obj = JSON.parse(data);
 					if (obj.type == "centerAdd"){
 						// add to the List								
-						addCenter(obj.id, obj.name);
+						addCenter(obj.id, obj.name, obj.CenterID);
 					}
 					else if (obj.type == "centerRemove"){
 						var contact = document.getElementById(obj.id);
@@ -225,8 +225,8 @@
 			return parms;
 		}
 		
-		function addCenter(id, name){
-			centers[id] = {"name": name, "unread": 0};
+        function addCenter(id, name, CenterID) {
+            centers[id] = { "name": name, "unread": 0, "CenterID": CenterID };
 			var list = document.getElementById("contacts");
 			var contact = document.createElement("div");
 			contact.id = id;

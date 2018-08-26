@@ -89,7 +89,7 @@
     $scope.StartChat = function (SessionID, CenterID) {
         debugger;
         var promise = GetCenterNameFromSession(CenterID).then(function (response) {
-            var url = "http://localhost:55082/Chat.aspx?SessionID=" + SessionID + "&CenterName=" + response;
+            var url = "http://localhost:55082/Chat.aspx?SessionID=" + SessionID + "&CenterName=" + response + "&CenterID=" + CenterID;
             var form = document.createElement("form");
             form.method = "POST";
             form.action = url;
@@ -170,6 +170,7 @@
     };
 
     $scope.ShowStreamKey = function (streamKey) {
+        debugger;
         $scope.header = "Stream key";
         $scope.body = streamKey;
         $('#pop').modal('show')
@@ -201,7 +202,7 @@ myapp.controller('SessionAttendanceCntrl', function ($scope, $http) {
     GetProgramsList();
 
     function GetProgramsList() {
-        $http.get('/CourseMgmt/GetPrograms')
+        $http.get('/CourseMgmt/GetProgramsForCenter')
         .then(function (result) {
             $scope.ProgramsList = result.data;
         });

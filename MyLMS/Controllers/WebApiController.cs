@@ -7,12 +7,14 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using MyLMS.Models;
 using Newtonsoft.Json;
 using UtilityClass;
 
 namespace MyLMS.Controllers
 {
+    [EnableCors(origins: "http://localhost:55082", headers: "*", methods: "*")]
     public class WebApiController : ApiController
     {
         /** Get session Id
@@ -54,16 +56,35 @@ namespace MyLMS.Controllers
             string url = string.Empty;
 
             //Workflow: Send in streamKey and MacAddr to get sessionId, pass in sessionId along with type to get stream
-            SqlParameter[] SParam = new SqlParameter[2];
+            SqlParameter[] SParam = new SqlParameter[1];
             SParam[0] = new SqlParameter("@SessionID", SqlDbType.Int);
             SParam[0].Value = sessionId;
-            SParam[1] = new SqlParameter("@Type", SqlDbType.Int);
-            SParam[1].Value = type;
-
+            
             DataTable keys = DAL.GetDataTable("GetStream", SParam);
             if (keys.Rows.Count > 0)
             {
-                url = Convert.ToString(Convert.IsDBNull(keys.Rows[0]["Stream"]) ? string.Empty : keys.Rows[0]["Stream"]);
+                int index = 0;
+                if (type > keys.Rows.Count)
+                {
+                    int[] types = new int[keys.Rows.Count];
+                    for (int i = 0; i < keys.Rows.Count; i++)
+                    {
+                        types[i] = Convert.ToInt32(keys.Rows[i]["Type"]);
+                    }
+
+                    // We would need to loop again since we're not keeping track of the original array indices.
+                    // However there would only be 1-3 streams per session, looping is not a big problem.
+                    Array.Sort(types); // sort, since we are unsure that type is stored in ascending order in database
+                    type = types[types.Length - 1];
+                }
+                for (int i = 0; i < keys.Rows.Count; i++)
+                {
+                    if (Convert.ToInt32(keys.Rows[i]["Type"]) == type)
+                        index = i;
+                }
+
+                url = Convert.ToString(Convert.IsDBNull(keys.Rows[index]["Stream"]) ? string.Empty : keys.Rows[0]["Stream"]);
+
             }
             else
             {
@@ -109,6 +130,29 @@ namespace MyLMS.Controllers
             string JSONString = string.Empty;
             JSONString = JsonConvert.SerializeObject(qId);
             return JSONString;
+        }
+
+        [Route("api/{sessionId:int}/{centerId:int}/getAttendingStudents")]
+        [HttpGet]
+        public StudentModel[] GetAttendingStudents(int sessionId, int centerId)
+        {
+            SqlParameter[] SParam = new SqlParameter[2];
+            SParam[0] = new SqlParameter("@SessionID", SqlDbType.Int);
+            SParam[0].Value = sessionId;
+            SParam[1] = new SqlParameter("CenterID", SqlDbType.Int);
+            SParam[1].Value = centerId;
+            DataTable val = DAL.GetDataTable("GetAttendingStudents", SParam);
+            StudentModel[] result = new StudentModel[val.Rows.Count];
+
+            for (int i = 0; i < val.Rows.Count; i++)
+            {
+                StudentModel s = new StudentModel();
+                s.StudentID = Convert.ToInt32(Convert.IsDBNull(val.Rows[i]["StudentID"]) ? "-1" : val.Rows[i]["StudentID"]);
+                s.StudentName = Convert.ToString(Convert.IsDBNull(val.Rows[i]["StudentName"]) ? "-1" : val.Rows[i]["StudentName"]);
+                s.StudentImageURL = Convert.ToString(Convert.IsDBNull(val.Rows[i]["StudentImageURL"]) ? "-1" : val.Rows[i]["StudentImageURL"]);
+                result[i] = s;
+            }
+            return result;
         }
 
         [Route("api/{sessionId:int}/{rrqId:int}/saveRRQResponse/{QId:int}/{remoteId}/{response}")]

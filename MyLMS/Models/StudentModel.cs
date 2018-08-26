@@ -9,6 +9,10 @@ namespace MyLMS.Models
 {
     public class StudentModel
     {
+        public int StudentID { get; set; }
+        public string StudentName { get; set; }
+        public string StudentImageURL { get; set; }
+
         public string SaveStudent(SqlParameter[] sparams)
         {
             string res = "Failure..";
