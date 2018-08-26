@@ -155,10 +155,10 @@ namespace MyLMS.Controllers
         }
 
         [HttpPost]
-        public void SaveStudio(string StudioName, string StudioLocation, string Remarks)
+        public void SaveStudio(string StudioName, string StudioLocation, string Remarks, string ChannelName)
         {
             EntityModel ModelObj1 = new EntityModel();
-            SqlParameter[] SParam = new SqlParameter[4];
+            SqlParameter[] SParam = new SqlParameter[5];
 
             SParam[0] = new SqlParameter("@UserID", SqlDbType.Int);
             SParam[0].Value = Convert.ToInt32(Session["USER_ID"]);
@@ -168,6 +168,8 @@ namespace MyLMS.Controllers
             SParam[2].Value = StudioLocation;
             SParam[3] = new SqlParameter("@Remarks", SqlDbType.Text);
             SParam[3].Value = Remarks;
+            SParam[4] = new SqlParameter("@ChannelName", SqlDbType.VarChar);
+            SParam[4].Value = ChannelName;
 
             try
             {
