@@ -202,7 +202,7 @@ myapp.controller('SessionAttendanceCntrl', function ($scope, $http) {
     GetProgramsList();
 
     function GetProgramsList() {
-        $http.get('/CourseMgmt/GetPrograms')
+        $http.get('/CourseMgmt/GetProgramsForCenter')
         .then(function (result) {
             $scope.ProgramsList = result.data;
         });
