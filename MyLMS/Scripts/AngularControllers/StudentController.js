@@ -3,7 +3,7 @@
     $scope.CourseTextToShow = 'Please select..'
     GetCourseDetails();
     function GetCourseDetails() {
-        $http.get('/CourseMgmt/GetCourseDetails')
+        $http.get('/CourseMgmt/GetProgramsForCenter')
         .then(function (result) {
             $scope.CourseList = result.data;
         });
@@ -82,7 +82,7 @@ myapp.controller('AllocateRemoteCntrl', function ($scope, $http) {
     GetProgramsList();
 
     function GetProgramsList() {
-        $http.get('/CourseMgmt/GetPrograms')
+        $http.get('/CourseMgmt/GetProgramsForCenter')
         .then(function (result) {
             $scope.ProgramsList = result.data;
         });

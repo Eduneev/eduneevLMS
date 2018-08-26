@@ -170,6 +170,7 @@
     };
 
     $scope.ShowStreamKey = function (streamKey) {
+        debugger;
         $scope.header = "Stream key";
         $scope.body = streamKey;
         $('#pop').modal('show')
