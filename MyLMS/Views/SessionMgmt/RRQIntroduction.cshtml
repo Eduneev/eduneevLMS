@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "RRQIntroduction";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+@section scripts{
+    <script src="~/Scripts/AngularControllers/QuestionBankController.js"></script>
+}
+@using MyLMS.Models;
+@{
+    RRQData RRQData = new RRQData();
+    RRQData = (RRQData)ViewBag.RRQInfo;
+}
+<div ng-controller="QuestionCntrl">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12" style="background-color:brown;height:100px;">
+                <div style="margin-top:36px; color:white;">
+                    <h2>RRQ Introduction</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12" style="margin-top:20px; background-color:brown; height:400px;">
+                <div class="row">
+                    <div class="col-lg-3">
+
+                    </div>
+                    <div class="col-lg-6">
+                        <h2 style="color:white;">RRQ No : #@RRQData.RRQNo</h2><br /><br />
+                        <h2 style="color:white;">Subject Name : @RRQData.Subject</h2><br /><br />
+                        <h2 style="color:white;">Date : @RRQData.CurrentDate</h2><br /><br />
+
+                        <button type="button" class="btn btn-lg btn-success" ng-click="StartRRQ()" id="btnAddTopic" data-dismiss="modal">Start RRQ</button>
+                    </div>
+                    <div class="col-lg-3">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
