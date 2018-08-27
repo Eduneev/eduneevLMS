@@ -55,6 +55,20 @@
         });
     }
 
+    $scope.StartRRQ = function () {
+        window.location.pathname = '/SessionMgmt/ViewRRQ'
+    }
+
+    $scope.DisplayOptions = function () {
+        $scope.DisplayOption = 'True';
+        StartTimer();
+    }
+
+    $scope.NextQuestion = function () {
+        $scope.currentPage = $scope.currentPage + 1
+        $scope.DisplayOption = 'False';
+    }
+
     $scope.currentPage = 0;
     $scope.pageSize = 5;
     $scope.numberOfPages = function () {
@@ -67,7 +81,7 @@
     }
 
 
-    function startTimer(duration, display) {
+    function CallstartTimer(duration, display) {
         var start = Date.now(),
             diff,
             minutes,
@@ -97,10 +111,10 @@
         setInterval(timer, 1000);
     }
 
-    $scope.StartTimer = function () {
+    function StartTimer() {
         var fiveMinutes = 60 * 5,
             display = document.querySelector('#time');
-        startTimer(fiveMinutes, display);
+        CallstartTimer(fiveMinutes, display);
     };
        
 });

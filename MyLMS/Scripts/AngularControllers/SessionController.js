@@ -139,9 +139,9 @@
         $scope.SessionID = SessionID;
 
         $http.get('/SessionMgmt/GetSessionsRRQ/' + SessionID)
-        .then(function (result) {
-            $scope.SessionRRQList = result.data;
-        });
+            .then(function (result) {
+                $scope.SessionRRQList = result.data;
+            });
     };
 
 
