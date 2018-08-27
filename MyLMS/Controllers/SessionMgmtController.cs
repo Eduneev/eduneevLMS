@@ -35,6 +35,14 @@ namespace MyLMS.Controllers
             return View();
         }
 
+        public ActionResult RRQIntroduction(int ID)
+        {
+            RRQData RRQInfoObj = new RRQData();
+            RRQInfoObj.GetRRQInformation(ID);
+            ViewBag.RRQInfo = RRQInfoObj;
+            return View();
+        }
+
         public ActionResult DisplayRRQ()
         {
             return View();
