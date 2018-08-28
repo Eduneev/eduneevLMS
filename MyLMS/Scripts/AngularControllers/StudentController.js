@@ -55,6 +55,7 @@ myapp.controller('StudentViewCntrl', function ($scope, $http) {
 });
 
 myapp.controller('StudentAttendanceCntrl', function ($scope, $http) {
+    GetStudents();
     function GetStudents() {
         $http.get('/StudentMgmt/GetStudentsForAttendance')
         .then(function (result) {

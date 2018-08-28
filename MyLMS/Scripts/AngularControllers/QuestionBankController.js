@@ -1,5 +1,9 @@
 ﻿myapp.controller('QuestionCntrl', function ($scope, $http) {
 
+    const ws = require('ws');
+
+
+
     $scope.SaveQuestion = function () {
         debugger;
         var _QuestionText = $scope.QuestionText
@@ -112,9 +116,9 @@
     }
 
     function StartTimer() {
-        var fiveMinutes = 60 * 5,
+        var oneMinute = 60,
             display = document.querySelector('#time');
-        CallstartTimer(fiveMinutes, display);
+        CallstartTimer(oneMinute, display);
     };
        
 });
