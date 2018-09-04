@@ -1,8 +1,21 @@
-﻿myapp.controller('QuestionCntrl', function ($scope, $http) {
+﻿myapp.controller('QuestionCntrl', function ($scope, $http, $rootScope) {
 
-    const ws = require('ws');
+    /*
+     * {
+            RRQID,
+            QID,
+            Start,
+            Next,
+            Stop,
+            End        
+        }
+     * 
+     */
 
+    function getValue() {
 
+    }
+    
 
     $scope.SaveQuestion = function () {
         debugger;
@@ -54,7 +67,8 @@
     ///////// Get Questions ////////
     $scope.GetQuestionDetails = function () {
         $http.get('/QuestionBank/GetQuestions')
-        .then(function (result) {
+            .then(function (result) {
+                console.log(result);
             $scope.QuestionList = result.data;
         });
     }
@@ -64,6 +78,8 @@
     }
 
     $scope.DisplayOptions = function () {
+        debugger;
+        console.log($rootScope.ws);
         $scope.DisplayOption = 'True';
         StartTimer();
     }

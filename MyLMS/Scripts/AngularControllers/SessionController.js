@@ -1,4 +1,5 @@
-﻿myapp.controller('SessionCntrl', function ($scope, $http) {
+﻿myapp.controller('SessionCntrl', ['$scope', '$http', 'Socket', function ($scope, $http, Socket) {
+
     $scope.SessionID = 0;
 
     GetStudio();
@@ -7,34 +8,34 @@
 
     function GetStudio() {
         $http.get('/SessionMgmt/GetStudios')
-        .then(function (result) {
-            $scope.StudioList = result.data;
-            $scope.StudioTextToShow = 'Please select studio..'
-        });
+            .then(function (result) {
+                $scope.StudioList = result.data;
+                $scope.StudioTextToShow = 'Please select studio..'
+            });
     }
 
     function GetPrograms() {
         $http.get('/CourseMgmt/GetPrograms')
-        .then(function (result) {
-            $scope.Programs = result.data;
-            $scope.ProgramTextToShow = 'Please select program..'
-        });
+            .then(function (result) {
+                $scope.Programs = result.data;
+                $scope.ProgramTextToShow = 'Please select program..'
+            });
     }
 
     $scope.GetCourse = function GetCourse() {
         $http.get('/CourseMgmt/GetCourse/' + $scope.ProgID)
-        .then(function (result) {
-            $scope.Courses = result.data;
-            $scope.CourseTextToShow = 'Please select course..'
-        });
+            .then(function (result) {
+                $scope.Courses = result.data;
+                $scope.CourseTextToShow = 'Please select course..'
+            });
     }
 
     $scope.GetSubject = function GetSubject() {
         $http.get('/CourseMgmt/GetSubject/' + $scope.CourseID)
-        .then(function (result) {
-            $scope.Subjects = result.data;
-            $scope.SubjectTextToShow = 'Please select subject..'
-        });
+            .then(function (result) {
+                $scope.Subjects = result.data;
+                $scope.SubjectTextToShow = 'Please select subject..'
+            });
     }
 
 
@@ -42,25 +43,25 @@
 
         $scope.FacultyTextToShow = 'Please select faculty...'
         $http.get('/CourseMgmt/GetTopics/' + $scope.SubjectID)
-        .then(function (result) {
-            $scope.Topics = result.data;
-            GetFaculty();
-            GetSessionName();
-        });
+            .then(function (result) {
+                $scope.Topics = result.data;
+                GetFaculty();
+                GetSessionName();
+            });
     }
 
     function GetFaculty() {
         $http.get('/CourseMgmt/GetFaculty/' + $scope.SubjectID)
-        .then(function (result) {
-            $scope.Faculties = result.data;
-        });
+            .then(function (result) {
+                $scope.Faculties = result.data;
+            });
     }
 
     function GetSessionName() {
         $http.get('/CourseMgmt/GetSessionName/' + $scope.SubjectID)
-        .then(function (result) {
-            $scope.SessionName = result.data;
-        });
+            .then(function (result) {
+                $scope.SessionName = result.data;
+            });
     }
 
     function GetCenterNameFromSession(CenterID) {
@@ -72,9 +73,9 @@
 
     $scope.GetSessions = function () {
         $http.get('/SessionMgmt/GetSessions')
-        .then(function (result) {
-            $scope.SessionsList = result.data;
-        });
+            .then(function (result) {
+                $scope.SessionsList = result.data;
+            });
     };
 
 
@@ -135,7 +136,7 @@
     }
 
     $scope.SelectSession = function (SessionID) {
-        debugger;
+        //debugger;
         $scope.SessionID = SessionID;
 
         $http.get('/SessionMgmt/GetSessionsRRQ/' + SessionID)
@@ -149,13 +150,20 @@
         debugger;
         var _SessionID = $scope.SessionID;
         $scope.header = 'Success Message';
-        if (btnType == 'Start')
-        {
+        if (btnType === 'Start') {
             $scope.body = 'Session started successfully!!';
+            // Start websoket connection
+            Socket.ws = Socket.StartSocket();
+            console.log(Socket.ws);
+            Socket.ws.onOpen(function (){
+                console.log("Started socket.");
+                console.log(Socket.ws);
+            });
         }
-        else if (btnType == 'Stop')
+        else if (btnType === 'Stop')
         {
             $scope.body = 'Session stopped successfully!!';
+            // Stop websocket connection
         }
         
         $http({
@@ -196,7 +204,7 @@
         window.location.href = "/SessionMgmt/RRQDashboard/" + RRQ_ID;
     };
 
-});
+}]);
 
 myapp.controller('SessionAttendanceCntrl', function ($scope, $http) {
     GetProgramsList();
