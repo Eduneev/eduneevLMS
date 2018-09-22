@@ -2,10 +2,6 @@
     // Open a WebSocket connection
     var ws;
 
-    function StartSocket() {
-        this.ws = $websocket('ws://localhost:3000');
-    }
-
     function SetWs(websockconn) {
         ws = websockconn;
     }

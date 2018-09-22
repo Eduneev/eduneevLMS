@@ -1,10 +1,9 @@
-﻿myapp.controller('SessionCntrl', ['$scope', '$http', 'Socket', function ($scope, $http, Socket) {
+﻿myapp.controller('SessionCntrl', ['$scope', '$http', 'Socket', 'Constants', '$rootScope', function ($scope, $http, Socket, Constants, $rootScope) {
 
     $scope.SessionID = 0;
 
     GetStudio();
     GetPrograms();
-
 
     function GetStudio() {
         $http.get('/SessionMgmt/GetStudios')
@@ -145,35 +144,99 @@
             });
     };
 
-
-    $scope.StartStopSession = function (btnType) {
-        debugger;
-        var _SessionID = $scope.SessionID;
-        $scope.header = 'Success Message';
-        if (btnType === 'Start') {
-            $scope.body = 'Session started successfully!!';
-            // Start websoket connection
-            Socket.ws = Socket.StartSocket();
-            console.log(Socket.ws);
-            Socket.ws.onOpen(function (){
-                console.log("Started socket.");
-                console.log(Socket.ws);
-            });
-        }
-        else if (btnType === 'Stop')
-        {
-            $scope.body = 'Session stopped successfully!!';
-            // Stop websocket connection
-        }
-        
+    $scope.StartSessionRRQ = function (rrqID) {
+        window.location.href = "/SessionMgmt/RRQIntroduction/" + rrqID;
         $http({
             method: 'POST',
-            url: '/SessionMgmt/StartStopSession',
-            data: { SessionID: $scope.SessionID, Status: btnType }
+            url: '/SessionMgmt/SetSessionRRQ',
+            data: { rrqID: rrqID }
         }).then(function (result) {
-            $scope.GetSessions();
-            $('#pop').modal('show')
+            console.log(result.data)
+        });
+
+    }
+
+    $scope.StartStopSession = function (btnType) {
+        //debugger;
+        var _SessionID = $scope.SessionID;
+        if (_SessionID == 0) {
+            alert("Please select a session!");
+        }
+        else {
+            var obs = new OBSWebSocket();
+            obs.connect({ address: 'localhost:4444' })
+                .catch(err => {
+                    alert("Unable to Connect to OBS. Please start streaming manually.")
+                });
+            obs.onConnectionOpened(() => {
+                console.log("OBS CONNECTION MADE")
+                if (btnType === 'Start') {
+                    console.log("Starting stream");
+                    obs.startRecording();
+                }
+                else
+                    obs.stopRecording();
             });
+
+            $scope.header = 'Success Message';
+            if (btnType === 'Start') {
+                $scope.body = 'Session started successfully!!';
+                // Start websoket connection
+
+                try {
+                    var ws = Socket.StartSocket();
+                }
+                catch (e) {
+                    alert("Unable to Connect to RRQ Server.")
+                }
+
+                $http({
+                    method: 'POST',
+                    url: '/SessionMgmt/SetSession',
+                    data: { SessionID: $scope.SessionID }
+                }).then(function (result) {
+                    console.log(result.data)
+                });
+
+
+                ws.onOpen(function () {
+                    console.log("Started socket.");
+                    ws.send(JSON.stringify({
+                        profile: Constants.Profile['RRQ'],
+                        type: Constants.Events['CONNECTION'],
+                        action: Constants.Action['TEACHERCONNECTION'],
+                        SessionID: _SessionID
+                    }));
+
+                });
+            }
+            else if (btnType === 'Stop') {
+                $scope.body = 'Session stopped successfully!!';
+                // Stop websocket connection
+
+                var ws = Socket.StartSocket();
+                console.log(ws);
+                ws.onOpen(function () {
+                    console.log(Socket.getSession());
+                    console.log("Started Socket. sending message to quit session");
+                    ws.send(JSON.stringify({
+                        profile: Constants.Profile['RRQ'],
+                        type: Constants.Events['CLOSE'],
+                        SessionID: _SessionID
+                    }));
+                })
+            }
+
+            $http({
+                method: 'POST',
+                url: '/SessionMgmt/StartStopSession',
+                data: { SessionID: $scope.SessionID, Status: btnType }
+            }).then(function (result) {
+                $scope.GetSessions();
+                $('#pop').modal('show')
+            });
+
+        }
        
     };
 
