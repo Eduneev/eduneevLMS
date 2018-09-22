@@ -119,6 +119,47 @@ namespace MyLMS.Controllers
             return JSONString;
         }
 
+        [HttpPost]
+        public Int32 SetSession(int SessionID)
+        {
+            Session["CurrSessionID"] = SessionID;
+            
+            return Convert.ToInt32(Session["CurrSessionID"].ToString());
+        }
+
+        [HttpGet]
+        public Int32 GetSession()
+        {
+            try
+            {
+                return Convert.ToInt32(Session["CurrSessionID"].ToString());
+            }
+            catch (Exception e)
+            {
+                return -1;
+            }
+        }
+
+        [HttpPost]
+        public Int32 SetSessionRRQ(int rrqID)
+        {
+            Session["RRQID"] = rrqID;
+            return Convert.ToInt32(Session["RRQID"].ToString());
+        }
+
+        [HttpGet]
+        public Int32 GetSessionRRQ()
+        {
+            try
+            {
+                return Convert.ToInt32(Session["RRQID"].ToString());
+            }
+            catch (Exception e)
+            {
+                return -1;
+            }
+        }
+
         [HttpGet]
         public string GetStartedSessions(int id)
         {
