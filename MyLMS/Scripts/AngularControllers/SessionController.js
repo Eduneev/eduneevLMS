@@ -1,40 +1,40 @@
-﻿myapp.controller('SessionCntrl', function ($scope, $http) {
+﻿myapp.controller('SessionCntrl', ['$scope', '$http', 'Socket', 'Constants', '$rootScope', function ($scope, $http, Socket, Constants, $rootScope) {
+
     $scope.SessionID = 0;
 
     GetStudio();
     GetPrograms();
 
-
     function GetStudio() {
         $http.get('/SessionMgmt/GetStudios')
-        .then(function (result) {
-            $scope.StudioList = result.data;
-            $scope.StudioTextToShow = 'Please select studio..'
-        });
+            .then(function (result) {
+                $scope.StudioList = result.data;
+                $scope.StudioTextToShow = 'Please select studio..'
+            });
     }
 
     function GetPrograms() {
         $http.get('/CourseMgmt/GetPrograms')
-        .then(function (result) {
-            $scope.Programs = result.data;
-            $scope.ProgramTextToShow = 'Please select program..'
-        });
+            .then(function (result) {
+                $scope.Programs = result.data;
+                $scope.ProgramTextToShow = 'Please select program..'
+            });
     }
 
     $scope.GetCourse = function GetCourse() {
         $http.get('/CourseMgmt/GetCourse/' + $scope.ProgID)
-        .then(function (result) {
-            $scope.Courses = result.data;
-            $scope.CourseTextToShow = 'Please select course..'
-        });
+            .then(function (result) {
+                $scope.Courses = result.data;
+                $scope.CourseTextToShow = 'Please select course..'
+            });
     }
 
     $scope.GetSubject = function GetSubject() {
         $http.get('/CourseMgmt/GetSubject/' + $scope.CourseID)
-        .then(function (result) {
-            $scope.Subjects = result.data;
-            $scope.SubjectTextToShow = 'Please select subject..'
-        });
+            .then(function (result) {
+                $scope.Subjects = result.data;
+                $scope.SubjectTextToShow = 'Please select subject..'
+            });
     }
 
 
@@ -42,25 +42,25 @@
 
         $scope.FacultyTextToShow = 'Please select faculty...'
         $http.get('/CourseMgmt/GetTopics/' + $scope.SubjectID)
-        .then(function (result) {
-            $scope.Topics = result.data;
-            GetFaculty();
-            GetSessionName();
-        });
+            .then(function (result) {
+                $scope.Topics = result.data;
+                GetFaculty();
+                GetSessionName();
+            });
     }
 
     function GetFaculty() {
         $http.get('/CourseMgmt/GetFaculty/' + $scope.SubjectID)
-        .then(function (result) {
-            $scope.Faculties = result.data;
-        });
+            .then(function (result) {
+                $scope.Faculties = result.data;
+            });
     }
 
     function GetSessionName() {
         $http.get('/CourseMgmt/GetSessionName/' + $scope.SubjectID)
-        .then(function (result) {
-            $scope.SessionName = result.data;
-        });
+            .then(function (result) {
+                $scope.SessionName = result.data;
+            });
     }
 
     function GetCenterNameFromSession(CenterID) {
@@ -72,9 +72,9 @@
 
     $scope.GetSessions = function () {
         $http.get('/SessionMgmt/GetSessions')
-        .then(function (result) {
-            $scope.SessionsList = result.data;
-        });
+            .then(function (result) {
+                $scope.SessionsList = result.data;
+            });
     };
 
 
@@ -135,37 +135,108 @@
     }
 
     $scope.SelectSession = function (SessionID) {
-        debugger;
+        //debugger;
         $scope.SessionID = SessionID;
 
         $http.get('/SessionMgmt/GetSessionsRRQ/' + SessionID)
-        .then(function (result) {
-            $scope.SessionRRQList = result.data;
-        });
+            .then(function (result) {
+                $scope.SessionRRQList = result.data;
+            });
     };
 
-
-    $scope.StartStopSession = function (btnType) {
-        debugger;
-        var _SessionID = $scope.SessionID;
-        $scope.header = 'Success Message';
-        if (btnType == 'Start')
-        {
-            $scope.body = 'Session started successfully!!';
-        }
-        else if (btnType == 'Stop')
-        {
-            $scope.body = 'Session stopped successfully!!';
-        }
-        
+    $scope.StartSessionRRQ = function (rrqID) {
+        window.location.href = "/SessionMgmt/RRQIntroduction/" + rrqID;
         $http({
             method: 'POST',
-            url: '/SessionMgmt/StartStopSession',
-            data: { SessionID: $scope.SessionID, Status: btnType }
+            url: '/SessionMgmt/SetSessionRRQ',
+            data: { rrqID: rrqID }
         }).then(function (result) {
-            $scope.GetSessions();
-            $('#pop').modal('show')
+            console.log(result.data)
+        });
+
+    }
+
+    $scope.StartStopSession = function (btnType) {
+        //debugger;
+        var _SessionID = $scope.SessionID;
+        if (_SessionID == 0) {
+            alert("Please select a session!");
+        }
+        else {
+            var obs = new OBSWebSocket();
+            obs.connect({ address: 'localhost:4444' })
+                .catch(err => {
+                    alert("Unable to Connect to OBS. Please start streaming manually.")
+                });
+            obs.onConnectionOpened(() => {
+                console.log("OBS CONNECTION MADE")
+                if (btnType === 'Start') {
+                    console.log("Starting stream");
+                    obs.startRecording();
+                }
+                else
+                    obs.stopRecording();
             });
+
+            $scope.header = 'Success Message';
+            if (btnType === 'Start') {
+                $scope.body = 'Session started successfully!!';
+                // Start websoket connection
+
+                try {
+                    var ws = Socket.StartSocket();
+                }
+                catch (e) {
+                    alert("Unable to Connect to RRQ Server.")
+                }
+
+                $http({
+                    method: 'POST',
+                    url: '/SessionMgmt/SetSession',
+                    data: { SessionID: $scope.SessionID }
+                }).then(function (result) {
+                    console.log(result.data)
+                });
+
+
+                ws.onOpen(function () {
+                    console.log("Started socket.");
+                    ws.send(JSON.stringify({
+                        profile: Constants.Profile['RRQ'],
+                        type: Constants.Events['CONNECTION'],
+                        action: Constants.Action['TEACHERCONNECTION'],
+                        SessionID: _SessionID
+                    }));
+
+                });
+            }
+            else if (btnType === 'Stop') {
+                $scope.body = 'Session stopped successfully!!';
+                // Stop websocket connection
+
+                var ws = Socket.StartSocket();
+                console.log(ws);
+                ws.onOpen(function () {
+                    console.log(Socket.getSession());
+                    console.log("Started Socket. sending message to quit session");
+                    ws.send(JSON.stringify({
+                        profile: Constants.Profile['RRQ'],
+                        type: Constants.Events['CLOSE'],
+                        SessionID: _SessionID
+                    }));
+                })
+            }
+
+            $http({
+                method: 'POST',
+                url: '/SessionMgmt/StartStopSession',
+                data: { SessionID: $scope.SessionID, Status: btnType }
+            }).then(function (result) {
+                $scope.GetSessions();
+                $('#pop').modal('show')
+            });
+
+        }
        
     };
 
@@ -196,7 +267,7 @@
         window.location.href = "/SessionMgmt/RRQDashboard/" + RRQ_ID;
     };
 
-});
+}]);
 
 myapp.controller('SessionAttendanceCntrl', function ($scope, $http) {
     GetProgramsList();

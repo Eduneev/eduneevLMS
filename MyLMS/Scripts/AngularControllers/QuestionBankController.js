@@ -1,5 +1,55 @@
-﻿myapp.controller('QuestionCntrl', function ($scope, $http) {
+﻿myapp.controller('QuestionCntrl', function ($scope, $http, $rootScope, Socket, Constants) {
 
+    /*
+     * {
+            RRQID,
+            QID,
+            Start,
+            Next,
+            Stop,
+            End        
+        }
+     * 
+     */
+
+    $http({
+        method: 'GET',
+        url: '/SessionMgmt/GetSession'
+    }).then(function (result) {
+        result.data = parseInt(result.data);
+        if (result.data == -1)
+            alert("Error in retrieving session. Click Start Session again!")
+        else {
+            $scope.SessionID = result.data;
+            console.log($scope.SessionID);
+
+            $scope.ws = Socket.StartSocket();
+            $scope.ws.onOpen(function () {
+                console.log("Started socket.");
+                $scope.ws.send(JSON.stringify({
+                    profile: Constants.Profile['RRQ'],
+                    type: Constants.Events['CONNECTION'],
+                    action: Constants.Action['TEACHERCONNECTION'],
+                    SessionID: $scope.SessionID
+                }));
+
+            });
+        }
+    });
+
+    $http({
+        method: 'GET',
+        url: '/SessionMgmt/GetSessionRRQ'
+    }).then(function (result) {
+        result.data = parseInt(result.data);
+        if (result.data == -1)
+            alert("Error in retrieving RRQ. Select RRQ again!")
+        else
+            $scope.RRQID = result.data;
+        console.log($scope.RRQID);
+    });
+
+   
     $scope.SaveQuestion = function () {
         debugger;
         var _QuestionText = $scope.QuestionText
@@ -50,9 +100,59 @@
     ///////// Get Questions ////////
     $scope.GetQuestionDetails = function () {
         $http.get('/QuestionBank/GetQuestions')
-        .then(function (result) {
+            .then(function (result) {
+                console.log(result);
             $scope.QuestionList = result.data;
         });
+    }
+
+    $scope.StartRRQ = function () {
+        window.location.pathname = '/SessionMgmt/ViewRRQ'
+    }
+
+    $scope.StopQuestion = function () {
+        $scope.ws.send(JSON.stringify({
+            profile: Constants.Profile['RRQ'],
+            type: Constants.Events['MESSAGE'],
+            action: Constants.Action['STOP'],
+            RrqID: $scope.RRQID,
+            qID: $scope.QuestionList[$scope.currentPage].Question.QID,
+            SessionID: $scope.SessionID
+        }));
+    }
+
+    $scope.DisplayOptions = function () {
+       // debugger;
+        // Send message to server to start current question polling
+        // Get QID somehow
+        console.log($scope.QuestionList[$scope.currentPage].Question.QID);
+        $scope.ws.send(JSON.stringify({
+            profile: Constants.Profile['RRQ'],
+            type: Constants.Events['MESSAGE'],
+            action: Constants.Action['START'],
+            RrqID: $scope.RRQID,
+            qID: $scope.QuestionList[$scope.currentPage].Question.QID, 
+            SessionID: $scope.SessionID
+        }));
+
+        $scope.DisplayOption = 'True';
+        StartTimer();
+    }
+
+    $scope.NextQuestion = function () {
+        $scope.currentPage = $scope.currentPage + 1
+        $scope.DisplayOption = 'False';
+    }
+
+    $scope.EndRRQ = function () {
+        $scope.ws.send(JSON.stringify({
+            profile: Constants.Profile['RRQ'],
+            type: Constants.Events['MESSAGE'],
+            action: Constants.Action['END'],
+            RrqID: $scope.RRQID,
+            qID: $scope.QuestionList[$scope.currentPage].Question.QID,
+            SessionID: $scope.SessionID
+        }));
     }
 
     $scope.currentPage = 0;
@@ -67,7 +167,7 @@
     }
 
 
-    function startTimer(duration, display) {
+    function CallstartTimer(duration, display) {
         var start = Date.now(),
             diff,
             minutes,
@@ -97,10 +197,10 @@
         setInterval(timer, 1000);
     }
 
-    $scope.StartTimer = function () {
-        var fiveMinutes = 60 * 5,
+    function StartTimer() {
+        var oneMinute = 60,
             display = document.querySelector('#time');
-        startTimer(fiveMinutes, display);
+        CallstartTimer(oneMinute, display);
     };
        
 });

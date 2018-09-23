@@ -83,12 +83,12 @@ namespace MyLMS.Controllers
                         index = i;
                 }
 
-                url = Convert.ToString(Convert.IsDBNull(keys.Rows[index]["Stream"]) ? string.Empty : keys.Rows[0]["Stream"]);
+                url = Convert.ToString(Convert.IsDBNull(keys.Rows[index]["Stream"]) ? string.Empty : keys.Rows[index]["Stream"]);
 
             }
             else
             {
-                SParam[1].Value = 1; //get default stream
+                SParam[0].Value = 1; //get default stream
                 DataTable keys2 = DAL.GetDataTable("GetStream", SParam);
                 if (keys2.Rows.Count > 0)
                 {
@@ -190,6 +190,66 @@ namespace MyLMS.Controllers
                     return true;
             }
             return false;
+        }
+        
+        [Route("api/SaveLastUsedCommand/{ClassRoomID:int}/{LastUsedCommand}")]
+        [HttpGet]
+        public string SaveLastUsedCommand(int ClassRoomID, string LastUsedCommand)
+        {
+            string result = String.Empty;
+            SqlParameter[] SParam = new SqlParameter[2];
+            SParam[0] = new SqlParameter("@ClassRoomID", SqlDbType.Int);
+            SParam[0].Value = ClassRoomID;
+            SParam[1] = new SqlParameter("@LastUsedCommand", SqlDbType.VarChar);
+            SParam[1].Value = LastUsedCommand;
+
+            DataTable val = DAL.GetDataTable("SaveLastUsedCommand", SParam);
+            result = Convert.ToString(Convert.IsDBNull(val.Rows[0]["results"]) ? "Failure" : val.Rows[0]["results"]);
+            return result;
+        }
+
+        [Route("api/GetLastUsedCommand/{ClassRoomID:int}")]
+        [HttpGet]
+        public string GetLastUsedCommand(int ClassRoomID)
+        {
+            string result = String.Empty;
+
+            SqlParameter[] SParam = new SqlParameter[1];
+            SParam[0] = new SqlParameter("@ClassRoomID", SqlDbType.Int);
+            SParam[0].Value = ClassRoomID;
+
+            DataTable val = DAL.GetDataTable("GetLastUsedCommand", SParam);
+            if (val.Rows.Count > 0)
+                result = Convert.ToString(Convert.IsDBNull(val.Rows[0]["LastUsedCommand"]) ? "Failure" : val.Rows[0]["LastUsedCommand"]);
+            else
+                result = "Failure";
+            return result;
+        }
+
+        [Route("api/GetClassroom/{auth}")]
+        [HttpGet]
+        public ClassRoomModel GetClassroom(string auth)
+        {
+            ClassRoomModel result = new Models.ClassRoomModel();
+
+            SqlParameter[] SParam = new SqlParameter[1];
+            SParam[0] = new SqlParameter("@Auth", SqlDbType.VarChar);
+            SParam[0].Value = auth;
+
+            DataTable val = DAL.GetDataTable("GetClassRoom", SParam);
+            if (val.Rows.Count > 0)
+            {
+                result.ClassRoomId = Convert.ToInt32(Convert.IsDBNull(val.Rows[0]["ClassRoomID"]) ? "-1" : val.Rows[0]["ClassRoomID"]);
+                result.ClassRoomName = Convert.ToString(Convert.IsDBNull(val.Rows[0]["ClassRoomName"]) ? "-1" : val.Rows[0]["ClassRoomName"]);
+                result.CenterId = Convert.ToInt32(Convert.IsDBNull(val.Rows[0]["CenterID"]) ? "-1" : val.Rows[0]["CenterID"]);
+                result.LastUsedCommand = Convert.ToString(Convert.IsDBNull(val.Rows[0]["LastUsedCommand"]) ? "-1" : val.Rows[0]["LastUsedCommand"]);
+            }
+            else
+            {
+                result.ClassRoomId = -1;
+            }
+
+            return result;
         }
     }
 }

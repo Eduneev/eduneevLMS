@@ -2,7 +2,7 @@
     $scope.Test = "Forget Password?";
 
     $scope.ValidateUser = function () {
-        debugger;
+//        debugger;
         var _UserName = $scope.UserName;
         var _Password = $scope.Password;
 
