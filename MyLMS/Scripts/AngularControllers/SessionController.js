@@ -125,10 +125,30 @@
         var _FacultyID = $scope.FacultyID;
         var _PlannedCoverage = $scope.PlannedCoverage;
 
+        var _ProgCode = "";
+        var _CouseCode = "";
+        var _SubjectCode = "";
+
+        for (var i of $scope.Programs)
+            if (i.ProgID === _ProgID){
+                console.log(i)
+                _ProgCode = i.ProgramCode;
+            }
+        for (var i of $scope.Courses)
+            if (i.CourseID === _CourseID) {
+                console.log(i);
+                _CouseCode = i.CourseCode;
+            }
+        for (var i of $scope.Subjects)
+            if (i.SubjectID === _SubjectID) {
+                console.log(i);
+                _SubjectCode = i.SubjectCode;
+            }
+
         $http({
             method: 'POST',
             url: '/SessionMgmt/SaveSession',
-            data: { SessionName: _SessionName, SessionDate: _SessionDate, StartTime: _StartTime, EndTime: _EndTime, StudioID: _StudioID, ProgID: _ProgID, CourseID: _CourseID, SubjectID: _SubjectID, TopicID: _TopicID, FacultyID: _FacultyID, PlannedCoverage: _PlannedCoverage }
+            data: { SessionName: _SessionName, SessionDate: _SessionDate, StartTime: _StartTime, EndTime: _EndTime, StudioID: _StudioID, ProgID: _ProgID, ProgCode: _ProgCode, CourseID: _CourseID, CourseCode: _CourseCode, SubjectID: _SubjectID, SubjectCode: _SubjectCode, TopicID: _TopicID, FacultyID: _FacultyID, PlannedCoverage: _PlannedCoverage }
         }).then(function (result) {
 
         });
