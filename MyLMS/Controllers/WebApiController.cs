@@ -7,14 +7,14 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Cors;
+//using System.Web.Http.Cors;
 using MyLMS.Models;
 using Newtonsoft.Json;
 using UtilityClass;
 
 namespace MyLMS.Controllers
 {
-    [EnableCors(origins: "http://localhost:55082", headers: "*", methods: "*")]
+    //[EnableCors(origins: "http://localhost:55082", headers: "*", methods: "*")]
     public class WebApiController : ApiController
     {
         /** Get session Id
