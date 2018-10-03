@@ -20,6 +20,7 @@ namespace MyLMS.Models
                 string stream_low = stream + "_360p.flv";
                 string stream_med = stream + "_480p.flv";
                 string stream_high = stream + "_720p.flv";
+                string stream_obs = stream;
                 // WHAT TO DO AFTER THIS?
 
                 SParam = new SqlParameter[3];
@@ -38,6 +39,10 @@ namespace MyLMS.Models
 
                 SParam[1].Value = stream_high;
                 SParam[2].Value = 3;
+                DAL.ExecuteScalar("CreateStream", SParam);
+
+                SParam[1].Value = stream_obs;
+                SParam[2].Value = -10;
                 DAL.ExecuteScalar("CreateStream", SParam);
             }
             catch (Exception ex)
