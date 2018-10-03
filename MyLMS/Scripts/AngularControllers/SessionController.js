@@ -126,7 +126,7 @@
         var _PlannedCoverage = $scope.PlannedCoverage;
 
         var _ProgCode = "";
-        var _CouseCode = "";
+        var _CourseCode = "";
         var _SubjectCode = "";
 
         for (var i of $scope.Programs)
@@ -137,7 +137,7 @@
         for (var i of $scope.Courses)
             if (i.CourseID === _CourseID) {
                 console.log(i);
-                _CouseCode = i.CourseCode;
+                _CourseCode = i.CourseCode;
             }
         for (var i of $scope.Subjects)
             if (i.SubjectID === _SubjectID) {
@@ -286,6 +286,10 @@
     $scope.ShowRRQDashboard = function (RRQ_ID) {
         window.location.href = "/SessionMgmt/RRQDashboard/" + RRQ_ID;
     };
+
+    $scope.ShowSessions = function () {
+        window.location.href = "/SessionMgmt/ViewSessions";
+    }
 
 }]);
 
