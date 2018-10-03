@@ -58,11 +58,21 @@ namespace MyLMS.Controllers
             url = s.GetStream(sessionId, type);
 
             // construct VLC string
-            string VlcCommand = string.Empty;
+            //string VlcCommand = string.Empty;
 
-            VlcCommand = "vlc.exe --no-sout-video --one-instance --embedded-video --key-record=  -I --disable-qt" + url;
+            //VlcCommand = "vlc.exe --no-sout-video --one-instance --embedded-video --key-record=  -I --disable-qt " + url;
+            //return VlcCommand;
+            return url;
+        }
+
+        [Route("api/getVLCCommand")]
+        [HttpGet]
+        public string GetVLCCommand()
+        {
+            string VlcCommand = "vlc.exe --no-sout-video --one-instance --embedded-video --key-record=  -I --disable-qt ";
             return VlcCommand;
         }
+
 
         [Route("api/{sessionId:int}/getRRQ")]
         [HttpGet]

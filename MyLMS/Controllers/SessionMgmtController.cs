@@ -238,13 +238,13 @@ namespace MyLMS.Controllers
         }
 
         [HttpGet]
-        public string GetStream(int sessionId, int type)
+        public string GetStream(int SessionID, int type=1)
         {
             string url = string.Empty;
             //Workflow: Send in streamKey and MacAddr to get sessionId, pass in sessionId along with type to get stream
             SqlParameter[] SParam = new SqlParameter[1];
             SParam[0] = new SqlParameter("@SessionID", SqlDbType.Int);
-            SParam[0].Value = sessionId;
+            SParam[0].Value = SessionID;
 
             DataTable keys = DAL.GetDataTable("GetStream", SParam);
             if (keys.Rows.Count > 0)
@@ -283,7 +283,12 @@ namespace MyLMS.Controllers
             }
 
             return url;
+        }
 
+        [HttpGet]
+        public string GetObsStream(int id)
+        {
+            return GetStream(id, -10);
         }
 
         [HttpGet]
