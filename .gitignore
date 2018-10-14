@@ -1,6 +1,9 @@
-bin
-obj
 release
 debug
 .vs
-packages/
+*.suo
+*.user
+_ReSharper.*
+MyLMS/bin
+MyLMS/obj
+packages*
