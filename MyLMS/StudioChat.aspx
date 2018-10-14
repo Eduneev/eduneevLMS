@@ -12,6 +12,35 @@
 	<link rel="stylesheet" href="Chat.css" />
 	<script>
 
+	var Events;
+	(function (Events) {
+		Events["CONNECTION"] = "Connection";
+		Events["GROUPMESSAGE"] = "groupMessage";
+		Events["SINGLEMESSAGE"] = "singleMessage";
+		Events["DISCONNECTION"] = "Disconnect";
+		Events["CENTERREMOVE"] = "centerRemove";
+	})(Events || (Events = {}));
+	var Profile;
+	(function (Profile) {
+		Profile["STARCHAT"] = "starchat";
+	})(Profile || (Profile = {}));
+	var Group;
+	(function (Group) {
+		Group["TEACHER"] = "teacher";
+		Group["CENTER"] = "center";
+	})(Group || (Group = {}));
+	var Message;
+	(function (Message) {
+		Message["PROFILE"] = "profile";
+		Message["TYPE"] = "type";
+		Message["SESSIONID"] = "SessionID";
+		Message["GROUP"] = "group";
+		Message["WSID"] = "wsID";
+		Message["DATA"] = "data";
+		Message["STUDENT"] = "student";
+		Message["NAME"] = "name";
+	})(Message || (Message = {}));
+
 	// centers = {id: name, unread}
 		// messages = {id: [{type: you/me, data: data, name: name},]}
 		// Current issues: 
@@ -83,9 +112,11 @@
 			ws.onopen = function(e) {
 			statusBar.textContent = "Connected";
 			ws.send(JSON.stringify({
-				session: SESSION,
-					type: "teacherAdd",
-					name: STUDIONAME
+				profile: Profile.STARCHAT,
+				SessionID: SESSION,
+				type: Events.CONNECTION,
+				group: Group.TEACHER,
+				name: STUDIONAME
 			}));
 			}
 			
@@ -95,11 +126,11 @@
 				if (isJson(data)){
 					console.log("Received message!" + data);
 					var obj = JSON.parse(data);
-					if (obj.type == "centerAdd"){
+					if (obj.type == Events.CONNECTION){
 						// add to the List								
-						addCenter(obj.id, obj.name, obj.CenterID);
+						addCenter(obj.id, obj.name);
 					}
-					else if (obj.type == "centerRemove"){
+					else if (obj.type == Events.CENTERREMOVE){
 						var contact = document.getElementById(obj.id);
 						delete centers[obj.id];
 						console.log(centers);
@@ -155,17 +186,19 @@
 				console.log(messages);
 		
 				if(currentId == GROUP){
-					ws.send(JSON.stringify({
-								type: "groupMessage",
-								group: "teacher",
-					session: SESSION,
-					data: typedMessage.value
+					ws.send(JSON.stringify({	
+						profile: Profile.STARCHAT,
+						type: Events.GROUPMESSAGE,
+						group: Group.TEACHER,
+						SessionID: SESSION,
+						data: typedMessage.value
 					}));
 				}
 				else{
 				ws.send(JSON.stringify({
-						type: "singleMessage",
-						group: "teacher",
+						profile: Profile.STARCHAT,
+						type: Events.SINGLEMESSAGE,
+						group: Group.TEACHER,
 						session: SESSION,
 						data: typedMessage.value,
 						id: currentId
@@ -225,8 +258,8 @@
 			return parms;
 		}
 		
-        function addCenter(id, name, CenterID) {
-            centers[id] = { "name": name, "unread": 0, "CenterID": CenterID };
+		function addCenter(id, name){
+			centers[id] = {"name": name, "unread": 0};
 			var list = document.getElementById("contacts");
 			var contact = document.createElement("div");
 			contact.id = id;
