@@ -191,9 +191,7 @@ C:\Users\sanat\Documents\Github\eduneevLMS\MyLMS\bin\Microsoft.ApplicationInsigh
 C:\Users\sanat\Documents\Github\eduneevLMS\MyLMS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\sanat\Documents\Github\eduneevLMS\MyLMS\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\sanat\Documents\Github\eduneevLMS\MyLMS\bin\Newtonsoft.Json.dll
-C:\Users\sanat\Documents\Github\eduneevLMS\MyLMS\bin\System.Net.Http.Formatting.dll
 C:\Users\sanat\Documents\Github\eduneevLMS\MyLMS\bin\System.Web.Helpers.dll
-C:\Users\sanat\Documents\Github\eduneevLMS\MyLMS\bin\System.Web.Http.dll
 C:\Users\sanat\Documents\Github\eduneevLMS\MyLMS\bin\System.Web.Http.WebHost.dll
 C:\Users\sanat\Documents\Github\eduneevLMS\MyLMS\bin\System.Web.Mvc.dll
 C:\Users\sanat\Documents\Github\eduneevLMS\MyLMS\bin\System.Web.Optimization.dll
@@ -226,3 +224,5 @@ C:\Users\sanat\Documents\Github\eduneevLMS\MyLMS\obj\Debug\MyLMS.csproj.CoreComp
 C:\Users\sanat\Documents\Github\eduneevLMS\MyLMS\obj\Debug\MyLMS.csproj.CopyComplete
 C:\Users\sanat\Documents\Github\eduneevLMS\MyLMS\obj\Debug\MyLMS.dll
 C:\Users\sanat\Documents\Github\eduneevLMS\MyLMS\obj\Debug\MyLMS.pdb
+C:\Users\sanat\Documents\Github\eduneevLMS\MyLMS\bin\System.Net.Http.Formatting.dll
+C:\Users\sanat\Documents\Github\eduneevLMS\MyLMS\bin\System.Web.Http.dll

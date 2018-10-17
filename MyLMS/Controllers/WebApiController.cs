@@ -7,14 +7,14 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Cors;
+//using System.Web.Http.Cors;
 using MyLMS.Models;
 using Newtonsoft.Json;
 using UtilityClass;
 
 namespace MyLMS.Controllers
 {
-    [EnableCors(origins: "http://localhost:55082", headers: "*", methods: "*")]
+    //[EnableCors(origins: "http://localhost:55082", headers: "*", methods: "*")]
     public class WebApiController : ApiController
     {
         /** Get session Id
@@ -54,50 +54,25 @@ namespace MyLMS.Controllers
         public string GetStream(int sessionId, int type)
         {
             string url = string.Empty;
+            SessionMgmtController s = new SessionMgmtController();
+            url = s.GetStream(sessionId, type);
 
-            //Workflow: Send in streamKey and MacAddr to get sessionId, pass in sessionId along with type to get stream
-            SqlParameter[] SParam = new SqlParameter[1];
-            SParam[0] = new SqlParameter("@SessionID", SqlDbType.Int);
-            SParam[0].Value = sessionId;
-            
-            DataTable keys = DAL.GetDataTable("GetStream", SParam);
-            if (keys.Rows.Count > 0)
-            {
-                int index = 0;
-                if (type > keys.Rows.Count)
-                {
-                    int[] types = new int[keys.Rows.Count];
-                    for (int i = 0; i < keys.Rows.Count; i++)
-                    {
-                        types[i] = Convert.ToInt32(keys.Rows[i]["Type"]);
-                    }
+            // construct VLC string
+            //string VlcCommand = string.Empty;
 
-                    // We would need to loop again since we're not keeping track of the original array indices.
-                    // However there would only be 1-3 streams per session, looping is not a big problem.
-                    Array.Sort(types); // sort, since we are unsure that type is stored in ascending order in database
-                    type = types[types.Length - 1];
-                }
-                for (int i = 0; i < keys.Rows.Count; i++)
-                {
-                    if (Convert.ToInt32(keys.Rows[i]["Type"]) == type)
-                        index = i;
-                }
-
-                url = Convert.ToString(Convert.IsDBNull(keys.Rows[index]["Stream"]) ? string.Empty : keys.Rows[index]["Stream"]);
-
-            }
-            else
-            {
-                SParam[0].Value = 1; //get default stream
-                DataTable keys2 = DAL.GetDataTable("GetStream", SParam);
-                if (keys2.Rows.Count > 0)
-                {
-                    url = Convert.ToString(Convert.IsDBNull(keys2.Rows[0]["Stream"]) ? string.Empty : keys2.Rows[0]["Stream"]);
-                }
-            }
-
+            //VlcCommand = "vlc.exe --no-sout-video --one-instance --embedded-video --key-record=  -I --disable-qt " + url;
+            //return VlcCommand;
             return url;
         }
+
+        [Route("api/getVLCCommand")]
+        [HttpGet]
+        public string GetVLCCommand()
+        {
+            string VlcCommand = "vlc.exe --no-sout-video --one-instance --embedded-video --key-record=  -I --disable-qt ";
+            return VlcCommand;
+        }
+
 
         [Route("api/{sessionId:int}/getRRQ")]
         [HttpGet]

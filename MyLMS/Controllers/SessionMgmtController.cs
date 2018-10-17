@@ -174,7 +174,7 @@ namespace MyLMS.Controllers
         }
 
         [HttpPost]
-        public void SaveSession(string SessionName, DateTime SessionDate, string StartTime, string EndTime, int StudioID, int ProgID, int CourseID, int SubjectID, string TopicID, int FacultyID, string PlannedCoverage)
+        public void SaveSession(string SessionName, DateTime SessionDate, string StartTime, string EndTime, int StudioID, int ProgID, string ProgCode, int CourseID, string CourseCode, int SubjectID, string SubjectCode, string TopicID, int FacultyID, string PlannedCoverage)
         {
             SessionModel SessionObj1 = new SessionModel();
             SqlParameter[] SParam = new SqlParameter[11];
@@ -204,14 +204,91 @@ namespace MyLMS.Controllers
             string streamKey = createRandomKey();
             SParam[10] = new SqlParameter("@Key", SqlDbType.VarChar);
             SParam[10].Value = streamKey;
+
+            int SessionID = -1;
             try
             {
-                SessionObj1.SaveSession(SParam);
+                string s = SessionObj1.SaveSession(SParam);
+                try
+                {
+                    SessionID = Convert.ToInt32(s); 
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Error converting created SessionID from string to int.");
+                }
             }
             catch (Exception ex)
             {
 
             }
+
+            SParam = new SqlParameter[1];
+            SParam[0] = new SqlParameter("@UserID", SqlDbType.Int);
+            SParam[0].Value = Convert.ToInt32(Session["USER_ID"]);
+            DataTable val = DAL.GetDataTable("GetEntity", SParam);
+
+            string EntityCode = string.Empty;
+            if (val.Rows.Count > 0)
+                EntityCode = Convert.ToString(Convert.IsDBNull(val.Rows[0]["EntityCode"]) ? string.Empty : val.Rows[0]["EntityCode"]);
+
+            Stream stream = new Stream();
+            stream.SaveStream(SessionID, EntityCode, ProgCode, CourseCode, SubjectCode);
+
+        }
+
+        [HttpGet]
+        public string GetStream(int SessionID, int type=1)
+        {
+            string url = string.Empty;
+            //Workflow: Send in streamKey and MacAddr to get sessionId, pass in sessionId along with type to get stream
+            SqlParameter[] SParam = new SqlParameter[1];
+            SParam[0] = new SqlParameter("@SessionID", SqlDbType.Int);
+            SParam[0].Value = SessionID;
+
+            DataTable keys = DAL.GetDataTable("GetStream", SParam);
+            if (keys.Rows.Count > 0)
+            {
+                int index = 0;
+                if (type > keys.Rows.Count)
+                {
+                    int[] types = new int[keys.Rows.Count];
+                    for (int i = 0; i < keys.Rows.Count; i++)
+                    {
+                        types[i] = Convert.ToInt32(keys.Rows[i]["Type"]);
+                    }
+
+                    // We would need to loop again since we're not keeping track of the original array indices.
+                    // However there would only be 1-3 streams per session, looping is not a big problem.
+                    Array.Sort(types); // sort, since we are unsure that type is stored in ascending order in database
+                    type = types[types.Length - 1];
+                }
+                for (int i = 0; i < keys.Rows.Count; i++)
+                {
+                    if (Convert.ToInt32(keys.Rows[i]["Type"]) == type)
+                        index = i;
+                }
+
+                url = Convert.ToString(Convert.IsDBNull(keys.Rows[index]["Stream"]) ? string.Empty : keys.Rows[index]["Stream"]);
+
+            }
+            else
+            {
+                SParam[0].Value = 1; //get default stream
+                DataTable keys2 = DAL.GetDataTable("GetStream", SParam);
+                if (keys2.Rows.Count > 0)
+                {
+                    url = Convert.ToString(Convert.IsDBNull(keys2.Rows[0]["Stream"]) ? string.Empty : keys2.Rows[0]["Stream"]);
+                }
+            }
+
+            return url;
+        }
+
+        [HttpGet]
+        public string GetObsStream(int id)
+        {
+            return GetStream(id, -10);
         }
 
         [HttpGet]

@@ -125,10 +125,26 @@
         var _FacultyID = $scope.FacultyID;
         var _PlannedCoverage = $scope.PlannedCoverage;
 
+        var _ProgCode = "";
+        var _CourseCode = "";
+        var _SubjectCode = "";
+
+        for (var i of $scope.Programs)
+            if (i.ProgID === _ProgID)
+                _ProgCode = i.ProgramCode;
+
+        for (var i of $scope.Courses)
+            if (i.CourseID === _CourseID)
+                _CourseCode = i.CourseCode;
+
+        for (var i of $scope.Subjects)
+            if (i.SubjectID === _SubjectID)
+                _SubjectCode = i.SubjectCode;
+
         $http({
             method: 'POST',
             url: '/SessionMgmt/SaveSession',
-            data: { SessionName: _SessionName, SessionDate: _SessionDate, StartTime: _StartTime, EndTime: _EndTime, StudioID: _StudioID, ProgID: _ProgID, CourseID: _CourseID, SubjectID: _SubjectID, TopicID: _TopicID, FacultyID: _FacultyID, PlannedCoverage: _PlannedCoverage }
+            data: { SessionName: _SessionName, SessionDate: _SessionDate, StartTime: _StartTime, EndTime: _EndTime, StudioID: _StudioID, ProgID: _ProgID, ProgCode: _ProgCode, CourseID: _CourseID, CourseCode: _CourseCode, SubjectID: _SubjectID, SubjectCode: _SubjectCode, TopicID: _TopicID, FacultyID: _FacultyID, PlannedCoverage: _PlannedCoverage }
         }).then(function (result) {
 
         });
@@ -151,7 +167,6 @@
             url: '/SessionMgmt/SetSessionRRQ',
             data: { rrqID: rrqID }
         }).then(function (result) {
-            console.log(result.data)
         });
 
     }
@@ -169,13 +184,16 @@
                     alert("Unable to Connect to OBS. Please start streaming manually.")
                 });
             obs.onConnectionOpened(() => {
-                console.log("OBS CONNECTION MADE")
                 if (btnType === 'Start') {
-                    console.log("Starting stream");
-                    obs.startRecording();
+
+                    $http.get('/SessionMgmt/GetObsStream/' + $scope.SessionID)
+                    .then(function (result) {
+                        console.log("Starting stream: " + result.data);
+                        obs.startStreaming({ 'stream': result.data });
+                    });
                 }
                 else
-                    obs.stopRecording();
+                    obs.stopStreaming();
             });
 
             $scope.header = 'Success Message';
@@ -195,7 +213,6 @@
                     url: '/SessionMgmt/SetSession',
                     data: { SessionID: $scope.SessionID }
                 }).then(function (result) {
-                    console.log(result.data)
                 });
 
 
@@ -215,9 +232,7 @@
                 // Stop websocket connection
 
                 var ws = Socket.StartSocket();
-                console.log(ws);
                 ws.onOpen(function () {
-                    console.log(Socket.getSession());
                     console.log("Started Socket. sending message to quit session");
                     ws.send(JSON.stringify({
                         profile: Constants.Profile['RRQ'],
@@ -266,6 +281,10 @@
     $scope.ShowRRQDashboard = function (RRQ_ID) {
         window.location.href = "/SessionMgmt/RRQDashboard/" + RRQ_ID;
     };
+
+    $scope.ShowSessions = function () {
+        window.location.href = "/SessionMgmt/ViewSessions";
+    }
 
 }]);
 

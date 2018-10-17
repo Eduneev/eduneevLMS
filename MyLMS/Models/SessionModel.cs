@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -14,7 +15,9 @@ namespace MyLMS.Models
             string res = "Failure..";
             try
             {
-                res = DAL.ExecuteScalar("SaveSession", sparams);
+                DataTable val  = DAL.GetDataTable("SaveSession", sparams);
+                if (val.Rows.Count>0)
+                    res = Convert.ToString(Convert.IsDBNull(val.Rows[0]["SessionID"]) ? string.Empty : val.Rows[0]["SessionID"]);
             }
             catch (Exception ex)
             {
