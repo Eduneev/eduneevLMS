@@ -150,8 +150,8 @@
 			var data = input.data;
 			if (isJson(data)){
 				console.log("Received message!" + data);
-				var obj = JSON.parse(data);
-				var messageWrapper = {'type': 'you', 'data': obj.data};
+                var obj = JSON.parse(data);
+                var messageWrapper = { 'type': 'you', 'data': obj.data, 'time': new Date().toLocaleTimeString() };
 				if (obj.type == "singleMessage"){
 					if(currentId == PRIVATE)
 						addMessage(obj.data, true);
@@ -182,7 +182,7 @@
 			if (e.keyCode === 13 && !e.shiftKey) {
 				if (typedMessage.value.length) {
 					typedMessage.value = typedMessage.value.substring(0, 512);
-					var messageWrapper = {'type': 'me', 'data': typedMessage.value};
+					var messageWrapper = {'type': 'me', 'data': typedMessage.value, 'time': new Date().toLocaleTimeString()};
 					if(currentId == GENERAL){
 						if(currentStudentId){
 							ws.send(JSON.stringify({
@@ -190,8 +190,8 @@
 								type: Events.GROUPMESSAGE,
 								group: Group.CENTER,
 								SessionID: SESSION,
-								data: typedMessage.value,
-								student: currentStudentId
+                                data: typedMessage.value,
+                                student: document.getElementById(currentStudentId).textContent
 							}));
 							addMessage(typedMessage.value, false);
 							messages[GENERAL].push(messageWrapper);
@@ -352,22 +352,23 @@
 			// display appropriate messages
 			messageList.forEach(function(mess){
 					if(mess.type == "you"){
-						addMessage(mess.data, true);
+						addMessage(mess.data, true, mess.time);
 					}
 					else
-						addMessage(mess.data, false);
+						addMessage(mess.data, false, mess.time);
 				});
 		}
 
 
 
-	function addMessage(message, left) {
+	function addMessage(message, left, time="") {
 		var flexBox = document.createElement('div');if (!left)
 		flexBox.className = "chat-bubble me";
 		else
 		flexBox.className = "chat-bubble you";
 	//  flexBox.style = 'display: flex; ' + (left ? '' : 'justify-content: flex-end');
-		var time = new Date().toLocaleTimeString();
+        if (time == "")
+    		time = new Date().toLocaleTimeString();
 		var messageBox = document.createElement('p');
 		messageBox.className = "content";
 		var timeShow = document.createElement('p');
@@ -410,7 +411,7 @@
 		<section class="right">
 			<div class="chat-head">
 				<div class="chat-name" style="padding-left:20px">
-					<h1 class="font-name">Center</h1>
+					<h1 class="font-name" id="centerName">Center</h1>
 					<p id="statusBar" class="font-online">Connecting</p>
 				</div>
 				<i class="fa fa-times fa-lg" aria-hidden="true" id="close-contact-information"></i>

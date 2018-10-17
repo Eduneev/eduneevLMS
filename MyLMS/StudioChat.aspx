@@ -340,7 +340,6 @@
 			flexBox.className = "chat-bubble me";
 			else
 			flexBox.className = "chat-bubble you";
-		//  flexBox.style = 'display: flex; ' + (left ? '' : 'justify-content: flex-end');
             if (time == "") {
     		    time = new Date().toLocaleTimeString();
             }
