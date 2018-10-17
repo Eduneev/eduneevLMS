@@ -139,11 +139,12 @@
 					else if (obj.data){
 						console.log("Received id: " + obj.id);
 						var name = centers[obj.id]["name"];
-						if(obj.student != ""){
-							name += " - " + obj.student;
-						}
-						var messageWrapper = {'type': 'you', 'data': obj.data,'name': name};
-						if(obj.type == "groupMessage"){
+						
+						var messageWrapper = {'type': 'you', 'data': obj.data,'name': name, 'time': new Date().toLocaleTimeString()};
+                        if (obj.type == "groupMessage") {
+                            if(obj.student != ""){
+							    name += " - " + obj.student;
+						    }
 							if (currentId==GROUP)
 								addMessage(obj.data, true, name);
 							else{
@@ -181,7 +182,7 @@
 				if (typedMessage.value.length) {
 				typedMessage.value = typedMessage.value.substring(0, 512);
 				addMessage(typedMessage.value, false);
-				var messageWrapper = {'type': 'me', 'data': typedMessage.value};
+				var messageWrapper = {'type': 'me', 'data': typedMessage.value, 'time': new Date().toLocaleTimeString()};
 				messages[currentId].push(messageWrapper);
 				console.log(messages);
 		
@@ -324,15 +325,15 @@
 			// display appropriate messages
 			messageList.forEach(function(mess){
 					if(mess.type == "you"){
-						addMessage(mess.data, true, mess.name);
+						addMessage(mess.data, true, mess.name, mess.time);
 					}
 					else
-						addMessage(mess.data, false);
+						addMessage(mess.data, false, "", mess.time);
 				});
 
 		}
 
-		function addMessage(message, left, name = "") {
+		function addMessage(message, left, name = "", time="") {
 			console.log("name: " + name);
 			var flexBox = document.createElement('div');
 			if (!left)
@@ -340,7 +341,10 @@
 			else
 			flexBox.className = "chat-bubble you";
 		//  flexBox.style = 'display: flex; ' + (left ? '' : 'justify-content: flex-end');
-			var time = new Date().toLocaleTimeString();
+            if (time == "") {
+    		    time = new Date().toLocaleTimeString();
+            }
+
 			var messageBox = document.createElement('p');
 			messageBox.className = "content";
 			var timeShow = document.createElement('p');
