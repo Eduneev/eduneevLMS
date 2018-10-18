@@ -48,7 +48,6 @@
 		//  2) if teacher connection closes and center tries to send message, server gets an error and shuts down
 
 		var urlParams = parseURLParams(window.location.href);
-		console.log(urlParams);
 		
 		var SESSION;
 		var STUDIONAME;
@@ -59,16 +58,12 @@
 			SESSION = "0";
 			alert("Exception: Unable to read Session from URL");
 		}
-		console.log(SESSION);
 
 		if ("StudioName" in urlParams) {
 			STUDIONAME = urlParams["StudioName"][0];
 		} else {
 			STUDIONAME = "Studio";
-			console.log("Exception: Unable to read Session from URL");
 		}
-		console.log(STUDIONAME);
-
 
 		const GROUP = "group";
 		const UNREAD = "unread";
@@ -122,9 +117,7 @@
 			
 			ws.onmessage = function ws_message(input){
 				var data = input.data;
-				console.log(input);
 				if (isJson(data)){
-					console.log("Received message!" + data);
 					var obj = JSON.parse(data);
 					if (obj.type == Events.CONNECTION){
 						// add to the List								
@@ -133,11 +126,9 @@
 					else if (obj.type == Events.CENTERREMOVE){
 						var contact = document.getElementById(obj.id);
 						delete centers[obj.id];
-						console.log(centers);
 						contact.remove();
 					}
 					else if (obj.data){
-						console.log("Received id: " + obj.id);
 						var name = centers[obj.id]["name"];
 						
 						var messageWrapper = {'type': 'you', 'data': obj.data,'name': name, 'time': new Date().toLocaleTimeString()};
@@ -160,16 +151,9 @@
 							}
 
 							messages[obj.id].push(messageWrapper);
-
 						}
-						console.log(messages);
-
 					}
-				}
-				else{
-					console.log("Data received is not JSON");
-				}
-		
+				}		
 			};
 		
 			ws.onclose = function() {
@@ -184,7 +168,6 @@
 				addMessage(typedMessage.value, false);
 				var messageWrapper = {'type': 'me', 'data': typedMessage.value, 'time': new Date().toLocaleTimeString()};
 				messages[currentId].push(messageWrapper);
-				console.log(messages);
 		
 				if(currentId == GROUP){
 					ws.send(JSON.stringify({	
@@ -213,7 +196,6 @@
 			};
 		
 			typedMessage.onclick = function() {
-			console.log("Clicked typed message");
 			if (first) {
 				typedMessage.value = "";
 				first = false;
@@ -233,7 +215,6 @@
 			try {
 				JSON.parse(str);
 			} catch (e) {
-				console.log(e);
 				return false;
 			}
 			return true;
@@ -290,7 +271,6 @@
 
 		function displayMessages(evt){
 			var name = evt.target;
-			console.log("reaching here");
 			var id = this.id // get the contact id
 			var c = currentId;
 			if (id == GROUP){
@@ -299,7 +279,6 @@
 					currentId = GROUP;
 					document.getElementById(GROUP).className ="new-message-contact active-contact";
 					document.getElementById(c).className = "new-message-contact"; 
-					console.log("Current id: " + currentId);
 					messagesPanel.innerHTML = "";
 					var messageList = messages[GROUP];
 				}
@@ -310,7 +289,6 @@
 					document.getElementById(id).className ="new-message-contact active-contact";
 					document.getElementById(currentId).className = "new-message-contact"; 
 					currentId = id;
-					console.log("Current id: " + currentId);
 					messagesPanel.innerHTML = "";
 					var messageList = messages[id];
 				}
@@ -334,12 +312,11 @@
 		}
 
 		function addMessage(message, left, name = "", time="") {
-			console.log("name: " + name);
 			var flexBox = document.createElement('div');
 			if (!left)
-			flexBox.className = "chat-bubble me";
+			    flexBox.className = "chat-bubble me";
 			else
-			flexBox.className = "chat-bubble you";
+    			flexBox.className = "chat-bubble you";
             if (time == "") {
     		    time = new Date().toLocaleTimeString();
             }

@@ -44,7 +44,6 @@
 	var statusBar;
 
 	var urlParams = parseURLParams(window.location.href);
-	console.log(urlParams);
 	var SESSION;
 	var NAME;
 	var CenterID
@@ -54,7 +53,6 @@
 	} else {
 		alert("Exception: Unable to read Session from URL");
 	}
-	console.log(SESSION);
 
 	if ("CenterID" in urlParams) {
 		CenterID = urlParams["CenterID"][0];
@@ -66,10 +64,8 @@
 		NAME = urlParams["CenterName"][0];
 	} else {
 		NAME = "Center";
-		console.log("Exception: Unable to read Center Name from URL");
 	}
 	
-	console.log(NAME);
 	const GENERAL = "general";
 	const PRIVATE = "private";
 	var currentId = GENERAL;
@@ -149,7 +145,6 @@
 		ws.onmessage = function ws_message(input){
 			var data = input.data;
 			if (isJson(data)){
-				console.log("Received message!" + data);
                 var obj = JSON.parse(data);
                 var messageWrapper = { 'type': 'you', 'data': obj.data, 'time': new Date().toLocaleTimeString() };
 				if (obj.type == "singleMessage"){
@@ -168,9 +163,6 @@
 					messages[GENERAL].push(messageWrapper);
 				}
 
-			}
-			else{
-				console.log("Data received is not JSON");
 			}
 		};
 
@@ -220,7 +212,6 @@
 		};
 
 		typedMessage.onclick = function() {
-			console.log("Clicked typed message");
 			if (first) {
 				typedMessage.value = "";
 				first = false;
@@ -252,7 +243,6 @@
 	try {
 		JSON.parse(str);
 	} catch (e) {
-		console.log(e);
 		return false;
 	}
 	return true;
@@ -266,7 +256,6 @@
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == XMLHttpRequest.DONE) {
 				var students = xhr.response;
-				console.log(students);
 				for (let i=0; i < students.length; i++){
 					var data = students[i];
 					var student = document.createElement('div');
@@ -316,14 +305,12 @@
 			else if(currentStudentId != id){
 				document.getElementById(currentStudentId).className = "contact";
 				currentStudentId = id;
-				console.log("getting here");
 			}
 			document.getElementById(currentStudentId).className = "active-student";
 		}
 	}
 	function displayMessages(evt){
 			var name = evt.target;
-			console.log("reaching here");
 			var id = this.id // get the contact id
 			var c = currentId;
 			// display on{ly the private chat messages for that id
@@ -337,7 +324,6 @@
 				document.getElementById(id).className ="new-message-contact active-contact";
 				document.getElementById(currentId).className = "new-message-contact"; 
 				currentId = id;
-				console.log("Current id: " + currentId);
 				typedMessage.value = "";
 				messagesPanel.innerHTML = "";
 				var messageList = messages[id];                    
