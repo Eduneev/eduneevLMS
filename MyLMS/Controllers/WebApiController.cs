@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-//using System.Web.Http.Cors;
 using MyLMS.Models;
 using Newtonsoft.Json;
 using UtilityClass;
+//using System.Web.Http.Cors;
 
 namespace MyLMS.Controllers
 {
@@ -67,9 +63,11 @@ namespace MyLMS.Controllers
 
         [Route("api/getVLCCommand")]
         [HttpGet]
-        public string GetVLCCommand()
+        public string[] GetVLCCommand()
         {
-            string VlcCommand = "vlc.exe --no-sout-video --one-instance --embedded-video --key-record=  -I --disable-qt ";
+            string[] VlcCommand = new string[2];
+            VlcCommand[0] = "\"C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe\""; 
+            VlcCommand[1] = "--no-sout-video --one-instance --embedded-video --key-record=  -I --disable-qt ";
             return VlcCommand;
         }
 
@@ -167,8 +165,8 @@ namespace MyLMS.Controllers
             return false;
         }
         
-        [Route("api/SaveLastUsedCommand/{ClassRoomID:int}/{LastUsedCommand}")]
-        [HttpGet]
+        [Route("api/SaveLastUsedCommand")]
+        [HttpPost]
         public string SaveLastUsedCommand(int ClassRoomID, string LastUsedCommand)
         {
             string result = String.Empty;
