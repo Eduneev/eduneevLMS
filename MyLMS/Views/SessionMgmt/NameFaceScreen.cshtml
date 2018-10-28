@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "NameFaceScreen";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+<script src="~/Scripts/AngularControllers/SessionController.js"></script>
+<div ng-controller="NameFaceScreenCntrl">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Student Presence System
+            <small>View all present students</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+            <li><a href="#">Student Presence System</a></li>
+        </ol>
+    </section>
+
+    <!-- Form Body (Page body)-->
+    <section class="content">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <div class="pull-left">
+                    <select class="form-control" id="drpcenter" style="width: 100%;" data-ng-model="CenterID" data-ng-options="c.CenterID as c.CenterName for c in CentersList" data-ng-change="GetStudentsByCenterID()">
+                        <option value="0">All</option>                        
+                    </select>
+                    <!-- Modal Popup -->
+                    <modal lolo="modal1" modal-body="body" modal-footer="footer" modal-header="header" data-ng-click-right-button="myRightButton()"></modal>
+                </div>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-2"  ng-repeat="Student in StudentsList" style="border: 1px solid #808080; height:200px; width:152px; padding-left:0px; margin-right:10px; margin-bottom:10px;">
+                            <center>
+                                <a data-toggle="modal" data-target="#DisplayRRQSelector" href="" ng-click="ElargePhoto(Student.StudentID)">
+                                    <img id="item-display" height="150" ng-src="{{Student.StudentImageURL}}" alt="" />
+                                </a>                                
+                            </center>
+                            <center>
+                                <h4>
+                                    {{Student.StudentName}}
+                                </h4>
+                            </center>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @* Popup to Show Students Enlarge Image *@
+    <div class="modal" id="DisplayRRQSelector" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" style="margin:0px 10px 0px 10px;">
+                    <form class="form-horizontal" name="ShowRRQSelector">
+                        <div class="form-group">
+                            <div>
+                                <center>
+                                    <a data-toggle="modal" data-target="#DisplayRRQSelector" href="">
+                                        <img id="item-display" height="450" ng-src="{{StudentImage}}" alt="" />
+                                    </a>
+                                </center>
+                                <center>
+                                    <h1>
+                                        {{StudentName}}
+                                    </h1>
+                                </center>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @* Popup to Show Students Enlarge Image *@
+</div>
+
