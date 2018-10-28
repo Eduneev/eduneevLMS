@@ -1,0 +1,102 @@
+﻿
+@{
+    ViewBag.Title = "RRQResponseEntry";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+
+@section scripts{
+    <script src="~/Scripts/TableNav/jquery.tablenavigator.js"></script>
+}
+<div>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            View Classrooms
+            <small>View connected classrooms</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+            <li><a href="#">View Classrooms</a></li>
+        </ol>
+    </section>
+
+    <!-- Form Body (Page body)-->
+    <section class="content">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <div class="pull-left">
+                    <div class="btn-group">
+                        @*<button type="button" class="btn btn-success" id="btnAddProgram" ng-click="StartStopSession('Start')"><i class="glyphicon glyphicon-play"> </i> Start Session</button>*@
+                        @*<button type="button" class="btn btn-danger" id="btnAddCourse" ng-click="StartStopSession('Stop')"><i class="glyphicon glyphicon-stop"> </i> Stop Session</button>*@
+                    </div>
+                </div>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Sl No.</th>
+                                    <th>Center Name</th>
+                                    <th>Classroom</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1. </td>
+                                    <td>Pritampura Center</td>
+                                    <td>Section A</td>
+                                    <td><button type="button" class="btn btn-success" id="btnAddProgram"><i class="fa fa-skype"> </i> Skype Call</button></td>
+                                </tr>
+                                <tr>
+                                    <td>2. </td>
+                                    <td>Pritampura Center</td>
+                                    <td>Section B</td>
+                                    <td><button type="button" class="btn btn-success" id="btnAddProgram"><i class="fa fa-skype"> </i> Skype Call</button></td>
+                                </tr>
+                                <tr>
+                                    <td>3. </td>
+                                    <td>Okhla Center</td>
+                                    <td>Section A</td>
+                                    <td><button type="button" class="btn btn-success" id="btnAddProgram"><i class="fa fa-skype"> </i> Skype Call</button></td>
+                                </tr>
+                                <tr>
+                                    <td>4. </td>
+                                    <td>Naraina Center</td>
+                                    <td>Section A</td>
+                                    <td><button type="button" class="btn btn-success" id="btnAddProgram"><i class="fa fa-skype"> </i> Skype Call</button></td>
+                                </tr>
+                                <tr>
+                                    <td>5. </td>
+                                    <td>Naraina Center</td>
+                                    <td>Section B</td>
+                                    <td><button type="button" class="btn btn-success" id="btnAddProgram"><i class="fa fa-skype"> </i> Skype Call</button></td>
+                                </tr>
+                                <tr>
+                                    <td>6. </td>
+                                    <td>Naraina Center</td>
+                                    <td>Section C</td>
+                                    <td><button type="button" class="btn btn-success" id="btnAddProgram"><i class="fa fa-skype"> </i> Skype Call</button></td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        $(function() {
+        $("table").tabnav();
+        });
+    </script>
+</div>
