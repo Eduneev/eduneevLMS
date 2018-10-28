@@ -191,6 +191,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CenterModel.cs" />
+    <Compile Include="Models\HelpdeskModel.cs" />
     <Compile Include="Models\RRQ.cs" />
     <Compile Include="Models\RRQData.cs" />
     <Compile Include="Models\CourseModel.cs" />
@@ -226,6 +227,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="index.html" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\angular-mocks.js" />
@@ -237,6 +239,7 @@
     <Content Include="Scripts\AngularControllers\CourseController.js" />
     <Content Include="Content\defaultmodalpopup.html" />
     <Content Include="Scripts\AngularControllers\EntityController.js" />
+    <Content Include="Scripts\AngularControllers\HelpdeskController.js" />
     <Content Include="Scripts\AngularControllers\LeftMenuController.js" />
     <Content Include="Scripts\AngularControllers\LoginController.js" />
     <Content Include="Scripts\AngularControllers\ModalDirective.js" />
@@ -244,6 +247,7 @@
     <Content Include="Scripts\AngularControllers\QuestionBankController.js" />
     <Content Include="Scripts\AngularControllers\RRQController.js" />
     <Content Include="Scripts\AngularControllers\RRQDashboardController.js" />
+    <Content Include="Scripts\AngularControllers\RRQSocketModule.js" />
     <Content Include="Scripts\AngularControllers\SessionController.js" />
     <Content Include="Scripts\AngularControllers\StudentController.js" />
     <Content Include="Scripts\AngularControllers\WebAdminController.js" />
@@ -255,6 +259,8 @@
     <Content Include="Scripts\angular.min.js.map" />
     <None Include="Properties\PublishProfiles\MyLMS.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\ImageCrop\image-crop-styles.css" />
+    <Content Include="Scripts\ImageCrop\image-crop.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -266,10 +272,13 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\simple-skillbar.js" />
+    <Content Include="Scripts\table.js" />
+    <Content Include="Scripts\TableNav\jquery.tablenavigator.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="StudentsImage\avatar2.png" />
     <Content Include="StudentsImage\avatar5.png" />
     <Content Include="StudioChat.aspx" />
+    <Content Include="Template\BarChat\Chart.HorizontalBar.js" />
     <Content Include="Template\bootstrap\css\bootstrap.css" />
     <Content Include="Template\bootstrap\css\bootstrap.min.css" />
     <Content Include="Template\bootstrap\css\CustomCSS.css" />
@@ -719,7 +728,9 @@
     <Content Include="Views\StudentMgmt\RegisterStudent.cshtml" />
     <Content Include="Views\SessionMgmt\NewSession.cshtml" />
     <Content Include="Views\QuestionBank\AddQuestion.cshtml" />
+    <Content Include="Views\RRQDashBoard\RRQDashboard.cshtml" />
     <Content Include="Views\SessionMgmt\ViewSessions.cshtml" />
+    <Content Include="Views\SessionMgmt\Dashboard.cshtml" />
     <Content Include="Views\QuestionBank\ViewQuestions.cshtml" />
     <Content Include="Views\SessionMgmt\AddRRQ.cshtml" />
     <Content Include="Views\SessionMgmt\AddQuestionsToRRQ.cshtml" />
@@ -741,7 +752,21 @@
     <Content Include="Views\Entity\Inventory.cshtml" />
     <Content Include="Views\Entity\Shipped.cshtml" />
     <Content Include="Views\Entity\Studios.cshtml" />
+    <Content Include="Views\SessionMgmt\DisplayRRQ.cshtml" />
     <Content Include="Views\Shared\_LayoutRRQ.cshtml" />
+    <Content Include="Views\SessionMgmt\RRQDashboard.cshtml" />
+    <Content Include="Views\SessionMgmt\RRQIntroduction.cshtml" />
+    <Content Include="Views\Notifications\ViewAll.cshtml" />
+    <Content Include="Views\SessionMgmt\NameFaceScreen.cshtml" />
+    <Content Include="Views\CenterMgmt\CenterActivityLogs.cshtml" />
+    <Content Include="Views\CenterMgmt\ViewClassrooms.cshtml" />
+    <Content Include="Views\Helpdesk\NewTicket.cshtml" />
+    <Content Include="Views\Helpdesk\ViewMyTickets.cshtml" />
+    <Content Include="Views\Helpdesk\TicketDetails.cshtml" />
+    <Content Include="Views\SessionMgmt\Classrooms.cshtml" />
+    <Content Include="Views\CenterMgmt\RRQResponseEntry.cshtml" />
+    <Content Include="Views\CenterMgmt\Dashboard.cshtml" />
+    <Content Include="Views\StudentMgmt\RRQManualEntry.cshtml" />  
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -757,9 +782,7 @@
     <Folder Include="Template\plugins\datatables\extensions\TableTools\" />
     <Folder Include="Template\plugins\datatables\images\" />
     <Folder Include="Views\Admin\" />
-    <Folder Include="Views\Helpdesk\" />
-    <Folder Include="Views\Notifications\" />
-    <Folder Include="Views\RRQDashBoard\" />
+	<Folder Include="Views\TroubleTicket\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
