@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "TicketDetails";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+@section scripts{
+    <script src="~/Scripts/AngularControllers/HelpdeskController.js"></script>
+}
+<div ng-controller="HelpdeskCntrl" ng-init="GetTicketByID()">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            View Tickets
+            <small>View your tickets</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+            <li><a href="#">View Tickets</a></li>
+        </ol>
+    </section>
+
+    <!-- Form Body (Page body)-->
+    <section class="content">
+        <div class="box box-default">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="post" ng-repeat="Ticket in TicketInfo">
+                            <div class="user-block">
+                                <img class="img-circle img-bordered-sm" ng-src="{{Ticket.ProfileImage}}" alt="user image">
+                                <span class="username">
+                                    <a href="#">{{Ticket.FullName}}</a>                                    
+                                </span>
+                                <span class="description">Raised ticket - {{Ticket.CreatedDate}}</span>
+                            </div>                            
+                            <h4>{{Ticket.TicketSubject}}</h4>
+                            <p>
+                                {{Ticket.TicketContent}}
+                            </p>                           
+                        </div>
+
+                        <div class="post" ng-repeat="Details in TicketDetails">
+                            <div class="user-block">
+                                <img class="img-circle img-bordered-sm" ng-src="{{Details.ProfileImage}}" alt="user image">
+                                <span class="username">
+                                    <a href="#">{{Details.FullName}}</a>
+                                </span>
+                                <span class="description">Replied - {{Details.CreatedDate}}</span>
+                            </div>                                                    
+                            <p>
+                                {{Details.ReplyComments}}
+                            </p>
+                        </div>
+                        <div>                            
+                            <div class="box-footer">
+                                <textarea class="form-control" id="inputExperience" placeholder="Reply.."></textarea>
+                                <button type="submit" class="btn btn-danger" style="margin-top:5px;">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
