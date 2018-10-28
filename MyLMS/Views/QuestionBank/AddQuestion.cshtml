@@ -44,7 +44,7 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
-            <li><a href="#">New Student</a></li>
+            <li><a href="#">New Question</a></li>
             @*<li class="active">Add Course</li>*@
         </ol>
     </section>
@@ -52,27 +52,27 @@
     <!-- Form Body (Page body)-->
     <section class="content">
         <div class="box box-default">
-            <div class="box-header with-border">
-                <div class="pull-left">
-                    <button type="button" class="btn btn-success" id="btnViewCenters">
-                    <i class="glyphicon glyphicon-list"> </i>&nbsp; View Questions</button>
-                </div>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                </div>
-            </div>
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Question Text</label>
-                            <textarea ng-model="QuestionText" rows="4" name="QuestionText" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter question text...">  </textarea>                           
+                            <textarea ng-model="QuestionText" rows="4" name="QuestionText" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter question text...">  </textarea>
                         </div>
-                            <div class="form-group">
-                                <label>
-                                    Enter answer text and select correct answer text 
-                                </label>
-                            </div>
+                        <div class="form-group">
+                            <label>
+                                Tag Question
+                            </label>
+
+                            <select class="form-control" id="drpQuestionTags" style="width:200px;" data-ng-model="CenterID" data-ng-options="c.QTagID as c.TagText for c in TagsList">
+                                <option value="">Select Tag</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Enter answer text and select correct answer text
+                            </label>
+                        </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-lg-2">
@@ -80,30 +80,35 @@
                                     <div class="btn-group pull-right">
                                         <label for="fancy-checkbox-primary1" class="btn btn-primary">
                                             <span class="glyphicon glyphicon-ok"></span>
-                                            <span> </span>
+                                            <span> </span>
                                         </label>
                                         <label for="fancy-checkbox-primary1" class="btn btn-default active">
                                             Option A
                                         </label>
-                                    </div>                                    
+                                    </div>
                                 </div>
                                 <div class="col-md-8">
                                     <textarea type="text" rows="3" ng-model="Option1Text" name="OptionA" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter text for Option A..."> </textarea>
                                 </div>
                                 <div class="col-md-1">
+                                    <label>Mark</label>
                                     <input type="text" ng-model="Option1Mark" name="Option1Mark" style="font-weight:bold; color:coral;" class="form-control" placeholder="Mark..">
                                 </div>
-                            </div> 
+                                <div class="col-md-1">
+                                    <label>Time</label>
+                                    <input type="text" ng-model="Option1Time" name="Option1Time" style="font-weight:bold; color:coral;" class="form-control" placeholder="Time..">
+                                </div>
+                            </div>
                         </div>
                         <div class="bootstrap-timepicker">
-                            <div class="form-group">                                
+                            <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-2">
                                         <input type="checkbox" ng-model="IsOption2Correct" class="minimal-red" data-toggle="modal" name="fancy-checkbox-primary2" id="fancy-checkbox-primary2" autocomplete="off">
                                         <div class="btn-group pull-right">
                                             <label for="fancy-checkbox-primary2" class="btn btn-primary">
                                                 <span class="glyphicon glyphicon-ok"></span>
-                                                <span> </span>
+                                                <span> </span>
                                             </label>
                                             <label for="fancy-checkbox-primary2" class="btn btn-default active">
                                                 Option B
@@ -114,20 +119,25 @@
                                         <textarea type="text" rows="3" ng-model="Option2Text" name="OptionB" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter text for Option B..."></textarea>
                                     </div>
                                     <div class="col-md-1">
+                                        <label>Mark</label>
                                         <input type="text" ng-model="Option2Mark" name="Option1Mark" style="font-weight:bold; color:coral;" class="form-control" placeholder="Mark..">
                                     </div>
-                                </div> 
+                                    <div class="col-md-1">
+                                        <label>Time</label>
+                                        <input type="text" ng-model="Option2Time" name="Option1Mark" style="font-weight:bold; color:coral;" class="form-control" placeholder="Time..">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="bootstrap-timepicker">
-                            <div class="form-group">                                
+                            <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-2">
                                         <input type="checkbox" ng-model="IsOption3Correct" class="minimal-red" data-toggle="modal" name="fancy-checkbox-primary3" id="fancy-checkbox-primary3" autocomplete="off">
                                         <div class="btn-group pull-right">
                                             <label for="fancy-checkbox-primary3" class="btn btn-primary">
                                                 <span class="glyphicon glyphicon-ok"></span>
-                                                <span> </span>
+                                                <span> </span>
                                             </label>
                                             <label for="fancy-checkbox-primary3" class="btn btn-default active">
                                                 Option C
@@ -138,9 +148,14 @@
                                         <textarea type="text" rows="3" ng-model="Option3Text" name="OptionC" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter text for Option C..."></textarea>
                                     </div>
                                     <div class="col-md-1">
+                                        <label>Mark</label>
                                         <input type="text" ng-model="Option3Mark" name="Option1Mark" style="font-weight:bold; color:coral;" class="form-control" placeholder="Mark..">
                                     </div>
-                                </div> 
+                                    <div class="col-md-1">
+                                        <label>Time</label>
+                                        <input type="text" ng-model="Option3Time" name="Option3Time" style="font-weight:bold; color:coral;" class="form-control" placeholder="Time..">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -150,7 +165,7 @@
                                     <div class="btn-group pull-right">
                                         <label for="fancy-checkbox-primary4" class="btn btn-primary">
                                             <span class="glyphicon glyphicon-ok"></span>
-                                            <span> </span>
+                                            <span> </span>
                                         </label>
                                         <label for="fancy-checkbox-primary4" class="btn btn-default active">
                                             Option D
@@ -161,15 +176,20 @@
                                     <textarea type="text" rows="3" ng-model="Option4Text" name="OptionD" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter text for Option D..."></textarea>
                                 </div>
                                 <div class="col-md-1">
+                                    <label>Mark</label>
                                     <input type="text" ng-model="Option4Mark" name="Option1Mark" style="font-weight:bold; color:coral;" class="form-control" placeholder="Mark..">
                                 </div>
-                            </div> 
+                                <div class="col-md-1">
+                                    <label>Time</label>
+                                    <input type="text" ng-model="Option4Time" name="Option4Time" style="font-weight:bold; color:coral;" class="form-control" placeholder="Time..">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="box-footer">
-                &nbsp;<button type="submit" ng-click="SaveQuestion()" class="btn btn-primary pull-right">Save Question</button> 
+                &nbsp;<button type="submit" ng-click="SaveQuestion()" class="btn btn-primary pull-right">Save Question</button>
                 <button type="submit" class="btn btn-default pull-right">Cancel</button>&nbsp;
             </div>
         </div>
