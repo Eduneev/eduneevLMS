@@ -255,6 +255,13 @@
        
     };
 
+    $scope.DisplayClassrooms = function () {
+        window.location.href = "/SessionMgmt/Classrooms/";
+    }
+    $scope.ShowNameFaceScreen = function () {
+        window.location.href = "/SessionMgmt/NameFaceScreen/";
+    };
+
     $scope.ShowStreamKey = function (streamKey) {
         debugger;
         $scope.header = "Stream key";
@@ -330,4 +337,39 @@ myapp.controller('SessionAttendanceCntrl', function ($scope, $http) {
             window.location.href = "/SessionMgmt/StudentAttendance/";
         });
     };
+});
+
+myapp.controller('NameFaceScreenCntrl', function ($scope, $http) {
+    GetCenters();
+    $scope.CenterID = 0;
+    function GetCenters() {
+        $http.get('/SessionMgmt/GetCentersForEntity')
+            .then(function (result) {
+                $scope.CentersList = result.data;
+            });
+    }
+    $scope.GetStudentsByCenterID = function () {
+        $http.get('/SessionMgmt/GetStudentsByCenterID/' + $scope.CenterID)
+            .then(function (result) {
+                $scope.StudentsList = result.data;
+            });
+    }
+    $scope.ElargePhoto = function (StudentID) {
+        $http.get('/SessionMgmt/GetStudentsByID/' + StudentID)
+            .then(function (result) {
+                $scope.StudentInfo = result.data;
+                $scope.StudentName = $scope.StudentInfo[0].StudentName;
+                $scope.StudentImage = $scope.StudentInfo[0].StudentImageURL;
+            });
+    }
+});
+
+myapp.controller('SkypeCallCntrl', function ($scope, $http) {
+    //GetClassrooms();
+    //function GetClassrooms() {
+    //    $http.get('/SessionMgmt/GetClassrooms')
+    //    .then(function (result) {
+    //        $scope.ClassroomsList = result.data;
+    //    });
+    //}
 });
