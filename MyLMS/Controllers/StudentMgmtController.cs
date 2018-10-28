@@ -29,6 +29,13 @@ namespace MyLMS.Controllers
             return View();
         }
 
+        public ActionResult RRQManualEntry()
+        {
+            return View();
+        }
+
+
+
         [HttpPost]
         public void SaveStudent(string StudentName, string Code,int ProgramID, int CourseID, string Email, string Mobile, string Landline, string Address, string Pincode, string Gender, string BirthPlace, string SchoolName, string GuardianName, string GuardianContactNo)
         {
