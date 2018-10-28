@@ -135,6 +135,7 @@ namespace MyLMS.Controllers
             {
                 Question Question = new Question();
                 Question.QID = Convert.ToInt32(QuestionsList.Rows[i]["QID"]);
+                Question.QUES_NO = QuestionsList.Rows[i]["QUES_NO"].ToString();
                 Question.QTypeID = Convert.ToInt32(QuestionsList.Rows[i]["QTypeID"].ToString());
                 Question.QuestionText = QuestionsList.Rows[i]["QuestionText"].ToString();
                 Question.IsCompulsory = Convert.ToBoolean(QuestionsList.Rows[i]["IsCompulsory"]);
@@ -150,6 +151,7 @@ namespace MyLMS.Controllers
                     Option Options = new Option();
                     Options.OptionID = Convert.ToInt32(Convert.IsDBNull(OptionsList.Rows[j]["OptionID"]) ? "0" : OptionsList.Rows[j]["OptionID"]);
                     Options.QID = Convert.ToInt32(Convert.IsDBNull(OptionsList.Rows[j]["QID"]) ? "0" : OptionsList.Rows[j]["QID"]);
+                    Options.OptionChar = OptionsList.Rows[j]["OptionChar"].ToString();
                     Options.OptionSeq = Convert.ToInt32(Convert.IsDBNull(OptionsList.Rows[j]["OptionSeq"]) ? "0" : OptionsList.Rows[j]["OptionSeq"]);
                     Options.OptionText = Convert.IsDBNull(OptionsList.Rows[j]["OptionText"]) ? "" : OptionsList.Rows[j]["OptionText"].ToString();
                     Options.Mark = Convert.ToInt32(Convert.IsDBNull(OptionsList.Rows[j]["Mark"]) ? "0" : OptionsList.Rows[j]["Mark"]);
@@ -170,6 +172,16 @@ namespace MyLMS.Controllers
             JSONString = JsonConvert.SerializeObject(CO);
             return JSONString;
         }
+
+        [HttpGet]
+        public string GetTags()
+        {
+            DataTable TagsList = DAL.GetDataTable("GetTags");
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(TagsList);
+            return JSONString;
+        }
+
 
         [HttpPost]
         public static bool SaveQuestionResponse (int RRQId, int QId, int studentId, int optionSeq) // response could be A,B,C,D or E
