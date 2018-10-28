@@ -12,4 +12,19 @@ namespace MyLMS.Models
         public int CenterId { get; set; }
         public string LastUsedCommand { get; set; }
     }
+
+    public string SaveClassRoom(SqlParameter[] sparams)
+    {
+        string res = "Failure..";
+        try
+        {
+            res = DAL.ExecuteScalar("SaveClassroom", sparams);
+        }
+        catch (Exception ex)
+        {
+            res = ex.Message;
+            throw;
+        }
+        return res;
+    }
 }
