@@ -175,11 +175,14 @@
     <Compile Include="Controllers\CourseMgmtController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\EntityController.cs" />
+    <Compile Include="Controllers\HelpdeskController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LeftMenuController.cs" />
     <Compile Include="Controllers\NavBarController.cs" />
+    <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\OrganisationController.cs" />
     <Compile Include="Controllers\QuestionBankController.cs" />
+    <Compile Include="Controllers\RRQDashBoardController.cs" />
     <Compile Include="Controllers\SessionMgmtController.cs" />
     <Compile Include="Controllers\StudentMgmtController.cs" />
     <Compile Include="Controllers\WebAdminController.cs" />
@@ -754,6 +757,9 @@
     <Folder Include="Template\plugins\datatables\extensions\TableTools\" />
     <Folder Include="Template\plugins\datatables\images\" />
     <Folder Include="Views\Admin\" />
+    <Folder Include="Views\Helpdesk\" />
+    <Folder Include="Views\Notifications\" />
+    <Folder Include="Views\RRQDashBoard\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
