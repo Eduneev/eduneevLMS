@@ -100,7 +100,7 @@
     };
 
     $scope.StartStudioChat = function (SessionID, StudioName) {
-        debugger;
+        //debugger;
         var url = "http://localhost:55082/StudioChat.aspx?SessionID=" + SessionID + "&StudioName=" + StudioName;
         var form = document.createElement("form");
         form.method = "POST";
