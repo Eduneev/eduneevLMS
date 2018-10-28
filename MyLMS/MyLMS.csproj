@@ -253,6 +253,8 @@
     <Content Include="Scripts\AngularControllers\WebAdminController.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+	<Content Include="Scripts\obs-websocket.js" />
+	<Content Include="Scripts\obs-websocket.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
