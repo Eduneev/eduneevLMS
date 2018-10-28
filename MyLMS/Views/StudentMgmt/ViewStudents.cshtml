@@ -6,9 +6,10 @@
 
 @section scripts{
     <script src="~/Scripts/AngularControllers/StudentController.js"></script>
+    <script src="~/Scripts/ImageCrop/image-crop.js"></script>
 }
 
-<div ng-controller="StudentViewCntrl">
+<div ng-controller="StudentViewCntrl" ng-init="clear()">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
@@ -27,12 +28,12 @@
         <div class="box box-default">
             <div class="box-header with-border">
                 <div class="pull-left">
-                    <button type="button" class="btn btn-success btn-sm" id="btnAddStudent" ng-click="AddStudent()"><i class="glyphicon glyphicon-list"> </i>&nbsp; Add Student</button> 
+                    <button type="button" class="btn btn-success btn-sm" id="btnAddStudent" ng-click="AddStudent()"><i class="glyphicon glyphicon-list"> </i>&nbsp; Add Student</button>
                 </div>
                 <div class="box-tools">
                     <div class="input-group input-group-sm " style="width:250px; height:30px;">
                         @*<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>*@
-                        <input type="text" name="table_search" ng-model="StudentFilter" class="form-control" placeholder="Search"> 
+                        <input type="text" name="table_search" ng-model="StudentFilter" class="form-control" placeholder="Search">
                         <div class="input-group-btn">
                             <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                         </div>
@@ -48,7 +49,7 @@
                                     <th style="width:15px;">Sl No.</th>
                                     <th style="width:100px;">Image</th>
                                     <th>Name</th>
-                                    <th>Guardian</th>                                    
+                                    <th>Guardian</th>
                                     <th>Center</th>
                                     <th>Course Info</th>
                                     <th>Created By</th>
@@ -64,27 +65,26 @@
                                         <span><img ng-src="{{Student.StudentImageURL}}" height="80" width="80"></span>
                                     </td>
                                     <td>
-                                        <span><strong>{{Student.StudentName}}</strong></span><br/>
-                                        <span>Roll No. {{Student.Code}}</span><br/>
+                                        <span><strong>{{Student.StudentName}}</strong></span><br />
+                                        <span>Roll No. {{Student.Code}}</span><br />
                                         <span>Contact No. {{Student.Mobile}}</span>
                                     </td>
                                     <td>
-                                        <span>{{Student.GuardianName}}</span><br/>
+                                        <span>{{Student.GuardianName}}</span><br />
                                         <span>Contact No. {{Student.GuardianContactNo}}</span>
                                     </td>
                                     <td>
                                         <span>{{Student.CenterName}}</span>
                                     </td>
                                     <td>
-                                        <span>Program: {{Student.ProgramName}}</span><br/>
+                                        <span>Program: {{Student.ProgramName}}</span><br />
                                         <span>Course: {{Student.CourseName}}</span>
                                     </td>
                                     <td>
                                         <span>{{Student.FullName}}</span>
                                     </td>
                                     <th>
-
-                                        @*<span ng-click="SurveyAttemptReport(Survey.SURVEY_ID)" style="cursor:pointer;" class="fa fa-file-text-o"></span>&nbsp;*@
+                                        <button type="submit" data-toggle="modal" data-target="#DisplayRRQSelector" class="btn btn-default"><i class="fa fa-search"></i></button>
                                     </th>
                                 </tr>
                             </tbody>
@@ -94,4 +94,22 @@
             </div>
         </div>
     </section>
+
+    @* Popup to Show Students Enlarge Image *@
+    <div class="modal" id="DisplayRRQSelector" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" style="margin:0px 10px 0px 10px;">
+                    <form class="form-horizontal" name="ShowRRQSelector">
+                        <div class="form-group">
+                            <div style="height:600px;">
+                                <iframe height="600" width="570" style="border: none" src="http://localhost:55082/Index.html"></iframe>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @* Popup to Show Students Enlarge Image *@
 </div>
