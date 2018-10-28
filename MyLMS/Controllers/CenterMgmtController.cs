@@ -19,6 +19,24 @@ namespace MyLMS.Controllers
             return View();
         }
 
+        public ActionResult ViewClassrooms()
+        {
+            return View();
+        }
+
+        public ActionResult CenterActivityLogs()
+        {
+            return View();
+        }
+        public ActionResult RRQResponseEntry()
+        {
+            return View();
+        }
+        public ActionResult Dashboard()
+        {
+            return View();
+        }
+
         public ActionResult ViewCenters()
         {
             return View();
@@ -62,6 +80,29 @@ namespace MyLMS.Controllers
 
             }
         }
+
+        [HttpPost]
+        public void SaveClassroom(string ClassRoomName, int CenterID, int SittingCapacity)
+        {
+            CenterModel CentObj1 = new CenterModel();
+            SqlParameter[] SParam = new SqlParameter[4];
+            SParam[0] = new SqlParameter("@ClassRoomName", SqlDbType.VarChar);
+            SParam[0].Value = ClassRoomName;
+            SParam[1] = new SqlParameter("@CenterID", SqlDbType.Int);
+            SParam[1].Value = CenterID;
+            SParam[2] = new SqlParameter("@SittingCapacity", SqlDbType.Int);
+            SParam[2].Value = SittingCapacity;
+            SParam[3] = new SqlParameter("@CreatedBy", SqlDbType.Int);
+            SParam[3].Value = Convert.ToInt32(Session["USER_ID"]);
+            try
+            {
+                CentObj1.SaveClassRoom(SParam);
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
 
         [HttpGet]
         public string GetCenters()
