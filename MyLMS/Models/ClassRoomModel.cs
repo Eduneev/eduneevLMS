@@ -13,18 +13,4 @@ namespace MyLMS.Models
         public string LastUsedCommand { get; set; }
     }
 
-    public string SaveClassRoom(SqlParameter[] sparams)
-    {
-        string res = "Failure..";
-        try
-        {
-            res = DAL.ExecuteScalar("SaveClassroom", sparams);
-        }
-        catch (Exception ex)
-        {
-            res = ex.Message;
-            throw;
-        }
-        return res;
-    }
 }
