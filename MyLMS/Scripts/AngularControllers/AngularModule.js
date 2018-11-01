@@ -13,6 +13,7 @@ myapp.constant('Constants', {
 
     Profile: {
         RRQ: "rrq",
+        TWOWAYCALL: "2WayCall"
     },
 
     Action: {
@@ -21,7 +22,9 @@ myapp.constant('Constants', {
         END: "end",
         NEXT: "next",
         TEACHERCONNECTION: "teacher",
-        CLASSROOMCONNECTION: "classroom"
+        CLASSROOMCONNECTION: "classroom",
+        JOIN: "join",
+        LEAVE: "leave"
     },
 
     Message: {
@@ -31,6 +34,11 @@ myapp.constant('Constants', {
         ACTION: 'action',
         RRQID: "RrqID",
         QID: "qID",
-        WSID: "wsID"
+        WSID: "wsID",
+        CHANNEL: "channel",
+        STUDIONAME: "StudioName",
+        STUDIOID: "StudioID",
+        CLASSROOMNAME: "ClassroomName",
+        CLASSROOMID: "ClassroomID"
     }
 });
