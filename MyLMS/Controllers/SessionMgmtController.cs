@@ -103,6 +103,20 @@ namespace MyLMS.Controllers
         }
 
         [HttpGet]
+        public string GetStudio(int id)
+        {
+            SqlParameter[] FObj = new SqlParameter[1];
+            FObj[0] = new SqlParameter("@SessionID", SqlDbType.Int);
+            FObj[0].Value = id;
+            DataTable StudiosList = DAL.GetDataTable("GetStudio", FObj);
+
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(StudiosList);
+            return JSONString;
+        }
+
+
+        [HttpGet]
         public string GetTop10Students()
         {
             SqlParameter[] RRQObj = new SqlParameter[1];
@@ -168,6 +182,20 @@ namespace MyLMS.Controllers
                 return -1;
             }
         }
+
+        [HttpGet]
+        public string GetChannel(int id)
+        {
+            string channel = string.Empty;
+            SqlParameter[] FObj = new SqlParameter[1];
+            FObj[0] = new SqlParameter("@SessionID", SqlDbType.Int);
+            FObj[0].Value = id;
+            DataTable val = DAL.GetDataTable("GetChannel", FObj);
+            if (val.Rows.Count > 0)
+                channel = Convert.ToString(Convert.IsDBNull(val.Rows[0]["ChannelName"]) ? string.Empty : val.Rows[0]["ChannelName"]);
+            return channel;
+        }
+
 
         [HttpGet]
         public string GetStartedSessions(int id)
