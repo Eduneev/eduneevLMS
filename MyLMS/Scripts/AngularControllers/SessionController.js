@@ -1,4 +1,4 @@
-﻿myapp.controller('SessionCntrl', ['$scope', '$http', 'Socket', 'Constants', '$rootScope', function ($scope, $http, Socket, Constants, $rootScope) {
+﻿myapp.controller('SessionCntrl', ['$scope', '$http', 'Socket', 'TwoWaySocket', 'Constants', '$rootScope', function ($scope, $http, Socket, TwoWaySocket, Constants, $rootScope) {
 
     $scope.SessionID = 0;
 
@@ -10,6 +10,13 @@
             .then(function (result) {
                 $scope.StudioList = result.data;
                 $scope.StudioTextToShow = 'Please select studio..'
+            });
+    }
+    function GetSessionStudio(SessionID) {
+        $http.get('/SessionMgmt/GetStudio/' + SessionID)
+            .then(function (result) {
+                console.log(result.data[0]);
+                return result.data[0];
             });
     }
 
@@ -69,6 +76,13 @@
                 return result.data;
             });
     };
+
+    function GetChannel(SessionID) {
+        $http.get('/SessionMgmt/GetChannel/' + SessionID)
+            .then(function (result) {
+                return result.data;
+            });
+    }
 
     $scope.GetSessions = function () {
         $http.get('/SessionMgmt/GetSessions')
@@ -171,13 +185,57 @@
 
     }
 
+    function StartTwoWayCall(btnType, SessionID) {
+
+        $http.get('/SessionMgmt/GetStudio/' + SessionID)
+            .then(function (result) {
+                var studio = result.data[0];
+
+                $http.get('/SessionMgmt/GetChannel/' + SessionID)
+                    .then(function (result) {
+                        var channel = result.data;
+                        if (btnType === 'Start') {
+                            ws2 = TwoWaySocket.StartSocket();
+
+                            ws2.onError(function () {
+                                alert("Unable to reach TwoWayCall Server.");
+                            })
+
+                            //var channel = GetChannel(_SessionID);
+
+                            ws2.onOpen(function () {
+                                ws2.send(JSON.stringify({
+                                    profile: Constants.Profile['TWOWAYCALL'],
+                                    type: Constants.Events['CONNECTION'],
+                                    StudioName: studio.StudioName,
+                                    StudioId: studio.StudioID,
+                                    channel: channel
+                                }));
+                            })
+                        }
+                        else {
+                            var ws2 = TwoWaySocket.StartSocket();
+                            ws2.onOpen(function () {
+                                ws2.send(JSON.stringify({
+
+                                }));
+                            })
+                        }
+                    });
+
+            });
+    }
+
     $scope.StartStopSession = function (btnType) {
         //debugger;
         var _SessionID = $scope.SessionID;
+
         if (_SessionID == 0) {
             alert("Please select a session!");
         }
         else {
+            StartTwoWayCall(btnType, _SessionID);
+            
             var obs = new OBSWebSocket();
             obs.connect({ address: 'localhost:4444' })
                 .catch(err => {
@@ -201,12 +259,11 @@
                 $scope.body = 'Session started successfully!!';
                 // Start websoket connection
 
-                try {
-                    var ws = Socket.StartSocket();
-                }
-                catch (e) {
-                    alert("Unable to Connect to RRQ Server.")
-                }
+                var ws = Socket.StartSocket();
+
+                ws.onError(function () {
+                    alert("Unable to Connect to RRQ Server.");
+                });
 
                 $http({
                     method: 'POST',
@@ -214,7 +271,6 @@
                     data: { SessionID: $scope.SessionID }
                 }).then(function (result) {
                 });
-
 
                 ws.onOpen(function () {
                     console.log("Started socket.");
@@ -226,6 +282,8 @@
                     }));
 
                 });
+
+                
             }
             else if (btnType === 'Stop') {
                 $scope.body = 'Session stopped successfully!!';
