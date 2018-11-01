@@ -217,7 +217,9 @@
                             var ws2 = TwoWaySocket.StartSocket();
                             ws2.onOpen(function () {
                                 ws2.send(JSON.stringify({
-
+                                    profile: Constants.Profile['TWOWAYCALL'],
+                                    type: Constants.Events['CLOSE'],
+                                    channel: channel
                                 }));
                             })
                         }
