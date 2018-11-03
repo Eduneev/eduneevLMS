@@ -250,11 +250,12 @@
     <Content Include="Scripts\AngularControllers\RRQSocketModule.js" />
     <Content Include="Scripts\AngularControllers\SessionController.js" />
     <Content Include="Scripts\AngularControllers\StudentController.js" />
+    <Content Include="Scripts\AngularControllers\TwoWayCallController.js" />
     <Content Include="Scripts\AngularControllers\WebAdminController.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-	<Content Include="Scripts\obs-websocket.js" />
-	<Content Include="Scripts\obs-websocket.min.js" />
+    <Content Include="Scripts\obs-websocket.js" />
+    <Content Include="Scripts\obs-websocket.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -768,7 +769,7 @@
     <Content Include="Views\SessionMgmt\Classrooms.cshtml" />
     <Content Include="Views\CenterMgmt\RRQResponseEntry.cshtml" />
     <Content Include="Views\CenterMgmt\Dashboard.cshtml" />
-    <Content Include="Views\StudentMgmt\RRQManualEntry.cshtml" />  
+    <Content Include="Views\StudentMgmt\RRQManualEntry.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -784,7 +785,7 @@
     <Folder Include="Template\plugins\datatables\extensions\TableTools\" />
     <Folder Include="Template\plugins\datatables\images\" />
     <Folder Include="Views\Admin\" />
-	<Folder Include="Views\TroubleTicket\" />
+    <Folder Include="Views\TroubleTicket\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
