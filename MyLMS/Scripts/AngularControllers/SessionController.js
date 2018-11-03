@@ -241,7 +241,7 @@
             var obs = new OBSWebSocket();
             obs.connect({ address: 'localhost:4444' })
                 .catch(err => {
-                    alert("Unable to Connect to OBS. Please start streaming manually.")
+                    alert("Unable to Connect to 2WayLiveStudio. Please start streaming manually.")
                 });
             obs.onConnectionOpened(() => {
                 if (btnType === 'Start') {
@@ -316,8 +316,20 @@
     };
 
     $scope.DisplayClassrooms = function () {
-        window.location.href = "/SessionMgmt/Classrooms/";
+        var _SessionID = $scope.SessionID;
+
+        if (_SessionID == 0) {
+            alert("Please select a session!");
+        }
+        else {
+            $http.get('/SessionMgmt/GetChannel/' + _SessionID)
+                .then(function (result) {
+                    var channel = result.data;
+                    window.location.href = "/SessionMgmt/Classrooms?SessionID=" + _SessionID + "&Channel=" + channel;
+                });
+        }
     }
+
     $scope.ShowNameFaceScreen = function () {
         window.location.href = "/SessionMgmt/NameFaceScreen/";
     };
@@ -424,12 +436,3 @@ myapp.controller('NameFaceScreenCntrl', function ($scope, $http) {
     }
 });
 
-myapp.controller('SkypeCallCntrl', function ($scope, $http) {
-    //GetClassrooms();
-    //function GetClassrooms() {
-    //    $http.get('/SessionMgmt/GetClassrooms')
-    //    .then(function (result) {
-    //        $scope.ClassroomsList = result.data;
-    //    });
-    //}
-});
