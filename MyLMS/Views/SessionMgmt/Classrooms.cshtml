@@ -5,10 +5,10 @@
 }
 
 @section scripts{
-    <script src="~/Scripts/AngularControllers/SessionController.js"></script>    
+    <script src="~/Scripts/AngularControllers/TwoWayCallController.js"></script>    
 }
-<div ng-controller="SkypeCallCntrl">
-    <!-- Content Header (Page header) -->
+<div data-ng-controller="TwoWayCallCntrl">
+    <!-- Content Header (Page header) --> 
     <section class="content-header">
         <h1>
             View Classrooms
@@ -39,52 +39,31 @@
                     <div class="col-md-12">
                         <table class="table table-hover">
                             <thead>
-                                <tr>                                    
+                                <tr>
                                     <th>Sl No.</th>
                                     <th>Center Name</th>
                                     <th>Classroom</th>
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody ng-repeat="data in ConnectedList">
                                 <tr>
-                                    <td>1. </td>
-                                    <td>Pritampura Center</td>
-                                    <td>Section A</td>
-                                    <td><button type="button" class="btn btn-success" id="btnAddProgram"><i class="fa fa-skype"> </i> Skype Call</button></td>
+                                    <td>
+                                        {{$index+1}}.
+                                    </td>
+                                    <td>
+                                        <span>{{data.CenterName}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{data['ClassroomName']}}</span>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-success" id="btnCall" ng-click="CallEvent(data.wsID, true)">Call</button>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger" id="btnStop" ng-click="CallEvent(data.wsID, false)">Disconnect</button>
+                                    </td>
                                 </tr>
-                                <tr>
-                                    <td>2. </td>
-                                    <td>Pritampura Center</td>
-                                    <td>Section B</td>
-                                    <td><button type="button" class="btn btn-success" id="btnAddProgram"><i class="fa fa-skype"> </i> Skype Call</button></td>
-                                </tr>
-                                <tr>
-                                    <td>3. </td>
-                                    <td>Okhla Center</td>
-                                    <td>Section A</td>
-                                    <td><button type="button" class="btn btn-success" id="btnAddProgram"><i class="fa fa-skype"> </i> Skype Call</button></td>
-                                </tr>
-                                <tr>
-                                    <td>4. </td>
-                                    <td>Naraina Center</td>
-                                    <td>Section A</td>
-                                    <td><button type="button" class="btn btn-success" id="btnAddProgram"><i class="fa fa-skype"> </i> Skype Call</button></td>
-                                </tr>
-                                <tr>
-                                    <td>5. </td>
-                                    <td>Naraina Center</td>
-                                    <td>Section B</td>
-                                    <td><button type="button" class="btn btn-success" id="btnAddProgram"><i class="fa fa-skype"> </i> Skype Call</button></td>
-                                </tr>
-                                <tr>
-                                    <td>6. </td>
-                                    <td>Naraina Center</td>
-                                    <td>Section C</td>
-                                    <td><button type="button" class="btn btn-success" id="btnAddProgram"><i class="fa fa-skype"> </i> Skype Call</button></td>
-                                </tr>
-
-
                             </tbody>
                         </table>
                     </div>
