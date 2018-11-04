@@ -92,8 +92,8 @@ namespace MyLMS.Controllers
             SParam[1].Value = CenterID;
             SParam[2] = new SqlParameter("@SittingCapacity", SqlDbType.Int);
             SParam[2].Value = SittingCapacity;
-            SParam[3] = new SqlParameter("@CreatedBy", SqlDbType.Int);
-            SParam[3].Value = Convert.ToInt32(Session["USER_ID"]);
+            SParam[3] = new SqlParameter("@LastUsedCommand", SqlDbType.Int);
+            SParam[3].Value = "";
             try
             {
                 CentObj1.SaveClassRoom(SParam);
