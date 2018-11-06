@@ -92,35 +92,6 @@
             </div>
         </section>
 
-        @* Popup to Show Add Class Coordinator Window *@
-        <div class="modal" id="AddClassCoordinator" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h3 class="text-info">Add Class Coordinator</h3>
-                    </div>
-                    <div class="modal-body" style="margin:0px 10px 0px 10px;">
-                        <form class="form-horizontal" name="UpdateEmployeeForm">
-                            <div class="form-group">
-                                <label class="text-info"> Classroom</label>
-                                <input type="text" name="ClassroomName" ng-model="ClassroomName" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter classroom name...">
-                            </div>
-                            <div class="form-group">
-                                <label class="text-info"> Coordinator</label>
-                                <input type="text" name="SittingCapacity" ng-model="SittingCapacity" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter sitting capacity of a classroom...">
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-success" ng-click="SaveProgram()" id="btnUpdate" data-dismiss="modal">Save</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @* Popup to Show Add Class Coordinator Window *@
-
         @* Popup to Show Add Equipment Window *@
         <div class="modal" id="AddEquipment" role="dialog">
             <div class="modal-dialog">
