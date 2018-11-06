@@ -767,7 +767,6 @@
     <Content Include="Views\Helpdesk\ViewMyTickets.cshtml" />
     <Content Include="Views\Helpdesk\TicketDetails.cshtml" />
     <Content Include="Views\SessionMgmt\Classrooms.cshtml" />
-    <Content Include="Views\CenterMgmt\RRQResponseEntry.cshtml" />
     <Content Include="Views\CenterMgmt\Dashboard.cshtml" />
     <Content Include="Views\StudentMgmt\RRQManualEntry.cshtml" />
   </ItemGroup>
