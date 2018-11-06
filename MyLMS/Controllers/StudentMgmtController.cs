@@ -94,11 +94,13 @@ namespace MyLMS.Controllers
         }
 
         [HttpGet]
-        public string GetStudentsForAttendance()
+        public string GetStudentsForAttendance(int id)
         {
-            SqlParameter[] FObj = new SqlParameter[1];
+            SqlParameter[] FObj = new SqlParameter[2];
             FObj[0] = new SqlParameter("@UserID", SqlDbType.Int);
             FObj[0].Value = Convert.ToInt32(Session["USER_ID"]);
+            FObj[1] = new SqlParameter("@SessionID", SqlDbType.Int);
+            FObj[1].Value = id;
             DataTable StudentsList = DAL.GetDataTable("GetStudentsForAttendance", FObj);
 
             string JSONString = string.Empty;
