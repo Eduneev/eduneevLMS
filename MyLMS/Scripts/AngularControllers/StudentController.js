@@ -31,6 +31,7 @@
             url: '/StudentMgmt/SaveStudent',
             data: { StudentName: _StudentName, Code: _Code, Gender: _Gender, ProgramID: _ProgramID, CourseID: _CourseID, Email: _Email, Mobile: _Mobile, Landline: _Landline, GuardianName: _GuardianName, GuardianContactNo: _GuardianContactNo, BirthPlace: _BirthPlace, SchoolName: _SchoolName, Address: _Address, Pincode: _Pincode }
         }).then(function (result) {
+            alert("Student Saved Successfully");
             GetCourseDetails();
         });
     }

@@ -399,9 +399,7 @@ myapp.controller('SessionAttendanceCntrl', function ($scope, $http) {
     }
 
     $scope.InitiateAttendance = function () {
-        debugger;
         var _SessionID = $scope.SessionID;
-        console.log(_SessionID)
         $http({
             method: 'POST',
             url: '/StudentMgmt/InitiateAttendance',
