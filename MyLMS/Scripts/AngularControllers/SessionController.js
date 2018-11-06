@@ -401,12 +401,13 @@ myapp.controller('SessionAttendanceCntrl', function ($scope, $http) {
     $scope.InitiateAttendance = function () {
         debugger;
         var _SessionID = $scope.SessionID;
+        console.log(_SessionID)
         $http({
             method: 'POST',
             url: '/StudentMgmt/InitiateAttendance',
             data: { SessionID: _SessionID }
         }).then(function (result) {
-            window.location.href = "/SessionMgmt/StudentAttendance/";
+            window.location.href = "/SessionMgmt/StudentAttendance?SessionID=" + _SessionID;
         });
     };
 });
