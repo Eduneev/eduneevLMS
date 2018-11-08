@@ -422,6 +422,7 @@ myapp.controller('NameFaceScreenCntrl', function ($scope, $http) {
     $scope.GetStudentsByCenterID = function () {
         $http.get('/SessionMgmt/GetStudentsByCenterID/' + $scope.CenterID)
             .then(function (result) {
+                console.log(result.data)
                 $scope.StudentsList = result.data;
             });
     }

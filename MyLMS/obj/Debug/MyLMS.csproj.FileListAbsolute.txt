@@ -226,3 +226,4 @@ C:\Users\sanat\Documents\Github\eduneevLMS\MyLMS\obj\Debug\MyLMS.dll
 C:\Users\sanat\Documents\Github\eduneevLMS\MyLMS\obj\Debug\MyLMS.pdb
 C:\Users\sanat\Documents\Github\eduneevLMS\MyLMS\bin\System.Net.Http.Formatting.dll
 C:\Users\sanat\Documents\Github\eduneevLMS\MyLMS\bin\System.Web.Http.dll
+C:\Users\sanat\Documents\Github\eduneevLMS\MyLMS\bin\UtilityClass.dll
