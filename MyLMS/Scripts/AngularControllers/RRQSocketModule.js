@@ -14,3 +14,16 @@
     };
     return methods;
 });
+
+myapp.factory('TwoWaySocket', function ($websocket) {
+    var ws;
+
+    var methods = {
+        ws: ws,
+        StartSocket: function () {
+            ws = $websocket("ws://localhost:2000");
+            return ws;
+        }
+    }
+    return methods;
+});

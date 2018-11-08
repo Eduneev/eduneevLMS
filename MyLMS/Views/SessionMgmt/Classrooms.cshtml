@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "Classrooms";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+@section scripts{
+    <script src="~/Scripts/AngularControllers/TwoWayCallController.js"></script>    
+}
+<div data-ng-controller="TwoWayCallCntrl">
+    <!-- Content Header (Page header) --> 
+    <section class="content-header">
+        <h1>
+            View Classrooms
+            <small>View connected classrooms</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+            <li><a href="#">View Classrooms</a></li>
+        </ol>
+    </section>
+
+    <!-- Form Body (Page body)-->
+    <section class="content">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <div class="pull-left">
+                    <div class="btn-group">
+                        @*<button type="button" class="btn btn-success" id="btnAddProgram" ng-click="StartStopSession('Start')"><i class="glyphicon glyphicon-play"> </i> Start Session</button>*@
+                        @*<button type="button" class="btn btn-danger" id="btnAddCourse" ng-click="StartStopSession('Stop')"><i class="glyphicon glyphicon-stop"> </i> Stop Session</button>*@
+                    </div>
+                </div>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Sl No.</th>
+                                    <th>Center Name</th>
+                                    <th>Classroom</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody ng-repeat="data in ConnectedList">
+                                <tr>
+                                    <td>
+                                        {{$index+1}}.
+                                    </td>
+                                    <td>
+                                        <span>{{data.CenterName}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{data['ClassroomName']}}</span>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-success" id="btnCall" ng-click="CallEvent(data.wsID, true)">Call</button>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger" id="btnStop" ng-click="CallEvent(data.wsID, false)">Disconnect</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+

@@ -1,0 +1,125 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html ng-app="MyModule">
+    
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DisplayRRQ</title>
+    <link rel="stylesheet" href="~/Template/bootstrap/css/bootstrap.min.css">
+    <script src="~/Template/plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- daterange picker -->
+    <link rel="stylesheet" href="~/Template/plugins/daterangepicker/daterangepicker.css">
+    <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="~/Template/plugins/datepicker/datepicker3.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="~/Template/plugins/iCheck/all.css">
+    <!-- Bootstrap Color Picker -->
+    <link rel="stylesheet" href="~/Template/plugins/colorpicker/bootstrap-colorpicker.min.css">
+    <!-- Bootstrap time Picker -->
+    <link rel="stylesheet" href="~/Template/plugins/timepicker/bootstrap-timepicker.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="~/Template/plugins/select2/select2.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Template/dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="~/Template/dist/css/skins/_all-skins.min.css">
+
+    
+
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular-sanitize.js" type="text/javascript"></script>
+    <script src="~/Scripts/AngularControllers/AngularModule.js"></script>
+    <!-- Bootstrap 3.3.6 -->
+    
+    <script src="~/Scripts/AngularControllers/QuestionBankController.js"></script>
+
+    <style>
+        .form-group input[type="checkbox"] {
+            display: none;
+        }
+
+            .form-group input[type="checkbox"] + .btn-group > label span {
+                width: 20px;
+            }
+
+                .form-group input[type="checkbox"] + .btn-group > label span:first-child {
+                    display: none;
+                }
+
+                .form-group input[type="checkbox"] + .btn-group > label span:last-child {
+                    display: inline-block;
+                }
+
+            .form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
+                display: inline-block;
+            }
+
+            .form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
+                display: none;
+            }
+
+        .label-text {
+            font-family: Effra;
+            font-size: 16px;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body data-ng-controller="QuestionCntrl" data-ng-init="GetQuestionDetails()">
+    <div>
+        <table class="table">
+            <tbody ng-repeat="Q in QuestionList | startFrom:currentPage*RRQpageSize | limitTo:RRQpageSize">
+                <tr style="background-color:#cbccd1">
+                    <td>
+                        <div class="callout" style="height:200px; background-color:#35556d; color:white">
+                            <h2>Q-{{currentPage+1}}. <span><strong>{{Q.Question.QuestionText}}</strong></span></h2>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="background-color:#cbccd1">
+                    <td colspan="3">
+                        <div style="height:50px;">
+                            <input type="checkbox" ng-model="myVar" ng-click="StartTimer()" class="minimal-red pull-left" name="fancy-checkbox-primary" id="fancy-checkbox-primary" autocomplete="off"> Display Options
+                            <div class="col-lg-12 text-center" style="font-size:20px; font-weight:bold;">Choose your options within <span style="color:darkred" id="time"></span> minutes!</div>
+                        </div>
+                        
+                        <div ng-show="myVar" style="margin-left:50px; height:80px" ng-repeat="O in Q.Options" class="callout callout-success">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div style="color: white; font-size:30px; font-weight:bold; height:20px; position:absolute; margin-left:10px;">{{$index+1}}</div>
+                                    </td>
+                                    <td>
+                                        <div style="margin-left: 50px; margin-top:10px; position:absolute; font-size:18px; font-weight:bold">{{O.OptionText}}</div>
+                                    </td>
+                                </tr>
+                            </table>                            
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button class="btn btn-flat" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+                        Previous
+                        </button>
+                        @*{{currentPage+1}}/{{RRQnumberOfPages()}}*@
+                        <button class="btn btn-flat" ng-disabled="currentPage >= data.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+                            Next
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

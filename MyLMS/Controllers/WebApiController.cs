@@ -71,7 +71,6 @@ namespace MyLMS.Controllers
             return VlcCommand;
         }
 
-
         [Route("api/{sessionId:int}/getRRQ")]
         [HttpGet]
         public RRQ GetRRQ(int sessionId)

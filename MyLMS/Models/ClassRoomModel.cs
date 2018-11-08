@@ -12,4 +12,5 @@ namespace MyLMS.Models
         public int CenterId { get; set; }
         public string LastUsedCommand { get; set; }
     }
+
 }

@@ -10,6 +10,7 @@ namespace MyLMS.Models
         public int OptionID { get; set; }
         public int QID { get; set; }
         public int OptionSeq { get; set; }
+        public string OptionChar { get; set; }
         public string OptionText { get; set; }
         public int Mark { get; set; }
         public bool IsCorrect { get; set; }

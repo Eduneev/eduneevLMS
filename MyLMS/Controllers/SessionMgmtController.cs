@@ -34,6 +34,15 @@ namespace MyLMS.Controllers
         {
             return View();
         }
+        public ActionResult NameFaceScreen()
+        {
+            return View();
+        }
+        public ActionResult Classrooms()
+        {
+            return View();
+        }
+
 
         public ActionResult RRQIntroduction(int ID)
         {
@@ -92,6 +101,20 @@ namespace MyLMS.Controllers
             JSONString = JsonConvert.SerializeObject(StudiosList);
             return JSONString;
         }
+
+        [HttpGet]
+        public string GetStudio(int id)
+        {
+            SqlParameter[] FObj = new SqlParameter[1];
+            FObj[0] = new SqlParameter("@SessionID", SqlDbType.Int);
+            FObj[0].Value = id;
+            DataTable StudiosList = DAL.GetDataTable("GetStudio", FObj);
+
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(StudiosList);
+            return JSONString;
+        }
+
 
         [HttpGet]
         public string GetTop10Students()
@@ -159,6 +182,20 @@ namespace MyLMS.Controllers
                 return -1;
             }
         }
+
+        [HttpGet]
+        public string GetChannel(int id)
+        {
+            string channel = string.Empty;
+            SqlParameter[] FObj = new SqlParameter[1];
+            FObj[0] = new SqlParameter("@SessionID", SqlDbType.Int);
+            FObj[0].Value = id;
+            DataTable val = DAL.GetDataTable("GetChannel", FObj);
+            if (val.Rows.Count > 0)
+                channel = Convert.ToString(Convert.IsDBNull(val.Rows[0]["ChannelName"]) ? string.Empty : val.Rows[0]["ChannelName"]);
+            return channel;
+        }
+
 
         [HttpGet]
         public string GetStartedSessions(int id)
@@ -421,6 +458,101 @@ namespace MyLMS.Controllers
 
             string finalString = new String(stringChars);
             return finalString;
+        }
+
+        [HttpGet]
+        public string GetDegreeOfDifficulty()
+        {
+            SqlParameter[] FObj = new SqlParameter[1];
+            FObj[0] = new SqlParameter("@RRQ_ID", SqlDbType.Int);
+            FObj[0].Value = 1; //****************************DEFINE RRQ ID;
+            DataTable StudiosList = DAL.GetDataTable("GetDegreeOfDifficulty", FObj);
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(StudiosList);
+            return JSONString;
+        }
+
+        public string GetStudentsByResponse(int id, int OptionSeq)
+        {
+            SqlParameter[] FObj = new SqlParameter[2];
+            FObj[0] = new SqlParameter("@QID", SqlDbType.Int);
+            FObj[0].Value = id;
+            FObj[1] = new SqlParameter("@OptionSeq", SqlDbType.Int);
+            FObj[1].Value = OptionSeq;
+            DataTable StudentsDetails = DAL.GetDataTable("GetStudentsByResponse", FObj);
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(StudentsDetails);
+            return JSONString;
+        }
+
+        public string GetDashboardData(int id)
+        {
+            SqlParameter[] FObj = new SqlParameter[2];
+            FObj[0] = new SqlParameter("@RRQ_ID", SqlDbType.Int);
+            FObj[0].Value = 1;
+            FObj[1] = new SqlParameter("@QID", SqlDbType.Int);
+            FObj[1].Value = id;
+            DataTable DashboardData = DAL.GetDataTable("GetDashboardData", FObj);
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(DashboardData);
+            return JSONString;
+        }
+
+        public string GetDashboardOptionGraph(int id)
+        {
+            SqlParameter[] FObj = new SqlParameter[2];
+            FObj[0] = new SqlParameter("@RRQ_ID", SqlDbType.Int);
+            FObj[0].Value = 1;
+            FObj[1] = new SqlParameter("@QID", SqlDbType.Int);
+            FObj[1].Value = id;
+            DataTable DashboardGraphData = DAL.GetDataTable("GetDashboardOptionGraph", FObj);
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(DashboardGraphData);
+            return JSONString;
+        }
+
+
+        //[HttpGet]
+        //public string GetClassrooms()
+        //{
+        //    DataTable AllClassrooms = DAL.GetDataTable("GetAllClassrooms");
+        //    string JSONString = string.Empty;
+        //    JSONString = JsonConvert.SerializeObject(AllClassrooms);
+        //    return JSONString;
+        //}
+
+        public string GetCentersForEntity()
+        {
+            SqlParameter[] CenterSessionObj = new SqlParameter[1];
+            CenterSessionObj[0] = new SqlParameter("@USER_ID", SqlDbType.Int);
+            CenterSessionObj[0].Value = Convert.ToInt32(Session["USER_ID"]);
+            DataTable CentersList = DAL.GetDataTable("GetCenterForEntity", CenterSessionObj);
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(CentersList);
+            return JSONString;
+        }
+
+        [HttpGet]
+        public string GetStudentsByCenterID(int id)
+        {
+            SqlParameter[] FObj = new SqlParameter[1];
+            FObj[0] = new SqlParameter("@CenterID", SqlDbType.Int);
+            FObj[0].Value = id;
+            DataTable StudentsList = DAL.GetDataTable("GetStudentsByCenterID", FObj);
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(StudentsList);
+            return JSONString;
+        }
+
+        public string GetStudentsByID(int id)
+        {
+            SqlParameter[] StudObj = new SqlParameter[1];
+            StudObj[0] = new SqlParameter("@StudentID", SqlDbType.Int);
+            StudObj[0].Value = id;
+            DataTable Student = DAL.GetDataTable("GetStudentsByID", StudObj);
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(Student);
+            return JSONString;
         }
     }
 }

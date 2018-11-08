@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "NewTicket";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+@section scripts{
+    <script src="~/Scripts/AngularControllers/HelpdeskController.js"></script>
+}
+
+
+<div ng-controller="HelpdeskCntrl">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            New Ticket
+            <small>Create New Ticket</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+            <li><a href="#">New Ticket</a></li>
+            @*<li class="active">Add Course</li>*@
+        </ol>
+    </section>
+
+    <!-- Form Body (Page body)-->
+    <section class="content">
+        <div class="box box-default">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <input type="text" ng-model="Subject" name="CenterName" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter subject text...">
+                        </div>
+                        <div class="form-group">
+                            <label>Contents</label>
+                            <textarea ng-model="TicketContent" rows="8" name="ContentText" class="form-control" placeholder="Enter trouble details..."></textarea>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">Attachment</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <table>
+                                <tr>
+                                    <td><input type="file" name="file" style="width:300px;" class="form-control" accept="application/pdf" onchange="angular.element(this).scope().selectFileforUpload(this.files)" required /></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="form-group" ng-show="ShowViewBtn.show">
+                            <a ng-href="{{ShowViewBtn.fileURL}}" target="_blank">
+                                <span style="font-size:14px;"><strong>Click here to view uploaded file.</strong></span>
+                            </a>
+                        </div>
+                        <div class="form-group">
+                            <img ng-show="ShowProgress.show" src="~/Template/images/progress.gif" alt="Progress" />
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary" id="btnUpdate" data-dismiss="modal" ng-click="SaveFile()"><i class="glyphicon glyphicon-open"> </i> Upload</button>
+                            <button type="button" class="btn btn-danger" id="btnUpdate" data-dismiss="modal" ng-click="DeleteFile()"><i class="glyphicon glyphicon-remove-sign"> </i> Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="box-footer">
+            <button type="submit" ng-click="SaveNewTicket()" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-default">Cancel</button>
+        </div>
+
+    </section>
+</div>
+

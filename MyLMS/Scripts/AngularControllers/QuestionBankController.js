@@ -12,6 +12,8 @@
      * 
      */
 
+    GetTags();
+
     $http({
         method: 'GET',
         url: '/SessionMgmt/GetSession'
@@ -166,6 +168,12 @@
         return Math.ceil($scope.QuestionList.length / $scope.RRQpageSize);
     }
 
+    function GetTags() {
+        $http.get('/QuestionBank/GetTags')
+            .then(function (result) {
+                $scope.TagsList = result.data;
+            });
+    }
 
     function CallstartTimer(duration, display) {
         var start = Date.now(),

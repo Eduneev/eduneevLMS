@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewBag.Title = "RRQManualEntry";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+@section scripts{
+    <script src="~/Scripts/table.js"></script>
+}
+<div>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            RRQ Manual Entry
+            <small>Enter Students Manually</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+            <li><a href="#">Manual Entry</a></li>
+        </ol>
+    </section>
+
+    <!-- Form Body (Page body)-->
+    <section class="content">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <div class="pull-left">
+                    <h4>RRQ-001</h4>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="excel-table table table-bordered">
+                            <thead>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="alert('Saved Successfully!!')">Save Responses</button>
+            </div>
+        </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="js/excel-table.js"></script>
+    <script>
+    $(function(){
+	  // Code to generate table dynamically
+        var rows = "", headerCols = "";
+        rows +='<tr>'
+        rows +='<th>Student Name</th>'
+        rows +='<th>Q-1</th>'
+        rows +='<th>Q-2</th>'
+        rows +='<th>Q-3</th>'
+        rows +='<th>Q-4</th>'
+        rows +='<th>Q-5</th>'
+        rows +='<th>Q-6</th>'
+        rows +='<th>Q-7</th>'
+        rows +='</tr>'
+        rows +='<tr>'
+          rows +='<td>Chandan Mohanty</td>'
+          rows +="<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows +="<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows +="<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows +="<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows +="<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows +="<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows +="<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows += "</tr>"
+          rows += '<tr>'
+          rows += '<td>Jimmy Kiran</td>'
+          rows += "<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows += "<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows += "<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows += "<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows += "<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows += "<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows += "<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows += "</tr>"
+          rows += '<tr>'
+          rows += '<td>Krishna Kaur</td>'
+          rows += "<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows += "<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows += "<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows += "<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows += "<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows += "<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows += "<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows += "</tr>"
+          rows += '<tr>'
+          rows += '<td>Ranjan Gupta</td>'
+          rows += "<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows += "<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows += "<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows += "<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows += "<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows += "<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows += "<td><input type='text'  style='width:20px;' class='editable' value='' /></td>"
+          rows += "</tr>"
+
+
+      //for(let row = 0; row < 7; row++){
+      //  rows += "<tr>";
+      //  for(let col = 0; col < 7; col++){
+	  //  	if(row===0){
+	  //  		headerCols += "<th> "+ col + "</th>";
+	  //  	}
+	  //  	if (col = 0) {
+	  //  	    rows += "<td><input type='text' readonly='readonly' style='width:20px;' class='editable' value='" + col + "' /></td>";
+	  //  	}
+	  //  	else
+	  //  	{
+	  //  	    rows += "<td><input type='text' style='width:20px;' class='editable' value='" + col + "' /></td>";
+	  //  	}
+
+      //  }
+      //  rows += "</tr>";
+      //}
+	  $(".excel-table thead").html("<tr>"+headerCols+"</tr>");
+      $(".excel-table tbody").html(rows);
+
+	  // This is how you can use the plugin in your jQuery app
+      $(".excel-table").exceltable();
+    });
+    </script>
+</div>

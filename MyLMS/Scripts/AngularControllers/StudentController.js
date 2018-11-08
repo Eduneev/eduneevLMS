@@ -31,6 +31,7 @@
             url: '/StudentMgmt/SaveStudent',
             data: { StudentName: _StudentName, Code: _Code, Gender: _Gender, ProgramID: _ProgramID, CourseID: _CourseID, Email: _Email, Mobile: _Mobile, Landline: _Landline, GuardianName: _GuardianName, GuardianContactNo: _GuardianContactNo, BirthPlace: _BirthPlace, SchoolName: _SchoolName, Address: _Address, Pincode: _Pincode }
         }).then(function (result) {
+            alert("Student Saved Successfully");
             GetCourseDetails();
         });
     }
@@ -52,15 +53,39 @@ myapp.controller('StudentViewCntrl', function ($scope, $http) {
     $scope.AddStudent = function () {
         window.location.href = "/StudentMgmt/RegisterStudent/";
     }
+
+    $scope.fileChanged = function (e) {
+        var files = e.target.files;
+        var fileReader = new FileReader();
+        fileReader.readAsDataURL(files[0]);
+        fileReader.onload = function (e) {
+            $scope.imgSrc = this.result;
+            $scope.$apply();
+        };
+    }
+
+    $scope.clear = function () {
+        $scope.imageCropStep = 1;
+        delete $scope.imgSrc;
+        delete $scope.result;
+        delete $scope.resultBlob;
+    };
 });
 
 myapp.controller('StudentAttendanceCntrl', function ($scope, $http) {
+
+
+
     GetStudents();
     function GetStudents() {
-        $http.get('/StudentMgmt/GetStudentsForAttendance')
-        .then(function (result) {
-            $scope.StudentsList = result.data;
-        });
+        var params = parseURLParams(window.location.href)
+        if ('SessionID' in params) {
+            $scope.SessionID = params['SessionID'][0]
+            $http.get('/StudentMgmt/GetStudentsForAttendance/' + $scope.SessionID)
+                .then(function (result) {
+                    $scope.StudentsList = result.data;
+                });
+        }
     }
 
     $scope.MarkAttendance = function (SessionID, StudentID) {
@@ -75,6 +100,26 @@ myapp.controller('StudentAttendanceCntrl', function ($scope, $http) {
     }
     $scope.AddStudent = function () {
         window.location.href = "/StudentMgmt/RegisterStudent/";
+    }
+
+    function parseURLParams(url) {
+        var queryStart = url.indexOf("?") + 1,
+            queryEnd = url.indexOf("#") + 1 || url.length + 1,
+            query = url.slice(queryStart, queryEnd - 1),
+            pairs = query.replace(/\+/g, " ").split("&"),
+            parms = {}, i, n, v, nv;
+
+        if (query === url || query === "") return;
+
+        for (i = 0; i < pairs.length; i++) {
+            nv = pairs[i].split("=", 2);
+            n = decodeURIComponent(nv[0]);
+            v = decodeURIComponent(nv[1]);
+
+            if (!parms.hasOwnProperty(n)) parms[n] = [];
+            parms[n].push(nv.length === 2 ? v : null);
+        }
+        return parms;
     }
 });
 

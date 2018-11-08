@@ -1,4 +1,4 @@
-﻿myapp.controller('SessionCntrl', ['$scope', '$http', 'Socket', 'Constants', '$rootScope', function ($scope, $http, Socket, Constants, $rootScope) {
+﻿myapp.controller('SessionCntrl', ['$scope', '$http', 'Socket', 'TwoWaySocket', 'Constants', '$rootScope', function ($scope, $http, Socket, TwoWaySocket, Constants, $rootScope) {
 
     $scope.SessionID = 0;
 
@@ -10,6 +10,12 @@
             .then(function (result) {
                 $scope.StudioList = result.data;
                 $scope.StudioTextToShow = 'Please select studio..'
+            });
+    }
+    function GetSessionStudio(SessionID) {
+        $http.get('/SessionMgmt/GetStudio/' + SessionID)
+            .then(function (result) {
+                return result.data[0];
             });
     }
 
@@ -70,6 +76,13 @@
             });
     };
 
+    function GetChannel(SessionID) {
+        $http.get('/SessionMgmt/GetChannel/' + SessionID)
+            .then(function (result) {
+                return result.data;
+            });
+    }
+
     $scope.GetSessions = function () {
         $http.get('/SessionMgmt/GetSessions')
             .then(function (result) {
@@ -100,7 +113,7 @@
     };
 
     $scope.StartStudioChat = function (SessionID, StudioName) {
-        debugger;
+        //debugger;
         var url = "http://localhost:55082/StudioChat.aspx?SessionID=" + SessionID + "&StudioName=" + StudioName;
         var form = document.createElement("form");
         form.method = "POST";
@@ -171,24 +184,69 @@
 
     }
 
+    function StartTwoWayCall(btnType, SessionID) {
+
+        $http.get('/SessionMgmt/GetStudio/' + SessionID)
+            .then(function (result) {
+                var studio = result.data[0];
+
+                $http.get('/SessionMgmt/GetChannel/' + SessionID)
+                    .then(function (result) {
+                        var channel = result.data;
+                        if (btnType === 'Start') {
+                            ws2 = TwoWaySocket.StartSocket();
+
+                            ws2.onError(function () {
+                                alert("Unable to reach TwoWayCall Server.");
+                            })
+
+                            //var channel = GetChannel(_SessionID);
+
+                            ws2.onOpen(function () {
+                                ws2.send(JSON.stringify({
+                                    profile: Constants.Profile['TWOWAYCALL'],
+                                    type: Constants.Events['CONNECTION'],
+                                    StudioName: studio.StudioName,
+                                    StudioId: studio.StudioID,
+                                    channel: channel
+                                }));
+                            })
+                        }
+                        else {
+                            var ws2 = TwoWaySocket.StartSocket();
+                            ws2.onOpen(function () {
+                                ws2.send(JSON.stringify({
+                                    profile: Constants.Profile['TWOWAYCALL'],
+                                    type: Constants.Events['CLOSE'],
+                                    channel: channel
+                                }));
+                            })
+                        }
+                    });
+
+            });
+    }
+
     $scope.StartStopSession = function (btnType) {
         //debugger;
         var _SessionID = $scope.SessionID;
+
         if (_SessionID == 0) {
             alert("Please select a session!");
         }
         else {
+            StartTwoWayCall(btnType, _SessionID);
+            
             var obs = new OBSWebSocket();
             obs.connect({ address: 'localhost:4444' })
                 .catch(err => {
-                    alert("Unable to Connect to OBS. Please start streaming manually.")
+                    alert("Unable to Connect to 2WayLiveStudio. Please start streaming manually.")
                 });
             obs.onConnectionOpened(() => {
                 if (btnType === 'Start') {
 
                     $http.get('/SessionMgmt/GetObsStream/' + $scope.SessionID)
                     .then(function (result) {
-                        console.log("Starting stream: " + result.data);
                         obs.startStreaming({ 'stream': result.data });
                     });
                 }
@@ -201,12 +259,11 @@
                 $scope.body = 'Session started successfully!!';
                 // Start websoket connection
 
-                try {
-                    var ws = Socket.StartSocket();
-                }
-                catch (e) {
-                    alert("Unable to Connect to RRQ Server.")
-                }
+                var ws = Socket.StartSocket();
+
+                ws.onError(function () {
+                    alert("Unable to Connect to RRQ Server.");
+                });
 
                 $http({
                     method: 'POST',
@@ -215,9 +272,7 @@
                 }).then(function (result) {
                 });
 
-
                 ws.onOpen(function () {
-                    console.log("Started socket.");
                     ws.send(JSON.stringify({
                         profile: Constants.Profile['RRQ'],
                         type: Constants.Events['CONNECTION'],
@@ -226,6 +281,8 @@
                     }));
 
                 });
+
+                
             }
             else if (btnType === 'Stop') {
                 $scope.body = 'Session stopped successfully!!';
@@ -233,7 +290,6 @@
 
                 var ws = Socket.StartSocket();
                 ws.onOpen(function () {
-                    console.log("Started Socket. sending message to quit session");
                     ws.send(JSON.stringify({
                         profile: Constants.Profile['RRQ'],
                         type: Constants.Events['CLOSE'],
@@ -253,6 +309,25 @@
 
         }
        
+    };
+
+    $scope.DisplayClassrooms = function () {
+        var _SessionID = $scope.SessionID;
+
+        if (_SessionID == 0) {
+            alert("Please select a session!");
+        }
+        else {
+            $http.get('/SessionMgmt/GetChannel/' + _SessionID)
+                .then(function (result) {
+                    var channel = result.data;
+                    window.location.href = "/SessionMgmt/Classrooms?SessionID=" + _SessionID + "&Channel=" + channel;
+                });
+        }
+    }
+
+    $scope.ShowNameFaceScreen = function () {
+        window.location.href = "/SessionMgmt/NameFaceScreen/";
     };
 
     $scope.ShowStreamKey = function (streamKey) {
@@ -320,14 +395,39 @@ myapp.controller('SessionAttendanceCntrl', function ($scope, $http) {
     }
 
     $scope.InitiateAttendance = function () {
-        debugger;
         var _SessionID = $scope.SessionID;
         $http({
             method: 'POST',
             url: '/StudentMgmt/InitiateAttendance',
             data: { SessionID: _SessionID }
         }).then(function (result) {
-            window.location.href = "/SessionMgmt/StudentAttendance/";
+            window.location.href = "/SessionMgmt/StudentAttendance?SessionID=" + _SessionID;
         });
     };
 });
+
+myapp.controller('NameFaceScreenCntrl', function ($scope, $http) {
+    GetCenters();
+    $scope.CenterID = 0;
+    function GetCenters() {
+        $http.get('/SessionMgmt/GetCentersForEntity')
+            .then(function (result) {
+                $scope.CentersList = result.data;
+            });
+    }
+    $scope.GetStudentsByCenterID = function () {
+        $http.get('/SessionMgmt/GetStudentsByCenterID/' + $scope.CenterID)
+            .then(function (result) {
+                $scope.StudentsList = result.data;
+            });
+    }
+    $scope.ElargePhoto = function (StudentID) {
+        $http.get('/SessionMgmt/GetStudentsByID/' + StudentID)
+            .then(function (result) {
+                $scope.StudentInfo = result.data;
+                $scope.StudentName = $scope.StudentInfo[0].StudentName;
+                $scope.StudentImage = $scope.StudentInfo[0].StudentImageURL;
+            });
+    }
+});
+

@@ -1,6 +1,7 @@
 ﻿myapp.controller('CenterCntrl', function ($scope, $http) {
     GetCentersList();
     GetAccountID();
+    $scope.CenterID = 0;
     $scope.SaveCenter = function () {
         debugger;
         var _CenterName = $scope.CenterName
@@ -32,6 +33,30 @@
         $http.get('/CenterMgmt/GetAccountID')
         .then(function (result) {
             $scope.AccountID = result.data;
+        });
+    }
+
+    $scope.SelectedCenter = function (SelectedCenterID) {
+        $scope.CenterID = SelectedCenterID;
+        GetClassrooms();
+    }
+
+    function GetClassrooms() {
+        $http.get('/CenterMgmt/GetClassroomsForCenter/' + $scope.CenterID)
+            .then(function (result) {
+                $scope.ClassroomList = result.data;
+            });
+    }
+
+    $scope.SaveClassroom = function () {
+        debugger;
+
+        $http({
+            method: 'POST',
+            url: '/CenterMgmt/SaveClassroom',
+            data: { ClassRoomName: $scope.ClassroomName, CenterID: $scope.CenterID, SittingCapacity: $scope.SittingCapacity }
+        }).then(function (result) {
+            alert('Saved Successfully!!');
         });
     }
 });
