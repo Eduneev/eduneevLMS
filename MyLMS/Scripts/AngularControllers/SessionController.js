@@ -15,7 +15,6 @@
     function GetSessionStudio(SessionID) {
         $http.get('/SessionMgmt/GetStudio/' + SessionID)
             .then(function (result) {
-                console.log(result.data[0]);
                 return result.data[0];
             });
     }
@@ -248,7 +247,6 @@
 
                     $http.get('/SessionMgmt/GetObsStream/' + $scope.SessionID)
                     .then(function (result) {
-                        console.log("Starting stream: " + result.data);
                         obs.startStreaming({ 'stream': result.data });
                     });
                 }
@@ -275,7 +273,6 @@
                 });
 
                 ws.onOpen(function () {
-                    console.log("Started socket.");
                     ws.send(JSON.stringify({
                         profile: Constants.Profile['RRQ'],
                         type: Constants.Events['CONNECTION'],
@@ -293,7 +290,6 @@
 
                 var ws = Socket.StartSocket();
                 ws.onOpen(function () {
-                    console.log("Started Socket. sending message to quit session");
                     ws.send(JSON.stringify({
                         profile: Constants.Profile['RRQ'],
                         type: Constants.Events['CLOSE'],
@@ -422,7 +418,6 @@ myapp.controller('NameFaceScreenCntrl', function ($scope, $http) {
     $scope.GetStudentsByCenterID = function () {
         $http.get('/SessionMgmt/GetStudentsByCenterID/' + $scope.CenterID)
             .then(function (result) {
-                console.log(result.data)
                 $scope.StudentsList = result.data;
             });
     }
