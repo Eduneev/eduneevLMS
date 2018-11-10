@@ -14,6 +14,36 @@
 
     GetTags();
 
+    SetParams(window.location.href);
+
+    function SetParams(url) {
+        var params = parseURLParams(url);
+        if ('SessionID' in params) {
+            $scope.SessionID = params['SessionID'][0];
+            $scope.ws = Socket.StartSocket();
+            $scope.ws.onOpen(function () {
+                console.log("Started socket.");
+                $scope.ws.send(JSON.stringify({
+                    profile: Constants.Profile['RRQ'],
+                    type: Constants.Events['CONNECTION'],
+                    action: Constants.Action['TEACHERCONNECTION'],
+                    SessionID: $scope.SessionID
+                }));
+
+            });
+        }
+        else
+            alert("Error in retrieving session. Click Start Session again!")
+        if ('RRQID' in params) {
+            $scope.RRQID = params['RRQID'][0];
+        }
+        else
+            alert("Error in retrieving RRQ. Select RRQ again!")
+
+
+    }
+
+    /*
     $http({
         method: 'GET',
         url: '/SessionMgmt/GetSession'
@@ -50,7 +80,7 @@
             $scope.RRQID = result.data;
         console.log($scope.RRQID);
     });
-
+    */
    
     $scope.SaveQuestion = function () {
         debugger;
@@ -210,7 +240,28 @@
             display = document.querySelector('#time');
         CallstartTimer(oneMinute, display);
     };
-       
+
+
+    function parseURLParams(url) {
+        var queryStart = url.indexOf("?") + 1,
+            queryEnd = url.indexOf("#") + 1 || url.length + 1,
+            query = url.slice(queryStart, queryEnd - 1),
+            pairs = query.replace(/\+/g, " ").split("&"),
+            parms = {}, i, n, v, nv;
+
+        if (query === url || query === "") return;
+
+        for (i = 0; i < pairs.length; i++) {
+            nv = pairs[i].split("=", 2);
+            n = decodeURIComponent(nv[0]);
+            v = decodeURIComponent(nv[1]);
+
+            if (!parms.hasOwnProperty(n)) parms[n] = [];
+            parms[n].push(nv.length === 2 ? v : null);
+        }
+        return parms;
+    }
+
 });
 
 myapp.filter('startFrom', function () {

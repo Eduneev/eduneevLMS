@@ -174,14 +174,15 @@
     };
 
     $scope.StartSessionRRQ = function (rrqID) {
-        window.location.href = "/SessionMgmt/RRQIntroduction/" + rrqID;
+        window.location.href = "/SessionMgmt/RRQIntroduction/" + rrqID + "?SessionID=" + $scope.SessionID + "&RRQID=" + rrqID;
+        /*
         $http({
             method: 'POST',
             url: '/SessionMgmt/SetSessionRRQ',
             data: { rrqID: rrqID }
         }).then(function (result) {
         });
-
+        */
     }
 
     function StartTwoWayCall(btnType, SessionID) {
@@ -246,7 +247,8 @@
                 if (btnType === 'Start') {
 
                     $http.get('/SessionMgmt/GetObsStream/' + $scope.SessionID)
-                    .then(function (result) {
+                        .then(function (result) {
+                            console.log(result.data);
                         obs.startStreaming({ 'stream': result.data });
                     });
                 }
