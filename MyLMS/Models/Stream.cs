@@ -16,13 +16,12 @@ namespace MyLMS.Models
             try
             {
                 SqlParameter[] SParam;
-                string stream = "rtsp://eduneev/live:1935_" + EntityCode + "_" + ProgCode + "_" + CourseCode + "_" + SubjectCode;
+                string stream = "rtsp://eduneev:1935/live/" + EntityCode + "_" + ProgCode + "_" + CourseCode + "_" + SubjectCode; // replace eduneev with server ip
                 string stream_low = stream + "_360p.flv";
                 string stream_med = stream + "_480p.flv";
                 string stream_high = stream + "_720p.flv";
                 string stream_obs = stream;
-                // WHAT TO DO AFTER THIS?
-
+                
                 SParam = new SqlParameter[3];
                 SParam[0] = new SqlParameter("@SessionID", SqlDbType.Int);
                 SParam[0].Value = SessionID;
