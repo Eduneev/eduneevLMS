@@ -140,7 +140,10 @@ namespace MyLMS.Controllers
             SParam[1].Value = sessionId;
             DataTable val = DAL.GetDataTable("GetStudentIdFromRemoteAllocation", SParam);
             int studentId = -1;
-            studentId = Convert.ToInt32(Convert.IsDBNull(val.Rows[0]["StudentID"]) ? "-1" : val.Rows[0]["StudentID"]);
+            if (val.Rows.Count > 0)
+                studentId = Convert.ToInt32(Convert.IsDBNull(val.Rows[0]["StudentID"]) ? "-1" : val.Rows[0]["StudentID"]);
+            else
+                Debug.WriteLine("Error in retrieving student");
 
             int optionSeq = -1;
             if (response.Equals("A"))
