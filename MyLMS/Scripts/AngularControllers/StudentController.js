@@ -141,8 +141,14 @@ myapp.controller('AllocateRemoteCntrl', function ($scope, $http) {
         });
     }
 
+    $scope.GetSubjectsList = function () {
+        $http.get('/CourseMgmt/GetSubject/' + $scope.CourseID)
+            .then(function (result) {
+                $scope.SubjectsList = result.data;
+            });
+    }
+
     $scope.GetStudentsList = function () {
-        debugger;
         $http.get('/StudentMgmt/GetStudentsForRemoteAllocation/' + $scope.CourseID)
         .then(function (result) {
             $scope.StudentsList = result.data;
@@ -153,10 +159,11 @@ myapp.controller('AllocateRemoteCntrl', function ($scope, $http) {
         debugger;
         var _StudentID = StudentID;
         var _RemoteNumber = RemoteNumber;
+        var _SubjectID = $scope.SubjectID
         $http({
             method: 'POST',
             url: '/StudentMgmt/AssignRemoteToStudent',
-            data: { StudentID: _StudentID, RemoteNumber: _RemoteNumber }
+            data: { StudentID: _StudentID, RemoteNumber: _RemoteNumber, SubjectID: _SubjectID }
         }).then(function (result) {
             $scope.GetStudentsList();
             //window.location.href = "/SessionMgmt/StudentAttendance/";
