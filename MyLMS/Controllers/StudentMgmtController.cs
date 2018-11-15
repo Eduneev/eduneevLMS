@@ -124,15 +124,17 @@ namespace MyLMS.Controllers
         }
 
         [HttpPost]
-        public void AssignRemoteToStudent(int StudentID, string RemoteNumber)
+        public void AssignRemoteToStudent(int StudentID, string RemoteNumber, int SubjectID)
         {
             StudentModel ModelObj1 = new StudentModel();
-            SqlParameter[] SParam = new SqlParameter[2];
+            SqlParameter[] SParam = new SqlParameter[3];
 
             SParam[0] = new SqlParameter("@StudentID", SqlDbType.Int);
             SParam[0].Value = StudentID;
             SParam[1] = new SqlParameter("@RemoteNumber", SqlDbType.VarChar);
             SParam[1].Value = RemoteNumber;
+            SParam[2] = new SqlParameter("@SubjectID", SqlDbType.Int);
+            SParam[2].Value = SubjectID;
             
             try
             {
