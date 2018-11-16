@@ -17,30 +17,33 @@
     SetParams(window.location.href);
 
     function SetParams(url) {
-        var params = parseURLParams(url);
-        if ('SessionID' in params) {
-            $scope.SessionID = params['SessionID'][0];
-            $scope.ws = Socket.StartSocket();
-            $scope.ws.onOpen(function () {
-                console.log("Started socket.");
-                $scope.ws.send(JSON.stringify({
-                    profile: Constants.Profile['RRQ'],
-                    type: Constants.Events['CONNECTION'],
-                    action: Constants.Action['TEACHERCONNECTION'],
-                    SessionID: $scope.SessionID
-                }));
+        try {
+            var params = parseURLParams(url);
+            if ('SessionID' in params) {
+                $scope.SessionID = params['SessionID'][0];
+                $scope.ws = Socket.StartSocket();
+                $scope.ws.onOpen(function () {
+                    console.log("Started socket.");
+                    $scope.ws.send(JSON.stringify({
+                        profile: Constants.Profile['RRQ'],
+                        type: Constants.Events['CONNECTION'],
+                        action: Constants.Action['TEACHERCONNECTION'],
+                        SessionID: $scope.SessionID
+                    }));
 
-            });
+                });
+            }
+            else
+                alert("Error in retrieving session. Click Start Session again!")
+            if ('RRQID' in params) {
+                $scope.RRQID = params['RRQID'][0];
+            }
+            else
+                alert("Error in retrieving RRQ. Select RRQ again!")
         }
-        else
-            alert("Error in retrieving session. Click Start Session again!")
-        if ('RRQID' in params) {
-            $scope.RRQID = params['RRQID'][0];
+        catch (e) {
+            
         }
-        else
-            alert("Error in retrieving RRQ. Select RRQ again!")
-
-
     }
 
     /*
@@ -81,15 +84,21 @@
         console.log($scope.RRQID);
     });
     */
-   
+
+    $scope.AddQuestion = function () {
+        window.location.pathname = "/QuestionBank/AddQuestion";
+    }
+
     $scope.SaveQuestion = function () {
         debugger;
         var _QuestionText = $scope.QuestionText
         $http({
             method: 'POST',
             url: '/QuestionBank/SaveQuestion',
-            data: { QuestionText: _QuestionText}
+            data: { QuestionText: _QuestionText }
         }).then(function (result) {
+
+            // 
 
             ////// Save Options //////
             $http({
@@ -97,35 +106,33 @@
                 url: '/QuestionBank/SaveOptions',
                 data: { OptionSeq: 1, OptionText: $scope.Option1Text, OptionMark: $scope.Option1Mark, IsOptionCorrect: $scope.IsOption1Correct }
             }).then(function (result) {
-
-            });
+                });
 
             $http({
                 method: 'POST',
                 url: '/QuestionBank/SaveOptions',
                 data: { OptionSeq: 2, OptionText: $scope.Option2Text, OptionMark: $scope.Option2Mark, IsOptionCorrect: $scope.IsOption2Correct }
             }).then(function (result) {
+                });
 
-            });
 
             $http({
                 method: 'POST',
                 url: '/QuestionBank/SaveOptions',
                 data: { OptionSeq: 3, OptionText: $scope.Option3Text, OptionMark: $scope.Option3Mark, IsOptionCorrect: $scope.IsOption3Correct }
             }).then(function (result) {
-
-            });
+                });
 
             $http({
                 method: 'POST',
                 url: '/QuestionBank/SaveOptions',
                 data: { OptionSeq: 4, OptionText: $scope.Option4Text, OptionMark: $scope.Option4Mark, IsOptionCorrect: $scope.IsOption4Correct }
             }).then(function (result) {
-
-            });
-            /////////////
+                });
 
         });
+        
+            /////////////
     }
 
     $scope.QuestionList = '';

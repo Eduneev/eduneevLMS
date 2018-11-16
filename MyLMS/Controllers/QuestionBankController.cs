@@ -35,7 +35,7 @@ namespace MyLMS.Controllers
            
             try
             {
-              Session["QID"] = QuesObj1.SaveQuestion(SParam);
+              Session["QID"] = QuesObj1.SaveQuestion(SParam).ToString();
             }
             catch (Exception ex)
             {
@@ -49,7 +49,7 @@ namespace MyLMS.Controllers
             QuestionModel QuesObj1 = new QuestionModel();
             SqlParameter[] SParam = new SqlParameter[5];
             SParam[0] = new SqlParameter("@QID", SqlDbType.Int);
-            SParam[0].Value = Session["QID"];
+            SParam[0].Value = Convert.ToInt32(Session["QID"]);
             SParam[1] = new SqlParameter("@OptionSeq", SqlDbType.Int);
             SParam[1].Value = OptionSeq;
             SParam[2] = new SqlParameter("@OptionText", SqlDbType.NVarChar);
