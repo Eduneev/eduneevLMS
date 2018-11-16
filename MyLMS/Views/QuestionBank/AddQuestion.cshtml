@@ -76,7 +76,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-lg-2">
-                                    <input type="checkbox" ng-model="IsOption1Correct" class="minimal-red" data-toggle="modal" name="fancy-checkbox-primary1" id="fancy-checkbox-primary1" autocomplete="off">
+                                    <input type="checkbox" ng-model="IsOption1Correct" ng-init="IsOption1Correct=false"  class="minimal-red" data-toggle="modal" name="fancy-checkbox-primary1" id="fancy-checkbox-primary1" autocomplete="off">
                                     <div class="btn-group pull-right">
                                         <label for="fancy-checkbox-primary1" class="btn btn-primary">
                                             <span class="glyphicon glyphicon-ok"></span>
@@ -92,7 +92,7 @@
                                 </div>
                                 <div class="col-md-1">
                                     <label>Mark</label>
-                                    <input type="text" ng-model="Option1Mark" name="Option1Mark" style="font-weight:bold; color:coral;" class="form-control" placeholder="Mark..">
+                                    <input type="text" ng-model="Option1Mark" ng-init="Option1Mark=0" name="Option1Mark" style="font-weight:bold; color:coral;" class="form-control" placeholder="Mark..">
                                 </div>
                                 <div class="col-md-1">
                                     <label>Time</label>
@@ -104,7 +104,7 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <input type="checkbox" ng-model="IsOption2Correct" class="minimal-red" data-toggle="modal" name="fancy-checkbox-primary2" id="fancy-checkbox-primary2" autocomplete="off">
+                                        <input type="checkbox" ng-model="IsOption2Correct" ng-init="IsOption2Correct=false" class="minimal-red" data-toggle="modal" name="fancy-checkbox-primary2" id="fancy-checkbox-primary2" autocomplete="off">
                                         <div class="btn-group pull-right">
                                             <label for="fancy-checkbox-primary2" class="btn btn-primary">
                                                 <span class="glyphicon glyphicon-ok"></span>
@@ -120,7 +120,7 @@
                                     </div>
                                     <div class="col-md-1">
                                         <label>Mark</label>
-                                        <input type="text" ng-model="Option2Mark" name="Option1Mark" style="font-weight:bold; color:coral;" class="form-control" placeholder="Mark..">
+                                        <input type="text" ng-model="Option2Mark" ng-init="Option2Mark=0" name="Option1Mark" style="font-weight:bold; color:coral;" class="form-control" placeholder="Mark..">
                                     </div>
                                     <div class="col-md-1">
                                         <label>Time</label>
@@ -133,7 +133,7 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <input type="checkbox" ng-model="IsOption3Correct" class="minimal-red" data-toggle="modal" name="fancy-checkbox-primary3" id="fancy-checkbox-primary3" autocomplete="off">
+                                        <input type="checkbox" ng-model="IsOption3Correct" ng-init="IsOption3Correct=false" class="minimal-red" data-toggle="modal" name="fancy-checkbox-primary3" id="fancy-checkbox-primary3" autocomplete="off">
                                         <div class="btn-group pull-right">
                                             <label for="fancy-checkbox-primary3" class="btn btn-primary">
                                                 <span class="glyphicon glyphicon-ok"></span>
@@ -145,11 +145,11 @@
                                         </div>
                                     </div>
                                     <div class="col-md-8">
-                                        <textarea type="text" rows="3" ng-model="Option3Text" name="OptionC" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter text for Option C..."></textarea>
+                                        <textarea type="text" rows="3" ng-model="Option3Text"  name="OptionC" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter text for Option C..."></textarea>
                                     </div>
                                     <div class="col-md-1">
                                         <label>Mark</label>
-                                        <input type="text" ng-model="Option3Mark" name="Option1Mark" style="font-weight:bold; color:coral;" class="form-control" placeholder="Mark..">
+                                        <input type="text" ng-model="Option3Mark" ng-init="Option3Mark=0" name="Option1Mark" style="font-weight:bold; color:coral;" class="form-control" placeholder="Mark..">
                                     </div>
                                     <div class="col-md-1">
                                         <label>Time</label>
@@ -161,7 +161,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-2">
-                                    <input type="checkbox" ng-model="IsOption4Correct" class="minimal-red" data-toggle="modal" name="fancy-checkbox-primary4" id="fancy-checkbox-primary4" autocomplete="off">
+                                    <input type="checkbox" ng-model="IsOption4Correct"  ng-init="IsOption4Correct=false" class="minimal-red" data-toggle="modal" name="fancy-checkbox-primary4" id="fancy-checkbox-primary4" autocomplete="off">
                                     <div class="btn-group pull-right">
                                         <label for="fancy-checkbox-primary4" class="btn btn-primary">
                                             <span class="glyphicon glyphicon-ok"></span>
@@ -177,7 +177,7 @@
                                 </div>
                                 <div class="col-md-1">
                                     <label>Mark</label>
-                                    <input type="text" ng-model="Option4Mark" name="Option1Mark" style="font-weight:bold; color:coral;" class="form-control" placeholder="Mark..">
+                                    <input type="text" ng-model="Option4Mark" ng-init="Option4Mark=0" name="Option1Mark" style="font-weight:bold; color:coral;" class="form-control" placeholder="Mark..">
                                 </div>
                                 <div class="col-md-1">
                                     <label>Time</label>
