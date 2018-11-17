@@ -118,7 +118,6 @@ namespace MyLMS.Controllers
             return JSONString;
         }
 
-
         [HttpGet]
         public string GetQuestionAndOptions(int ID)
         {

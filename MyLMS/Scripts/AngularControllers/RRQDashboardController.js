@@ -9,7 +9,6 @@
     var Questions = [];
 
     function GetRRQQuestions() {
-        debugger;
         $http.get('/SessionMgmt/GetRRQQuestions/')
         .then(function (result) {
             $scope.RRQQuestions = result.data;
@@ -38,7 +37,6 @@
     }
 
     function GetDegreeOfDifficulty() {
-        debugger;
         $http.get('/SessionMgmt/GetDegreeOfDifficulty/')
             .then(function (result) {
                 $scope.GraphData = result.data;
@@ -84,7 +82,6 @@
     }
     ///////// Get Top 10 Students ////////
     function GetDashboardData(QID) {
-        debugger;
         $http.get('/SessionMgmt/GetDashboardData/' + QID)
             .then(function (result) {
                 $scope.DashboardData = result.data;
@@ -96,7 +93,6 @@
             });
     }
     function GetDashboardOptionGraph(QID) {
-        debugger;
         $http.get('/SessionMgmt/GetDashboardOptionGraph/' + QID)
             .then(function (result) {
                 $scope.DashboardGraphData = result.data;
