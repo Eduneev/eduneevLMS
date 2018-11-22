@@ -24,6 +24,7 @@
             .then(function (result) {
                 $scope.Programs = result.data;
                 $scope.ProgramTextToShow = 'Please select program..'
+                $scope.SessionNameTextToShow = "System Generated"
             });
     }
 
