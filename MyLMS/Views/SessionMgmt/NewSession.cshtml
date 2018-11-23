@@ -37,54 +37,6 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-4">
-                        @*<div class="form-group">
-                            <label>Session No.</label>
-                            <input type="text" ng-model="SessionNo" name="SessionNo" style="font-weight:bold; color:coral;" class="form-control">
-                        </div>*@
-                        <div class="form-group">
-                            <label>Session Name</label>
-                            <input type="text" ng-model="SessionName" readonly="readonly" name="SessionName" placeholder="System Generated" style="font-weight:bold; color:coral;" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Session Date</label>
-                            <div class="input-group date">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </div>
-                                <input type="text" ng-model="SessionDate" class="form-control pull-right" id="datepicker">
-                            </div>                            
-                        </div>
-                        <div class="bootstrap-timepicker">
-                            <div class="form-group">
-                                <label>Start Time</label>
-                                <div class="input-group">
-                                    <input type="text" ng-model="StartTime" class="form-control timepicker">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-clock-o"></i>
-                                    </div>
-                                </div>                                
-                            </div>                            
-                        </div>
-                        <div class="bootstrap-timepicker">
-                            <div class="form-group">
-                                <label>End Time</label>
-                                <div class="input-group">
-                                    <input type="text" ng-model="EndTime" class="form-control timepicker">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-clock-o"></i>
-                                    </div>
-                                </div>                                
-                            </div>                            
-                        </div>
-                        <div class="form-group">
-                            <label>Studio</label>
-                            <select class="form-control" id="drpStudio" style="width: 100%;" data-ng-model="StudioID" data-ng-options="st.StudioID as st.StudioName for st in StudioList">
-                                <option value="">{{StudioTextToShow}}</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
                         <div class="form-group">
                             <label>Program</label>
                             <select class="form-control" id="drpProgramName" style="width: 100%;" data-ng-model="ProgID" data-ng-options="p.ProgID as p.ProgramName for p in Programs" data-ng-change="GetCourse()">
@@ -105,8 +57,7 @@
                         </div>
                         <div class="form-group">
                             <label>Topic</label>
-                            <select multiple class="form-control" data-ng-model="TopicID" data-ng-options="t.TopicID as t.TopicName for t in Topics" style="height:108px;">                                
-                            </select>
+                            <select multiple class="form-control" data-ng-model="TopicID" data-ng-options="t.TopicID as t.TopicName for t in Topics" style="height:108px;"></select>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -119,8 +70,59 @@
                         <div class="form-group">
                             <label>Planned Coverage </label>
                             <textarea class="form-control" ng-model="PlannedCoverage" rows="6" placeholder="Enter ..."></textarea>
-                        </div>                        
+                        </div>
                     </div>
+                    <div class="col-md-4">
+                        @*<div class="form-group">
+            <label>Session No.</label>
+            <input type="text" ng-model="SessionNo" name="SessionNo" style="font-weight:bold; color:coral;" class="form-control">
+        </div>*@
+                        <div class="form-group">
+                            <label>Session Date</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" ng-model="SessionDate" class="form-control pull-right" id="datepicker">
+                            </div>
+                        </div>
+                        <div class="bootstrap-timepicker">
+                            <div class="form-group">
+                                <label>Start Time</label>
+                                <div class="input-group">
+                                    <input type="text" ng-model="StartTime" class="form-control timepicker">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-clock-o"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bootstrap-timepicker">
+                            <div class="form-group">
+                                <label>End Time</label>
+                                <div class="input-group">
+                                    <input type="text" ng-model="EndTime" class="form-control timepicker">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-clock-o"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Studio</label>
+                            <select class="form-control" id="drpStudio" style="width: 100%;" data-ng-model="StudioID" data-ng-options="st.StudioID as st.StudioName for st in StudioList">
+                                <option value="">{{StudioTextToShow}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Session Name</label>
+                            <input type="text" ng-model="SessionName" readonly="readonly" name="SessionName" placeholder="System Generated" style="font-weight:bold; color:coral;" class="form-control">
+                        </div>
+
+                    </div>
+
+
+
                 </div>
             </div>
             <div class="box-footer">
