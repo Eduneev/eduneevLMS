@@ -24,12 +24,42 @@ namespace MyLMS.Models
             return res;
         }
 
+        public string DeleteQuestion(SqlParameter[] sparams)
+        {
+            string res = "Failure..";
+            try
+            {
+                res = DAL.ExecuteScalar("DeleteQuestion", sparams);
+            }
+            catch (Exception ex)
+            {
+                res = ex.Message;
+                throw;
+            }
+            return res;
+        }
+
         public string SaveOptions(SqlParameter[] sparams)
         {
             string res = "Failure..";
             try
             {
                 res = DAL.ExecuteScalar("SaveOptions", sparams);
+            }
+            catch (Exception ex)
+            {
+                res = ex.Message;
+                throw;
+            }
+            return res;
+        }
+
+        public string AddRemoveQuestionToRRQ(SqlParameter[] sparams)
+        {
+            string res = "Failure..";
+            try
+            {
+                res = DAL.ExecuteScalar("AddRemoveQuestionToRRQ", sparams);
             }
             catch (Exception ex)
             {

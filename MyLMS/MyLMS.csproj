@@ -769,6 +769,8 @@
     <Content Include="Views\SessionMgmt\Classrooms.cshtml" />
     <Content Include="Views\CenterMgmt\Dashboard.cshtml" />
     <Content Include="Views\StudentMgmt\RRQManualEntry.cshtml" />
+    <Content Include="Views\SessionMgmt\CreateRRQ.cshtml" />
+    <Content Include="Views\SessionMgmt\NewRRQ.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
