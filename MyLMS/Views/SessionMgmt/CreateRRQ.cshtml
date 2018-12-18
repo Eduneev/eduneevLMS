@@ -1,0 +1,102 @@
+﻿
+@{
+    ViewBag.Title = "CreateRRQ";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+@section scripts{
+    <script src="~/Scripts/AngularControllers/RRQController.js"></script>
+}
+
+<div data-ng-controller="RRQCntrl" data-ng-init="GetRRQ()">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            RRQ
+            <small>View / Edit RRQ</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+            <li><a href="#">RRQ</a></li>
+        </ol>
+    </section>
+
+    <!-- Form Body (Page body)-->
+    <section class="content">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <div class="pull-left">
+                    @*<button type="button" class="btn btn-info" id="btnCreateRRQ" data-toggle="modal" data-target="#NewRRQModalSelector">
+                            <i class="glyphicon glyphicon-tasks"></i> Create RRQ
+                        </button>*@
+                </div>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Sl No.</th>
+                                    <th>RRQ No</th>
+                                    <th>Session Name</th>
+                                    <th>Session Date</th>
+                                    <th>Course Details</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="RRQ in RRQList | filter: RRQFilter">
+                                    <td>
+                                        {{$index+1}}.
+                                    </td>
+                                    <td>
+                                        <span><a href="AddQuestionsToRRQ/{{RRQ.RRQ_ID}}">{{RRQ.RRQNo}}</a></span>
+                                    </td>
+                                    <td>
+                                        <span>{{RRQ.SessionName}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{RRQ.SessionDate}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{RRQ.COURSE_DETAILS}}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @* Popup to Show New RRQ Popup *@
+    <div class="modal" id="NewRRQModalSelector" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="text-info">New RRQ</h3>
+                </div>
+                <div class="modal-body" style="margin:0px 10px 0px 10px;">
+                    <form class="form-horizontal" name="ShowRRQSelector">
+                        <div class="form-group">
+                            <label class="text-info"> RRQ Name</label>
+                            <input type="text" ng-model="RRQName" name="RRQName" class="form-control">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" ng-click="CreateRRQ()" id="btnNewRRQ" data-dismiss="modal"> New RRQ </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @* Popup to Show New RRQ Popup *@
+</div>
+
