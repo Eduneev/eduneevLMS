@@ -42,7 +42,20 @@ namespace MyLMS.Controllers
         {
             return View();
         }
+        public ActionResult CreateRRQ()
+        {
+            return View();
+        }
+        public ActionResult NewRRQ()
+        {
+            return View();
+        }
 
+        public ActionResult AddQuestionsToRRQ(int ID)
+        {
+            Session["RRQ_ID"] = ID;
+            return View();
+        }
 
         public ActionResult RRQIntroduction(int ID)
         {
@@ -84,10 +97,6 @@ namespace MyLMS.Controllers
             return View();
         }
 
-        public ActionResult AddQuestionsToRRQ()
-        {
-            return View();
-        }
 
         [HttpGet]
         public string GetStudios()
@@ -114,7 +123,6 @@ namespace MyLMS.Controllers
             JSONString = JsonConvert.SerializeObject(StudiosList);
             return JSONString;
         }
-
 
         [HttpGet]
         public string GetTop10Students()
@@ -381,8 +389,21 @@ namespace MyLMS.Controllers
             }
         }
 
+        [HttpGet]
+        public string GetRRQList()
+        {
+            SqlParameter[] FObj = new SqlParameter[1];
+            FObj[0] = new SqlParameter("@USER_ID", SqlDbType.Int);
+            FObj[0].Value = Convert.ToInt32(Session["USER_ID"]);
+            DataTable RRQList = DAL.GetDataTable("GetRRQList", FObj);
+
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(RRQList);
+            return JSONString;
+        }
+
         [HttpPost]
-        public void CreateRRQ(string RRQNo, DateTime ActiveFromDate, DateTime ActiveToDate)
+        public void CreateRRQ(string RRQNo)
         {
             int SessionID = Convert.ToInt32(Session["SessionID"]);
 
@@ -392,10 +413,6 @@ namespace MyLMS.Controllers
             RRQParam[0].Value = SessionID;
             RRQParam[1] = new SqlParameter("@RRQNo", SqlDbType.Int);
             RRQParam[1].Value = RRQNo;
-            RRQParam[2] = new SqlParameter("@StartFrom", SqlDbType.Int);
-            RRQParam[2].Value = ActiveFromDate;
-            RRQParam[3] = new SqlParameter("@EndDate", SqlDbType.Int);
-            RRQParam[3].Value = ActiveToDate;
             try
             {
                 SessionObj3.CreateRRQ(RRQParam);

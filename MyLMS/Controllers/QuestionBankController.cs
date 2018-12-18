@@ -25,26 +25,49 @@ namespace MyLMS.Controllers
         }
 
         [HttpPost]
-        public void SaveQuestion(string QuestionText)
+        public void SaveQuestion(string QuestionText, int QTagID, int DisplayTime)
         {
             QuestionModel QuesObj1 = new QuestionModel();
-            SqlParameter[] SParam = new SqlParameter[1];
+            SqlParameter[] SParam = new SqlParameter[3];
 
-            SParam[0] = new SqlParameter("@QuestionText", SqlDbType.Int);
+            SParam[0] = new SqlParameter("@QuestionText", SqlDbType.NVarChar);
             SParam[0].Value = QuestionText;
-           
+            SParam[1] = new SqlParameter("@QTagID", SqlDbType.Int);
+            SParam[1].Value = QTagID;
+            SParam[2] = new SqlParameter("@DisplayTime", SqlDbType.Int);
+            SParam[2].Value = DisplayTime;
+
             try
             {
-              Session["QID"] = QuesObj1.SaveQuestion(SParam).ToString();
+                Session["QID"] = QuesObj1.SaveQuestion(SParam).ToString();
             }
             catch (Exception ex)
             {
-                                
+
             }
         }
 
         [HttpPost]
-        public void SaveOptions(int OptionSeq, string OptionText, int OptionMark, bool IsOptionCorrect )
+        public void DeleteQuestion(string QID)
+        {
+            QuestionModel QuesObj1 = new QuestionModel();
+            SqlParameter[] SParam = new SqlParameter[1];
+
+            SParam[0] = new SqlParameter("@QID", SqlDbType.Int);
+            SParam[0].Value = QID;
+
+            try
+            {
+                QuesObj1.DeleteQuestion(SParam);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        [HttpPost]
+        public void SaveOptions(int OptionSeq, string OptionText, int OptionMark, bool IsOptionCorrect)
         {
             QuestionModel QuesObj1 = new QuestionModel();
             SqlParameter[] SParam = new SqlParameter[5];
@@ -69,6 +92,26 @@ namespace MyLMS.Controllers
             }
         }
 
+        [HttpPost]
+        public void AddRemoveQuestionToRRQ(int QID)
+        {
+            QuestionModel QuesObj1 = new QuestionModel();
+            SqlParameter[] SParam = new SqlParameter[2];
+            SParam[0] = new SqlParameter("@QID", SqlDbType.Int);
+            SParam[0].Value = QID;
+            SParam[1] = new SqlParameter("@RRQ_ID", SqlDbType.Int);
+            SParam[1].Value = Convert.ToInt32(Session["RRQ_ID"]);
+
+            try
+            {
+                QuesObj1.AddRemoveQuestionToRRQ(SParam);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
         [HttpGet]
         public string GetQuestions()
         {
@@ -76,7 +119,7 @@ namespace MyLMS.Controllers
             DataTable QuestionsList = DAL.GetDataTable("GetQuestions");
             SqlParameter[] SParam = new SqlParameter[1];
             List<Question> QuestionList = new List<Question>();
-            
+
 
             for (int i = 0; i < QuestionsList.Rows.Count; i++)
             {
@@ -86,14 +129,14 @@ namespace MyLMS.Controllers
                 Question.QuestionText = QuestionsList.Rows[i]["QuestionText"].ToString();
                 Question.IsCompulsory = Convert.ToBoolean(QuestionsList.Rows[i]["IsCompulsory"]);
                 QuestionList.Add(Question);
-                                
+
                 SParam[0] = new SqlParameter("@QID", SqlDbType.Int);
                 SParam[0].Value = Convert.ToInt32(QuestionsList.Rows[i]["QID"]);
 
                 DataTable OptionsList = DAL.GetDataTable("GetOptions", SParam);
                 List<Option> OptionList = new List<Option>();
                 for (int j = 0; j < OptionsList.Rows.Count; j++)
-                {                    
+                {
                     Option Options = new Option();
                     Options.OptionID = Convert.ToInt32(Convert.IsDBNull(OptionsList.Rows[j]["OptionID"]) ? "0" : OptionsList.Rows[j]["OptionID"]);
                     Options.QID = Convert.ToInt32(Convert.IsDBNull(OptionsList.Rows[j]["QID"]) ? "0" : OptionsList.Rows[j]["QID"]);
@@ -105,7 +148,7 @@ namespace MyLMS.Controllers
 
                     OptList = OptionList;
                 }
-                
+
                 CO.Add(new QuestionOptions
                 {
                     Question = Question,
@@ -183,7 +226,7 @@ namespace MyLMS.Controllers
 
 
         [HttpPost]
-        public static bool SaveQuestionResponse (int RRQId, int QId, int studentId, int optionSeq) // response could be A,B,C,D or E
+        public static bool SaveQuestionResponse(int RRQId, int QId, int studentId, int optionSeq) // response could be A,B,C,D or E
         {
             SqlParameter[] SParam = new SqlParameter[4];
 
