@@ -49,7 +49,8 @@ myapp.controller('StudentViewCntrl', function ($scope, $http) {
         .then(function (result) {
             $scope.StudentsList = result.data;
         });
-    }
+    
+}
     $scope.AddStudent = function () {
         window.location.href = "/StudentMgmt/RegisterStudent/";
     }

@@ -89,13 +89,26 @@
         window.location.pathname = "/QuestionBank/AddQuestion";
     }
 
+    // DeleteQuestion
+    $scope.DeleteQuestion = function (QID) {
+        $http({
+            method: 'POST',
+            url: '/QuestionBank/DeleteQuestion',
+            data: { QID: QID }
+        }).then(function (result) {
+            alert('Deleted Successfully!!')
+        });
+    }
+
     $scope.SaveQuestion = function () {
         debugger;
         var _QuestionText = $scope.QuestionText
+        var _QTagID = $scope.QTagID
+        var _DisplayTime = $scope.DisplayTime
         $http({
             method: 'POST',
             url: '/QuestionBank/SaveQuestion',
-            data: { QuestionText: _QuestionText }
+            data: { QuestionText: _QuestionText,QTagID: _QTagID, DisplayTime: _DisplayTime }
         }).then(function (result) {
 
             // 
@@ -131,8 +144,17 @@
                 });
 
         });
-        
+        alert('Saved Successfully!!');
             /////////////
+    }
+
+    $scope.AddRemoveQuestionToRRQ = function (QID) {
+        $http({
+            method: 'POST',
+            url: '/QuestionBank/AddRemoveQuestionToRRQ',
+            data: { QID: QID }
+        }).then(function (result) {
+        });
     }
 
     $scope.QuestionList = '';
