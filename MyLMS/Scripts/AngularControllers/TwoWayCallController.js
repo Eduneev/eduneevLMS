@@ -31,6 +31,10 @@
                 $scope.ws = TwoWaySocket.StartSocket();
                 $scope.ws.onOpen(function () {
                     console.log("Started socket.");
+                    s = document.getElementById('connect');
+                    s.style.color = "green";
+                    s.textContent = "Connected";
+
                     $scope.ws.send(JSON.stringify({
                         profile: Constants.Profile['TWOWAYCALL'],
                         type: Constants.Events['CONNECTION'],
@@ -64,6 +68,15 @@
                 }
             }           
             
+        });
+
+        $scope.ws.onClose(function () {
+            for (var i = 0; i < $scope.ConnectedList.length; i++) {
+                    $scope.ConnectedList.splice(i, 1);
+            }
+            s = document.getElementById('connect');
+            s.textContent = "Disconnected";
+            s.style.color = "red";
         });
     }
 
