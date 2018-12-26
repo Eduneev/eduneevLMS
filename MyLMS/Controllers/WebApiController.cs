@@ -201,6 +201,24 @@ namespace MyLMS.Controllers
             return result;
         }
 
+        [Route("api/GetSessionForRRQ/{RRQID:int}")]
+        [HttpGet]
+        public string GetSessionForRRQ(int RRQID)
+        {
+            string result = String.Empty;
+
+            SqlParameter[] SParam = new SqlParameter[1];
+            SParam[0] = new SqlParameter("@RRQ_ID", SqlDbType.Int);
+            SParam[0].Value = RRQID;
+
+            DataTable val = DAL.GetDataTable("GetSessionForRRQ", SParam);
+            if (val.Rows.Count > 0)
+                result = Convert.ToString(Convert.IsDBNull(val.Rows[0]["SessionID"]) ? "-1" : val.Rows[0]["SessionID"]);
+            else
+                result = "-1";
+            return result;
+        }
+
         [Route("api/GetClassroom/{auth}")]
         [HttpGet]
         public ClassRoomModel GetClassroom(string auth)
