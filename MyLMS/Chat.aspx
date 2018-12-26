@@ -40,7 +40,7 @@
 	var messagesPanel, typedMessage, first = true, ws, centerName;
 	
 	const TESTINGURI = "ws://localhost:4000";
-	const PRODURI = "ws://ec2-18-218-225-8.us-east-2.compute.amazonaws.com:4000";
+	const PRODURI = "ws://52.15.186.193:4000";
 	var statusBar;
 
 	var urlParams = parseURLParams(window.location.href);
@@ -125,7 +125,8 @@
 		messages[GENERAL] = [];
 		messages[PRIVATE] = [];
 		
-		ws = new WebSocket(TESTINGURI);
+        //ws = new WebSocket(TESTINGURI);
+        ws = new WebSocket(PRODURI);
 
 		ws.onerror = function(e){
 			alert("Could not connect to server");
@@ -249,8 +250,38 @@
 	}
 
 	function addStudents(){
-		list = document.getElementById("contacts");
+
+        list = document.getElementById("contacts");
+
+        var hardcoded = [
+			["Bob", "https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg"],
+			["Ross", "https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_02.jpg"],
+			["Max", "https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_03.jpg"],
+			["Claire", "https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_04.jpg"]
+		];
+
+		for(i=0;i<hardcoded.length;i++){
+			var student = document.createElement("div");
+			student.className = "contact";
+			student.id = hardcoded[i][0];
+			var image_placeholder = document.createElement("img");
+			image_placeholder.src = hardcoded[i][1];
+			image_placeholder.id = "image";
+
+			var text = document.createElement("span");
+			text.className = "contact-text2";
+			text.id = "text";
+			text.textContent = hardcoded[i][0];
+			
+			student.appendChild(image_placeholder);
+			student.appendChild(text);
+
+			student.onclick = setCurrentStudentId;
+
+			list.appendChild(student);					
+		}
 		
+
 		const url = "http://localhost:55082/api/" + SESSION + "/" + CenterID + "/getAttendingStudents";
 		var xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function() {
@@ -277,7 +308,7 @@
 
 					list.appendChild(student);
 				}
-			}
+            }            	
 		}
 		xhr.responseType='json';
 		xhr.open('GET', url, true);

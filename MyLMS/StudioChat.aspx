@@ -70,7 +70,7 @@
 
 		var messagesPanel, typedMessage, first = true, currentId=GROUP;
 		const TESTINGURI = "ws://localhost:4000";
-		const PRODURI = "ws://ec2-18-218-225-8.us-east-2.compute.amazonaws.com:4000";
+		const PRODURI = "ws://52.15.186.193:4000";
 		var centers = {}
 		var messages = {};				
 		var statusBar;
@@ -98,8 +98,9 @@
 
 			messages[GROUP] = [];
 			
-			const ws = new WebSocket(TESTINGURI);
-		
+            //const ws = new WebSocket(TESTINGURI);
+            const ws = new WebSocket(PRODURI);
+
 			ws.onerror = function(e){
 				alert("Not able to connect to server");
 			}
