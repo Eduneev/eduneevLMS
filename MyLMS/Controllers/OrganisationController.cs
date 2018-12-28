@@ -36,6 +36,11 @@ namespace MyLMS.Controllers
             return View();
         }
 
+        public ActionResult Billing()
+        {
+            return View();
+        }
+
         [HttpPost]
         public void CreateEntity(string EntityName, string EntityCode, string ManagerName, string Email, string Mobile, string Landline, string Address)
         {
@@ -102,6 +107,30 @@ namespace MyLMS.Controllers
 
             string JSONString = string.Empty;
             JSONString = JsonConvert.SerializeObject(EntityUserList);
+            return JSONString;
+        }
+
+        [HttpGet]
+        [Route("Organisation/GetStreamLogsForClassroom/{id:int}/{StartDate}/{EndDate}")]
+        public string GetStreamLogsForClassroom(int id, string StartDate, string EndDate)
+        {
+            if (StartDate == "0" && EndDate == "0")
+            {
+                StartDate = null;
+                EndDate = null;
+            }
+
+            SqlParameter[] StreamObj = new SqlParameter[3];
+            StreamObj[0] = new SqlParameter("@ClassroomID", SqlDbType.Int);
+            StreamObj[0].Value = id;
+            StreamObj[1] = new SqlParameter("@StartDate", SqlDbType.VarChar);
+            StreamObj[1].Value = StartDate;
+            StreamObj[2] = new SqlParameter("@EndDate", SqlDbType.VarChar);
+            StreamObj[2].Value = EndDate;
+            DataTable StreamList = DAL.GetDataTable("GetStreamLogsForClassroom", StreamObj);
+
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(StreamList);
             return JSONString;
         }
 

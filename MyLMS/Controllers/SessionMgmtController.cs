@@ -51,16 +51,16 @@ namespace MyLMS.Controllers
             return View();
         }
 
-        public ActionResult AddQuestionsToRRQ(int ID)
+        public ActionResult AddQuestionsToRRQ(int id)
         {
-            Session["RRQ_ID"] = ID;
+            Session["RRQ_ID"] = id;
             return View();
         }
 
-        public ActionResult RRQIntroduction(int ID)
+        public ActionResult RRQIntroduction(int id)
         {
             RRQData RRQInfoObj = new RRQData();
-            RRQInfoObj.GetRRQInformation(ID);
+            RRQInfoObj.GetRRQInformation(id);
             ViewBag.RRQInfo = RRQInfoObj;
             return View();
         }
@@ -509,10 +509,18 @@ namespace MyLMS.Controllers
             FObj[0].Value = 1;
             FObj[1] = new SqlParameter("@QID", SqlDbType.Int);
             FObj[1].Value = id;
-            DataTable DashboardData = DAL.GetDataTable("GetDashboardData", FObj);
-            string JSONString = string.Empty;
-            JSONString = JsonConvert.SerializeObject(DashboardData);
-            return JSONString;
+
+            try
+            {
+                DataTable DashboardData = DAL.GetDataTable("GetDashboardData", FObj);
+                string JSONString = string.Empty;
+                JSONString = JsonConvert.SerializeObject(DashboardData);
+                return JSONString;
+            }
+            catch
+            {
+                return string.Empty;
+            }
         }
 
         public string GetDashboardOptionGraph(int id)
@@ -544,6 +552,17 @@ namespace MyLMS.Controllers
             CenterSessionObj[0] = new SqlParameter("@USER_ID", SqlDbType.Int);
             CenterSessionObj[0].Value = Convert.ToInt32(Session["USER_ID"]);
             DataTable CentersList = DAL.GetDataTable("GetCenterForEntity", CenterSessionObj);
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(CentersList);
+            return JSONString;
+        }
+
+        public string GetCentersForSelectedEntity(int id)
+        {
+            SqlParameter[] CenterSessionObj = new SqlParameter[1];
+            CenterSessionObj[0] = new SqlParameter("@EntityID", SqlDbType.Int);
+            CenterSessionObj[0].Value = id;
+            DataTable CentersList = DAL.GetDataTable("GetCenterForSelectedEntity", CenterSessionObj);
             string JSONString = string.Empty;
             JSONString = JsonConvert.SerializeObject(CentersList);
             return JSONString;
