@@ -32,9 +32,18 @@
                         </select>
                     </label>
                     <label>
-                        <select class="form-control" id="drpClassroomName" style="width: 100%;" data-ng-model="ClassRoomID" data-ng-options="c.ClassRoomID as c.ClassRoomName for c in ClassroomList" data-ng-change="GetStreamList()">
+                        <select class="form-control" id="drpClassroomName" style="width: 100%;" data-ng-model="ClassRoomID" data-ng-options="c.ClassRoomID as c.ClassRoomName for c in ClassroomList">
                             <option value="">{{ClassroomTextToShow}}</option>
                         </select>
+                    </label>
+
+                    <label>
+                        <span style="width: 100%;">Select Start Date:</span>
+                        <quick-datepicker ng-model='StartDate' date-format='yyyy-M-d' placeholder='Pick a Date' disable-timepicker='true'></quick-datepicker>
+                    </label>
+                    <label>
+                        <span style="width: 100%;">Select End Date:</span>
+                        <quick-datepicker ng-model='EndDate' date-format='yyyy-M-d' placeholder='Pick a Date' disable-timepicker='true'  data-ng-change="GetStreamList()"></quick-datepicker>
                     </label>
                 </div>
             </div>
