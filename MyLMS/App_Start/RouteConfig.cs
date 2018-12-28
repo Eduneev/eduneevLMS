@@ -12,7 +12,8 @@ namespace MyLMS
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-           
+            routes.MapMvcAttributeRoutes();
+
             routes.MapRoute(
                 name: "Details",
                 url: "SessionMgmt/RRQDashboard/{id}/{OptionSeq}",
