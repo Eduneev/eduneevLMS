@@ -42,9 +42,23 @@
     }
 
     $scope.GetStreamList = function () {
-        $http.get('/Organisation/GetStreamLogsForClassroom/' + $scope.ClassRoomID + "/" + $scope.StartDate + "/" + $scope.EndDate)
+        dates = GetDate();
+        $http.get('/Organisation/GetStreamLogsForClassroom/' + $scope.ClassRoomID + "/" + dates[0] + "/" + dates[1])
             .then(function (result) {
                 $scope.StreamList = result.data;
             });
+    }
+
+    function GetDate() {
+        startDate = $scope.StartDate;
+        day = startDate.getUTCDate(); if (day < 10) { day = "0" + day; }
+        month = startDate.getMonth() + 1; if (month < 10) { month = "0" + month;}
+        s = startDate.getFullYear() + "-" + month + "-" + day;
+        endDate = $scope.EndDate;
+        day = endDate.getUTCDate(); if (day < 10) { day = "0" + day; }
+        month = endDate.getMonth() + 1; if (month < 10) { month = "0" + month; }
+        t = endDate.getFullYear() + "-" + month + "-" + day;
+
+        return [s, t];
     }
 });

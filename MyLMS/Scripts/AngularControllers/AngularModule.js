@@ -1,6 +1,6 @@
 ﻿var myapp;
 (function () {
-    myapp = angular.module('MyModule', ['ngSanitize', 'ngWebSocket']);
+    myapp = angular.module('MyModule', ['ngSanitize', 'ngWebSocket','ngQuickDate']);
 })();
 
 myapp.constant('Constants', {
