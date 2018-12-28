@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "Billing";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+@section scripts{
+    <script src="~/Scripts/AngularControllers/BillingController.js"></script>
+    <
+}
+
+<div ng-controller="BillingCntrl">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Billing
+        </h1>
+    </section>
+
+    <!-- Form Body (Page body)-->
+    <section class="content">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <div class="pull-left">
+                    <label>
+                        <select class="form-control" id="drpEntityName" style="width: 100%;" data-ng-model="EntityID" data-ng-options="c.EntityID as c.EntityName for c in EntityList" data-ng-change="GetCentersForSelectedEntity()">
+                            <option value="">{{EntityTextToShow}}</option>
+                        </select>
+                    </label>
+                    <label>
+                        <select class="form-control" id="drpCenterName" style="width: 100%;" data-ng-model="CenterID" data-ng-options="c.CenterID as c.CenterName for c in CentersList" data-ng-change="GetClassroomList()">
+                            <option value="">{{CenterTextToShow}}</option>
+                        </select>
+                    </label>
+                    <label>
+                        <select class="form-control" id="drpClassroomName" style="width: 100%;" data-ng-model="SubjectID" data-ng-options="c.ClassRoomID as c.ClassRoomName for c in ClassroomList" data-ng-change="GetStudentsList()">
+                            <option value="">{{ClassroomTextToShow}}</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        <input type="text" name="table_search" ng-model="StudentFilter" class="form-control" placeholder="Search Student..">
+                    </label>
+                </div>
+                <div class="box-tools">
+                    <div class="input-group input-group-sm " style="width:250px; height:30px;">
+                    </div>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width:15px;">Sl No.</th>
+                                    <th style="width:100px;">Image</th>
+                                    <th style="width:250px;">Name</th>
+                                    <th>Enter Remote No.</th>
+                                </tr>
+                            </thead>
+                            <tbody style="font-size:16px;">
+                                <tr ng-repeat="Student in StudentsList | filter: StudentFilter">
+                                    <td>
+                                        {{$index+1}}.
+                                    </td>
+                                    <td>
+                                        <span><img ng-src="{{Student.StudentImageURL}}" height="80" width="80"></span>
+                                    </td>
+                                    <td>
+                                        <span><strong>{{Student.StudentName}}</strong></span><br />
+                                        <span>Roll No. {{Student.Code}}</span><br />
+                                        <span>Contact No. {{Student.Mobile}}</span><br />
+                                    </td>
+                                    <th>
+                                        <div>
+                                            <label>
+                                                <span>Assigned Remote: {{Student.RemoteID}}</span>
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label class="col-lg-3">
+                                                <input type="text" ng-model="RemoteNumber" name="Landline" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter remote number...">
+                                            </label>
+                                            <label>
+                                                <button type="button" class="btn btn-block btn-success btn-sm" ng-click="AssignRemoteToStudent(Student.StudentID, RemoteNumber)"><span class="glyphicon glyphicon-ok"></span> Assign</button>
+                                            </label>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
