@@ -346,7 +346,7 @@
         var _RRQNo = $scope.RRQNo;
         var _ActiveFromDate = $scope.ActiveFromDate;
         var _ActiveToDate = $scope.ActiveToDate;
-        window.location.href = "/SessionMgmt/AddQuestionsToRRQ/";
+        window.location.href = "/SessionMgmt/CreateRRQ/";
         //$http({
         //    method: 'POST',
         //    url: '/SessionMgmt/CreateRRQ',

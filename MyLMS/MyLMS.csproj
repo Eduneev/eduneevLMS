@@ -235,6 +235,7 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\AngularControllers\angular-datatables.min.js" />
     <Content Include="Scripts\AngularControllers\AngularModule.js" />
+    <Content Include="Scripts\AngularControllers\BillingController.js" />
     <Content Include="Scripts\AngularControllers\CenterController.js" />
     <Content Include="Scripts\AngularControllers\CourseController.js" />
     <Content Include="Content\defaultmodalpopup.html" />
@@ -771,6 +772,7 @@
     <Content Include="Views\StudentMgmt\RRQManualEntry.cshtml" />
     <Content Include="Views\SessionMgmt\CreateRRQ.cshtml" />
     <Content Include="Views\SessionMgmt\NewRRQ.cshtml" />
+    <Content Include="Views\Organisation\Billing.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
