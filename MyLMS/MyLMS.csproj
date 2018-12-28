@@ -772,7 +772,8 @@
     <Content Include="Views\StudentMgmt\RRQManualEntry.cshtml" />
     <Content Include="Views\SessionMgmt\CreateRRQ.cshtml" />
     <Content Include="Views\SessionMgmt\NewRRQ.cshtml" />
-    <Content Include="Views\Organisation\Billing.cshtml" />
+    <Content Include="Views\Organisation\OrgBilling.cshtml" />
+    <Content Include="Views\Entity\Billing.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

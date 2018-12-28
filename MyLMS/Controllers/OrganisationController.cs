@@ -36,7 +36,7 @@ namespace MyLMS.Controllers
             return View();
         }
 
-        public ActionResult Billing()
+        public ActionResult OrgBilling()
         {
             return View();
         }
