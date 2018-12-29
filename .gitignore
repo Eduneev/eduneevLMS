@@ -7,3 +7,4 @@ _ReSharper.*
 MyLMS/bin
 MyLMS/obj
 packages*
+bower_components
