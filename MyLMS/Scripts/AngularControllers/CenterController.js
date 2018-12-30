@@ -63,17 +63,16 @@
 
 myapp.controller('AllocateReceiverCntrl', function ($scope, $http) {
     GetClassroomList();
+    $scope.ReceiverSerialNo = null;
 
     function GetClassroomList() {
         $http.get('/CenterMgmt/GetClassroomReceiver')
             .then(function (result) {
-                console.log(result.data);
                 $scope.ClassroomList = result.data;
             });
     }
 
     $scope.AssignReceiver = function (ClassroomID, ReceiverSerialNo) {
-        debugger;
         var _ClassRoomID = ClassroomID;
         var _ReceiverSerialNo = ReceiverSerialNo;
 

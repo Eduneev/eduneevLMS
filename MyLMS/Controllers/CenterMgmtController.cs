@@ -148,6 +148,21 @@ namespace MyLMS.Controllers
             return JSONString;
         }
 
+        [HttpPost]
+        public string AssignReceiver(int ClassRoomID, string ReceiverSerialNo)
+        {
+            SqlParameter[] FObj = new SqlParameter[2];
+            FObj[0] = new SqlParameter("@ClassRoomID", SqlDbType.Int);
+            FObj[0].Value = ClassRoomID;
+            FObj[1] = new SqlParameter("@ReceiverSerialNo", SqlDbType.VarChar);
+            FObj[1].Value = ReceiverSerialNo;
+            DataTable CentersList = DAL.GetDataTable("AssignReceiver", FObj);
+
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(CentersList);
+            return JSONString;
+        }
+
         [HttpGet]
         public int GetAccountID()
         {
@@ -156,8 +171,15 @@ namespace MyLMS.Controllers
             FObj[0] = new SqlParameter("@UserID", SqlDbType.Int);
             FObj[0].Value = Convert.ToInt32(Session["USER_ID"]);
             DataTable DtAccountID = DAL.GetDataTable("GetUserAccountID", FObj);
-            AccountID = Convert.ToInt32(DtAccountID.Rows[0]["Column1"].ToString());
-            return AccountID;
+            try
+            {
+                AccountID = Convert.ToInt32(DtAccountID.Rows[0]["Column1"].ToString());
+                return AccountID;
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
         }
     }
 }
