@@ -134,7 +134,7 @@ namespace MyLMS.Controllers
             // first get the studentId
             // Also, can this be done in one go rather than first get the studenId?
             SqlParameter[] SParam = new SqlParameter[2];
-            SParam[0] = new SqlParameter("@RemoteID", SqlDbType.VarChar);
+            SParam[0] = new SqlParameter("@RemoteNum", SqlDbType.VarChar);
             SParam[0].Value = remoteId;
             SParam[1] = new SqlParameter("@SessionID", SqlDbType.Int);
             SParam[1].Value = sessionId;
