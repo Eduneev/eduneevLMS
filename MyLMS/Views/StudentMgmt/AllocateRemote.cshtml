@@ -14,6 +14,7 @@
         <h1>
             Remote Management
             <small>Assign remote to student</small>
+            <strong><small style="color:red">Make sure to bind remote to receiver before allocating to student</small></strong>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
@@ -28,6 +29,11 @@
             <div class="box-header with-border">
                 <div class="pull-left">
                     <label>
+                        <select class="form-control" id="drpClassroomName" style="width: 100%;" data-ng-model="ReceiverSerialNo" data-ng-options="c.ReceiverSerialNo as c.ClassRoomName for c in ClassroomList" data-ng-change="GetProgramsList()">
+                            <option value="">{{ClassroomTextToShow}}</option>
+                        </select>
+                    </label>
+                    <label>
                         <select class="form-control" id="drpProgramName" style="width: 100%;" data-ng-model="ProgID" data-ng-options="c.ProgID as c.ProgramName for c in ProgramsList" data-ng-change="GetCourseList()">
                             <option value="">{{ProgramTextToShow}}</option>
                         </select>
@@ -41,6 +47,11 @@
                         <select class="form-control" id="drpSubjecteName" style="width: 100%;" data-ng-model="SubjectID" data-ng-options="c.SubjectID as c.SubjectName for c in SubjectsList" data-ng-change="GetStudentsList()">
                             <option value="">{{SubjectTextToShow}}</option>
                         </select>
+                    </label>
+
+                    <label>
+                        <span style="width: 100%; height:30px">Receiver Number: </span>
+                        <strong><span style="width: 100%;" id="receiver"></span></strong>
                     </label>
 
                     <label>
@@ -80,7 +91,7 @@
                                     <th>
                                         <div>
                                             <label>
-                                                <span>Assigned Remote: {{Student.RemoteID}}</span>
+                                                <span>Assigned Remote: {{Student.RemoteNum}}</span>
                                             </label>                                            
                                         </div>
                                         <div>
