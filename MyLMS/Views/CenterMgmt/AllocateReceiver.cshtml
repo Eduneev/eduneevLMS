@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "AllocateReceiver";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+@section scripts{
+    <script src="~/Scripts/AngularControllers/CenterController.js"></script>
+}
+
+<div ng-controller="AllocateReceiverCntrl">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Receiver Management
+            <small>Assign Receiver to Classroom</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+            <li><a href="#">Manage Course</a></li>
+            @*<li class="active">Add Course</li>*@
+        </ol>
+    </section>
+
+    <!-- Form Body (Page body)-->
+    <section class="content">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <div class="pull-left">
+                    <label>
+                        <input type="text" name="table_search" ng-model="StudentFilter" class="form-control" placeholder="Search Classroom..">
+                    </label>
+                </div>
+                <div class="box-tools">
+                    <div class="input-group input-group-sm " style="width:250px; height:30px;">
+                    </div>
+                </div>
+            </div>
+
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width:15px;">Sl No.</th>
+                                <th>Classroom</th>
+                                <th>Allocated Receiver</th>
+                                <th>Enter Receiver No.</th>
+                            </tr>
+                        </thead>
+                        <tbody style="font-size:16px;">
+                            <tr ng-repeat="Classroom in ClassroomList | filter: StudentFilter">
+                                <td>
+                                    {{$index+1}}.
+                                </td>
+                                <td>
+                                    <span>{{Classroom.ClassRoomName}}</span>
+                                </td>
+                                <td>
+                                    <span>{{Classroom.ReceiverSerialNo}}</span>
+                                </td>
+                                <th>
+                                    <div>
+                                        <label class="col-lg-3">
+                                            <input type="text" ng-model="ReceiverSerialNo" name="Landline" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter receiver number...">
+                                        </label>
+                                        <label>
+                                            <button type="button" class="btn btn-block btn-success btn-sm" ng-click="AssignReceiver(Classroom.ClassRoomID, ReceiverSerialNo)"><span class="glyphicon glyphicon-ok"></span> Assign</button>
+                                        </label>
+                                    </div>
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+</div>
+    </section>
+</div>
