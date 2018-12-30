@@ -60,3 +60,29 @@
         });
     }
 });
+
+myapp.controller('AllocateReceiverCntrl', function ($scope, $http) {
+    GetClassroomList();
+
+    function GetClassroomList() {
+        $http.get('/CenterMgmt/GetClassroomReceiver')
+            .then(function (result) {
+                console.log(result.data);
+                $scope.ClassroomList = result.data;
+            });
+    }
+
+    $scope.AssignReceiver = function (ClassroomID, ReceiverSerialNo) {
+        debugger;
+        var _ClassRoomID = ClassroomID;
+        var _ReceiverSerialNo = ReceiverSerialNo;
+
+        $http({
+            method: 'POST',
+            url: '/CenterMgmt/AssignReceiver',
+            data: { ClassRoomID: _ClassRoomID, ReceiverSerialNo: _ReceiverSerialNo }
+        }).then(function (result) {
+            $scope.GetClassroomList();
+        });
+    };
+});

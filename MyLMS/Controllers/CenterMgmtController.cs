@@ -47,6 +47,11 @@ namespace MyLMS.Controllers
             return View();
         }
 
+        public ActionResult AllocateReceiver()
+        {
+            return View();
+        }
+
         [HttpPost]
         public void SaveCenter(string CenterName, string CenterCode, string Email, string Landline1, string Landline2, string Mobile, string Address, string PinCode)
         {
@@ -124,6 +129,19 @@ namespace MyLMS.Controllers
             FObj[0] = new SqlParameter("@CenterID", SqlDbType.Int);
             FObj[0].Value = id;
             DataTable CentersList = DAL.GetDataTable("GetClassroomByCenterID", FObj);
+
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(CentersList);
+            return JSONString;
+        }
+
+        [HttpGet]
+        public string GetClassroomReceiver()
+        {
+            SqlParameter[] FObj = new SqlParameter[1];
+            FObj[0] = new SqlParameter("@USER_ID", SqlDbType.Int);
+            FObj[0].Value = Convert.ToInt32(Session["USER_ID"]);
+            DataTable CentersList = DAL.GetDataTable("GetClassRoomReceiver", FObj);
 
             string JSONString = string.Empty;
             JSONString = JsonConvert.SerializeObject(CentersList);
