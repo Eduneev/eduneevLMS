@@ -126,9 +126,20 @@ myapp.controller('StudentAttendanceCntrl', function ($scope, $http) {
 
 
 myapp.controller('AllocateRemoteCntrl', function ($scope, $http) {
-    GetProgramsList();
+    GetClassroomList();
+    $scope.ClassroomTextToShow = "Please Select....";
+    $scope.ReceiverSerialNo = null;
 
-    function GetProgramsList() {
+    function GetClassroomList() {
+        $http.get('/CenterMgmt/GetClassroomReceiver')
+            .then(function (result) {
+                console.log(result.data)
+                $scope.ClassroomList = result.data;
+            });
+    }
+
+    $scope.GetProgramsList = function() {
+        document.getElementById('receiver').textContent = $scope.ReceiverSerialNo;
         $http.get('/CourseMgmt/GetProgramsForCenter')
         .then(function (result) {
             $scope.ProgramsList = result.data;
@@ -159,7 +170,7 @@ myapp.controller('AllocateRemoteCntrl', function ($scope, $http) {
     $scope.AssignRemoteToStudent = function (StudentID, RemoteNumber) {
         debugger;
         var _StudentID = StudentID;
-        var _RemoteNumber = RemoteNumber;
+        var _RemoteNumber = RemoteNumber + "-" + $scope.ReceiverSerialNo;
         var _SubjectID = $scope.SubjectID
         $http({
             method: 'POST',

@@ -81,7 +81,7 @@ myapp.controller('AllocateReceiverCntrl', function ($scope, $http) {
             url: '/CenterMgmt/AssignReceiver',
             data: { ClassRoomID: _ClassRoomID, ReceiverSerialNo: _ReceiverSerialNo }
         }).then(function (result) {
-            $scope.GetClassroomList();
+            GetClassroomList();
         });
     };
 });
