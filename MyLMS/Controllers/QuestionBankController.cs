@@ -218,7 +218,11 @@ namespace MyLMS.Controllers
         [HttpGet]
         public string GetTags()
         {
-            DataTable TagsList = DAL.GetDataTable("GetTags");
+            SqlParameter[] FObj = new SqlParameter[1];
+            FObj[0] = new SqlParameter("@UserID", SqlDbType.Int);
+            FObj[0].Value = Convert.ToInt32(Session["USER_ID"]);
+
+            DataTable TagsList = DAL.GetDataTable("GetTags", FObj);
             string JSONString = string.Empty;
             JSONString = JsonConvert.SerializeObject(TagsList);
             return JSONString;

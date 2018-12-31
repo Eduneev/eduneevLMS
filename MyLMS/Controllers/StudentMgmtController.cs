@@ -83,6 +83,19 @@ namespace MyLMS.Controllers
         }
 
         [HttpGet]
+        public string GenerateStudentCode()
+        {
+            SqlParameter[] FObj = new SqlParameter[1];
+            FObj[0] = new SqlParameter("@UserID", SqlDbType.Int);
+            FObj[0].Value = Convert.ToInt32(Session["USER_ID"]);
+            DataTable StudentsList = DAL.GetDataTable("GenerateStudentCode", FObj);
+
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(StudentsList);
+            return JSONString;
+        }
+
+        [HttpGet]
         public string GetStudents()
         {
             SqlParameter[] FObj = new SqlParameter[1];
@@ -114,7 +127,7 @@ namespace MyLMS.Controllers
         public string GetStudentsForRemoteAllocation(int id)
         {
             SqlParameter[] FObj = new SqlParameter[2];
-            FObj[0] = new SqlParameter("@CourseID", SqlDbType.Int);
+            FObj[0] = new SqlParameter("@SubjectID", SqlDbType.Int);
             FObj[0].Value = id;
             FObj[1] = new SqlParameter("@UserID", SqlDbType.Int);
             FObj[1].Value = Convert.ToInt32(Session["USER_ID"]);
