@@ -28,6 +28,9 @@
                     <button type="button" class="btn btn-dropbox" id="btnAddProgram" data-toggle="modal" ng-click="AddQuestion()"><i class="glyphicon glyphicon-plus"> </i> Add Question</button>
                 </div>
                 <div class="box-tools pull-right">
+                    <label>
+                        <input type="text" name="table_search" ng-model="StudentFilter" class="form-control" placeholder="Search Question..">
+                    </label>
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                 </div>
             </div>
@@ -42,7 +45,7 @@
                                     <th style="width:150px;">Action</th>                                  
                                 </tr>
                             </thead>
-                            <tbody ng-repeat="Q in QuestionList | startFrom:currentPage*pageSize | limitTo:pageSize">
+                            <tbody ng-repeat="Q in QuestionList | startFrom:currentPage*pageSize | limitTo:pageSize | filter:StudentFilter">
                                 <tr>
                                     <td>
                                         {{$index+1}}.
