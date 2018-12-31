@@ -49,8 +49,8 @@ myapp.controller('StudentViewCntrl', function ($scope, $http) {
         .then(function (result) {
             $scope.StudentsList = result.data;
         });
-    
-}
+    }
+
     $scope.AddStudent = function () {
         window.location.href = "/StudentMgmt/RegisterStudent/";
     }
@@ -133,7 +133,6 @@ myapp.controller('AllocateRemoteCntrl', function ($scope, $http) {
     function GetClassroomList() {
         $http.get('/CenterMgmt/GetClassroomReceiver')
             .then(function (result) {
-                console.log(result.data)
                 $scope.ClassroomList = result.data;
             });
     }
@@ -142,6 +141,7 @@ myapp.controller('AllocateRemoteCntrl', function ($scope, $http) {
         document.getElementById('receiver').textContent = $scope.ReceiverSerialNo;
         $http.get('/CourseMgmt/GetProgramsForCenter')
         .then(function (result) {
+            $scope.ProgramTextToShow = 'Please select..';
             $scope.ProgramsList = result.data;
         });
     }
@@ -149,6 +149,7 @@ myapp.controller('AllocateRemoteCntrl', function ($scope, $http) {
     $scope.GetCourseList = function () {
         $http.get('/CourseMgmt/GetCourse/' + $scope.ProgID)
         .then(function (result) {
+            $scope.CourseTextToShow = 'Please select..';
             $scope.CoursesList = result.data;
         });
     }
@@ -156,6 +157,7 @@ myapp.controller('AllocateRemoteCntrl', function ($scope, $http) {
     $scope.GetSubjectsList = function () {
         $http.get('/CourseMgmt/GetSubject/' + $scope.CourseID)
             .then(function (result) {
+                $scope.SubjectTextToShow = 'Please select..';
                 $scope.SubjectsList = result.data;
             });
     }

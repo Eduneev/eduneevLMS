@@ -14,7 +14,7 @@
         <h1>
             Remote Management
             <small>Assign remote to student</small>
-            <strong><small style="color:red">Make sure to bind remote to receiver before allocating to student</small></strong>
+            <strong><small style="color:red">Make sure to bind 2WayRemote to 2WayReceiver before allocating to student</small></strong>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
@@ -50,8 +50,8 @@
                     </label>
 
                     <label>
-                        <span style="width: 100%; height:30px">Receiver Number: </span>
-                        <strong><span style="width: 100%;" id="receiver"></span></strong>
+                        <span style="width: 100%; height:30px">2WayReceiver No: </span>
+                        <strong><span style="width: 100%;color:red" id="receiver"></span></strong>
                     </label>
 
                     <label>
@@ -91,7 +91,7 @@
                                     <th>
                                         <div>
                                             <label>
-                                                <span>Assigned Remote: {{Student.RemoteNum}}</span>
+                                                <span>Assigned 2WayRemote: {{Student.RemoteNum}}</span>
                                             </label>                                            
                                         </div>
                                         <div>
