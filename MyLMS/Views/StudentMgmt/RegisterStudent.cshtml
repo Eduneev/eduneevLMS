@@ -41,14 +41,14 @@
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                 <input type="text" ng-model="StudentName" name="StudentName" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter student name...">
-                            </div>                            
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Roll No.</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-tag"></i></span>
                                 <input type="text" ng-model="Code" name="Code" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter roll number...">
-                            </div>                            
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Gender</label>
@@ -60,15 +60,34 @@
                         </div>
                         <div class="form-group">
                             <label>Program</label>
-                            <select class="form-control" id="drpProgramName" style="width: 100%;" data-ng-model="ProgID" data-ng-options="c.ProgID as c.ProgramName for c in CourseList">
+                            <select class="form-control" id="drpProgramName" style="width: 100%;" data-ng-model="ProgID" data-ng-options="c.ProgID as c.ProgramName for c in ProgramsList" data-ng-change="GetCourseList()">
                                 <option value="">{{ProgramTextToShow}}</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Course</label>
-                            <select class="form-control" id="drpCourseName" style="width: 100%;" data-ng-model="CourseID" data-ng-options="c.CourseID as c.CourseName for c in CourseList">
+                            <select class="form-control" id="drpCourseName" style="width: 100%;" data-ng-model="CourseID" data-ng-options="c.CourseID as c.CourseName for c in CoursesList" data-ng-change="GetSubjectsList()">
                                 <option value="">{{CourseTextToShow}}</option>
                             </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <table class="table table-hover table-bordered">
+                                <tbody ng-repeat="Q in SubjectsList">
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" name="r2" ng-model="selectedObjs" value="{{Q.SubjectID}}"
+                                                   ng-checked="Qselection.indexOf(Q.SubjectID) > -1"
+                                                   ng-click="AddRemoveSubject(Q.SubjectID)">
+                                        </td>
+                                        <td>
+                                            <span><strong>{{Q.SubjectName}}</strong></span>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
