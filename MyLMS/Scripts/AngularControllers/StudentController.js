@@ -37,30 +37,36 @@
     $scope.SaveStudent = function () {
         debugger;
 
-        for (SubjectID of $scope.SubjectSet) {
-            var _StudentName = $scope.StudentName;
-            var _Code = $scope.Code;
-            var _Gender = $scope.Gender;
-            var _ProgramID = $scope.ProgID;
-            var _CourseID = $scope.CourseID;
-            var _SubjectID = SubjectID;
-            var _Email = $scope.Email;
-            var _Mobile = $scope.Mobile;
-            var _Landline = $scope.Landline;
-            var _GuardianName = $scope.GuardianName;
-            var _GuardianContactNo = $scope.GuardianContactNo;
-            var _BirthPlace = $scope.BirthPlace;
-            var _SchoolName = $scope.SchoolName;
-            var _Address = $scope.Address;
-            var _Pincode = $scope.PinCode;
+        $http.get('/StudentMgmt/GenerateStudentCode')
+            .then(function (result) {
+                $scope.Code = result.data[0].StudentEnrollmentNo;
+                for (SubjectID of $scope.SubjectSet) {
+                    var _StudentName = $scope.StudentName;
+                    var _Code = $scope.Code;
+                    var _Gender = $scope.Gender;
+                    var _ProgramID = $scope.ProgID;
+                    var _CourseID = $scope.CourseID;
+                    var _SubjectID = SubjectID;
+                    var _Email = $scope.Email;
+                    var _Mobile = $scope.Mobile;
+                    var _Landline = $scope.Landline;
+                    var _GuardianName = $scope.GuardianName;
+                    var _GuardianContactNo = $scope.GuardianContactNo;
+                    var _BirthPlace = $scope.BirthPlace;
+                    var _SchoolName = $scope.SchoolName;
+                    var _Address = $scope.Address;
+                    var _Pincode = $scope.PinCode;
 
-            $http({
-                method: 'POST',
-                url: '/StudentMgmt/SaveStudent',
-                data: { StudentName: _StudentName, Code: _Code, Gender: _Gender, ProgramID: _ProgramID, CourseID: _CourseID, SubjectID: _SubjectID, Email: _Email, Mobile: _Mobile, Landline: _Landline, GuardianName: _GuardianName, GuardianContactNo: _GuardianContactNo, BirthPlace: _BirthPlace, SchoolName: _SchoolName, Address: _Address, Pincode: _Pincode }
-            }).then(function (result) {
+                    $http({
+                        method: 'POST',
+                        url: '/StudentMgmt/SaveStudent',
+                        data: { StudentName: _StudentName, Code: _Code, Gender: _Gender, ProgramID: _ProgramID, CourseID: _CourseID, SubjectID: _SubjectID, Email: _Email, Mobile: _Mobile, Landline: _Landline, GuardianName: _GuardianName, GuardianContactNo: _GuardianContactNo, BirthPlace: _BirthPlace, SchoolName: _SchoolName, Address: _Address, Pincode: _Pincode }
+                    }).then(function (result) {
+                    });
+                }
+
             });
-        }
+
         alert("Student Saved Successfully");
     }
 
@@ -191,7 +197,7 @@ myapp.controller('AllocateRemoteCntrl', function ($scope, $http) {
     }
 
     $scope.GetStudentsList = function () {
-        $http.get('/StudentMgmt/GetStudentsForRemoteAllocation/' + $scope.CourseID)
+        $http.get('/StudentMgmt/GetStudentsForRemoteAllocation/' + $scope.SubjectID)
         .then(function (result) {
             $scope.StudentsList = result.data;
         });
