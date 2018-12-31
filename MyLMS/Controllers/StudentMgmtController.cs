@@ -37,10 +37,10 @@ namespace MyLMS.Controllers
 
 
         [HttpPost]
-        public void SaveStudent(string StudentName, string Code,int ProgramID, int CourseID, string Email, string Mobile, string Landline, string Address, string Pincode, string Gender, string BirthPlace, string SchoolName, string GuardianName, string GuardianContactNo)
+        public void SaveStudent(string StudentName, string Code,int ProgramID, int CourseID, int SubjectID, string Email, string Mobile, string Landline, string Address, string Pincode, string Gender, string BirthPlace, string SchoolName, string GuardianName, string GuardianContactNo)
         {
             StudentModel ModelObj1 = new StudentModel();
-            SqlParameter[] SParam = new SqlParameter[14];
+            SqlParameter[] SParam = new SqlParameter[15];
 
             SParam[0] = new SqlParameter("@StudentName", SqlDbType.VarChar);
             SParam[0].Value = StudentName;
@@ -50,26 +50,28 @@ namespace MyLMS.Controllers
             SParam[2].Value = ProgramID;
             SParam[3] = new SqlParameter("@CourseID", SqlDbType.Int);
             SParam[3].Value = CourseID;
-            SParam[4] = new SqlParameter("@Email", SqlDbType.VarChar);
-            SParam[4].Value = Email;
-            SParam[5] = new SqlParameter("@Mobile", SqlDbType.VarChar);
-            SParam[5].Value = Mobile;
-            SParam[6] = new SqlParameter("@Landline", SqlDbType.VarChar);
-            SParam[6].Value = Landline;
-            SParam[7] = new SqlParameter("@Address", SqlDbType.Text);
-            SParam[7].Value = Address;
-            SParam[8] = new SqlParameter("@Pincode", SqlDbType.VarChar);
-            SParam[8].Value = Pincode;
-            SParam[9] = new SqlParameter("@Gender", SqlDbType.VarChar);
-            SParam[9].Value = Gender;
-            SParam[10] = new SqlParameter("@UserID", SqlDbType.Int);
-            SParam[10].Value = Convert.ToInt32(Session["USER_ID"]);
-            SParam[11] = new SqlParameter("@SchoolName", SqlDbType.VarChar);
-            SParam[11].Value = SchoolName;
-            SParam[12] = new SqlParameter("@GuardianName", SqlDbType.VarChar);
-            SParam[12].Value = GuardianName;
-            SParam[13] = new SqlParameter("@GuardianContactNo", SqlDbType.VarChar);
-            SParam[13].Value = GuardianContactNo;
+            SParam[4] = new SqlParameter("@SubjectID", SqlDbType.Int);
+            SParam[4].Value = SubjectID;
+            SParam[5] = new SqlParameter("@Email", SqlDbType.VarChar);
+            SParam[5].Value = Email;
+            SParam[6] = new SqlParameter("@Mobile", SqlDbType.VarChar);
+            SParam[6].Value = Mobile;
+            SParam[7] = new SqlParameter("@Landline", SqlDbType.VarChar);
+            SParam[7].Value = Landline;
+            SParam[8] = new SqlParameter("@Address", SqlDbType.Text);
+            SParam[8].Value = Address;
+            SParam[9] = new SqlParameter("@Pincode", SqlDbType.VarChar);
+            SParam[9].Value = Pincode;
+            SParam[10] = new SqlParameter("@Gender", SqlDbType.VarChar);
+            SParam[10].Value = Gender;
+            SParam[11] = new SqlParameter("@UserID", SqlDbType.Int);
+            SParam[11].Value = Convert.ToInt32(Session["USER_ID"]);
+            SParam[12] = new SqlParameter("@SchoolName", SqlDbType.VarChar);
+            SParam[12].Value = SchoolName;
+            SParam[13] = new SqlParameter("@GuardianName", SqlDbType.VarChar);
+            SParam[13].Value = GuardianName;
+            SParam[14] = new SqlParameter("@GuardianContactNo", SqlDbType.VarChar);
+            SParam[14].Value = GuardianContactNo;
             try
             {
                 ModelObj1.SaveStudent(SParam);

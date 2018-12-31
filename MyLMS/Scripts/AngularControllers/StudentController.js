@@ -1,39 +1,67 @@
 ﻿myapp.controller('StudentCntrl', function ($scope, $http) {
-    $scope.ProgramTextToShow = 'Please select..'
-    $scope.CourseTextToShow = 'Please select..'
-    GetCourseDetails();
-    function GetCourseDetails() {
-        $http.get('/CourseMgmt/GetCourseDetails')
-        .then(function (result) {
-            $scope.CourseList = result.data;
-        });
+    GetProgramsList();
+    $scope.SubjectSet = new Set();
+
+    function GetProgramsList() {
+        $http.get('/CourseMgmt/GetProgramsForCenter')
+            .then(function (result) {
+                $scope.ProgramTextToShow = 'Please select..';
+                $scope.ProgramsList = result.data;
+            });
     }
+
+    $scope.GetCourseList = function () {
+        $http.get('/CourseMgmt/GetCourse/' + $scope.ProgID)
+            .then(function (result) {
+                $scope.CourseTextToShow = 'Please select..';
+                $scope.CoursesList = result.data;
+            });
+    };
+
+    $scope.GetSubjectsList = function () {
+        $http.get('/CourseMgmt/GetSubject/' + $scope.CourseID)
+            .then(function (result) {
+                $scope.SubjectsList = result.data;
+            });
+    };
+
+    $scope.AddRemoveSubject = function (SubjectID) {
+        if ($scope.SubjectSet.has(SubjectID))
+            $scope.SubjectSet.delete(SubjectID);
+        else
+            $scope.SubjectSet.add(SubjectID);
+
+        console.log($scope.SubjectSet);
+    };
 
     $scope.SaveStudent = function () {
         debugger;
-        var _StudentName = $scope.StudentName
-        var _Code = $scope.Code;
-        var _Gender = $scope.Gender;
-        var _ProgramID = $scope.ProgID
-        var _CourseID = $scope.CourseID;
-        var _Email = $scope.Email;
-        var _Mobile = $scope.Mobile
-        var _Landline = $scope.Landline;
-        var _GuardianName = $scope.GuardianName;
-        var _GuardianContactNo = $scope.GuardianContactNo
-        var _BirthPlace = $scope.BirthPlace;
-        var _SchoolName = $scope.SchoolName;
-        var _Address = $scope.Address
-        var _Pincode = $scope.PinCode;
 
-        $http({
-            method: 'POST',
-            url: '/StudentMgmt/SaveStudent',
-            data: { StudentName: _StudentName, Code: _Code, Gender: _Gender, ProgramID: _ProgramID, CourseID: _CourseID, Email: _Email, Mobile: _Mobile, Landline: _Landline, GuardianName: _GuardianName, GuardianContactNo: _GuardianContactNo, BirthPlace: _BirthPlace, SchoolName: _SchoolName, Address: _Address, Pincode: _Pincode }
-        }).then(function (result) {
-            alert("Student Saved Successfully");
-            GetCourseDetails();
-        });
+        for (SubjectID of $scope.SubjectSet) {
+            var _StudentName = $scope.StudentName;
+            var _Code = $scope.Code;
+            var _Gender = $scope.Gender;
+            var _ProgramID = $scope.ProgID;
+            var _CourseID = $scope.CourseID;
+            var _SubjectID = SubjectID;
+            var _Email = $scope.Email;
+            var _Mobile = $scope.Mobile;
+            var _Landline = $scope.Landline;
+            var _GuardianName = $scope.GuardianName;
+            var _GuardianContactNo = $scope.GuardianContactNo;
+            var _BirthPlace = $scope.BirthPlace;
+            var _SchoolName = $scope.SchoolName;
+            var _Address = $scope.Address;
+            var _Pincode = $scope.PinCode;
+
+            $http({
+                method: 'POST',
+                url: '/StudentMgmt/SaveStudent',
+                data: { StudentName: _StudentName, Code: _Code, Gender: _Gender, ProgramID: _ProgramID, CourseID: _CourseID, SubjectID: _SubjectID, Email: _Email, Mobile: _Mobile, Landline: _Landline, GuardianName: _GuardianName, GuardianContactNo: _GuardianContactNo, BirthPlace: _BirthPlace, SchoolName: _SchoolName, Address: _Address, Pincode: _Pincode }
+            }).then(function (result) {
+            });
+        }
+        alert("Student Saved Successfully");
     }
 
     $scope.ViewStudentsList = function () {
