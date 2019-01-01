@@ -164,7 +164,6 @@
     $scope.GetQuestionDetails = function () {
         $http.get('/QuestionBank/GetQuestions')
             .then(function (result) {
-                console.log(result);
             $scope.QuestionList = result.data;
         });
     }
@@ -239,8 +238,20 @@
     }
 
     $scope.SetTagFilter = function () {
-        console.log($scope.TagText)
-        $scope.StudentFilter = $scope.TagText;
+        console.log($scope.QTagID);
+
+        if ($scope.QTagID == null)
+            $scope.GetQuestionDetails();
+        else
+            GetQuestionByTag();
+    }
+
+
+    function GetQuestionByTag() {
+        $http.get('/QuestionBank/GetQuestionsByTag/' + $scope.QTagID)
+            .then(function (result) {
+                $scope.QuestionList = result.data;
+            });
     }
 
     // DeleteQuestion

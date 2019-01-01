@@ -211,6 +211,61 @@ namespace MyLMS.Controllers
         }
 
         [HttpGet]
+        public string GetQuestionsByTag(int id)
+        {
+            SqlParameter[] FObj = new SqlParameter[2];
+            FObj[0] = new SqlParameter("@UserID", SqlDbType.Int);
+            FObj[0].Value = Convert.ToInt32(Session["USER_ID"]);
+            FObj[1] = new SqlParameter("@QTagID", SqlDbType.Int);
+            FObj[1].Value = id;
+            List<QuestionOptions> CO = new List<QuestionOptions>();
+            DataTable QuestionsList = DAL.GetDataTable("GetQuestionsByTag", FObj);
+            SqlParameter[] SParam = new SqlParameter[1];
+            List<Question> QuestionList = new List<Question>();
+
+
+            for (int i = 0; i < QuestionsList.Rows.Count; i++)
+            {
+                Question Question = new Question();
+                Question.QID = Convert.ToInt32(QuestionsList.Rows[i]["QID"]);
+                Question.QTypeID = Convert.ToInt32(QuestionsList.Rows[i]["QTypeID"].ToString());
+                Question.QuestionText = QuestionsList.Rows[i]["QuestionText"].ToString();
+                Question.IsCompulsory = Convert.ToBoolean(QuestionsList.Rows[i]["IsCompulsory"]);
+                Question.TagText = QuestionsList.Rows[i]["TagText"].ToString();
+                QuestionList.Add(Question);
+
+                SParam[0] = new SqlParameter("@QID", SqlDbType.Int);
+                SParam[0].Value = Convert.ToInt32(QuestionsList.Rows[i]["QID"]);
+
+                DataTable OptionsList = DAL.GetDataTable("GetOptions", SParam);
+                List<Option> OptionList = new List<Option>();
+                for (int j = 0; j < OptionsList.Rows.Count; j++)
+                {
+                    Option Options = new Option();
+                    Options.OptionID = Convert.ToInt32(Convert.IsDBNull(OptionsList.Rows[j]["OptionID"]) ? "0" : OptionsList.Rows[j]["OptionID"]);
+                    Options.QID = Convert.ToInt32(Convert.IsDBNull(OptionsList.Rows[j]["QID"]) ? "0" : OptionsList.Rows[j]["QID"]);
+                    Options.OptionSeq = Convert.ToInt32(Convert.IsDBNull(OptionsList.Rows[j]["OptionSeq"]) ? "0" : OptionsList.Rows[j]["OptionSeq"]);
+                    Options.OptionText = Convert.IsDBNull(OptionsList.Rows[j]["OptionText"]) ? "" : OptionsList.Rows[j]["OptionText"].ToString();
+                    Options.Mark = Convert.ToInt32(Convert.IsDBNull(OptionsList.Rows[j]["Mark"]) ? "0" : OptionsList.Rows[j]["Mark"]);
+                    Options.IsCorrect = Convert.ToBoolean(Convert.IsDBNull(OptionsList.Rows[j]["IsCorrect"]) ? "0" : OptionsList.Rows[j]["IsCorrect"]);
+                    OptionList.Add(Options);
+
+                    OptList = OptionList;
+                }
+
+                CO.Add(new QuestionOptions
+                {
+                    Question = Question,
+                    Options = OptList
+                });
+            }
+
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(CO);
+            return JSONString;
+        }
+
+        [HttpGet]
         public string GetQuestionAndOptions(int ID)
         {
             List<QuestionOptions> CO = new List<QuestionOptions>();

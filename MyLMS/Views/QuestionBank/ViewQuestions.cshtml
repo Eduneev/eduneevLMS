@@ -7,7 +7,7 @@
 @section scripts{
     <script src="~/Scripts/AngularControllers/QuestionBankController.js"></script>
 }
-<div data-ng-controller="QuestionCntrl" data-ng-init="GetQuestionDetails()">
+<div data-ng-controller="QuestionCntrl">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
@@ -27,7 +27,7 @@
                 <div class="pull-left">
                     <button type="button" class="btn btn-dropbox" id="btnAddProgram" data-toggle="modal" ng-click="AddQuestion()"><i class="glyphicon glyphicon-plus"> </i> Add Question</button>
                     <label>
-                        <select class="form-control" id="drpClassroomName" style="width: 100%;" data-ng-model="TagText" data-ng-options="c.TagText as c.TagText for c in TagsList" data-ng-change="SetTagFilter()">
+                        <select class="form-control" id="drpClassroomName" style="width: 100%;" data-ng-model="QTagID" data-ng-options="c.QTagID as c.TagText for c in TagsList" data-ng-change="SetTagFilter()">
                             <option value="">{{TagTextToShow}}</option>
                         </select>
                     </label>
