@@ -241,6 +241,29 @@
         $scope.StudentFilter = $scope.TagText;
     }
 
+    // DeleteQuestion
+    $scope.DeleteTag = function (QTagID) {
+        $http({
+            method: 'POST',
+            url: '/QuestionBank/DeleteTag',
+            data: { QTagID: QTagID }
+        }).then(function (result) {
+            alert('Deleted Successfully!!');
+            GetTags()
+        });
+    }
+
+    $scope.CreateTags = function (TagText) {
+        $http({
+            method: 'POST',
+            url: '/QuestionBank/CreateTags',
+            data: { TagText: TagText }
+        }).then(function (result) {
+            alert('Created Successfully!!');
+            GetTags()
+        });
+    }
+
     function CallstartTimer(duration, display) {
         var start = Date.now(),
             diff,

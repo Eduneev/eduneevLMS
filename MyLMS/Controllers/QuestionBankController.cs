@@ -24,6 +24,11 @@ namespace MyLMS.Controllers
             return View();
         }
 
+        public ActionResult CreateQTags()
+        {
+            return View();
+        }
+
         [HttpPost]
         public void SaveQuestion(string QuestionText, int QTagID, int DisplayTime)
         {
@@ -63,6 +68,44 @@ namespace MyLMS.Controllers
             catch (Exception ex)
             {
 
+            }
+        }
+
+        [HttpPost]
+        public void DeleteTag(int QTagID)
+        {
+            SqlParameter[] SParam = new SqlParameter[1];
+
+            SParam[0] = new SqlParameter("@QTagID", SqlDbType.Int);
+            SParam[0].Value = QTagID;
+
+            string res = "Failure";
+            try
+            {
+                res = DAL.ExecuteScalar("DeleteQTag", SParam);
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+        [HttpPost]
+        public void CreateTags(string TagText)
+        {
+            SqlParameter[] SParam = new SqlParameter[2];
+
+            SParam[0] = new SqlParameter("@UserID", SqlDbType.Int);
+            SParam[0].Value = Convert.ToInt32(Session["USER_ID"]);
+            SParam[1] = new SqlParameter("@TagText", SqlDbType.VarChar);
+            SParam[1].Value = TagText;
+
+            string res = "Failure";
+            try
+            {
+                res = DAL.ExecuteScalar("CreateTags", SParam);
+            }
+            catch (Exception ex)
+            {
             }
         }
 
