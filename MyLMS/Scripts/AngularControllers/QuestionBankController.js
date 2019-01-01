@@ -105,6 +105,8 @@
         var _QuestionText = $scope.QuestionText
         var _QTagID = $scope.QTagID
         var _DisplayTime = $scope.DisplayTime
+        if (_DisplayTime === null)
+            _DisplayTime = 20;
         $http({
             method: 'POST',
             url: '/QuestionBank/SaveQuestion',
