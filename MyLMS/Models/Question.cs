@@ -12,5 +12,6 @@ namespace MyLMS.Models
         public int QTypeID { get; set; }
         public string QuestionText { get; set; }
         public bool IsCompulsory { get; set; }
+        public string TagText { get; set; }
     }
 }

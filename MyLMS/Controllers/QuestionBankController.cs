@@ -128,6 +128,7 @@ namespace MyLMS.Controllers
                 Question.QTypeID = Convert.ToInt32(QuestionsList.Rows[i]["QTypeID"].ToString());
                 Question.QuestionText = QuestionsList.Rows[i]["QuestionText"].ToString();
                 Question.IsCompulsory = Convert.ToBoolean(QuestionsList.Rows[i]["IsCompulsory"]);
+                Question.TagText = QuestionsList.Rows[i]["TagText"].ToString();
                 QuestionList.Add(Question);
 
                 SParam[0] = new SqlParameter("@QID", SqlDbType.Int);
