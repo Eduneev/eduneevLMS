@@ -33,7 +33,7 @@ namespace MyLMS.Controllers
         public void SaveQuestion(string QuestionText, int QTagID, int DisplayTime)
         {
             QuestionModel QuesObj1 = new QuestionModel();
-            SqlParameter[] SParam = new SqlParameter[3];
+            SqlParameter[] SParam = new SqlParameter[4];
 
             SParam[0] = new SqlParameter("@QuestionText", SqlDbType.NVarChar);
             SParam[0].Value = QuestionText;
@@ -41,6 +41,8 @@ namespace MyLMS.Controllers
             SParam[1].Value = QTagID;
             SParam[2] = new SqlParameter("@DisplayTime", SqlDbType.Int);
             SParam[2].Value = DisplayTime;
+            SParam[3] = new SqlParameter("@UserID", SqlDbType.Int);
+            SParam[3].Value = Convert.ToInt32(Session["USER_ID"]);
 
             try
             {
@@ -158,8 +160,11 @@ namespace MyLMS.Controllers
         [HttpGet]
         public string GetQuestions()
         {
+            SqlParameter[] FObj = new SqlParameter[1];
+            FObj[0] = new SqlParameter("@UserID", SqlDbType.Int);
+            FObj[0].Value = Convert.ToInt32(Session["USER_ID"]);
             List<QuestionOptions> CO = new List<QuestionOptions>();
-            DataTable QuestionsList = DAL.GetDataTable("GetQuestions");
+            DataTable QuestionsList = DAL.GetDataTable("GetQuestions", FObj);
             SqlParameter[] SParam = new SqlParameter[1];
             List<Question> QuestionList = new List<Question>();
 
