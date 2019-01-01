@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "CreateQTags";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+@section scripts{
+    <script src="~/Scripts/AngularControllers/QuestionBankController.js"></script>
+}
+<div data-ng-controller="QuestionCntrl">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Create Question Tags
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+            <li><a href="#">Manage Course</a></li>
+        </ol>
+    </section>
+
+    <!-- Form Body (Page body)-->
+    <section class="content">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <div class="box-tools pull-right">
+                    <label>
+                        <input type="text" name="table_search" ng-model="StudentFilter" class="form-control" placeholder="Search Question..">
+                    </label>
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            <label class="col-lg-3">
+                                <input type="text" ng-model="NewTagText" name="Landline" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter new tag...">
+                            </label>
+                            <label>
+                                <button type="button" class="btn btn-block btn-success btn-sm" ng-click="CreateTags(NewTagText)"><span class="glyphicon glyphicon-ok"></span> Create</button>
+                            </label>
+                        </div>
+
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width:5px;">#</th>
+                                    <th>Tag Text</th>
+                                    <th style="width:150px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-repeat="Q in TagsList | filter:StudentFilter">
+                                <tr>
+                                    <td>
+                                        {{$index+1}}.
+                                    </td>
+                                    <td>
+                                        <span><strong>{{Q.TagText}}</strong></span>
+                                    </td>
+                                    <td>
+                                        <span ng-click="DeleteTag(Q.QTagID)" style="cursor:pointer;" class="fa fa-times-circle-o"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
