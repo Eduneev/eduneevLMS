@@ -96,7 +96,7 @@
             url: '/QuestionBank/DeleteQuestion',
             data: { QID: QID }
         }).then(function (result) {
-            alert('Deleted Successfully!!')
+            alert('Deleted Successfully!!');
         });
     }
 
@@ -227,11 +227,18 @@
         return Math.ceil($scope.QuestionList.length / $scope.RRQpageSize);
     }
 
+
+    $scope.TagTextToShow = "All Question Tags";
     function GetTags() {
         $http.get('/QuestionBank/GetTags')
             .then(function (result) {
                 $scope.TagsList = result.data;
             });
+    }
+
+    $scope.SetTagFilter = function () {
+        console.log($scope.TagText)
+        $scope.StudentFilter = $scope.TagText;
     }
 
     function CallstartTimer(duration, display) {

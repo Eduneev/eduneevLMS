@@ -26,6 +26,12 @@
             <div class="box-header with-border">
                 <div class="pull-left">
                     <button type="button" class="btn btn-dropbox" id="btnAddProgram" data-toggle="modal" ng-click="AddQuestion()"><i class="glyphicon glyphicon-plus"> </i> Add Question</button>
+                    <label>
+                        <select class="form-control" id="drpClassroomName" style="width: 100%;" data-ng-model="TagText" data-ng-options="c.TagText as c.TagText for c in TagsList" data-ng-change="SetTagFilter()">
+                            <option value="">{{TagTextToShow}}</option>
+                        </select>
+                    </label>
+
                 </div>
                 <div class="box-tools pull-right">
                     <label>
@@ -41,17 +47,21 @@
                             <thead>
                                 <tr>
                                     <th style="width:5px;">#</th>
-                                    <th>Questions & Options</th>  
+                                    <th>Questions & Options</th>
+                                    <th style="width:250px;">Question Tag</th>
                                     <th style="width:150px;">Action</th>                                  
                                 </tr>
                             </thead>
-                            <tbody ng-repeat="Q in QuestionList | startFrom:currentPage*pageSize | limitTo:pageSize | filter:StudentFilter">
+                            <tbody ng-repeat="Q in QuestionList | filter:StudentFilter | startFrom:currentPage*pageSize | limitTo:pageSize">
                                 <tr>
                                     <td>
                                         {{$index+1}}.
                                     </td>
                                     <td>
                                         <span><strong>{{Q.Question.QuestionText}}</strong></span>
+                                    </td>
+                                    <td>
+                                        <span>{{Q.Question.TagText}}</span>
                                     </td>
                                     <td>
                                         <span ng-click="DeleteQuestion(Q.Question.QID)" style="cursor:pointer;" class="fa fa-times-circle-o"></span>
