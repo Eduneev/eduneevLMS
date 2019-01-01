@@ -29,6 +29,28 @@
             <div class="box-header with-border">
                 <div class="pull-left">
                     <button type="button" class="btn btn-success btn-sm" id="btnAddStudent" ng-click="AddStudent()"><i class="glyphicon glyphicon-list"> </i>&nbsp; Add Student</button>
+                    <label>
+                        <select class="form-control" style="Width:100%;" ng-options=" option for option in StudentViewOptions"
+                                ng-model="selectedItem"
+                                ng-change="selectedItemChanged()">
+                                <option value="">Please Select...</option>
+                        </select>
+                    </label>
+                    <label>
+                        <select class="form-control" id="drpProgramName" style="width: 100%;" data-ng-model="ProgID" data-ng-options="c.ProgID as c.ProgramName for c in ProgramsList" data-ng-change="GetCourseList()">
+                            <option value="">{{ProgramTextToShow}}</option>
+                        </select>
+                    </label>
+                    <label>
+                        <select class="form-control" id="drpCourseName" style="width: 100%;" data-ng-model="CourseID" data-ng-options="c.CourseID as c.CourseName for c in CoursesList" data-ng-change="GetSubjectsList()">
+                            <option value="">{{CourseTextToShow}}</option>
+                        </select>
+                    </label>
+                    <label>
+                        <select class="form-control" id="drpSubjecteName" style="width: 100%;" data-ng-model="SubjectID" data-ng-options="c.SubjectID as c.SubjectName for c in SubjectsList" data-ng-change="GetStudentsListBySubject()">
+                            <option value="">{{SubjectTextToShow}}</option>
+                        </select>
+                    </label>
                 </div>
                 <div class="box-tools">
                     <div class="input-group input-group-sm " style="width:250px; height:30px;">
@@ -78,7 +100,8 @@
                                     </td>
                                     <td>
                                         <span>Program: {{Student.ProgramName}}</span><br />
-                                        <span>Course: {{Student.CourseName}}</span>
+                                        <span>Course: {{Student.CourseName}}</span><br />
+                                        <span>Subject: {{Student.SubjectName}}</span>
                                     </td>
                                     <td>
                                         <span>{{Student.FullName}}</span>

@@ -77,7 +77,7 @@
 });
 
 myapp.controller('StudentViewCntrl', function ($scope, $http) {
-    GetStudents();
+    //GetStudents();
     function GetStudents() {
         $http.get('/StudentMgmt/GetStudents')
         .then(function (result) {
@@ -85,9 +85,51 @@ myapp.controller('StudentViewCntrl', function ($scope, $http) {
         });
     }
 
+    $scope.GetStudentsListBySubject = function () {
+        $http.get('/StudentMgmt/GetStudentsBySubject/' + $scope.SubjectID)
+            .then(function (result) {
+                $scope.StudentsList = result.data;
+            });
+    }
+
+    $scope.StudentViewOptions = ["View Students By Subject", "View Students By Enrolment"];
+
+    $scope.selectedItemChanged = function () {
+        console.log($scope.selectedItem)
+        if ($scope.selectedItem == $scope.StudentViewOptions[0])
+            GetProgramsList()
+        else if ($scope.selectedItem == $scope.StudentViewOptions[1])
+            GetStudents()
+    }
+
     $scope.AddStudent = function () {
         window.location.href = "/StudentMgmt/RegisterStudent/";
     }
+
+    function GetProgramsList() {
+        $http.get('/CourseMgmt/GetProgramsForCenter')
+            .then(function (result) {
+                $scope.ProgramTextToShow = 'Please select program..';
+                $scope.ProgramsList = result.data;
+            });
+    }
+
+    $scope.GetCourseList = function () {
+        $http.get('/CourseMgmt/GetCourse/' + $scope.ProgID)
+            .then(function (result) {
+                $scope.CourseTextToShow = 'Please select Course..';
+                $scope.CoursesList = result.data;
+            });
+    }
+
+    $scope.GetSubjectsList = function () {
+        $http.get('/CourseMgmt/GetSubject/' + $scope.CourseID)
+            .then(function (result) {
+                $scope.SubjectTextToShow = 'Please select Subject..';
+                $scope.SubjectsList = result.data;
+            });
+    }
+
 
     $scope.fileChanged = function (e) {
         var files = e.target.files;
@@ -108,8 +150,6 @@ myapp.controller('StudentViewCntrl', function ($scope, $http) {
 });
 
 myapp.controller('StudentAttendanceCntrl', function ($scope, $http) {
-
-
 
     GetStudents();
     function GetStudents() {
