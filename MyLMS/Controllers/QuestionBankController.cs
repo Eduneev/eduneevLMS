@@ -332,7 +332,6 @@ namespace MyLMS.Controllers
             return JSONString;
         }
 
-
         [HttpPost]
         public static bool SaveQuestionResponse(int RRQId, int QId, int studentId, int optionSeq) // response could be A,B,C,D or E
         {

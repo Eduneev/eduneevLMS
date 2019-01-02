@@ -6,6 +6,7 @@
     $scope.ClassRoomID = 0;
     $scope.StartDate = 0;
     $scope.EndDate = 0;
+    $scope.Allowed = 0;
 
     $scope.EntityTextToShow = 'Please select..';
     
@@ -14,6 +15,7 @@
             .then(function (result) {
                 $scope.EntityList = result.data;
                 console.log(result.data);
+                $scope.Allowed = 0;
             });
     }
 
@@ -61,4 +63,63 @@
 
         return [s, t];
     }
+});
+
+myapp.controller("BillingAgreementCntrl", function ($scope, $http) {
+    $scope.Allowed = 0;
+    $scope.EntityTextToShow = "Please select Entity..";
+
+    GetEntityList();
+    GetBillingDetails();
+
+    function GetBillingDetails() {
+        $http.get('/BillingMgmt/GetBillingDetails')
+            .then(function (result) {
+                $scope.BillingList = result.data;
+            });
+    }
+
+    function GetEntityList() {
+        $http.get('/Organisation/GetEntityList')
+            .then(function (result) {
+                $scope.EntityList = result.data;
+                console.log(result.data);
+                $scope.Allowed = 0;
+            });
+    }
+
+    $scope.GetBillingTypes = function () {
+        $http.get('/BillingMgmt/GetBillingTypes')
+            .then(function (result) {
+                $scope.BillingTypeList = result.data;
+                $scope.BillingTextToShow = 'Please select Billing Type..';
+            });
+    }
+
+    $scope.GetStreamTypes = function () {
+        $http.get('/BillingMgmt/GetStreamTypes')
+            .then(function (result) {
+                $scope.StreamTypeList = result.data;
+                $scope.StreamTextToShow = "Please select Stream Type..";
+                $scope.Allowed = 1;
+            });
+    }
+
+
+    $scope.SetBilling = function (Cost) {
+        var _EntityID = $scope.EntityID;
+        var _BillingTypeID = $scope.BillingTypeID;
+        var _StreamTypeID = $scope.StreamTypeID;
+        var _Cost = Cost;
+
+        $http({
+            method: 'POST',
+            url: '/BillingMgmt/CreateEntityBilling',
+            data: { EntityID: _EntityID, BillingTypeID: _BillingTypeID, StreamTypeID:_StreamTypeID, Cost: _Cost }
+        }).then(function (result) {
+            alert("Saved Successfully");
+            GetBillingDetails();
+        });
+    };
+
 });
