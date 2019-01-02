@@ -36,11 +36,6 @@ namespace MyLMS.Controllers
             return View();
         }
 
-        public ActionResult OrgBilling()
-        {
-            return View();
-        }
-
         [HttpPost]
         public void CreateEntity(string EntityName, string EntityCode, string ManagerName, string Email, string Mobile, string Landline, string Address)
         {

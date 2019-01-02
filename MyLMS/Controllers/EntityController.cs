@@ -43,11 +43,7 @@ namespace MyLMS.Controllers
         {
             return View();
         }
-
-        public ActionResult Billing()
-        {
-            return View();
-        }
+        
 
         [HttpGet]
         public string GetReceiversList()
