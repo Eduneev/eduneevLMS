@@ -171,6 +171,7 @@
     <Compile Include="Chat.aspx.designer.cs">
       <DependentUpon>Chat.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\BillingMgmtController.cs" />
     <Compile Include="Controllers\CenterMgmtController.cs" />
     <Compile Include="Controllers\CourseMgmtController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
@@ -190,6 +191,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BillingModel.cs" />
     <Compile Include="Models\CenterModel.cs" />
     <Compile Include="Models\HelpdeskModel.cs" />
     <Compile Include="Models\RRQ.cs" />
@@ -772,10 +774,11 @@
     <Content Include="Views\StudentMgmt\RRQManualEntry.cshtml" />
     <Content Include="Views\SessionMgmt\CreateRRQ.cshtml" />
     <Content Include="Views\SessionMgmt\NewRRQ.cshtml" />
-    <Content Include="Views\Organisation\OrgBilling.cshtml" />
-    <Content Include="Views\Entity\Billing.cshtml" />
+    <Content Include="Views\BillingMgmt\OrgBilling.cshtml" />
+    <Content Include="Views\BillingMgmt\Billing.cshtml" />
     <Content Include="Views\CenterMgmt\AllocateReceiver.cshtml" />
     <Content Include="Views\QuestionBank\CreateQTags.cshtml" />
+    <Content Include="Views\BillingMgmt\BillingAgreement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

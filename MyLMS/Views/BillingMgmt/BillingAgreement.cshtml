@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewBag.Title = "BillingAgreement";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+@section scripts{
+    <script src="~/Scripts/AngularControllers/BillingController.js"></script>
+}
+
+<div ng-controller="BillingAgreementCntrl">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Billing Master
+            <small>Manage and Create entity billing</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+            <li><a href="#">Billing</a></li>
+            @*<li class="active">Add Course</li>*@
+        </ol>
+    </section>
+
+    <!-- Form Body (Page body)-->
+    <section class="content">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <div class="pull-left">
+                    <label>
+                        <select class="form-control" id="drpEntityName" style="width: 100%;" data-ng-model="EntityID" data-ng-options="c.EntityID as c.EntityName for c in EntityList" data-ng-change="GetBillingTypes()">
+                            <option value="">{{EntityTextToShow}}</option>
+                        </select>
+                    </label>
+                    <label>
+                        <select class="form-control" id="drpEntityName" style="width: 100%;" data-ng-model="BillingTypeID" data-ng-options="c.BillingTypeID as c.BillingType for c in BillingTypeList" data-ng-change="GetStreamTypes()">
+                            <option value="">{{BillingTextToShow}}</option>
+                        </select>
+                    </label>
+                    <label>
+                        <select class="form-control" id="drpEntityName" style="width: 100%;" data-ng-model="StreamTypeID" data-ng-options="c.StreamTypeID as c.StreamType for c in StreamTypeList" data-ng-change="EnterCost()">
+                            <option value="">{{StreamTextToShow}}</option>
+                        </select>
+                    </label>
+                    
+                    <label>
+                        <input type="text" ng-model="Cost" ng-disabled="Allowed == 0" name="Landline" style="font-weight:bold; color:coral; width:100%;" class="form-control" placeholder="Enter Amount...">
+                    </label>
+                    <label>
+                        <button type="button" class="btn btn-block btn-success btn-sm" ng-click="SetBilling(Cost)"><span class="glyphicon"></span>Save</button>
+                    </label>
+                    
+                </div>
+                <div class="box-tools pull-right">
+                    <label>
+                        <input type="text" name="table_search" ng-model="StudentFilter" class="form-control" placeholder="Search..">
+                    </label>
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Sl No.</th>
+                                    <th>Entity</th>
+                                    <th>Billing Type</th>
+                                    <th>Stream Type</th>
+                                    <th>Amount</th>
+                                    @*<th></th>*@
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="Bill in BillingList | filter: StudentFilter">
+                                    <td>
+                                        {{$index+1}}.
+                                    </td>
+                                    <td>
+                                        <span>{{Bill.EntityName}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{Bill.BillingType}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{Bill.StreamType}}</span>
+                                    </td>
+                                    <td>
+                                        <strong><span>{{Bill.Cost}}</span></strong>
+                                    </td>
+                                    @*<th>
+                                            <span ng-click="SurveyAttemptReport(Survey.SURVEY_ID)" style="cursor:pointer;" class="fa fa-file-text-o"></span>&nbsp;
+                                        </th>*@
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
