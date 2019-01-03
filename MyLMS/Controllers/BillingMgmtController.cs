@@ -111,7 +111,7 @@ namespace MyLMS.Controllers
                 // Once cost is retrieved, assign amount as Ceiling(xduration/xfactor)*cost
                 BillingModel Bill = new BillingModel();
                 Bill.Client = Convert.ToInt32(StreamList.Rows[i]["Client"]);
-                Bill.Bytes = Convert.ToInt32(StreamList.Rows[i]["Bytes"]);
+                Bill.Bytes = StreamList.Rows[i]["Bytes"].ToString();
                 Bill.Date = StreamList.Rows[i]["date"].ToString();
                 Bill.Stream = StreamList.Rows[i]["Stream"].ToString();
 
@@ -121,13 +121,13 @@ namespace MyLMS.Controllers
 
                 if (xduration != null)
                 {
-                    double Duration = Convert.ToDouble(xduration);
+                    double Duration = Convert.ToDouble(xduration)/60.0;
                     int BillingFactor = Convert.ToInt32(StreamList.Rows[i]["BillingFactor"]);
                     Bill.Duration = (int)Math.Ceiling(Duration / BillingFactor) * BillingFactor;
                     int StreamTypeID=0;
 
                     // AUTOMATE THE BELOW STUFF RATHER THAN HARDCODE VALUES
-                    string StreamEnd = Bill.Stream.Substring(Bill.Stream.Length - 5, Bill.Stream.Length);
+                    string StreamEnd = Bill.Stream.Substring(Bill.Stream.Length - 5);
                     if (StreamEnd.Contains("SSD"))
                         StreamTypeID = 1;
                     else if (StreamEnd.Contains("DVD"))
