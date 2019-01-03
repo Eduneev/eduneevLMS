@@ -105,30 +105,6 @@ namespace MyLMS.Controllers
             return JSONString;
         }
 
-        [HttpGet]
-        [Route("Organisation/GetStreamLogsForClassroom/{id:int}/{StartDate}/{EndDate}")]
-        public string GetStreamLogsForClassroom(int id, string StartDate, string EndDate)
-        {
-            if (StartDate == "0" && EndDate == "0")
-            {
-                StartDate = null;
-                EndDate = null;
-            }
-
-            SqlParameter[] StreamObj = new SqlParameter[3];
-            StreamObj[0] = new SqlParameter("@ClassroomID", SqlDbType.Int);
-            StreamObj[0].Value = id;
-            StreamObj[1] = new SqlParameter("@StartDate", SqlDbType.VarChar);
-            StreamObj[1].Value = StartDate;
-            StreamObj[2] = new SqlParameter("@EndDate", SqlDbType.VarChar);
-            StreamObj[2].Value = EndDate;
-            DataTable StreamList = DAL.GetDataTable("GetStreamLogsForClassroom", StreamObj);
-
-            string JSONString = string.Empty;
-            JSONString = JsonConvert.SerializeObject(StreamList);
-            return JSONString;
-        }
-
         [HttpPost]
         public void AddEntityUser(int EntityID, string UserName, string Password, string FullName, string EmailID, string Mobile, int RoleID)
         {
