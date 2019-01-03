@@ -58,6 +58,7 @@
                                     <th>Date</th>
                                     <th>Stream</th>
                                     <th>Bytes</th>
+                                    <th>Duration</th>
                                     <th>Amount</th>
                                     @*<th></th>*@
                                 </tr>
@@ -68,16 +69,19 @@
                                         {{$index+1}}.
                                     </td>
                                     <td>
-                                        <span>{{Stream.date}}</span>
+                                        <span>{{Stream.Date}}</span>
                                     </td>
                                     <td>
                                         <span>{{Stream.Stream}}</span>
                                     </td>
                                     <td>
-                                        <strong><span>{{Stream.Bytes}}</span></strong>
+                                        <span>{{Stream.Bytes}}</span>
                                     </td>
                                     <td>
-                                        <strong><span>0</span></strong>
+                                        <span>{{Stream.Duration}}</span>
+                                    </td>
+                                    <td>
+                                        <strong><span>{{Stream.Amount}}</span></strong>
                                     </td>
                                     @*<th>
                                     <span ng-click="SurveyAttemptReport(Survey.SURVEY_ID)" style="cursor:pointer;" class="fa fa-file-text-o"></span>&nbsp;

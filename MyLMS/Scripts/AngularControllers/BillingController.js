@@ -45,7 +45,7 @@
 
     $scope.GetStreamList = function () {
         dates = GetDate();
-        $http.get('/Organisation/GetStreamLogsForClassroom/' + $scope.ClassRoomID + "/" + dates[0] + "/" + dates[1])
+        $http.get('/BillingMgmt/GetStreamLogsForClassroom/' + $scope.ClassRoomID + "/" + dates[0] + "/" + dates[1])
             .then(function (result) {
                 $scope.StreamList = result.data;
             });
