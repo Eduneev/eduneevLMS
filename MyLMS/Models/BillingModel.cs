@@ -9,6 +9,14 @@ namespace MyLMS.Models
 {
     public class BillingModel
     {
+
+        public int Client { get; set; }
+        public int Bytes { get; set; }
+        public string Date { get; set; }
+        public string Stream { get; set; }
+        public float Duration { get; set; }
+        public int Amount { get; set; }
+
         public string CreateEntityBilling(SqlParameter[] sparams)
         {
             string res = "Failure..";
