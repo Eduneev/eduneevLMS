@@ -5,7 +5,7 @@ using System.Web;
 
 namespace MyLMS.Models
 {
-    public class MobileRRQModel
+    public class MobileRRQ
     {
         public int RRQID { get; set; }
         public int SessionID { get; set; }

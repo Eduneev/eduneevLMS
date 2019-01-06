@@ -128,7 +128,7 @@ namespace MyLMS.Controllers
 
                     // AUTOMATE THE BELOW STUFF RATHER THAN HARDCODE VALUES
                     string StreamEnd = Bill.Stream.Substring(Bill.Stream.Length - 5);
-                    if (StreamEnd.Contains("SSD"))
+                    if (StreamEnd.Contains("SD"))
                         StreamTypeID = 1;
                     else if (StreamEnd.Contains("DVD"))
                         StreamTypeID = 2;
