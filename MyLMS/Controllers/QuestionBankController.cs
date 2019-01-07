@@ -359,5 +359,33 @@ namespace MyLMS.Controllers
             }
             return false;
         }
+
+        [HttpPost]
+        public static bool SaveMobileQuestionResponse(int RRQID, int QuesNo, int StudentID, int OptionSeq)
+        {
+            SqlParameter[] SParam = new SqlParameter[4];
+
+            // how do we map from response to optionId? Mapping to OptionSeq instead
+            SParam[0] = new SqlParameter("@RRQ_ID", SqlDbType.Int);
+            SParam[0].Value = RRQID;
+            SParam[1] = new SqlParameter("@QUES_NO", SqlDbType.Int);
+            SParam[1].Value = QuesNo;
+            SParam[2] = new SqlParameter("@StudentID", SqlDbType.Int);
+            SParam[2].Value = StudentID;
+            SParam[3] = new SqlParameter("@OptionSeq", SqlDbType.Int);
+            SParam[3].Value = OptionSeq;
+
+            try
+            {
+                DataTable val = DAL.GetDataTable("SaveMobileQuestionResponse", SParam);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return false;
+            }
+            return false;
+        }
     }
 }
