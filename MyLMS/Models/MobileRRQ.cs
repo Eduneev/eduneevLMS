@@ -8,9 +8,8 @@ namespace MyLMS.Models
     public class MobileRRQ
     {
         public int RRQID { get; set; }
-        public int SessionID { get; set; }
-        public int SubjectID { get; set; }
-        public string RRQNo { get; set; }
+        public string SubjectName { get; set; }
         public int NumQuestions { get; set; }
+        public StudentModel Student { get; set; }
     }
 }
