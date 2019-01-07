@@ -160,9 +160,9 @@
             url: '/SessionMgmt/SaveSession',
             data: { SessionName: _SessionName, SessionDate: _SessionDate, StartTime: _StartTime, EndTime: _EndTime, StudioID: _StudioID, ProgID: _ProgID, ProgCode: _ProgCode, CourseID: _CourseID, CourseCode: _CourseCode, SubjectID: _SubjectID, SubjectCode: _SubjectCode, TopicID: _TopicID, FacultyID: _FacultyID, PlannedCoverage: _PlannedCoverage }
         }).then(function (result) {
-
+            alert("Session Successfully created!");
         });
-    }
+    };
 
     $scope.SelectSession = function (SessionID) {
         //debugger;

@@ -40,10 +40,42 @@
     <link rel="stylesheet" href="~/Template/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/Scripts/DatePicker/ng-quick-date.css" />
 
+    <script type="text/javascript">
+        window.addEventListener("load", function (event) {
+            /*VANILLA JAVASCRIPT*/
+            var element = document.getElementById("page-loading");
+            element.parentNode.removeChild(element);
+        });
+    </script>
+    <style>
+        #page-loading {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            position: fixed;
+            display: block;
+            opacity: 0.7;
+            background-color: #fff;
+            z-index: 99;
+            text-align: center;
+        }
+
+        #loading-image {
+            position: absolute;
+            top: 400px;
+            z-index: 100;
+        }
+    </style>
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini" ng-app="MyModule">
+
     <div class="wrapper">
+        <div id="page-loading">
+            <img id="loading-image" alt="Loading..." src="https://media4.giphy.com/media/VUqw0plWqhVHq/200w.gif">
+        </div>
+
         <header class="main-header" style="background:#404041;">
             <a href="http://eduneev.in/what-is-2waylive-2/" class="logo">
                 <span class="logo-mini"><b>2WayLive</b></span>
@@ -56,15 +88,17 @@
             <!--NAV End-->
         </header>
 
+
         <!--Left Menu Start-->
         @Html.Action("LeftMenu", "LeftMenu")
         <!--Left Menu End-->
-
         <!-- Form Body Start -->
         <div class="content-wrapper">
             @RenderBody()
         </div>
         <!-- Form Body End -->
+
+
 
         <footer class="main-footer">
             <div class="pull-right hidden-xs">
@@ -73,7 +107,7 @@
             <strong>Copyright &copy; 2018 <a href="http://">Eduneev.in</a>.</strong> All rights
             reserved.
         </footer>
-    </div> 
+    </div>
 
     <script src="~/Template/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
