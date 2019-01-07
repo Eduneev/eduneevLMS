@@ -194,6 +194,7 @@
     <Compile Include="Models\BillingModel.cs" />
     <Compile Include="Models\CenterModel.cs" />
     <Compile Include="Models\HelpdeskModel.cs" />
+    <Compile Include="Models\MobileRRQ.cs" />
     <Compile Include="Models\RRQ.cs" />
     <Compile Include="Models\RRQData.cs" />
     <Compile Include="Models\CourseModel.cs" />
