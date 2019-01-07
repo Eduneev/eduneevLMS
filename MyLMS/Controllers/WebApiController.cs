@@ -244,5 +244,105 @@ namespace MyLMS.Controllers
 
             return result;
         }
+
+        // ------Mobile RRQ section
+        [Route("api/RegisterStudent")]
+        [HttpPost]
+        public String RegisterStudent(string StudentRegNo, string Password)
+        {
+            SqlParameter[] SParam = new SqlParameter[2];
+            string result = string.Empty;
+            SParam[0] = new SqlParameter("@Code", SqlDbType.VarChar);
+            SParam[0].Value = StudentRegNo;
+            SParam[1] = new SqlParameter("@Password", SqlDbType.VarChar);
+            SParam[1].Value = Password;
+
+            DataTable val = DAL.GetDataTable("CreateMobileStudent", SParam);
+            if (val.Rows.Count > 0)
+                result = Convert.ToString(val.Rows[0]["StudentName"]);
+            return result;
+        }
+
+        [Route("api/SendOTP")]
+        [HttpPost]
+        public Boolean SendOTP(string StudentRegNo, string Mobile)
+        {
+            SqlParameter[] SParam = new SqlParameter[2];
+            SParam[0] = new SqlParameter("@Code", SqlDbType.VarChar);
+            SParam[0].Value = StudentRegNo;
+            SParam[1] = new SqlParameter("@Mobile", SqlDbType.VarChar);
+            SParam[1].Value = Mobile;
+
+            DataTable val = DAL.GetDataTable("VerifyStudentMobile", SParam);
+            if (val.Rows.Count > 0)
+            {
+                // SEND OTP
+                return true;
+            }
+
+            return false;
+        }
+
+        [Route("api/ConfirmOTP")]
+        [HttpPost]
+        public Boolean ConfirmOTP(string StudentRegNo, string Mobile, string OTP)
+        {
+            // CONFIRM OTP
+            return true;
+        }
+
+        [Route("api/GetRRQDetails/{StudentRegNo}/{RRQID:int}")]
+        [HttpGet]
+        public MobileRRQ GetRRQDetails(string StudentRegNo, int RRQID)
+        {
+            MobileRRQ mobile = new MobileRRQ();
+            SqlParameter[] SParam = new SqlParameter[2];
+            SParam[0] = new SqlParameter("@Code", SqlDbType.VarChar);
+            SParam[0].Value = StudentRegNo;
+            SParam[1] = new SqlParameter("RRQID", SqlDbType.VarChar);
+            SParam[1].Value = RRQID;
+
+            DataTable val = DAL.GetDataTable("GetMobieRRQ", SParam);
+            if (val.Rows.Count>0)
+            {
+                mobile.RRQID = RRQID;
+                mobile.SubjectName = Convert.ToString(Convert.IsDBNull(val.Rows[0]["SubjectName"]) ? "-1" : val.Rows[0]["SubjectName"]);
+                mobile.NumQuestions = Convert.ToInt32(Convert.IsDBNull(val.Rows[0]["NumQuestions"]) ? "-1" : val.Rows[0]["NumQuestions"]);
+
+                StudentModel s = new StudentModel();
+                s.StudentID = Convert.ToInt32(Convert.IsDBNull(val.Rows[0]["StudentID"]) ? "-1" : val.Rows[0]["StudentID"]);
+                s.StudentName = Convert.ToString(Convert.IsDBNull(val.Rows[0]["StudentName"]) ? "-1" : val.Rows[0]["StudentName"]);
+                mobile.Student = s;
+            }
+
+            return mobile;
+        }
+
+        [Route("api/SaveMobileRRQResponse")]
+        [HttpPost]
+        public bool SaveMobileRRQResponse(int StudentID, int RRQID, int QuesNo, string Response)
+        {
+
+            int OptionSeq = -1;
+            if (Response.Equals("A"))
+                OptionSeq = 1;
+            else if (Response.Equals("B"))
+                OptionSeq = 2;
+            else if (Response.Equals("C"))
+                OptionSeq = 3;
+            else if (Response.Equals("D"))
+                OptionSeq = 4;
+            else if (Response.Equals("E"))
+                OptionSeq = 5;
+            else if (Response.Equals("F"))
+                OptionSeq = 6;
+
+            if (OptionSeq != -1)
+            {
+                return QuestionBankController.SaveMobileQuestionResponse(RRQID, QuesNo, StudentID, OptionSeq);
+            }
+            return false;
+        }
+
     }
 }
