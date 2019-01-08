@@ -28,6 +28,21 @@ namespace MyLMS.Models
             return res;
         }
 
+        public string SaveStudentImage(SqlParameter[] sparams)
+        {
+            string res = "Failure..";
+            try
+            {
+                res = DAL.ExecuteScalar("SaveStudentImage", sparams);
+            }
+            catch (Exception ex)
+            {
+                res = ex.Message;
+                throw;
+            }
+            return res;
+        }
+
         public string InitiateAttendance(SqlParameter[] sparams)
         {
             string res = "Failure..";
