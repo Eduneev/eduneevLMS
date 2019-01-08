@@ -59,6 +59,7 @@ namespace MyLMS.Controllers
 
         public ActionResult RRQIntroduction(int id)
         {
+            Session["RRQ_ID_Display"] = id;
             RRQData RRQInfoObj = new RRQData();
             RRQInfoObj.GetRRQInformation(id);
             ViewBag.RRQInfo = RRQInfoObj;
@@ -125,11 +126,11 @@ namespace MyLMS.Controllers
         }
 
         [HttpGet]
-        public string GetTop10Students()
+        public string GetTop10Students(int id)
         {
             SqlParameter[] RRQObj = new SqlParameter[1];
             RRQObj[0] = new SqlParameter("@RRQ_ID", SqlDbType.Int);
-            RRQObj[0].Value = 1;
+            RRQObj[0].Value = id;
             DataTable StudentsList = DAL.GetDataTable("GetTop10Students", RRQObj);
 
             string JSONString = string.Empty;
@@ -174,8 +175,8 @@ namespace MyLMS.Controllers
         [HttpPost]
         public Int32 SetSessionRRQ(int rrqID)
         {
-            Session["RRQID"] = rrqID;
-            return Convert.ToInt32(Session["RRQID"].ToString());
+            Session["RRQ_ID"] = rrqID;
+            return Convert.ToInt32(Session["RRQ_ID"].ToString());
         }
 
         [HttpGet]
@@ -183,7 +184,7 @@ namespace MyLMS.Controllers
         {
             try
             {
-                return Convert.ToInt32(Session["RRQID"].ToString());
+                return Convert.ToInt32(Session["RRQ_ID"].ToString());
             }
             catch (Exception e)
             {
@@ -437,11 +438,11 @@ namespace MyLMS.Controllers
         }
 
         [HttpGet]
-        public string GetRRQQuestions() 
+        public string GetRRQQuestions(int id) 
         {
             SqlParameter[] FObj = new SqlParameter[1];
             FObj[0] = new SqlParameter("@RRQ_ID", SqlDbType.Int);
-            FObj[0].Value = 1; //****************************DEFINE RRQ ID
+            FObj[0].Value = id; //****************************DEFINE RRQ ID
             DataTable SessionsList = DAL.GetDataTable("GetRRQQuestions", FObj);
 
             string JSONString = string.Empty;
@@ -450,11 +451,11 @@ namespace MyLMS.Controllers
         }
 
         [HttpGet]
-        public string GetRRQQdetails()
+        public string GetRRQQdetails(int id)
         {
             SqlParameter[] FObj = new SqlParameter[1];
             FObj[0] = new SqlParameter("@RRQ_ID", SqlDbType.Int);
-            FObj[0].Value = 1; //****************************DEFINE RRQ ID
+            FObj[0].Value = id; //****************************DEFINE RRQ ID
             DataTable QuestionsPrcnt = DAL.GetDataTable("GetRRQQuestionsPrcnt", FObj);
 
             string JSONString = string.Empty;
@@ -506,7 +507,7 @@ namespace MyLMS.Controllers
         {
             SqlParameter[] FObj = new SqlParameter[2];
             FObj[0] = new SqlParameter("@RRQ_ID", SqlDbType.Int);
-            FObj[0].Value = 1;
+            FObj[0].Value = Convert.ToInt32(Session["RRQ_ID"].ToString());
             FObj[1] = new SqlParameter("@QID", SqlDbType.Int);
             FObj[1].Value = id;
 
@@ -527,7 +528,7 @@ namespace MyLMS.Controllers
         {
             SqlParameter[] FObj = new SqlParameter[2];
             FObj[0] = new SqlParameter("@RRQ_ID", SqlDbType.Int);
-            FObj[0].Value = 1;
+            FObj[0].Value = Convert.ToInt32(Session["RRQ_ID"].ToString());
             FObj[1] = new SqlParameter("@QID", SqlDbType.Int);
             FObj[1].Value = id;
             DataTable DashboardGraphData = DAL.GetDataTable("GetDashboardOptionGraph", FObj);
