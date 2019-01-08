@@ -187,7 +187,7 @@
             type: Constants.Events['MESSAGE'],
             action: Constants.Action['STOP'],
             RrqID: $scope.RRQID,
-            qID: $scope.QuestionList[$scope.currentPage].Question.QID,
+            qID: $scope.RRQQuestionList[$scope.currentPage].Question.QID,
             SessionID: $scope.SessionID
         }));
     }
@@ -221,7 +221,7 @@
             type: Constants.Events['MESSAGE'],
             action: Constants.Action['END'],
             RrqID: $scope.RRQID,
-            qID: $scope.QuestionList[$scope.currentPage].Question.QID,
+            qID: $scope.RRQQuestionList[$scope.currentPage].Question.QID,
             SessionID: $scope.SessionID
         }));
     }

@@ -1,26 +1,46 @@
 ﻿myapp.controller('RRQDashboardCntrl', function ($scope, $http) {
-    GetRRQQuestions();
-    GetDegreeOfDifficulty();
-    GetTop10Students();
+
+    GetRRQID(window.location.href);
 
     $scope.LabelsArray = [];
-    $scope.RRQ_ID = 1;
+    $scope.RRQ_ID;
+
     var Labels = [];
     var Questions = [];
 
+
+    function GetRRQID(url) {
+        var params = parseURLParams(url);
+        console.log(params)
+        if ("RRQID" in params) {
+            $scope.RRQ_ID = params["RRQID"][0];
+
+            $http({
+                method: 'POST',
+                url: '/SessionMgmt/SetSessionRRQ',
+                data: { rrqID: $scope.RRQ_ID }
+            })
+
+            GetRRQQuestions();
+            GetDegreeOfDifficulty();
+            GetTop10Students();
+        }
+    }
+
     function GetRRQQuestions() {
-        $http.get('/SessionMgmt/GetRRQQuestions/')
+        $http.get('/SessionMgmt/GetRRQQuestions/' + $scope.RRQ_ID)
         .then(function (result) {
             $scope.RRQQuestions = result.data;
         });
     }
 
     ///////// Get Questions ////////
-    $scope.GetQuestionAndOptions = function (QID) {
+    $scope.GetRRQQuestionAndOptions = function (QID) {
         $scope.QID = QID;
 
         $http.get('/QuestionBank/GetRRQQuestionAndOptions/' + QID)
-        .then(function (result) {
+            .then(function (result) {
+                console.log(result.data);
             $scope.QuestionList = result.data;
             });
 
@@ -30,15 +50,17 @@
 
     ///////// Get Top 10 Students ////////
     function GetTop10Students() {
-        $http.get('/SessionMgmt/GetTop10Students/')
+        $http.get('/SessionMgmt/GetTop10Students/' + $scope.RRQ_ID)
         .then(function (result) {
             $scope.Top10Students = result.data;
         });
     }
 
     function GetDegreeOfDifficulty() {
-        $http.get('/SessionMgmt/GetDegreeOfDifficulty/')
+        /*
+        $http.get('/SessionMgmt/GetDegreeOfDifficulty/' + $scope.RRQ_ID)
             .then(function (result) {
+                console.log(result.data)
                 $scope.GraphData = result.data;
                 PrepareGraphData();
 
@@ -48,6 +70,7 @@
                     barShowStroke: false
                 });
             });
+            */
     }
     function PrepareGraphData() {
         angular.forEach($scope.GraphData, function (value, key) {
@@ -82,8 +105,11 @@
     }
     ///////// Get Top 10 Students ////////
     function GetDashboardData(QID) {
+        console.log(QID);
+        console.log($scope.RRQ_ID);
         $http.get('/SessionMgmt/GetDashboardData/' + QID)
             .then(function (result) {
+                console.log(result.data)
                 $scope.DashboardData = result.data;
                 $scope.ResponsesPrcnt = $scope.DashboardData[0].ResponsesPrcnt
                 $scope.NoResponsesPrcnt = $scope.DashboardData[0].NoResponsesPrcnt
@@ -101,5 +127,25 @@
                 $scope.OPTION_3_PRCNT = $scope.DashboardGraphData[0].OPTION_3_PRCNT
                 $scope.OPTION_4_PRCNT = $scope.DashboardGraphData[0].OPTION_4_PRCNT
             });
+    }
+
+    function parseURLParams(url) {
+        var queryStart = url.indexOf("?") + 1,
+            queryEnd = url.indexOf("#") + 1 || url.length + 1,
+            query = url.slice(queryStart, queryEnd - 1),
+            pairs = query.replace(/\+/g, " ").split("&"),
+            parms = {}, i, n, v, nv;
+
+        if (query === url || query === "") return;
+
+        for (i = 0; i < pairs.length; i++) {
+            nv = pairs[i].split("=", 2);
+            n = decodeURIComponent(nv[0]);
+            v = decodeURIComponent(nv[1]);
+
+            if (!parms.hasOwnProperty(n)) parms[n] = [];
+            parms[n].push(nv.length === 2 ? v : null);
+        }
+        return parms;
     }
 });
