@@ -8,6 +8,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using UtilityClass;
+using System.IO;
+using System.Drawing;
+using System.Text.RegularExpressions;
 
 namespace MyLMS.Controllers
 {
@@ -121,6 +124,23 @@ namespace MyLMS.Controllers
             string JSONString = string.Empty;
             JSONString = JsonConvert.SerializeObject(StudentsList);
             return JSONString;
+        }
+
+        [HttpPost]
+        public void SetStudentPhoto(int StudentID, string StudentImage)
+        {
+
+            string cleanImage = Regex.Replace(StudentImage, "data:image/png;base64,", "");
+            byte[] encodedDataAsBytes = System.Convert.FromBase64String(cleanImage);
+            string Path = Server.MapPath("~/StudentsImage/" + StudentID + ".jpg");
+            System.IO.File.WriteAllBytes(Path, encodedDataAsBytes);
+        }
+
+
+        [HttpPost]
+        public void SetStudentID(int StudentID)
+        {
+            Session["StudentID"] = StudentID;
         }
 
         [HttpGet]

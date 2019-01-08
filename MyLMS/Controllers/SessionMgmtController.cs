@@ -403,9 +403,9 @@ namespace MyLMS.Controllers
         }
 
         [HttpPost]
-        public void CreateRRQ(string RRQNo)
+        public void CreateNewRRQ(string RRQNo, string SessionID)
         {
-            int SessionID = Convert.ToInt32(Session["SessionID"]);
+            //int SessionID = Convert.ToInt32(Session["SessionID"]);
 
             SessionModel SessionObj3 = new SessionModel();
             SqlParameter[] RRQParam = new SqlParameter[4];
