@@ -35,6 +35,10 @@ namespace MyLMS.Controllers
         {
             return View();
         }
+        public ActionResult CreateOrgUser()
+        {
+            return View();
+        }
 
         [HttpPost]
         public void CreateEntity(string EntityName, string EntityCode, string ManagerName, string Email, string Mobile, string Landline, string Address)
@@ -67,6 +71,16 @@ namespace MyLMS.Controllers
             {
 
             }
+        }
+
+        [HttpGet]
+        public string GetOrgUserList()
+        {
+            DataTable OrgUserList = DAL.GetDataTable("GetOrgUserList");
+
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(OrgUserList);
+            return JSONString;
         }
 
         [HttpGet]
@@ -104,6 +118,57 @@ namespace MyLMS.Controllers
             JSONString = JsonConvert.SerializeObject(EntityUserList);
             return JSONString;
         }
+
+        [HttpPost]
+        public void AddOrgUser(string UserName, string Password, string FullName, string EmailID, string Mobile)
+        {
+            OrganisationModel OrgObj = new OrganisationModel();
+            SqlParameter[] SParam = new SqlParameter[6];
+
+            SParam[0] = new SqlParameter("@UserID", SqlDbType.Int);
+            SParam[0].Value = Convert.ToInt32(Session["USER_ID"]);
+            SParam[1] = new SqlParameter("@UserName", SqlDbType.VarChar);
+            SParam[1].Value = UserName;
+            SParam[2] = new SqlParameter("@Password", SqlDbType.VarChar);
+            SParam[2].Value = EDHelper.EncryptTripleDES(Password);
+            SParam[3] = new SqlParameter("@FullName", SqlDbType.VarChar);
+            SParam[3].Value = FullName;
+            SParam[4] = new SqlParameter("@EmailID", SqlDbType.VarChar);
+            SParam[4].Value = EmailID;
+            SParam[5] = new SqlParameter("@Mobile", SqlDbType.VarChar);
+            SParam[5].Value = Mobile;
+
+            try
+            {
+                OrgObj.AddOrgUser(SParam);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        [HttpPost]
+        public void UpdatePassword(string UserID, string Password)
+        {
+            OrganisationModel OrgObj = new OrganisationModel();
+            SqlParameter[] SParam = new SqlParameter[2];
+
+            SParam[0] = new SqlParameter("@UserID", SqlDbType.Int);
+            SParam[0].Value = UserID;
+            SParam[1] = new SqlParameter("@Password", SqlDbType.VarChar);
+            SParam[1].Value = EDHelper.EncryptTripleDES(Password);
+
+            try
+            {
+                OrgObj.UpdatePassword(SParam);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
 
         [HttpPost]
         public void AddEntityUser(int EntityID, string UserName, string Password, string FullName, string EmailID, string Mobile, int RoleID)
