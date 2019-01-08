@@ -84,7 +84,7 @@
       margin: 20px auto;
     }
   </style>
-  
+  </head>
   <body>
      <div ng-controller="MainController">
       
@@ -108,8 +108,8 @@
 		   ></image-crop> -->
 		   
 		   <image-crop			 
-			 data-height="200"
-			 data-width="150"
+			 data-height="215"
+			 data-width="215"
 			 data-shape="square"
 			 data-step="imageCropStep"
 			 src="imgSrc"
@@ -127,13 +127,12 @@
 		   <button ng-click="initCrop = true">Crop</button>		
 	   </div>		  
 	   
-	   <div ng-show="imageCropStep == 3">
-	   
-		 <img ng-src="{{result}}"></img>        
-         <textarea class="result-datauri">{{ result }}</textarea>
-		 <button ng-click="clear()">Save</button>	
-       
-	  </div>
+       <div ng-show="imageCropStep == 3">
+
+           <img ng-src="{{result}}"></img>
+           <textarea id="ImageData" class="result-datauri">{{ result }}</textarea>
+           <!--<button ng-click="clear()">Save</button>-->
+       </div>
 	   
      </div>
   </body>
