@@ -39,6 +39,36 @@ namespace MyLMS.Models
             return res;
         }
 
+        public string AddOrgUser(SqlParameter[] sparams)
+        {
+            string res = "Failure..";
+            try
+            {
+                res = DAL.ExecuteScalar("CreateOrgyUser", sparams);
+            }
+            catch (Exception ex)
+            {
+                res = ex.Message;
+                throw;
+            }
+            return res;
+        }
+
+        public string UpdatePassword(SqlParameter[] sparams)
+        {
+            string res = "Failure..";
+            try
+            {
+                res = DAL.ExecuteScalar("UpdatePassword", sparams);
+            }
+            catch (Exception ex)
+            {
+                res = ex.Message;
+                throw;
+            }
+            return res;
+        }
+
         public string SaveShippedReceiver(SqlParameter[] sparams)
         {
             string res = "Failure..";
