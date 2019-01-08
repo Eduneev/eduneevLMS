@@ -8,14 +8,14 @@
 @section scripts{
     <script src="~/Scripts/AngularControllers/QuestionBankController.js"></script>
 }
-<div data-ng-controller="QuestionCntrl" data-ng-init="GetQuestionDetails()">
+<div data-ng-controller="QuestionCntrl" data-ng-init="GetRRQQuestionDetails()">
     <!-- Form Body (Page body)-->
 
     <div class="box-body">
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-hover table-bordered">
-                    <tbody ng-repeat="Q in QuestionList | startFrom:currentPage*RRQpageSize | limitTo:RRQpageSize">
+                    <tbody ng-repeat="Q in RRQQuestionList | startFrom:currentPage*RRQpageSize | limitTo:RRQpageSize">
                         <tr>
                             <td>
                                 <div class="callout callout-danger" style="height:200px;">
