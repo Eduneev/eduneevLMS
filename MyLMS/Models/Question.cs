@@ -13,5 +13,6 @@ namespace MyLMS.Models
         public string QuestionText { get; set; }
         public bool IsCompulsory { get; set; }
         public string TagText { get; set; }
+        public int QTime { get; set; }
     }
 }
