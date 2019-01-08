@@ -106,6 +106,16 @@ myapp.controller('StudentViewCntrl', function ($scope, $http) {
         window.location.href = "/StudentMgmt/RegisterStudent/";
     }
 
+    $scope.SelectStudent = function (StudentID) {
+        $http({
+            method: 'POST',
+            url: '/StudentMgmt/SetStudentID',
+            data: { StudentID: StudentID }
+        }).then(function (result) {
+
+        });
+    }
+
     function GetProgramsList() {
         $http.get('/CourseMgmt/GetProgramsForCenter')
             .then(function (result) {
@@ -139,6 +149,23 @@ myapp.controller('StudentViewCntrl', function ($scope, $http) {
             $scope.imgSrc = this.result;
             $scope.$apply();
         };
+    }
+
+    $scope.SelectStudent = function (StudentID) {
+        $scope.StudentID = StudentID;
+    }
+
+    $scope.SaveImage = function () {
+        debugger;
+        //var _StudentImage = $('#mce').contents().find('#select_name').val();
+        var _StudentImage = $('#mce').contents().find('#ImageData').val();
+        $http({
+            method: 'POST',
+            url: '/StudentMgmt/SetStudentPhoto',
+            data: { StudentID: $scope.StudentID, StudentImage: _StudentImage }
+        }).then(function (result) {
+
+        });
     }
 
     $scope.clear = function () {
