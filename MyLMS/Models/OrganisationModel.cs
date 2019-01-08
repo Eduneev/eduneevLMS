@@ -44,7 +44,7 @@ namespace MyLMS.Models
             string res = "Failure..";
             try
             {
-                res = DAL.ExecuteScalar("CreateOrgyUser", sparams);
+                res = DAL.ExecuteScalar("CreateOrgUser", sparams);
             }
             catch (Exception ex)
             {

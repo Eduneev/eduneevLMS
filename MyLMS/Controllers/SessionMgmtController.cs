@@ -403,15 +403,15 @@ namespace MyLMS.Controllers
         }
 
         [HttpPost]
-        public void CreateNewRRQ(string RRQNo, string SessionID)
+        public void CreateNewRRQ(string RRQNo, int SessionID)
         {
             //int SessionID = Convert.ToInt32(Session["SessionID"]);
 
             SessionModel SessionObj3 = new SessionModel();
-            SqlParameter[] RRQParam = new SqlParameter[4];
+            SqlParameter[] RRQParam = new SqlParameter[2];
             RRQParam[0] = new SqlParameter("@SessionID", SqlDbType.Int);
             RRQParam[0].Value = SessionID;
-            RRQParam[1] = new SqlParameter("@RRQNo", SqlDbType.Int);
+            RRQParam[1] = new SqlParameter("@RRQNo", SqlDbType.VarChar);
             RRQParam[1].Value = RRQNo;
             try
             {

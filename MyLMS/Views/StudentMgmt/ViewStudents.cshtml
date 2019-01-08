@@ -107,7 +107,7 @@
                                         <span>{{Student.FullName}}</span>
                                     </td>
                                     <th>
-                                        <button type="submit" data-toggle="modal" data-target="#DisplayRRQSelector" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                        <button type="submit" data-toggle="modal" data-target="#DisplayRRQSelector" class="btn btn-default" ng-click="SelectStudent(Student.StudentID)"><i class="fa fa-search"></i></button>
                                     </th>
                                 </tr>
                             </tbody>
@@ -126,10 +126,16 @@
                     <form class="form-horizontal" name="ShowRRQSelector">
                         <div class="form-group">
                             <div style="height:600px;">
-                                <iframe height="600" width="570" style="border: none" src="http://localhost:55082/Index.html"></iframe>
+                                <iframe id="mce" height="600" width="570" style="border: none" src="http://localhost:55082/Index.html"></iframe>
                             </div>
                         </div>
                     </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" data-toggle="modal" data-target="#DisplayRRQSelector" class="btn btn-default" ng-click="SaveImage()">
+                        Save
+                    </button>
                 </div>
             </div>
         </div>
