@@ -31,6 +31,58 @@
     }
 });
 
+myapp.controller('OrgUserCntrl', function ($scope, $http) {
+    GetOrgList();
+    $scope.EntityTextToShow = "Please wait.."
+    $scope.RoleTextToShow = "Please wait.."
+
+
+    function GetOrgList() {
+        debugger;
+        $http.get('/Organisation/GetOrgUserList')
+            .then(function (result) {
+                $scope.OrgUserList = result.data;
+            });
+    }
+
+    $scope.AddOrgUser = function () {
+        debugger;
+
+        var _UserName = $scope.UserName
+        var _Password = $scope.Password;
+        var _FullName = $scope.FullName;
+        var _EmailID = $scope.EmailID;
+        var _Mobile = $scope.Mobile;
+
+        $http({
+            method: 'POST',
+            url: '/Organisation/AddOrgUser',
+            data: { UserName: _UserName, Password: _Password, FullName: _FullName, EmailID: _EmailID, Mobile: _Mobile }
+        }).then(function (result) {
+            $http.get('/Organisation/GetOrgUserList')
+                .then(function (result) {
+                    $scope.OrgUserList = result.data;
+                });
+        });
+    }
+
+    $scope.UpdatePassword = function () {
+        debugger;
+
+        var _UserID = $scope.UserID
+        var _Password = $scope.Password;
+
+        $http({
+            method: 'POST',
+            url: '/Organisation/UpdatePassword',
+            data: { UserID: _UserID, Password: _Password }
+        }).then(function (result) {
+
+        });
+    }
+
+});
+
 myapp.controller('EntityUserCntrl', function ($scope, $http) {
     GetEntityList();
     $scope.EntityTextToShow = "Please wait.."
