@@ -168,6 +168,15 @@
         });
     }
 
+    $scope.RRQQuestionList = '';
+    ///////// Get RRQ Questions ////////
+    $scope.GetRRQQuestionDetails = function () {
+        $http.get('/QuestionBank/GetRRQQuestions')
+            .then(function (result) {
+                $scope.RRQQuestionList = result.data;
+            });
+    }
+
     $scope.StartRRQ = function () {
         window.location.pathname = '/SessionMgmt/ViewRRQ'
     }
@@ -187,13 +196,13 @@
        // debugger;
         // Send message to server to start current question polling
         // Get QID somehow
-        console.log($scope.QuestionList[$scope.currentPage].Question.QID);
+        console.log($scope.RRQQuestionList[$scope.currentPage].Question.QID);
         $scope.ws.send(JSON.stringify({
             profile: Constants.Profile['RRQ'],
             type: Constants.Events['MESSAGE'],
             action: Constants.Action['START'],
             RrqID: $scope.RRQID,
-            qID: $scope.QuestionList[$scope.currentPage].Question.QID, 
+            qID: $scope.RRQQuestionList[$scope.currentPage].Question.QID, 
             SessionID: $scope.SessionID
         }));
 
@@ -308,7 +317,9 @@
     }
 
     function StartTimer() {
-        var oneMinute = 60,
+        //var oneMinute = 60,
+        console.log($scope.RRQQuestionList[$scope.currentPage].Question.QTime);
+        var oneMinute = $scope.RRQQuestionList[$scope.currentPage].Question.QTime,
             display = document.querySelector('#time');
         CallstartTimer(oneMinute, display);
     };
