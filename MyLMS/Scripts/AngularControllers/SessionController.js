@@ -353,17 +353,17 @@
     $scope.CreateRRQ = function () {
         debugger;
         var _SessionID = $scope.SessionID;
-        var _RRQNo = $scope.RRQNo;
+        var _RRQNo = $scope.RRQName;
         var _ActiveFromDate = $scope.ActiveFromDate;
         var _ActiveToDate = $scope.ActiveToDate;
-        window.location.href = "/SessionMgmt/CreateRRQ/";
-        //$http({
-        //    method: 'POST',
-        //    url: '/SessionMgmt/CreateRRQ',
-        //    data: { RRQNo: _RRQNo, ActiveFromDate: _ActiveFromDate, ActiveToDate: _ActiveToDate}
-        //}).then(function (result) {
-        //    window.location.href = "/SessionMgmt/AddQuestionsToRRQ/";
-        //});
+        //window.location.href = "/SessionMgmt/CreateRRQ/";
+        $http({
+            method: 'POST',
+            url: '/SessionMgmt/CreateNewRRQ',
+            data: { RRQNo: _RRQNo, SessionID: $scope.SessionID}
+        }).then(function (result) {
+            window.location.href = "/SessionMgmt/CreateRRQ/";
+        });
     }
 
     $scope.ShowRRQDashboard = function (RRQ_ID) {

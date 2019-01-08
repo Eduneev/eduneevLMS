@@ -19,7 +19,7 @@
     $scope.GetQuestionAndOptions = function (QID) {
         $scope.QID = QID;
 
-        $http.get('/QuestionBank/GetQuestionAndOptions/' + QID)
+        $http.get('/QuestionBank/GetRRQQuestionAndOptions/' + QID)
         .then(function (result) {
             $scope.QuestionList = result.data;
             });
