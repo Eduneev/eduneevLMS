@@ -780,6 +780,7 @@
     <Content Include="Views\CenterMgmt\AllocateReceiver.cshtml" />
     <Content Include="Views\QuestionBank\CreateQTags.cshtml" />
     <Content Include="Views\BillingMgmt\BillingAgreement.cshtml" />
+    <Content Include="Views\Organisation\CreateOrgUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
