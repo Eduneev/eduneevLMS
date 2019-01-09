@@ -479,11 +479,11 @@ namespace MyLMS.Controllers
         }
 
         [HttpGet]
-        public string GetDegreeOfDifficulty()
+        public string GetDegreeOfDifficulty(int id)
         {
             SqlParameter[] FObj = new SqlParameter[1];
             FObj[0] = new SqlParameter("@RRQ_ID", SqlDbType.Int);
-            FObj[0].Value = 1; //****************************DEFINE RRQ ID;
+            FObj[0].Value = id; //****************************DEFINE RRQ ID;
             DataTable StudiosList = DAL.GetDataTable("GetDegreeOfDifficulty", FObj);
             string JSONString = string.Empty;
             JSONString = JsonConvert.SerializeObject(StudiosList);
@@ -503,7 +503,21 @@ namespace MyLMS.Controllers
             return JSONString;
         }
 
-        public string GetDashboardData(int id)
+        public string GetTop10FastestStudents(int id)
+        {
+            SqlParameter[] FObj = new SqlParameter[2];
+            FObj[0] = new SqlParameter("@RRQ_ID", SqlDbType.Int);
+            FObj[0].Value = Convert.ToInt32(Session["RRQ_ID"].ToString());
+            FObj[1] = new SqlParameter("@QID", SqlDbType.Int);
+            FObj[1].Value = id;
+
+            DataTable StudentsDetails = DAL.GetDataTable("GetTop10FastestStudents", FObj);
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(StudentsDetails);
+            return JSONString;
+        }
+
+            public string GetDashboardData(int id)
         {
             SqlParameter[] FObj = new SqlParameter[2];
             FObj[0] = new SqlParameter("@RRQ_ID", SqlDbType.Int);
