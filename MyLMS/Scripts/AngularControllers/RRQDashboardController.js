@@ -34,7 +34,7 @@
         });
     }
 
-    ///////// Get Questions ////////
+    // Get RRQ Questions
     $scope.GetRRQQuestionAndOptions = function (QID) {
         $scope.QID = QID;
 
@@ -46,9 +46,10 @@
 
         GetDashboardData($scope.QID);
         GetDashboardOptionGraph($scope.QID);
+        GetTop10FastestStudents($scope.QID);
     }
 
-    ///////// Get Top 10 Students ////////
+    // Get Top 10 Students
     function GetTop10Students() {
         $http.get('/SessionMgmt/GetTop10Students/' + $scope.RRQ_ID)
         .then(function (result) {
@@ -56,8 +57,16 @@
         });
     }
 
+    // Get Top 10 Fastest Correct Students
+    function GetTop10FastestStudents(QID) {
+        $http.get('/SessionMgmt/GetTop10FastestStudents/' + $scope.QID)
+            .then(function (result) {
+                $scope.Top10FastestStudents = result.data;
+            });
+    }
+
     function GetDegreeOfDifficulty() {
-        /*
+        
         $http.get('/SessionMgmt/GetDegreeOfDifficulty/' + $scope.RRQ_ID)
             .then(function (result) {
                 console.log(result.data)
@@ -70,7 +79,7 @@
                     barShowStroke: false
                 });
             });
-            */
+            
     }
     function PrepareGraphData() {
         angular.forEach($scope.GraphData, function (value, key) {
