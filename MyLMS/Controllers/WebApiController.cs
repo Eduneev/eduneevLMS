@@ -302,7 +302,7 @@ namespace MyLMS.Controllers
             SParam[1] = new SqlParameter("RRQID", SqlDbType.VarChar);
             SParam[1].Value = RRQID;
 
-            DataTable val = DAL.GetDataTable("GetMobieRRQ", SParam);
+            DataTable val = DAL.GetDataTable("GetMobileRRQ", SParam);
             if (val.Rows.Count>0)
             {
                 mobile.RRQID = RRQID;

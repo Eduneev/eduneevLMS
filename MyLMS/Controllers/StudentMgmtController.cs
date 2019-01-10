@@ -129,11 +129,24 @@ namespace MyLMS.Controllers
         [HttpPost]
         public void SetStudentPhoto(int StudentID, string StudentImage)
         {
-
             string cleanImage = Regex.Replace(StudentImage, "data:image/png;base64,", "");
             byte[] encodedDataAsBytes = System.Convert.FromBase64String(cleanImage);
             string Path = Server.MapPath("~/StudentsImage/" + StudentID + ".jpg");
             System.IO.File.WriteAllBytes(Path, encodedDataAsBytes);
+
+            SqlParameter[] FObj = new SqlParameter[1];
+            FObj[0] = new SqlParameter("@StudentID", SqlDbType.Int);
+            FObj[0].Value = StudentID;
+
+            StudentModel s = new StudentModel();
+            try
+            {
+                s.SaveStudentImage(FObj);
+            }
+            catch
+            {
+
+            }
         }
 
 
