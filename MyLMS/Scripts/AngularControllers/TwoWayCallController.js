@@ -23,14 +23,12 @@
     }
 
     function StartSocket() {
-        console.log($scope.SessionID);
 
         $http.get('/SessionMgmt/GetStudio/' + $scope.SessionID)
             .then(function (result) {
                 var studio = result.data[0];
                 $scope.ws = TwoWaySocket.StartSocket();
                 $scope.ws.onOpen(function () {
-                    console.log("Started socket.");
                     s = document.getElementById('connect');
                     s.style.color = "green";
                     s.textContent = "Connected";
@@ -54,12 +52,9 @@
             var obj = JSON.parse(data);
             if (obj.type == Constants.Events['CONNECTION']) {
                 // add to the List
-                obj['CenterName'] = "";
-                console.log(obj)
                 $scope.ConnectedList.push(obj);
             }
             else if (obj.type == Constants.Events['DISCONNECTION']) {                
-                console.log(obj)
                 for (var i = 0; i < $scope.ConnectedList.length; i++) {
                     if (obj.wsID == $scope.ConnectedList[i].wsID) {
                         $scope.ConnectedList.splice(i, 1);
@@ -81,7 +76,6 @@
     }
 
     $scope.CallEvent = function (wsID, call) {
-        console.log(wsID)
         if (call) {
             $scope.ws.send(
                 JSON.stringify({
