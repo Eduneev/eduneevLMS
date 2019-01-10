@@ -334,7 +334,7 @@
             $http.get('/SessionMgmt/GetChannel/' + _SessionID)
                 .then(function (result) {
                     var channel = result.data;
-                    window.location.href = "/SessionMgmt/Classrooms?SessionID=" + _SessionID + "&Channel=" + channel;
+                    window.location.href = "/SessionMgmt/TwoWayCall?SessionID=" + _SessionID + "&Channel=" + channel;
                 });
         }
     }

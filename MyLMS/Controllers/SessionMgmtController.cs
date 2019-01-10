@@ -38,7 +38,7 @@ namespace MyLMS.Controllers
         {
             return View();
         }
-        public ActionResult Classrooms()
+        public ActionResult TwoWayCall()
         {
             return View();
         }
