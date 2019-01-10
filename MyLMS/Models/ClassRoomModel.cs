@@ -10,6 +10,7 @@ namespace MyLMS.Models
         public int ClassRoomId { get; set; }
         public string ClassRoomName { get; set; }
         public int CenterId { get; set; }
+        public string CenterName { get; set; }
         public string LastUsedCommand { get; set; }
     }
 

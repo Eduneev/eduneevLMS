@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Net;
 using System.Web.Http;
 using MyLMS.Models;
 using Newtonsoft.Json;
@@ -236,6 +237,7 @@ namespace MyLMS.Controllers
                 result.ClassRoomName = Convert.ToString(Convert.IsDBNull(val.Rows[0]["ClassRoomName"]) ? "-1" : val.Rows[0]["ClassRoomName"]);
                 result.CenterId = Convert.ToInt32(Convert.IsDBNull(val.Rows[0]["CenterID"]) ? "-1" : val.Rows[0]["CenterID"]);
                 result.LastUsedCommand = Convert.ToString(Convert.IsDBNull(val.Rows[0]["LastUsedCommand"]) ? "-1" : val.Rows[0]["LastUsedCommand"]);
+                result.CenterName = Convert.ToString(Convert.IsDBNull(val.Rows[0]["CenterName"]) ? "-1" : val.Rows[0]["CenterName"]);
             }
             else
             {
@@ -246,6 +248,14 @@ namespace MyLMS.Controllers
         }
 
         // ------Mobile RRQ section
+
+        public static string SenderID = "TWLRRQ";
+        public static string ProfileID = "718461";
+        public static string OTPKey = "0106t55i00XwQM6mqHgVC6MccfhVOe";
+        public static string Message = "2WayLive. Your OTP is: ";
+        public static string OTPbaseURL = "http://promo.strantech.co.in/api/pushsms.php?usr=" + ProfileID +
+            "&key=" + OTPKey + "&sndr=" + SenderID + "&";
+
         [Route("api/RegisterStudent")]
         [HttpPost]
         public String RegisterStudent(string StudentRegNo, string Password)
@@ -267,16 +277,28 @@ namespace MyLMS.Controllers
         [HttpPost]
         public Boolean SendOTP(string StudentRegNo, string Mobile)
         {
-            SqlParameter[] SParam = new SqlParameter[2];
+            string OTP = string.Empty;
+            Random r = new Random();
+            for (int i = 0; i < 4; i++)
+            {
+                OTP += r.Next(10);
+            }
+
+            SqlParameter[] SParam = new SqlParameter[3];
             SParam[0] = new SqlParameter("@Code", SqlDbType.VarChar);
             SParam[0].Value = StudentRegNo;
             SParam[1] = new SqlParameter("@Mobile", SqlDbType.VarChar);
             SParam[1].Value = Mobile;
+            SParam[2] = new SqlParameter("@OTP", SqlDbType.VarChar);
+            SParam[2].Value = OTP;
 
             DataTable val = DAL.GetDataTable("VerifyStudentMobile", SParam);
             if (val.Rows.Count > 0)
             {
-                // SEND OTP
+                string OTPUrl = OTPbaseURL + "ph=" + Mobile + "&text=" + Message + OTP + "&rpt=1";
+                Uri u = new Uri(OTPUrl);
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(u);
+                request.GetResponse();
                 return true;
             }
 
@@ -287,8 +309,19 @@ namespace MyLMS.Controllers
         [HttpPost]
         public Boolean ConfirmOTP(string StudentRegNo, string Mobile, string OTP)
         {
-            // CONFIRM OTP
-            return true;
+            SqlParameter[] SParam = new SqlParameter[3];
+            SParam[0] = new SqlParameter("@Code", SqlDbType.VarChar);
+            SParam[0].Value = StudentRegNo;
+            SParam[1] = new SqlParameter("@Mobile", SqlDbType.VarChar);
+            SParam[1].Value = Mobile;
+            SParam[2] = new SqlParameter("@OTP", SqlDbType.VarChar);
+            SParam[2].Value = OTP;
+
+            DataTable val = DAL.GetDataTable("ValidateOTP", SParam);
+            if (val.Rows.Count > 0)
+                return true;
+
+            return false;
         }
 
         [Route("api/GetRRQDetails/{StudentRegNo}/{RRQID:int}")]
