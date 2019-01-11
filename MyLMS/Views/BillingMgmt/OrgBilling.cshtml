@@ -43,13 +43,13 @@
                     </label>
                     <label>
                         <span style="width: 100%;">Select Start Date:</span>
-                        <quick-datepicker ng-model='StartDate' date-format='yyyy-M-d' placeholder='Pick a Date' disable-timepicker='true'></quick-datepicker>
-                    </label>
-                    <label>
-                        <span style="width: 100%;">Select End Date:</span>
-                        <quick-datepicker ng-model='EndDate' date-format='yyyy-M-d' placeholder='Pick a Date' disable-timepicker='true' data-ng-change="GetStreamList()"></quick-datepicker>
+                        <input type="date" style="width:100%" ng-model="StartDate" placeholder='Pick a Date'>
                     </label>
 
+                    <label>
+                        <span style="width: 100%;">Select End Date:</span>
+                        <input type="date" ng-model='EndDate' placeholder='Pick a Date' data-ng-change=GetStreamList()>
+                    </label>
                 </div>
             </div>
 

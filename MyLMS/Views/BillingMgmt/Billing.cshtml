@@ -15,9 +15,9 @@
             Usage and Billing
         </h1>
         <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
-        <li><a href="#">Billing</a></li>
-        @*<li class="active">Add Course</li>*@
+            <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+            <li><a href="#">Billing</a></li>
+            @*<li class="active">Add Course</li>*@
         </ol>
     </section>
 
@@ -39,11 +39,12 @@
 
                     <label>
                         <span style="width: 100%;">Select Start Date:</span>
-                        <quick-datepicker ng-model='StartDate' date-format='yyyy-M-d' placeholder='Pick a Date' disable-timepicker='true'></quick-datepicker>
+                        <input type="date" style="width:100%" ng-model="StartDate" placeholder='Pick a Date'>
                     </label>
+
                     <label>
                         <span style="width: 100%;">Select End Date:</span>
-                        <quick-datepicker ng-model='EndDate' date-format='yyyy-M-d' placeholder='Pick a Date' disable-timepicker='true'  data-ng-change="GetStreamList()"></quick-datepicker>
+                        <input type="date" ng-model='EndDate' placeholder='Pick a Date' data-ng-change=GetStreamList()>
                     </label>
                 </div>
             </div>
@@ -84,8 +85,8 @@
                                         <strong><span>{{Stream.Amount}}</span></strong>
                                     </td>
                                     @*<th>
-                                    <span ng-click="SurveyAttemptReport(Survey.SURVEY_ID)" style="cursor:pointer;" class="fa fa-file-text-o"></span>&nbsp;
-                                </th>*@
+                                            <span ng-click="SurveyAttemptReport(Survey.SURVEY_ID)" style="cursor:pointer;" class="fa fa-file-text-o"></span>&nbsp;
+                                        </th>*@
                                 </tr>
                             </tbody>
                         </table>
@@ -96,3 +97,16 @@
     </section>
 </div>
 
+<script src="~/Template/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+<script>
+    $(function () {
+        //Date picker
+        $('#datepicker').datepicker({
+            autoclose: true
+        });
+
+        $('#datepicker2').datepicker({
+            autoclose: true
+        });
+    });
+</script>
