@@ -43,7 +43,12 @@ namespace MyLMS.Controllers
         {
             return View();
         }
-        
+
+        public ActionResult CreateCenterUser()
+        {
+            return View();
+        }
+
 
         [HttpGet]
         public string GetReceiversList()
@@ -174,6 +179,62 @@ namespace MyLMS.Controllers
             try
             {
                 ModelObj1.CreateStudio(SParam);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        [HttpGet]
+        public string GetCenterUserList(int ID)
+        {
+            SqlParameter[] FObj = new SqlParameter[1];
+            FObj[0] = new SqlParameter("@CenterID", SqlDbType.Int);
+            FObj[0].Value = ID;
+            DataTable EntityUserList = DAL.GetDataTable("GetCenterUserList", FObj);
+
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(EntityUserList);
+            return JSONString;
+        }
+
+        [HttpGet]
+        public string GetCenterCoordinatorRole()
+        {
+            DataTable EntityUserList = DAL.GetDataTable("GetCenterCoordinatorRole");
+
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(EntityUserList);
+            return JSONString;
+        }
+
+        [HttpPost]
+        public void AddCenterUser(int CenterID, string UserName, string Password, string FullName, string EmailID, string Mobile, int RoleID)
+        {
+            EntityModel EntObj = new EntityModel();
+            SqlParameter[] SParam = new SqlParameter[8];
+
+            SParam[0] = new SqlParameter("@UserID", SqlDbType.Int);
+            SParam[0].Value = Convert.ToInt32(Session["USER_ID"]);
+            SParam[1] = new SqlParameter("@UserName", SqlDbType.VarChar);
+            SParam[1].Value = UserName;
+            SParam[2] = new SqlParameter("@Password", SqlDbType.VarChar);
+            SParam[2].Value = EDHelper.EncryptTripleDES(Password);
+            SParam[3] = new SqlParameter("@FullName", SqlDbType.VarChar);
+            SParam[3].Value = FullName;
+            SParam[4] = new SqlParameter("@EmailID", SqlDbType.VarChar);
+            SParam[4].Value = EmailID;
+            SParam[5] = new SqlParameter("@Mobile", SqlDbType.VarChar);
+            SParam[5].Value = Mobile;
+            SParam[6] = new SqlParameter("@RoleID", SqlDbType.VarChar);
+            SParam[6].Value = RoleID;
+            SParam[7] = new SqlParameter("@CenterID", SqlDbType.VarChar);
+            SParam[7].Value = CenterID;
+
+            try
+            {
+                EntObj.AddCenterUser(SParam);
             }
             catch (Exception ex)
             {

@@ -144,7 +144,7 @@ namespace MyLMS.Controllers
             SqlParameter[] FObj = new SqlParameter[1];
             FObj[0] = new SqlParameter("@UserID", SqlDbType.Int);
             FObj[0].Value = Convert.ToInt32(Session["USER_ID"]);
-            DataTable SessionsList = DAL.GetDataTable("GetSessions");
+            DataTable SessionsList = DAL.GetDataTable("GetSessions", FObj);
 
             string JSONString = string.Empty;
             JSONString = JsonConvert.SerializeObject(SessionsList);
@@ -209,9 +209,11 @@ namespace MyLMS.Controllers
         [HttpGet]
         public string GetStartedSessions(int id)
         {
-            SqlParameter[] FObj = new SqlParameter[1];
+            SqlParameter[] FObj = new SqlParameter[2];
             FObj[0] = new SqlParameter("@SubjectID", SqlDbType.Int);
             FObj[0].Value = id;
+            FObj[1] = new SqlParameter("@UserID", SqlDbType.Int);
+            FObj[1].Value = Convert.ToInt32(Session["USER_ID"].ToString());
             DataTable StartedSessionsList = DAL.GetDataTable("StartedSessionsList", FObj);
 
             string JSONString = string.Empty;
@@ -246,8 +248,19 @@ namespace MyLMS.Controllers
             SParam[9] = new SqlParameter("@CreatedBy", SqlDbType.Int);
             SParam[9].Value = Convert.ToInt32(Session["USER_ID"]);
 
+            bool KeyUnique = false;
+            string streamKey = string.Empty;
             // Create session stream key
-            string streamKey = createRandomKey();
+            while (!KeyUnique)
+            {
+                streamKey = createRandomKey();
+                SqlParameter[] FObj = new SqlParameter[1];
+                FObj[0] = new SqlParameter("@StreamKey", SqlDbType.VarChar);
+                FObj[0].Value = streamKey;
+                DataTable z = DAL.GetDataTable("ValidateStreamKey", FObj);
+                if (z.Rows.Count == 0)
+                    KeyUnique = true;
+            }
             SParam[10] = new SqlParameter("@Key", SqlDbType.VarChar);
             SParam[10].Value = streamKey;
 

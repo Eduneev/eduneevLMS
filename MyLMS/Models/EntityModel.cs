@@ -53,5 +53,20 @@ namespace MyLMS.Models
             }
             return res;
         }
+
+        public string AddCenterUser(SqlParameter[] sparams)
+        {
+            string res = "Failure..";
+            try
+            {
+                res = DAL.ExecuteScalar("CreateCenterUser", sparams);
+            }
+            catch (Exception ex)
+            {
+                res = ex.Message;
+                throw;
+            }
+            return res;
+        }
     }
 }
