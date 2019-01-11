@@ -92,3 +92,57 @@ myapp.controller('StudioCntrl', function ($scope, $http) {
         });
     }
 });
+
+myapp.controller('CenterUserCntrl', function ($scope, $http) {
+    GetCenterList();
+    $scope.CenterTextToShow = "Please wait.."
+    $scope.RoleTextToShow = "Please wait.."
+
+
+    function GetCenterList() {
+        $http.get('/CenterMgmt/GetCenters')
+            .then(function (result) {
+                $scope.CenterList = result.data;
+                $scope.CenterTextToShow = "Please select entity.."
+            });
+    }
+
+    $scope.GetCenterUsers = function GetCenterUsersList() {
+        $http.get('/Entity/GetCenterUserList/' + $scope.CenterID)
+            .then(function (result) {
+                $scope.CenterUserList = result.data;
+                GetRoles();
+            });
+    }
+
+    function GetRoles() {
+        $http.get('/Entity/GetCenterCoordinatorRole')
+            .then(function (result) {
+                $scope.CenterCoordinatorUsers = result.data;
+                $scope.RoleTextToShow = "Please select.."
+            });
+    }
+
+    $scope.AddCenterUser = function () {
+        debugger;
+        var _CenterID = $scope.CenterID
+        var _UserName = $scope.UserName
+        var _Password = $scope.Password;
+        var _FullName = $scope.FullName;
+        var _EmailID = $scope.EmailID;
+        var _Mobile = $scope.Mobile;
+        var _RoleID = $scope.RoleID;
+
+        $http({
+            method: 'POST',
+            url: '/Entity/AddCenterUser',
+            data: { CenterID: _CenterID, UserName: _UserName, Password: _Password, FullName: _FullName, EmailID: _EmailID, Mobile: _Mobile, RoleID: _RoleID }
+        }).then(function (result) {
+            $http.get('/Entity/GetCenterUserList/' + $scope.CenterID)
+                .then(function (result) {
+                    $scope.CenterUserList = result.data;
+                    GetRoles();
+                });
+        });
+    }
+});
