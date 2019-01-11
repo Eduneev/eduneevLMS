@@ -187,6 +187,20 @@ namespace MyLMS.Controllers
         }
 
         [HttpGet]
+        public string GetEntityUserList()
+        {
+            SqlParameter[] FObj = new SqlParameter[1];
+
+            FObj[0] = new SqlParameter("@UserID", SqlDbType.Int);
+            FObj[0].Value = Convert.ToInt32(Session["USER_ID"]);
+            DataTable Studios = DAL.GetDataTable("GetEntitysUsers", FObj);
+
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(Studios);
+            return JSONString;
+        }
+
+        [HttpGet]
         public string GetCenterUserList(int ID)
         {
             SqlParameter[] FObj = new SqlParameter[1];
