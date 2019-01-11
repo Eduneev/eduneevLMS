@@ -4,20 +4,19 @@
     Layout = "~/Views/Shared/_PageLayout.cshtml";
 }
 
-
 @section scripts{
     <script src="~/Scripts/AngularControllers/EntityController.js"></script>
 }
-<div ng-controller="EntityCntrl">
+<div ng-controller="EntityUserCntrl">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            User Management
-            <small>Add and View user details</small>
+            View Users
+            <small>View all Organisation users</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
-            <li><a href="#">User</a></li>
+            <li><a href="#">Organisation Users</a></li>
             @*<li class="active">Add Course</li>*@
         </ol>
     </section>
@@ -27,7 +26,11 @@
         <div class="box box-default">
             <div class="box-header with-border">
                 <div class="pull-left">
-                    <button type="button" class="btn btn-dropbox btn-sm" id="btnAddUser" data-toggle="modal" data-target="#AddUser"><i class="glyphicon glyphicon-plus"> </i> Add User</button>                    
+                    <label>
+
+                    </label>
+
+                    <button type="button" class="btn btn-dropbox btn-sm" id="btnUpdatePassword" data-toggle="modal" data-target="#UpdatePassword"><i class="glyphicon glyphicon-plus"> </i> Update Password</button>
                 </div>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -40,33 +43,33 @@
                             <thead>
                                 <tr>
                                     <th>Sl No.</th>
-                                    <th>Program</th>
-                                    <th>Course</th>
-                                    <th>Subject</th>
-                                    <th>Topic</th>
-                                    @*<th></th>*@
+                                    <th>User Full Name</th>
+                                    <th>Login Name</th>
+                                    <th>Email</th>
+                                    <th>Mobile</th>
+                                    <th>User Type</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="Course in CourseList | filter: CourseFilter">
+                                <tr ng-repeat="User in EntityUserList">
                                     <td>
                                         {{$index+1}}.
                                     </td>
                                     <td>
-                                        <span>{{Course.ProgramName}}</span>
+                                        <span>{{User.FullName}}</span>
                                     </td>
                                     <td>
-                                        <span>{{Course.CourseName}}</span>
+                                        <span>{{User.UserName}}</span>
                                     </td>
                                     <td>
-                                        <span>{{Course.SubjectName}}</span>
+                                        <span>{{User.EmailID}}</span>
                                     </td>
                                     <td>
-                                        <span>{{Course.TopicName}}</span>
+                                        <span>{{User.Mobile}}</span>
                                     </td>
-                                    @*<th>
-                                            <span ng-click="SurveyAttemptReport(Survey.SURVEY_ID)" style="cursor:pointer;" class="fa fa-file-text-o"></span>&nbsp;
-                                        </th>*@
+                                    <td>
+                                        <span>{{User.RoleName}}</span>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -76,156 +79,36 @@
         </div>
     </section>
 
+
+
+    @* Popup to Show Update Password *@
+    <div class="modal" id="UpdatePassword" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="text-info">Update Password</h3>
+                </div>
+                <div class="modal-body" style="margin:0px 10px 0px 10px;">
+                    <form class="form-horizontal" name="UpdatePasswordForm">
+                        <div class="form-group">
+                            <label class="text-info"> Select User</label>
+                            <select class="form-control" id="drpRole" style="width: 100%;" data-ng-model="UserID" data-ng-options="c.UserID as c.UserName for c in EntityUserList">
+                                <option value="">Please Select..</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-info"> Password</label>
+                            <input type="text" name="EntityCode" ng-model="Password" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter Password...">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" ng-click="UpdatePassword()" id="btnUpdate" data-dismiss="modal">Update Password</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     @* Popup to Show Program Window *@
-    <div class="modal" id="AddProgram" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h3 class="text-info">Add Program</h3>
-                </div>
-                <div class="modal-body" style="margin:0px 10px 0px 10px;">
-                    <form class="form-horizontal" name="UpdateEmployeeForm">
-                        <div class="form-group">
-                            <label class="text-info"> Program Name</label>
-                            <input type="text" name="ProgramName" ng-model="ProgramName" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter program name...">
-                        </div>
-                        <div class="form-group">
-                            <label class="text-info"> Program Code</label>
-                            <input type="text" name="ProgramCode" ng-model="ProgramCode" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter program code...">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" ng-click="SaveProgram()" id="btnUpdate" data-dismiss="modal">Save</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    @* Popup to Show Program Window *@
-
-    @* Popup to Show Course Window *@
-    <div class="modal" id="AddCourse" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h3 class="text-info">Add Course</h3>
-                </div>
-                <div class="modal-body" style="margin:0px 10px 0px 10px;">
-                    <form class="form-horizontal" name="UpdateEmployeeForm">
-                        <div class="form-group">
-                            <label class="text-info"> Program Name</label>
-                            <select class="form-control" id="drpProgramName" style="width: 100%;" data-ng-model="ProgID" data-ng-options="c.ProgID as c.ProgramName for c in ProgramsList">
-                                <option value="">{{ProgramTextToShow}}</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="text-info"> Course Name</label>
-                            <input type="text" name="CourseName" ng-model="CourseName" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter course name...">
-                        </div>
-                        <div class="form-group">
-                            <label class="text-info"> Course Code</label>
-                            <input type="text" name="CourseCode" ng-model="CourseCode" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter course code...">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" ng-click="SaveCourse()" id="btnAddCourse" data-dismiss="modal">Save</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    @* Popup to Show Course Window *@
-
-    @* Popup to Show Subject Window *@
-    <div class="modal" id="AddSubject" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h3 class="text-info">Add Subject</h3>
-                </div>
-                <div class="modal-body" style="margin:0px 10px 0px 10px;">
-                    <form class="form-horizontal" name="UpdateEmployeeForm">
-                        <div class="form-group">
-                            <label class="text-info"> Program Name</label>
-                            <select class="form-control" id="drpProgramName" style="width: 100%;" data-ng-model="ProgID" data-ng-options="c.ProgID as c.ProgramName for c in ProgramsList" data-ng-change="GetCourseList()">
-                                <option value="">{{ProgramTextToShow}}</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="text-info"> Course Name</label>
-                            <select class="form-control" id="drpProgramName" style="width: 100%;" data-ng-model="CourseID" data-ng-options="c.CourseID as c.CourseName for c in CoursesList">
-                                <option value="">{{CourseTextToShow}}</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="text-info"> Subject Name</label>
-                            <input type="text" name="SubjectName" ng-model="SubjectName" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter subject name...">
-                        </div>
-                        <div class="form-group">
-                            <label class="text-info"> Subject Code</label>
-                            <input type="text" name="SubjectCode" ng-model="SubjectCode" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter subject code...">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" ng-click="SaveSubject()" id="btnAddSubject" data-dismiss="modal">Save</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    @* Popup to Show Subject Window *@
-
-    @* Popup to Show Topic Window *@
-    <div class="modal" id="AddTopic" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h3 class="text-info">Add Topic</h3>
-                </div>
-                <div class="modal-body" style="margin:0px 10px 0px 10px;">
-                    <form class="form-horizontal" name="UpdateEmployeeForm">
-                        <div class="form-group">
-                            <label class="text-info"> Program Name</label>
-                            <select class="form-control" id="drpProgramName" style="width: 100%;" data-ng-model="ProgID" data-ng-options="c.ProgID as c.ProgramName for c in ProgramsList" data-ng-change="GetCourseList()">
-                                <option value="">{{ProgramTextToShow}}</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="text-info"> Course Name</label>
-                            <select class="form-control" id="drpCourseName" style="width: 100%;" data-ng-model="CourseID" data-ng-options="c.CourseID as c.CourseName for c in CoursesList" data-ng-change="GetSubjectsList()">
-                                <option value="">{{CourseTextToShow}}</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="text-info"> Subject Name</label>
-                            <select class="form-control" id="drpSubjectName" style="width: 100%;" data-ng-model="SubjectID" data-ng-options="c.SubjectID as c.SubjectName for c in SubjectsList">
-                                <option value="">{{SubjectTextToShow}}</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="text-info"> Topic Name</label>
-                            <input type="text" name="TopicName" ng-model="TopicName" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter topic name...">
-                        </div>
-                        <div class="form-group">
-                            <label class="text-info"> Topic Code</label>
-                            <input type="text" name="TopicCode" ng-model="TopicCode" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter topic code...">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" ng-click="SaveTopic()" id="btnAddTopic" data-dismiss="modal">Save</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    @* Popup to Show Topic Window *@
 </div>
-

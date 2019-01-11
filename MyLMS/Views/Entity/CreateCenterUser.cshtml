@@ -8,133 +8,165 @@
 @section scripts{
     <script src="~/Scripts/AngularControllers/EntityController.js"></script>
 }
-<div ng-controller="CenterUserCntrl">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            View Users
-            <small>View all Center users</small>
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
-            <li><a href="#">Center Users</a></li>
-            @*<li class="active">Add Course</li>*@
-        </ol>
-    </section>
+    <div ng-controller="CenterUserCntrl">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                View Users
+                <small>View all Center users</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+                <li><a href="#">Center Users</a></li>
+                @*<li class="active">Add Course</li>*@
+            </ol>
+        </section>
 
-    <!-- Form Body (Page body)-->
-    <section class="content">
-        <div class="box box-default">
-            <div class="box-header with-border">
-                <div class="pull-left">
-                    <label>
-                        <select class="form-control" id="drpEntityName" style="width: 100%;" data-ng-model="CenterID" data-ng-options="c.CenterID as c.CenterName for c in CenterList" data-ng-change="GetCenterUsers()">
-                            <option value="">{{CenterTextToShow}}</option>
-                        </select>
-                    </label>
-                    <button type="button" class="btn btn-dropbox btn-sm" id="btnAddEntity" data-toggle="modal" data-target="#AddCenter"><i class="glyphicon glyphicon-plus"> </i> Add User</button>
+        <!-- Form Body (Page body)-->
+        <section class="content">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <div class="pull-left">
+                        <label>
+                            <select class="form-control" id="drpEntityName" style="width: 100%;" data-ng-model="CenterID" data-ng-options="c.CenterID as c.CenterName for c in CenterList" data-ng-change="GetCenterUsers()">
+                                <option value="">{{CenterTextToShow}}</option>
+                            </select>
+                        </label>
+                        <button type="button" class="btn btn-dropbox btn-sm" id="btnAddEntity" data-toggle="modal" data-target="#AddCenter"><i class="glyphicon glyphicon-plus"> </i> Add User</button>
+                        <button type="button" class="btn btn-dropbox btn-sm" id="btnUpdatePassword" data-toggle="modal" data-target="#UpdatePassword"><i class="glyphicon glyphicon-plus"> </i> Update Password</button>
+                    </div>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
                 </div>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                </div>
-            </div>
-            <div class="box-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Sl No.</th>
-                                    <th>Center Name</th>
-                                    <th>User Full Name</th>
-                                    <th>Login Name</th>
-                                    <th>Email</th>
-                                    <th>Mobile</th>
-                                    <th>User Type</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="User in CenterUserList | filter: CourseFilter">
-                                    <td>
-                                        {{$index+1}}.
-                                    </td>
-                                    <td>
-                                        <span>{{User.CenterName}}</span>
-                                    </td>
-                                    <td>
-                                        <span>{{User.FullName}}</span>
-                                    </td>
-                                    <td>
-                                        <span>{{User.UserName}}</span>
-                                    </td>
-                                    <td>
-                                        <span>{{User.EmailID}}</span>
-                                    </td>
-                                    <td>
-                                        <span>{{User.Mobile}}</span>
-                                    </td>
-                                    <td>
-                                        <span>{{User.RoleName}}</span>
-                                    </td>
-                                    @*<th>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Sl No.</th>
+                                        <th>Center Name</th>
+                                        <th>User Full Name</th>
+                                        <th>Login Name</th>
+                                        <th>Email</th>
+                                        <th>Mobile</th>
+                                        <th>User Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="User in CenterUserList | filter: CourseFilter">
+                                        <td>
+                                            {{$index+1}}.
+                                        </td>
+                                        <td>
+                                            <span>{{User.CenterName}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{User.FullName}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{User.UserName}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{User.EmailID}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{User.Mobile}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{User.RoleName}}</span>
+                                        </td>
+                                        @*<th>
                                               <span ng-click="SurveyAttemptReport(Survey.SURVEY_ID)" style="cursor:pointer;" class="fa fa-file-text-o"></span>&nbsp;
                                         </th>*@
-                                </tr>
-                            </tbody>
-                        </table>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        @* Popup to Show Program Window *@
+        <div class="modal" id="AddCenter" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3 class="text-info">Add User</h3>
+                    </div>
+                    <div class="modal-body" style="margin:0px 10px 0px 10px;">
+                        <form class="form-horizontal" name="AddEntityForm">
+                            <div class="form-group">
+                                <label class="text-info"> User Type</label>
+                                <select class="form-control" id="drpRole" style="width: 100%;" data-ng-model="RoleID" data-ng-options="c.RoleID as c.RoleName for c in CenterCoordinatorUsers">
+                                    <option value="">{{RoleTextToShow}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="text-info"> User Full Name</label>
+                                <input type="text" name="EntityName" ng-model="FullName" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter full name...">
+                            </div>
+                            <div class="form-group">
+                                <label class="text-info"> User Name</label>
+                                <input type="text" name="EntityCode" ng-model="UserName" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter user name...">
+                            </div>
+                            <div class="form-group">
+                                <label class="text-info"> Password</label>
+                                <input type="text" name="ManagerName" ng-model="Password" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter password...">
+                            </div>
+                            <div class="form-group">
+                                <label class="text-info"> Email ID</label>
+                                <input type="text" name="Email" ng-model="EmailID" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter Email ID...">
+                            </div>
+                            <div class="form-group">
+                                <label class="text-info"> Mobile</label>
+                                <input type="text" name="Mobile" ng-model="Mobile" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter manager mobile no...">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" ng-click="AddCenterUser()" id="btnUpdate" data-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+        @* Popup to Show Program Window *@
 
-    @* Popup to Show Program Window *@
-    <div class="modal" id="AddCenter" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h3 class="text-info">Add User</h3>
-                </div>
-                <div class="modal-body" style="margin:0px 10px 0px 10px;">
-                    <form class="form-horizontal" name="AddEntityForm">
-                        <div class="form-group">
-                            <label class="text-info"> User Type</label>
-                            <select class="form-control" id="drpRole" style="width: 100%;" data-ng-model="RoleID" data-ng-options="c.RoleID as c.RoleName for c in CenterCoordinatorUsers">
-                                <option value="">{{RoleTextToShow}}</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="text-info"> User Full Name</label>
-                            <input type="text" name="EntityName" ng-model="FullName" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter full name...">
-                        </div>
-                        <div class="form-group">
-                            <label class="text-info"> User Name</label>
-                            <input type="text" name="EntityCode" ng-model="UserName" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter user name...">
-                        </div>
-                        <div class="form-group">
-                            <label class="text-info"> Password</label>
-                            <input type="text" name="ManagerName" ng-model="Password" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter password...">
-                        </div>
-                        <div class="form-group">
-                            <label class="text-info"> Email ID</label>
-                            <input type="text" name="Email" ng-model="EmailID" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter Email ID...">
-                        </div>
-                        <div class="form-group">
-                            <label class="text-info"> Mobile</label>
-                            <input type="text" name="Mobile" ng-model="Mobile" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter manager mobile no...">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" ng-click="AddCenterUser()" id="btnUpdate" data-dismiss="modal">Save</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        @* Popup to Show Update Password *@
+        <div class="modal" id="UpdatePassword" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3 class="text-info">Update Password</h3>
+                    </div>
+                    <div class="modal-body" style="margin:0px 10px 0px 10px;">
+                        <form class="form-horizontal" name="UpdatePasswordForm">
+                            <div class="form-group">
+                                <label class="text-info"> Select User</label>
+                                <select class="form-control" id="drpRole" style="width: 100%;" data-ng-model="UserID" data-ng-options="c.UserID as c.UserName for c in CenterUserList">
+                                    <option value="">Please Select..</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="text-info"> Password</label>
+                                <input type="text" name="EntityCode" ng-model="Password" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter Password...">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" ng-click="UpdatePassword()" id="btnUpdate" data-dismiss="modal">Update Password</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
+        @* Popup to Show Program Window *@
     </div>
-    @* Popup to Show Program Window *@
-</div>
 
 
 
