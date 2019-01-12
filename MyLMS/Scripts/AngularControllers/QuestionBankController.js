@@ -190,6 +190,8 @@
             qID: $scope.RRQQuestionList[$scope.currentPage].Question.QID,
             SessionID: $scope.SessionID
         }));
+        display = document.querySelector('#time');
+        CallstartTimer(0, display);
     }
 
     $scope.DisplayOptions = function () {
@@ -207,6 +209,7 @@
         }));
 
         $scope.DisplayOption = 'True';
+        window.clearInterval(timerclock);
         StartTimer();
     }
 
@@ -224,6 +227,10 @@
             qID: $scope.RRQQuestionList[$scope.currentPage].Question.QID,
             SessionID: $scope.SessionID
         }));
+        display = document.querySelector('#time');
+        window.clearInterval(timerclock);
+        CallstartTimer(0, display);
+
     }
 
     $scope.currentPage = 0;
@@ -286,6 +293,8 @@
         });
     }
 
+    var timerclock = 0;
+
     function CallstartTimer(duration, display) {
         var start = Date.now(),
             diff,
@@ -304,6 +313,8 @@
             seconds = seconds < 10 ? "0" + seconds : seconds;
 
             display.textContent = minutes + ":" + seconds;
+            if (minutes == 0 && seconds == 0)
+                ClearTimer();
 
             if (diff <= 0) {
                 // add one second so that the count down starts at the full duration
@@ -313,8 +324,14 @@
         };
         // we don't want to wait a full second before the timer starts
         timer();
-        setInterval(timer, 1000);
+        timerclock = setInterval(timer, 1000);
+
+        function ClearTimer() {
+            console.log("here")
+            window.clearInterval(timerclock);
+        }
     }
+
 
     function StartTimer() {
         //var oneMinute = 60,
