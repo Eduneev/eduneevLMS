@@ -293,7 +293,15 @@
         });
     }
 
-    var timerclock = 0;
+    function GetRRQAnswerPercentage() {
+        $http.get('/QuestionBank/GetRRQAnswerPercentage/' + $scope.Q.Question.QID)
+            .then(function (result) {
+                console.log(result.data)
+            });
+    }
+
+    // RRQ Question timer
+    var timerclock = 0; 
 
     function CallstartTimer(duration, display) {
         var start = Date.now(),
@@ -321,13 +329,15 @@
                 // example 05:00 not 04:59
                 start = Date.now() + 1000;
             }
+
+            // Also send call to function to show how many students have answered 
+            GetRRQAnswerPercentage()
         };
         // we don't want to wait a full second before the timer starts
         timer();
         timerclock = setInterval(timer, 1000);
 
         function ClearTimer() {
-            console.log("here")
             window.clearInterval(timerclock);
         }
     }
