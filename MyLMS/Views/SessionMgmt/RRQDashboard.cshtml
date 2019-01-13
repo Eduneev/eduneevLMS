@@ -51,7 +51,7 @@
                                         <div class="callout callout-warning">
                                             <div>
                                                 <button type="button" id="{{Q.QID}}" ng-click="GetRRQQuestionAndOptions(Q.QID)" ng-repeat="Q in RRQQuestions" class="btn btn-outline btn-circle btn-xl">
-                                                    <div style="font-size: 20px; font-weight:bold;">Q-{{$index+1}}</div>
+                                                    <div style="font-size: 20px; font-weight:bold;">Q-{{Q.QUES_NO}}</div>
                                                 </button>
                                                 <button type="button" class="btn btn-outline btn-circle btn-xl right" style="float:right;">
                                                     <div style="font-size: 20px; font-weight:bold;">RRQ-101</div>
@@ -187,7 +187,7 @@
                                                         <table class="table table-hover table-bordered" style="height:370px">
                                                             <tbody ng-repeat="Q in QuestionList">
                                                                 <tr>
-                                                                    <td style="font-size:30px;">
+                                                                    <td style="font-size:20px;">
                                                                         <span><strong>Q-{{Q.Question.QUES_NO}}. {{Q.Question.QuestionText}}</strong></span>
                                                                     </td>
                                                                 </tr>
