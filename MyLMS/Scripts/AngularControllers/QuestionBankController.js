@@ -209,6 +209,7 @@
         }));
 
         $scope.DisplayOption = 'True';
+        window.clearInterval(prcntclock);
         window.clearInterval(timerclock);
         StartTimer();
     }
@@ -229,6 +230,7 @@
         }));
         display = document.querySelector('#time');
         window.clearInterval(timerclock);
+        window.clearInterval(prcntclock);
         CallstartTimer(0, display);
 
     }
@@ -241,7 +243,7 @@
 
     $scope.RRQpageSize = 1;
     $scope.RRQnumberOfPages = function () {
-        return Math.ceil($scope.QuestionList.length / $scope.RRQpageSize);
+        return Math.ceil($scope.RRQQuestionList.length / $scope.RRQpageSize);
     }
 
 
@@ -294,14 +296,18 @@
     }
 
     function GetRRQAnswerPercentage() {
-        $http.get('/QuestionBank/GetRRQAnswerPercentage/' + $scope.Q.Question.QID)
+        console.log($scope.RRQQuestionList[$scope.currentPage].Question.QID)
+        $http.get('/QuestionBank/GetRRQAnswerPercentage/' + $scope.RRQQuestionList[$scope.currentPage].Question.QID)
             .then(function (result) {
-                console.log(result.data)
+                display = document.querySelector('#prcnt');
+                val = Math.ceil((result.data[0].Responses / result.data[0].AttendingStudents) * 100);
+                display.textContent = val
             });
     }
 
     // RRQ Question timer
     var timerclock = 0; 
+    var prcntclock = 0;
 
     function CallstartTimer(duration, display) {
         var start = Date.now(),
@@ -330,15 +336,19 @@
                 start = Date.now() + 1000;
             }
 
-            // Also send call to function to show how many students have answered 
-            GetRRQAnswerPercentage()
         };
+        function prcnt() {
+            // call function to show how many students have answered 
+            GetRRQAnswerPercentage()
+        }
         // we don't want to wait a full second before the timer starts
         timer();
         timerclock = setInterval(timer, 1000);
+        prcntclock = setInterval(prcnt, 3000);
 
         function ClearTimer() {
             window.clearInterval(timerclock);
+            window.clearInterval(prcntclock);
         }
     }
 

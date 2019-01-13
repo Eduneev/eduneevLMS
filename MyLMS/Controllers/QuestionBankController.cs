@@ -426,13 +426,13 @@ namespace MyLMS.Controllers
         }
 
         [HttpGet]
-        public string GetRRQAnswerPercentage(int QID)
+        public string GetRRQAnswerPercentage(int id)
         {
-            SqlParameter[] FObj = new SqlParameter[1];
+            SqlParameter[] FObj = new SqlParameter[2];
             FObj[0] = new SqlParameter("@RRQ_ID", SqlDbType.Int);
             FObj[0].Value = Convert.ToInt32(Session["RRQ_ID_Display"].ToString());
-            FObj[0] = new SqlParameter("@QID", SqlDbType.Int);
-            FObj[0].Value = QID;
+            FObj[1] = new SqlParameter("@QID", SqlDbType.Int);
+            FObj[1].Value = id;
 
             DataTable TagsList = DAL.GetDataTable("GetRRQAnswerPrcnt", FObj);
             string JSONString = string.Empty;
