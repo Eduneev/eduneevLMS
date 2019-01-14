@@ -41,7 +41,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Sl No.</th>
-                                                <th>Remote Serial No</th>
+                                                <th>Remote Shipment Amount</th>
                                                 <th>Remote Model</th>
                                                 <th>Shipment Date</th>
                                                 <th></th>
@@ -53,7 +53,7 @@
                                                     {{$index+1}}.
                                                 </td>
                                                 <td>
-                                                    <span>{{Remote.RemoteSerialNo}}</span>
+                                                    <span>{{Remote.ShipmentAmount}}</span>
                                                 </td>
                                                 <td>
                                                     <span>{{Remote.RemoteModel}}</span>
@@ -61,9 +61,9 @@
                                                 <td>
                                                     <span>{{Remote.OrgShipmentDate}}</span>
                                                 </td>
-                                                <td>
+                                                @*<td>
                                                     <button type="button" class="btn btn-success btn-sm" id="btnAddReceiver" ng-click="ReceiveEquipment(Receiver.ReceiverID)"><i class="glyphicon glyphicon-plus"> </i> Send</button>
-                                                </td>
+                                                </td>*@
                                             </tr>
                                         </tbody>
                                     </table>
@@ -95,9 +95,9 @@
                                                 <td>
                                                     <span>{{Receiver.OrgShipmentDate}}</span>
                                                 </td>
-                                                <td>
+                                                @*<td>
                                                     <button type="button" class="btn btn-success btn-sm" id="btnAddReceiver" ng-click="ReceiveEquipment(Receiver.ReceiverID)"><i class="glyphicon glyphicon-plus"> </i> Send</button>
-                                                </td>
+                                                </td>*@
                                                 @*<th>
                                                           <span ng-click="SurveyAttemptReport(Survey.SURVEY_ID)" style="cursor:pointer;" class="fa fa-file-text-o"></span>&nbsp;
                                                     </th>*@
