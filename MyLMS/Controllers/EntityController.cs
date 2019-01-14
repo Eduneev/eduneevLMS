@@ -124,7 +124,7 @@ namespace MyLMS.Controllers
 
             FObj[0] = new SqlParameter("@UserID", SqlDbType.Int);
             FObj[0].Value = Convert.ToInt32(Session["USER_ID"]);
-            DataTable InvRemList = DAL.GetDataTable("GetInvRemE", FObj);
+            DataTable InvRemList = DAL.GetDataTable("GetEntityRemoteInventory", FObj);
 
             string JSONString = string.Empty;
             JSONString = JsonConvert.SerializeObject(InvRemList);
