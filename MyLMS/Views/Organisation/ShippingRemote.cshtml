@@ -32,7 +32,7 @@
                             <option value="">{{EntityTextToShow}}</option>
                         </select>
                     </label>
-                    <button type="button" class="btn btn-dropbox btn-sm" id="btnAddRemote" data-toggle="modal" data-target="#AddRemote"><i class="glyphicon glyphicon-plus"> </i> Add Remote</button>
+                    <button type="button" class="btn btn-dropbox btn-sm" id="btnAddRemote" data-toggle="modal" data-target="#AddRemote"><i class="glyphicon glyphicon-plus"> </i> Add Remote Shipment</button>
                 </div>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -46,7 +46,7 @@
                                 <tr>
                                     <th>Sl No.</th>
                                     <th>Entity Name</th>
-                                    <th>Global Remote ID</th>
+                                    <th>Shipment Amount</th>
                                     <th>Remote Model</th>
                                     <th>Shipment Date</th>
                                 </tr>
@@ -60,7 +60,7 @@
                                         <span>{{Remote.EntityName}}</span>
                                     </td>
                                     <td>
-                                        <span>{{Remote.RemoteSerialNo}}</span>
+                                        <span>{{Remote.ShipmentAmount}}</span>
                                     </td>
                                     <td>
                                         <span>{{Remote.RemoteModel}}</span>
@@ -98,8 +98,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="text-info"> Global Remote ID</label>
-                            <input type="text" name="ReceiverSerialNo" ng-model="RemoteSerialNo" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter remote serial no...">
+                            <label class="text-info"> Shipment Amount</label>
+                            <input type="text" name="ReceiverSerialNo" ng-model="ShipmentAmount" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter number of remotes to ship...">
                         </div>
                         <div class="form-group">
                             <label class="text-info"> Model No</label>
