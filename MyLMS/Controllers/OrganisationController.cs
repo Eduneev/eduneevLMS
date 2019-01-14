@@ -261,15 +261,15 @@ namespace MyLMS.Controllers
         }
 
         [HttpPost]
-        public void SaveShippedRemote(string RemoteSerialNo, string RemoteModel, int EntityID)
+        public void SaveShippedRemote(int ShipmentAmount, string RemoteModel, int EntityID)
         {
             OrganisationModel OrgObj = new OrganisationModel();
             SqlParameter[] SParam = new SqlParameter[4];
 
             SParam[0] = new SqlParameter("@UserID", SqlDbType.Int);
             SParam[0].Value = Convert.ToInt32(Session["USER_ID"]);
-            SParam[1] = new SqlParameter("@RemoteSerialNo", SqlDbType.VarChar);
-            SParam[1].Value = RemoteSerialNo;
+            SParam[1] = new SqlParameter("@ShipmentAmount", SqlDbType.VarChar);
+            SParam[1].Value = ShipmentAmount;
             SParam[2] = new SqlParameter("@RemoteModel", SqlDbType.VarChar);
             SParam[2].Value = RemoteModel;
             SParam[3] = new SqlParameter("@EntityID", SqlDbType.VarChar);

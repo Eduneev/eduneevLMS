@@ -194,14 +194,14 @@ myapp.controller('RemoteCntrl', function ($scope, $http) {
 
     $scope.SaveRemote = function () {
         debugger;
-        var _RemoteSerialNo = $scope.RemoteSerialNo
+        var _ShipmentAmount = $scope.ShipmentAmount
         var _RemoteModel = $scope.RemoteModel
         var _EntityID = $scope.SelectedEntityID
 
         $http({
             method: 'POST',
             url: '/Organisation/SaveShippedRemote',
-            data: { RemoteSerialNo: _RemoteSerialNo, RemoteModel: _RemoteModel, EntityID: _EntityID }
+            data: { ShipmentAmount: _ShipmentAmount, RemoteModel: _RemoteModel, EntityID: _EntityID }
         }).then(function (result) {
             $http.get('/Organisation/GetRemotesList/' + $scope.EntityID)
                .then(function (result) {
