@@ -40,7 +40,13 @@ namespace MyLMS.Controllers
             FObj[1] = new SqlParameter("@BillingTypeID", SqlDbType.Int);
             FObj[1].Value = BillingTypeID;
             FObj[2] = new SqlParameter("@StreamTypeID", SqlDbType.Int);
-            FObj[2].Value = StreamTypeID;
+
+            // Check for Fixed Cost Billing
+            if (StreamTypeID == 0)
+                FObj[2].Value = null;
+            else
+                FObj[2].Value = StreamTypeID;
+
             FObj[3] = new SqlParameter("@Cost", SqlDbType.Int);
             FObj[3].Value = Cost;
 
@@ -119,7 +125,10 @@ namespace MyLMS.Controllers
                 int EntityID = Convert.ToInt32(StreamList.Rows[i]["EntityID"]);
                 int BillingTypeID = Convert.ToInt32(StreamList.Rows[i]["BillingTypeID"]);
 
-                if (xduration != null)
+                if (BillingTypeID == 3) //----------FIXED BILLING--------
+                {
+                }
+                else if (xduration != null)
                 {
                     double Duration = Convert.ToDouble(xduration)/60.0;
                     int BillingFactor = Convert.ToInt32(StreamList.Rows[i]["BillingFactor"]);

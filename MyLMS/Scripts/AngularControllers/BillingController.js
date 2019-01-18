@@ -97,12 +97,18 @@ myapp.controller("BillingAgreementCntrl", function ($scope, $http) {
     }
 
     $scope.GetStreamTypes = function () {
-        $http.get('/BillingMgmt/GetStreamTypes')
-            .then(function (result) {
-                $scope.StreamTypeList = result.data;
-                $scope.StreamTextToShow = "Please select Stream Type..";
-                $scope.Allowed = 1;
-            });
+        if ($scope.BillingTypeID == 3) { //-------Fixed Cost-----
+            $scope.StreamTypeID = 0;
+            $scope.Allowed = 1;
+        }
+        else {
+            $http.get('/BillingMgmt/GetStreamTypes')
+                .then(function (result) {
+                    $scope.StreamTypeList = result.data;
+                    $scope.StreamTextToShow = "Please select Stream Type..";
+                    $scope.Allowed = 1;
+                });
+        }
     }
 
 
