@@ -74,8 +74,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Course Management
-            <small>Add and View course details</small>
+            Student Attendance
+            <small>manage student attendance</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
@@ -123,7 +123,7 @@
                                     </td>
                                     <th>
                                         <label class="switch">
-                                            <input type="checkbox" ng-checked="Student.ATTENDANCE_STATUS == 'Marked'" ng-click="MarkAttendance(Student.SessionID, Student.StudentID)">
+                                            <input type="checkbox" ng-checked="Student.ATTENDANCE_STATUS == 'Marked'" ng-click="MarkAttendance(Student.StudentID)">
                                             <span class="slider"></span>
                                         </label>
                                     </th>

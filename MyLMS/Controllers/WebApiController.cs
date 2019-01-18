@@ -114,7 +114,7 @@ namespace MyLMS.Controllers
             SParam[0].Value = sessionId;
             SParam[1] = new SqlParameter("CenterID", SqlDbType.Int);
             SParam[1].Value = centerId;
-            DataTable val = DAL.GetDataTable("GetAttendingStudents", SParam);
+            DataTable val = DAL.GetDataTable("GetStudentsAttendanceByCenterID", SParam);
             StudentModel[] result = new StudentModel[val.Rows.Count];
 
             for (int i = 0; i < val.Rows.Count; i++)

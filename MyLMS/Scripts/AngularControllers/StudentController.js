@@ -190,12 +190,12 @@ myapp.controller('StudentAttendanceCntrl', function ($scope, $http) {
         }
     }
 
-    $scope.MarkAttendance = function (SessionID, StudentID) {
+    $scope.MarkAttendance = function (StudentID) {
         debugger;
         $http({
             method: 'POST',
             url: '/StudentMgmt/MarkAttendance',
-            data: { SessionID: SessionID, StudentID: StudentID}
+            data: { SessionID: $scope.SessionID, StudentID: StudentID}
         }).then(function (result) {
             GetStudents();
         });

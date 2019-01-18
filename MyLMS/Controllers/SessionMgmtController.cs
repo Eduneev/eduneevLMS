@@ -608,6 +608,21 @@ namespace MyLMS.Controllers
             return JSONString;
         }
 
+        [HttpGet]
+        [Route("SessionMgmt/GetStudentsAttendanceByCenterID/{CenterID:int}/{SessionID:int}")]
+        public string GetStudentsAttendanceByCenterID(int CenterID, int SessionID)
+        {
+            SqlParameter[] FObj = new SqlParameter[2];
+            FObj[0] = new SqlParameter("@CenterID", SqlDbType.Int);
+            FObj[0].Value = CenterID;
+            FObj[1] = new SqlParameter("@SessionID", SqlDbType.Int);
+            FObj[1].Value = SessionID;
+            DataTable StudentsList = DAL.GetDataTable("GetStudentsAttendanceByCenterID", FObj);
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(StudentsList);
+            return JSONString;
+        }
+
         public string GetStudentsByID(int id)
         {
             SqlParameter[] StudObj = new SqlParameter[1];
