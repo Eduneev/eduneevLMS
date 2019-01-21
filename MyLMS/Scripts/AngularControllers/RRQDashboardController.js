@@ -7,7 +7,7 @@
 
     var Labels = [];
     var Questions = [];
-
+    $scope.RevealAnswer = false;
 
     function GetRRQID(url) {
         var params = parseURLParams(url);
@@ -29,8 +29,9 @@
 
     function GetRRQQuestions() {
         $http.get('/SessionMgmt/GetRRQQuestions/' + $scope.RRQ_ID)
-        .then(function (result) {
+         .then(function (result) {
             $scope.RRQQuestions = result.data;
+            document.getElementById('RRQName').textContent = result.data[0].RRQName;
         });
     }
 
@@ -112,6 +113,9 @@
                 $scope.StudentsListByResp = result.data;
             });
     }
+    $scope.MarkAnswer = function () {
+        $scope.RevealAnswer = true;
+    }
     ///////// Get Top 10 Students ////////
     function GetDashboardData(QID) {
         console.log(QID);
@@ -124,6 +128,7 @@
                 $scope.NoResponsesPrcnt = $scope.DashboardData[0].NoResponsesPrcnt
                 $scope.CorrectPrcnt = $scope.DashboardData[0].CorrectPrcnt
                 $scope.InCorrestPrcnt = $scope.DashboardData[0].InCorrestPrcnt
+                $scope.RevealAnswer = false;
                 $scope.CorrectOption = $scope.DashboardData[0].CorrectOption
             });
     }

@@ -54,7 +54,7 @@
                                                     <div style="font-size: 20px; font-weight:bold;">Q-{{Q.QUES_NO}}</div>
                                                 </button>
                                                 <button type="button" class="btn btn-outline btn-circle btn-xl right" style="float:right;">
-                                                    <div style="font-size: 20px; font-weight:bold;">RRQ-101</div>
+                                                    <div style="font-size: 20px; font-weight:bold;" id="RRQName"></div>
                                                 </button>
                                             </div>                                            
                                         </div>
@@ -115,18 +115,21 @@
                                                                     </tr>
                                                                     <tr>
                                                                         <th>Correct Choice: </th>
-                                                                        <th> 
-                                                                            <div ng-if="CorrectOption == 'A'">
-                                                                                <button type="button" ng-click="GetStudentsByResponse(1)" class="btn btn-block btn-success btn-flat">{{CorrectOption}}</button>
+                                                                        <th>
+                                                                            <div ng-if="RevealAnswer == false">
+                                                                                <button type="button" ng-click="MarkAnswer()" class="btn btn-block btn-success btn-flat" style="font-size:18px">?</button>
                                                                             </div>
-                                                                            <div ng-if="CorrectOption == 'B'">
-                                                                                <button type="button" ng-click="GetStudentsByResponse(2)" class="btn btn-block btn-success btn-flat">{{CorrectOption}}</button>
+                                                                            <div ng-if="CorrectOption == 'A' && RevealAnswer==true">
+                                                                                <button type="button" ng-click="GetStudentsByResponse(1)" class="btn btn-block btn-success btn-flat" style="font-size:18px">{{CorrectOption}}</button>
                                                                             </div>
-                                                                            <div ng-if="CorrectOption == 'C'">
-                                                                                <button type="button" ng-click="GetStudentsByResponse(3)" class="btn btn-block btn-success btn-flat">{{CorrectOption}}</button>
+                                                                            <div ng-if="CorrectOption == 'B' && RevealAnswer==true">
+                                                                                <button type="button" ng-click="GetStudentsByResponse(2)" class="btn btn-block btn-success btn-flat" style="font-size:18px">{{CorrectOption}}</button>
                                                                             </div>
-                                                                            <div ng-if="CorrectOption == 'D'">
-                                                                                <button type="button" ng-click="GetStudentsByResponse(4)" class="btn btn-block btn-success btn-flat">{{CorrectOption}}</button>
+                                                                            <div ng-if="CorrectOption == 'C' && RevealAnswer==true">
+                                                                                <button type="button" ng-click="GetStudentsByResponse(3)" class="btn btn-block btn-success btn-flat" style="font-size:18px">{{CorrectOption}}</button>
+                                                                            </div>
+                                                                            <div ng-if="CorrectOption == 'D' && RevealAnswer==true">
+                                                                                <button type="button" ng-click="GetStudentsByResponse(4)" class="btn btn-block btn-success btn-flat" style="font-size:18px">{{CorrectOption}}</button>
                                                                             </div>
                                                                         </th>
                                                                     </tr>
