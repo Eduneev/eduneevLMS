@@ -172,13 +172,16 @@ namespace MyLMS.Controllers
         }
 
         [HttpGet]
-        public string GetStudentsForRemoteAllocation(int id)
+        [Route("StudentMgmt/GetStudentsForRemoteAllocation/{SubjectID:int}/{ClassroomID:int}")]
+        public string GetStudentsForRemoteAllocation(int SubjectID, int ClassroomID)
         {
-            SqlParameter[] FObj = new SqlParameter[2];
+            SqlParameter[] FObj = new SqlParameter[3];
             FObj[0] = new SqlParameter("@SubjectID", SqlDbType.Int);
-            FObj[0].Value = id;
+            FObj[0].Value = SubjectID;
             FObj[1] = new SqlParameter("@UserID", SqlDbType.Int);
             FObj[1].Value = Convert.ToInt32(Session["USER_ID"]);
+            FObj[2] = new SqlParameter("@ClassRoomID", SqlDbType.Int);
+            FObj[2].Value = ClassroomID;
             DataTable StudentsList = DAL.GetDataTable("GetStudentsForRemoteAllocation", FObj);
 
             string JSONString = string.Empty;
@@ -187,10 +190,10 @@ namespace MyLMS.Controllers
         }
 
         [HttpPost]
-        public void AssignRemoteToStudent(int StudentID, string RemoteNumber, int SubjectID)
+        public void AssignRemoteToStudent(int StudentID, string RemoteNumber, int SubjectID, int ClassroomID)
         {
             StudentModel ModelObj1 = new StudentModel();
-            SqlParameter[] SParam = new SqlParameter[3];
+            SqlParameter[] SParam = new SqlParameter[4];
 
             SParam[0] = new SqlParameter("@StudentID", SqlDbType.Int);
             SParam[0].Value = StudentID;
@@ -198,7 +201,9 @@ namespace MyLMS.Controllers
             SParam[1].Value = RemoteNumber;
             SParam[2] = new SqlParameter("@SubjectID", SqlDbType.Int);
             SParam[2].Value = SubjectID;
-            
+            SParam[3] = new SqlParameter("@ClassRoomID", SqlDbType.Int);
+            SParam[3].Value = ClassroomID;
+
             try
             {
                 ModelObj1.AssignRemoteToStudent(SParam);

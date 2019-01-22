@@ -228,12 +228,12 @@ myapp.controller('StudentAttendanceCntrl', function ($scope, $http) {
 
 myapp.controller('AllocateRemoteCntrl', function ($scope, $http) {
     GetClassroomList();
-    $scope.ClassroomTextToShow = "Please Select....";
     $scope.ReceiverSerialNo = null;
 
     function GetClassroomList() {
         $http.get('/CenterMgmt/GetClassroomReceiver')
             .then(function (result) {
+                $scope.ClassroomTextToShow = "Please Select....";
                 $scope.ClassroomList = result.data;
             });
     }
@@ -264,7 +264,13 @@ myapp.controller('AllocateRemoteCntrl', function ($scope, $http) {
     }
 
     $scope.GetStudentsList = function () {
-        $http.get('/StudentMgmt/GetStudentsForRemoteAllocation/' + $scope.SubjectID)
+        $scope.ClassroomID = 0;
+        for (var i = 0; i < $scope.ClassroomList.length; i++)
+            if ($scope.ClassroomList[i].ReceiverSerialNo == $scope.ReceiverSerialNo)
+                $scope.ClassroomID = $scope.ClassroomList[i].ClassRoomID;
+        console.log($scope.ClassroomID)
+
+        $http.get('/StudentMgmt/GetStudentsForRemoteAllocation/' + $scope.SubjectID + '/' + $scope.ClassroomID)
         .then(function (result) {
             $scope.StudentsList = result.data;
         });
@@ -272,16 +278,20 @@ myapp.controller('AllocateRemoteCntrl', function ($scope, $http) {
 
     $scope.AssignRemoteToStudent = function (StudentID, RemoteNumber) {
         debugger;
-        var _StudentID = StudentID;
-        var _RemoteNumber = RemoteNumber + "-" + $scope.ReceiverSerialNo;
-        var _SubjectID = $scope.SubjectID
-        $http({
-            method: 'POST',
-            url: '/StudentMgmt/AssignRemoteToStudent',
-            data: { StudentID: _StudentID, RemoteNumber: _RemoteNumber, SubjectID: _SubjectID }
-        }).then(function (result) {
-            $scope.GetStudentsList();
-            //window.location.href = "/SessionMgmt/StudentAttendance/";
-        });
+
+        if ($scope.ClassroomID != 0) {
+            var _StudentID = StudentID;
+            var _RemoteNumber = RemoteNumber + "-" + $scope.ReceiverSerialNo;
+            var _SubjectID = $scope.SubjectID;
+            var _ClassroomID = $scope.ClassroomID;
+            $http({
+                method: 'POST',
+                url: '/StudentMgmt/AssignRemoteToStudent',
+                data: { StudentID: _StudentID, RemoteNumber: _RemoteNumber, SubjectID: _SubjectID, ClassroomID: _ClassroomID }
+            }).then(function (result) {
+                $scope.GetStudentsList();
+                //window.location.href = "/SessionMgmt/StudentAttendance/";
+            });
+        }
     };
 });
