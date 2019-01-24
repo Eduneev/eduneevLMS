@@ -40,7 +40,8 @@
 	var messagesPanel, typedMessage, first = true, ws, centerName;
 	
 	const TESTINGURI = "ws://localhost:4000";
-	const PRODURI = "ws://52.15.186.193:4000";
+    const PRODURI = "ws://52.15.186.193:4000";
+    const SERVERURI = - 'http://twowaylive.us-east-2.elasticbeanstalk.com/';
 	var statusBar;
 
 	var urlParams = parseURLParams(window.location.href);
@@ -253,6 +254,7 @@
 
         list = document.getElementById("contacts");
 
+        /*
         var hardcoded = [
 			["Bob", "https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg"],
 			["Ross", "https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_02.jpg"],
@@ -280,9 +282,9 @@
 
 			list.appendChild(student);					
 		}
-		
+		*/
 
-		const url = "http://localhost:55082/api/" + SESSION + "/" + CenterID + "/getAttendingStudents";
+        const url = SERVERURI + SESSION + "/" + CenterID + "/getAttendingStudents";
 		var xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == XMLHttpRequest.DONE) {
