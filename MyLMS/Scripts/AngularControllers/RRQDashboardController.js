@@ -22,14 +22,14 @@
             })
 
             GetRRQQuestions();
-            GetDegreeOfDifficulty();
             GetTop10Students();
         }
     }
 
     function GetRRQQuestions() {
         $http.get('/SessionMgmt/GetRRQQuestions/' + $scope.RRQ_ID)
-         .then(function (result) {
+            .then(function (result) {
+            GetDegreeOfDifficulty();
             $scope.RRQQuestions = result.data;
             document.getElementById('RRQName').textContent = result.data[0].RRQName;
         });
@@ -83,10 +83,24 @@
             
     }
     function PrepareGraphData() {
-        angular.forEach($scope.GraphData, function (value, key) {
+        angular.forEach($scope.RRQQuestions, function (val, key) {
+            Labels.push('Q-' + val.QUES_NO.toString());
+            var check = false;
+            angular.forEach($scope.GraphData, function (value, key) {
+                if (value.QUES_NO.toString() == val.QUES_NO.toString()) {
+                    check = true;
+                    Questions.push(Math.round((1 - (value.TOTAL_CorrectResp / value.TOTAL_RESP)) * 100));
+                }
+            });
+            if (!check)
+                Questions.push(100);
+
+        });
+
+        /*angular.forEach($scope.GraphData, function (value, key) {
             Labels.push('Q-' + value.QUES_NO.toString());
             Questions.push(value.PERCENTAGE);
-        })
+        })*/
         //console.log(JSON.stringify(Labels));
         //console.log(JSON.stringify(Questions));
     }

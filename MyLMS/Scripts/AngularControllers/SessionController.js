@@ -103,7 +103,7 @@
     $scope.StartChat = function (SessionID, CenterID) {
         debugger;
         var promise = GetCenterNameFromSession(CenterID).then(function (response) {
-            var url = "http://localhost:55082/Chat.aspx?SessionID=" + SessionID + "&CenterName=" + response + "&CenterID=" + CenterID;
+            var url = "http://twowaylive.us-east-2.elasticbeanstalk.com/Chat.aspx?SessionID=" + SessionID + "&CenterName=" + response + "&CenterID=" + CenterID;
             var form = document.createElement("form");
             form.method = "POST";
             form.action = url;
@@ -115,7 +115,7 @@
 
     $scope.StartStudioChat = function (SessionID, StudioName) {
         //debugger;
-        var url = "http://localhost:55082/StudioChat.aspx?SessionID=" + SessionID + "&StudioName=" + StudioName;
+        var url = "http://twowaylive.us-east-2.elasticbeanstalk.com/StudioChat.aspx?SessionID=" + SessionID + "&StudioName=" + StudioName;
         var form = document.createElement("form");
         form.method = "POST";
         form.action = url;
@@ -233,7 +233,7 @@
         //debugger;
         var _SessionID = $scope.SessionID;
 
-        if (_SessionID == 0) {
+        if (_SessionID === 0) {
             alert("Please select a session!");
         }
         else {
@@ -327,7 +327,7 @@
     $scope.DisplayClassrooms = function () {
         var _SessionID = $scope.SessionID;
 
-        if (_SessionID == 0) {
+        if (_SessionID === 0) {
             alert("Please select a session!");
         }
         else {

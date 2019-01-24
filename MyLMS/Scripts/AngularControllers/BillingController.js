@@ -1,4 +1,4 @@
-﻿myapp.controller('BillingCntrl', function ($scope, $http) {
+﻿myapp.controller('BillingCntrl', function ($scope,$http) {
     GetCenters();
     GetEntityList();
     $scope.CenterID = 0;
@@ -9,6 +9,14 @@
     $scope.Allowed = 0;
 
     $scope.EntityTextToShow = 'Please select..';
+
+    $scope.propertyName = 'date';
+    $scope.reverse = true;
+
+    $scope.sortBy = function (propertyName) {
+        $scope.reverse = (propertyName !== null && $scope.propertyName === propertyName) ? !$scope.reverse : false;
+        $scope.propertyName = propertyName;
+    };
     
     function GetEntityList() {
         $http.get('/Organisation/GetEntityList')
@@ -47,12 +55,14 @@
         dates = GetDate();
         $http.get('/BillingMgmt/GetStreamLogsForClassroom/' + $scope.ClassRoomID + "/" + dates[0] + "/" + dates[1])
             .then(function (result) {
+                console.log(result.data)
                 $scope.StreamList = result.data;
             });
     }
 
     function GetDate() {
         startDate = $scope.StartDate;
+        console.log(startDate)
         day = startDate.getUTCDate(); if (day < 10) { day = "0" + day; }
         month = startDate.getMonth() + 1; if (month < 10) { month = "0" + month;}
         s = startDate.getFullYear() + "-" + month + "-" + day;
