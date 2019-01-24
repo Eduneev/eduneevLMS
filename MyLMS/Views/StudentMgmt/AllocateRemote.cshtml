@@ -76,7 +76,7 @@
                                 </tr>
                             </thead>
                             <tbody style="font-size:16px;">
-                                <tr ng-repeat="Student in StudentsList | filter: StudentFilter">
+                                <tr ng-repeat="Student in StudentsList | filter: StudentFilter | orderBy:'RemoteNum'">
                                     <td>
                                         {{$index+1}}.
                                     </td>
