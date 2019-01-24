@@ -11,6 +11,7 @@ using MyLMS.Models;
 
 namespace MyLMS.Controllers
 {
+    [SessionExpire]
     public class BillingMgmtController : Controller
     {
         // GET: BillingMgmt
@@ -117,7 +118,7 @@ namespace MyLMS.Controllers
                 // Once cost is retrieved, assign amount as Ceiling(xduration/xfactor)*cost
                 BillingModel Bill = new BillingModel();
                 Bill.Client = Convert.ToInt32(StreamList.Rows[i]["Client"]);
-                Bill.Bytes = StreamList.Rows[i]["Bytes"].ToString();
+                Bill.Bytes = Convert.ToInt64(StreamList.Rows[i]["Bytes"]);
                 Bill.Date = StreamList.Rows[i]["date"].ToString();
                 Bill.Stream = StreamList.Rows[i]["Stream"].ToString();
 

@@ -11,7 +11,7 @@ namespace MyLMS.Models
     {
 
         public int Client { get; set; }
-        public string Bytes { get; set; }
+        public long Bytes { get; set; }
         public string Date { get; set; }
         public string Stream { get; set; }
         public int Duration { get; set; }
