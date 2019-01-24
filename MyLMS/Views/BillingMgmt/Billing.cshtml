@@ -56,16 +56,31 @@
                             <thead>
                                 <tr>
                                     <th>Sl No.</th>
-                                    <th>Date</th>
-                                    <th>Stream</th>
-                                    <th>Bytes</th>
-                                    <th>Duration(Minutes)</th>
-                                    <th>Amount</th>
+                                    <th>
+                                        <button ng-click="sortBy('Date')">Date</button>
+                                        <span class="sortorder" ng-show="propertyName === 'Date'" ng-class="{reverse: reverse}"></span>
+                                    </th>
+                                    <th>
+                                        <button ng-click="sortBy('Stream')">Stream</button>
+                                        <span class="sortorder" ng-show="propertyName === 'Stream'" ng-class="{reverse: reverse}"></span>
+                                    </th>
+                                    <th>
+                                        <button ng-click="sortBy('Bytes')">Bytes</button>
+                                        <span class="sortorder" ng-show="propertyName === 'Bytes'" ng-class="{reverse: reverse}"></span>
+                                    </th>
+                                    <th>
+                                        <button ng-click="sortBy('Duration')">Duration(minutes)</button>
+                                        <span class="sortorder" ng-show="propertyName === 'Duration'" ng-class="{reverse: reverse}"></span>
+                                    </th>
+                                    <th>
+                                        <button ng-click="sortBy('Amount')">Amount</button>
+                                        <span class="sortorder" ng-show="propertyName === 'Amount'" ng-class="{reverse: reverse}"></span>
+                                    </th>
                                     @*<th></th>*@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="Stream in StreamList | filter: CourseFilter">
+                                <tr ng-repeat="Stream in StreamList | filter: CourseFilter | orderBy:propertyName:reverse">
                                     <td>
                                         {{$index+1}}.
                                     </td>
@@ -85,8 +100,8 @@
                                         <strong><span>{{Stream.Amount}}</span></strong>
                                     </td>
                                     @*<th>
-                                            <span ng-click="SurveyAttemptReport(Survey.SURVEY_ID)" style="cursor:pointer;" class="fa fa-file-text-o"></span>&nbsp;
-                                        </th>*@
+                                    <span ng-click="SurveyAttemptReport(Survey.SURVEY_ID)" style="cursor:pointer;" class="fa fa-file-text-o"></span>&nbsp;
+                                </th>*@
                                 </tr>
                             </tbody>
                         </table>
