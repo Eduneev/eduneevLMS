@@ -42,6 +42,11 @@ namespace MyLMS.Controllers
             return View();
         }
 
+        public ActionResult ViewOrgCenters()
+        {
+            return View();
+        }
+
         public ActionResult ViewSessions()
         {
             return View();

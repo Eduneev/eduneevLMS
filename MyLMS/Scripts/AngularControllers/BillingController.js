@@ -31,7 +31,7 @@
         $http.get('/SessionMgmt/GetCentersForEntity')
             .then(function (result) {
                 $scope.CentersList = result.data;
-                $scope.ClassroomTextToShow = 'Please select..';
+                $scope.CenterTextToShow = 'Please select..';
             });
     }
 

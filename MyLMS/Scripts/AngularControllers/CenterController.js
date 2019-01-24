@@ -61,6 +61,37 @@
     }
 });
 
+myapp.controller('OrgCntrl', function ($scope, $http) {
+    GetEntityList();
+    function GetEntityList() {
+        $http.get('/Organisation/GetEntityList')
+            .then(function (result) {
+                $scope.EntityList = result.data;
+                $scope.EntityTextToShow = 'Please select..';
+            });
+    }
+
+    $scope.GetCentersForEntity = function () {
+        $http.get('/SessionMgmt/GetCentersForSelectedEntity/' + $scope.EntityID)
+            .then(function (result) {
+                $scope.CentersList = result.data;
+                $scope.CenterTextToShow = 'Please select..';
+            });
+    }
+
+    $scope.SelectedCenter = function (SelectedCenterID) {
+        $scope.CenterID = SelectedCenterID;
+        GetClassrooms();
+    }
+
+    function GetClassrooms() {
+        $http.get('/CenterMgmt/GetClassroomsForCenter/' + $scope.CenterID)
+            .then(function (result) {
+                $scope.ClassroomList = result.data;
+            });
+    }
+});
+
 myapp.controller('AllocateReceiverCntrl', function ($scope, $http) {
     GetClassroomList();
     $scope.ReceiverSerialNo = null;
