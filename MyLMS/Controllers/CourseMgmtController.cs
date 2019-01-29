@@ -191,19 +191,6 @@ namespace MyLMS.Controllers
         }
 
         [HttpGet]
-        public string GetFaculty(int ID)
-        {
-            SqlParameter[] FacultyObj = new SqlParameter[1];
-            FacultyObj[0] = new SqlParameter("@SubjectID", SqlDbType.Int);
-            FacultyObj[0].Value = ID;
-            DataTable FacultyList = DAL.GetDataTable("GetFaculty", FacultyObj);
-
-            string JSONString = string.Empty;
-            JSONString = JsonConvert.SerializeObject(FacultyList);
-            return JSONString;
-        }
-
-        [HttpGet]
         public string GetCourseDetails()
         {
             SqlParameter[] FObj = new SqlParameter[1];

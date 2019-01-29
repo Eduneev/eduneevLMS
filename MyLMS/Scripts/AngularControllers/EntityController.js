@@ -188,3 +188,82 @@ myapp.controller('EntityUserCntrl', function ($scope, $http) {
     }
 
 });
+
+myapp.controller('FacultyCntrl', function ($scope, $http) {
+
+    GetProgramsList();
+    $scope.SubjectSet = new Set();
+
+    function GetProgramsList() {
+        $http.get('/CourseMgmt/GetPrograms')
+            .then(function (result) {
+                $scope.ProgramTextToShow = 'Please select..';
+                $scope.ProgramsList = result.data;
+            });
+    }
+
+    $scope.GetCourseList = function () {
+        $http.get('/CourseMgmt/GetCourse/' + $scope.ProgID)
+            .then(function (result) {
+                $scope.CourseTextToShow = 'Please select..';
+                $scope.CoursesList = result.data;
+            });
+    }
+
+    $scope.GetSubjectsList = function () {
+        $http.get('/CourseMgmt/GetSubject/' + $scope.CourseID)
+            .then(function (result) {
+                $scope.SubjectTextToShow = 'Please select..';
+                $scope.SubjectsList = result.data;
+            });
+    }
+
+    $scope.GetFaculty = function () {
+        $http.get('/FacultyMgmt/GetFaculty/' + $scope.SubjectID)
+            .then(function (result) {
+                $scope.FacultyList = result.data;
+            });
+    }
+
+    $scope.AddRemoveSubject = function (SubjectID) {
+        if ($scope.SubjectSet.has(SubjectID))
+            $scope.SubjectSet.delete(SubjectID);
+        else
+            $scope.SubjectSet.add(SubjectID);
+
+        console.log($scope.SubjectSet);
+    };
+
+
+    $scope.SaveFaculty = function () {
+        $scope.AddRemoveSubject = function (SubjectID) {
+            if ($scope.SubjectSet.has(SubjectID))
+                $scope.SubjectSet.delete(SubjectID);
+            else
+                $scope.SubjectSet.add(SubjectID);
+
+            console.log($scope.SubjectSet);
+        };
+
+        for (SubjectID of $scope.SubjectSet) {
+            var _FacultyName = $scope.FacultyName;
+            var _Gender = $scope.Gender;
+            var _ProgramID = $scope.ProgID;
+            var _CourseID = $scope.CourseID;
+            var _SubjectID = SubjectID;
+            var _Email = $scope.Email;
+            var _Mobile = $scope.Mobile;
+            var _Address = $scope.Address;
+            var _Pincode = $scope.PinCode;
+
+            $http({
+                method: 'POST',
+                url: '/FacultyMgmt/SaveFaculty',
+                data: { FacultyName: _FacultyName, ProgramID: _ProgramID, CourseID: _CourseID, SubjectID: _SubjectID, Email: _Email, Mobile: _Mobile, Address: _Address, Pincode: _Pincode, Gender: _Gender }
+            }).then(function (result) {
+                alert("Faculty Saved Successfully");
+            });
+        }
+    }
+
+});
