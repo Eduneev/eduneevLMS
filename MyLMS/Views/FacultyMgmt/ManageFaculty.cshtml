@@ -1,0 +1,184 @@
+﻿
+@{
+    ViewBag.Title = "ManageFaculty";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+@section scripts{
+    <script src="~/Scripts/AngularControllers/EntityController.js"></script>
+}
+
+    <div ng-controller="FacultyCntrl">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Faculty List
+                <small>View all Faculty</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="~/Home"><i class="fa fa-dashboard"></i>Home</a></li>
+                <li><a href="#">Manage Faculty</a></li>
+                @*<li class="active">Add Course</li>*@
+            </ol>
+        </section>
+
+        <!-- Form Body (Page body)-->
+        <section class="content">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <div class="pull-left">
+                        <label>
+                            <select class="form-control" id="drpProgramName" style="width: 100%;" data-ng-model="ProgID" data-ng-options="c.ProgID as c.ProgramName for c in ProgramsList" data-ng-change="GetCourseList()">
+                                <option value="">{{ProgramTextToShow}}</option>
+                            </select>
+                        </label>
+                        <label>
+                            <select class="form-control" id="drpCourseName" style="width: 100%;" data-ng-model="CourseID" data-ng-options="c.CourseID as c.CourseName for c in CoursesList" data-ng-change="GetSubjectsList()">
+                                <option value="">{{CourseTextToShow}}</option>
+                            </select>
+                        </label>
+                        <label>
+                            <select class="form-control" id="drpSubjecteName" style="width: 100%;" data-ng-model="SubjectID" data-ng-options="c.SubjectID as c.SubjectName for c in SubjectsList" data-ng-change="GetFaculty()">
+                                <option value="">{{SubjectTextToShow}}</option>
+                            </select>
+                        </label>
+                        <button type="button" class="btn btn-success btn-sm" id="btnAddStudent" data-toggle="modal" data-target="#AddFaculty"><i class="glyphicon glyphicon-list"> </i>&nbsp; Add Faculty</button>
+                    </div>
+                    <div class="box-tools">
+                        <div class="input-group input-group-sm " style="width:250px; height:30px;">
+                            @*<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>*@
+                            <input type="text" name="table_search" ng-model="StudentFilter" class="form-control" placeholder="Search">
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="width:15px;">Sl No.</th>
+                                        <th>Name</th>
+                                        <th>Contact</th>
+                                        <th>Course Info</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-size:16px;">
+                                    <tr ng-repeat="Faculty in FacultyList | filter: StudentFilter">
+                                        <td>
+                                            {{$index+1}}.
+                                        </td>
+                                        <td>
+                                            <span><strong>{{Faculty.FacultyName}}</strong></span><br />
+                                            <span>Gender: {{Faculty.Gender}}</span>
+                                        </td>
+                                        <td>
+                                            <span>Contact No. {{Faculty.Mobile}}</span><br />
+                                            <span>Email: {{Faculty.Email}}</span>
+                                        </td>
+                                        <td>
+                                            <span>Program: {{Faculty.ProgramName}}</span><br />
+                                            <span>Course: {{Faculty.CourseName}}</span><br />
+                                            <span>Subject: {{Faculty.SubjectName}}</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        @* Popup to Show Program Window *@
+        <div class="modal" id="AddFaculty" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3 class="text-info">Add Faculty</h3>
+                    </div>
+                    <div class="modal-body" style="margin:0px 10px 0px 10px;">
+                        <form class="form-horizontal" name="AddEntityForm">
+                            <div class="form-group">
+                                <label class="text-info">Faculty Name</label>
+                                <input type="text" name="EntityName" ng-model="FacultyName" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter full name...">
+                            </div>
+                            <div class="form-group">
+                                <<label>Gender</label>
+                                <select class="form-control" ng-model="Gender" id="drpGender" style="width: 100%;">
+                                    <option value="" selected="selected">Please select...</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Program</label>
+                                <select class="form-control" id="drpProgramName" style="width: 100%;" data-ng-model="ProgID" data-ng-options="c.ProgID as c.ProgramName for c in ProgramsList" data-ng-change="GetCourseList()">
+                                    <option value="">{{ProgramTextToShow}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Course</label>
+                                <select class="form-control" id="drpCourseName" style="width: 100%;" data-ng-model="CourseID" data-ng-options="c.CourseID as c.CourseName for c in CoursesList" data-ng-change="GetSubjectsList()">
+                                    <option value="">{{CourseTextToShow}}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Subject</label>
+                                <table class="table table-hover table-bordered">
+                                    <tbody ng-repeat="Q in SubjectsList">
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" name="r2" ng-model="selectedObjs" value="{{Q.SubjectID}}"
+                                                       ng-checked="Qselection.indexOf(Q.SubjectID) > -1"
+                                                       ng-click="AddRemoveSubject(Q.SubjectID)">
+                                            </td>
+                                            <td>
+                                                <span><strong>{{Q.SubjectName}}</strong></span>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                    <input type="email" ng-model="Email" class="form-control" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Mobile</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                    <input type="text" ng-model="Mobile" name="CenterName" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter center name...">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Permanent Address</label>
+                                <textarea class="form-control" ng-model="Address" rows="4" style="height:108px;" placeholder="Enter complete address..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Pin Code</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-at"></i></span>
+                                    <input type="text" ng-model="PinCode" name="PinCode" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter pin code...">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" ng-click="SaveFaculty()" id="btnUpdate" data-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @* Popup to Show Program Window *@
+    </div>
