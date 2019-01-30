@@ -47,7 +47,7 @@
 
         GetDashboardData($scope.QID);
         GetDashboardOptionGraph($scope.QID);
-        GetTop10FastestStudents($scope.QID);
+        //GetTop10FastestStudents($scope.QID);
     }
 
     // Get Top 10 Students
@@ -150,16 +150,18 @@
         $http.get('/SessionMgmt/GetDashboardOptionGraph/' + QID)
             .then(function (result) {
                 $scope.DashboardGraphData = result.data;
-                var OPTION_1_PRCNT = $scope.DashboardGraphData[0].OPTION_1_PRCNT
-                var OPTION_2_PRCNT = $scope.DashboardGraphData[0].OPTION_2_PRCNT
-                var OPTION_3_PRCNT = $scope.DashboardGraphData[0].OPTION_3_PRCNT
-                var OPTION_4_PRCNT = $scope.DashboardGraphData[0].OPTION_4_PRCNT
+                $scope.OPTION_1_PRCNT = $scope.DashboardGraphData[0].OPTION_1_PRCNT
+                $scope.OPTION_2_PRCNT = $scope.DashboardGraphData[0].OPTION_2_PRCNT
+                $scope.OPTION_3_PRCNT = $scope.DashboardGraphData[0].OPTION_3_PRCNT
+                $scope.OPTION_4_PRCNT = $scope.DashboardGraphData[0].OPTION_4_PRCNT
 
+                /*
                 var total = OPTION_1_PRCNT + OPTION_2_PRCNT + OPTION_3_PRCNT + OPTION_4_PRCNT;
                 $scope.OPTION_1_PRCNT = Math.round((OPTION_1_PRCNT/total)*100)
                 $scope.OPTION_2_PRCNT = Math.round((OPTION_2_PRCNT / total) * 100)
                 $scope.OPTION_3_PRCNT = Math.round((OPTION_3_PRCNT / total) * 100)
                 $scope.OPTION_4_PRCNT = Math.round((OPTION_4_PRCNT / total) * 100)                
+                */
 
             });
     }
