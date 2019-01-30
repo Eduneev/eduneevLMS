@@ -8,10 +8,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using UtilityClass;
 
 namespace MyLMS.Controllers
 {
+    [SessionExpire]
     public class SessionMgmtController : Controller
     {
         // GET: SessionMgmt
@@ -632,6 +634,25 @@ namespace MyLMS.Controllers
             string JSONString = string.Empty;
             JSONString = JsonConvert.SerializeObject(Student);
             return JSONString;
+        }
+    }
+
+    public class SessionExpireAttribute : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            HttpContext ctx = HttpContext.Current;
+            // check  sessions here
+            if (ctx.Session != null && ctx.Session["USER_ID"] == null)
+            {
+                if (ctx.Request.IsAuthenticated)
+                    FormsAuthentication.SignOut();
+
+                filterContext.Result = new RedirectResult("~/Home/Login");
+                return;
+            }
+
+            base.OnActionExecuting(filterContext);
         }
     }
 }

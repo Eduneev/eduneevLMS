@@ -218,7 +218,7 @@
                                                             <div class="nav-tabs-custom">
                                                                 <ul class="nav nav-tabs">
                                                                     <li class="active"><a href="#tab_1" data-toggle="tab">Top 10</a></li>
-                                                                    <li><a href="#tab_2" data-toggle="tab">FFF</a></li>                                                                    
+                                                                    <!--<li><a href="#tab_2" data-toggle="tab">FFF</a></li>-->                                                                    
                                                                 </ul>
                                                                 <div class="tab-content">
                                                                     <div class="tab-pane active" id="tab_1">
@@ -226,7 +226,6 @@
                                                                             <table class="table table-hover table-bordered">
                                                                                 <thead>
                                                                                     <tr>
-                                                                                        <th>Sl No.</th>
                                                                                         <th>Student Name</th>
                                                                                         <th>Center Name</th>
                                                                                         <th>Score</th>
@@ -234,9 +233,6 @@
                                                                                 </thead>
                                                                                 <tbody ng-repeat="Stud in Top10Students">
                                                                                     <tr>
-                                                                                        <td>
-                                                                                            {{$index+1}}
-                                                                                        </td>
                                                                                         <td>
                                                                                             <span><strong>{{Stud.StudentName}}</strong></span>
                                                                                         </td>
@@ -264,9 +260,6 @@
                                                                                 </thead>
                                                                                 <tbody ng-repeat="Stud in Top10FastestStudents">
                                                                                     <tr>
-                                                                                        <td>
-                                                                                            {{$index+1}}
-                                                                                        </td>
                                                                                         <td>
                                                                                             <span><strong>{{Stud.StudentName}}</strong></span>
                                                                                         </td>
