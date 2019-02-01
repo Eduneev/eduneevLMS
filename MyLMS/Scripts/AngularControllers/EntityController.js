@@ -103,7 +103,7 @@ myapp.controller('CenterUserCntrl', function ($scope, $http) {
         $http.get('/CenterMgmt/GetCenters')
             .then(function (result) {
                 $scope.CenterList = result.data;
-                $scope.CenterTextToShow = "Please select entity.."
+                $scope.CenterTextToShow = "Please select center.."
             });
     }
 
