@@ -112,6 +112,26 @@ namespace MyLMS.Controllers
         }
 
         [HttpPost]
+        public void EditTag(int QTagID, string TagText)
+        {
+            SqlParameter[] SParam = new SqlParameter[2];
+
+            SParam[0] = new SqlParameter("@QTagID", SqlDbType.Int);
+            SParam[0].Value = QTagID;
+            SParam[1] = new SqlParameter("@TagText", SqlDbType.VarChar);
+            SParam[1].Value = TagText;
+
+            string res = "Failure";
+            try
+            {
+                res = DAL.ExecuteScalar("EditTag", SParam);
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+        [HttpPost]
         public void SaveOptions(int OptionSeq, string OptionText, int OptionMark, bool IsOptionCorrect)
         {
             QuestionModel QuesObj1 = new QuestionModel();

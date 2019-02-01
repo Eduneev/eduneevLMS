@@ -105,7 +105,7 @@
         var _QuestionText = $scope.QuestionText
         var _QTagID = $scope.QTagID
         var _DisplayTime = $scope.DisplayTime
-        if (_DisplayTime === null)
+        if (_DisplayTime == null)
             _DisplayTime = 20;
         $http({
             method: 'POST',
@@ -293,6 +293,19 @@
             alert('Created Successfully!!');
             GetTags()
         });
+    }
+
+    $scope.EditTag = function () {
+        var _TagText = $scope.UpdateTagText;
+        var _QTagID = $scope.QTagID;
+        if (_QTagID !== null)
+            $http({
+                method: 'POST',
+                url: '/QuestionBank/EditTag',
+                data: { QTagID: _QTagID, TagText: _TagText }
+            }).then(function (result) {
+                GetTags()
+            });
     }
 
     function GetRRQAnswerPercentage() {
