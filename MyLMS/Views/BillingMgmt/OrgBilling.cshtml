@@ -48,7 +48,10 @@
 
                     <label>
                         <span style="width: 100%;">Select End Date:</span>
-                        <input type="date" ng-model='EndDate' placeholder='Pick a Date' data-ng-change=GetStreamList()>
+                        <input type="date" ng-model='EndDate' placeholder='Pick a Date'>
+                    </label>
+                    <label>
+                        <button class="btn btn-success" ng-click="GetStreamList()">Go</button>
                     </label>
                 </div>
             </div>
