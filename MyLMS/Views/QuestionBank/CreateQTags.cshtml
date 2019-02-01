@@ -7,67 +7,101 @@
 @section scripts{
     <script src="~/Scripts/AngularControllers/QuestionBankController.js"></script>
 }
-<div data-ng-controller="QuestionCntrl">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            Create Question Tags
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="/Home"><i class="fa fa-dashboard"></i>Home</a></li>
-            <li><a href="#">RRQ</a></li>
-        </ol>
-    </section>
+    <div data-ng-controller="QuestionCntrl">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Create Question Tags
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="/Home"><i class="fa fa-dashboard"></i>Home</a></li>
+                <li><a href="#">RRQ</a></li>
+            </ol>
+        </section>
 
-    <!-- Form Body (Page body)-->
-    <section class="content">
-        <div class="box box-default">
-            <div class="box-header with-border">
-                <div class="box-tools pull-right">
-                    <label>
-                        <input type="text" name="table_search" ng-model="StudentFilter" class="form-control" placeholder="Search Question..">
-                    </label>
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        <!-- Form Body (Page body)-->
+        <section class="content">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <div class="box-tools pull-right">
+                        <label>
+                            <input type="text" name="table_search" ng-model="StudentFilter" class="form-control" placeholder="Search Tags..">
+                        </label>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div>
+                                <label class="col-lg-3">
+                                    <input type="text" ng-model="NewTagText" name="Landline" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter new tag...">
+                                </label>
+                                <label>
+                                    <button type="button" class="btn btn-block btn-success btn-sm" ng-click="CreateTags(NewTagText)">Create</button>
+                                </label>
+                                <label>
+                                    <button type="button" class="btn btn-block btn-default btn-sm" data-toggle="modal" data-target="#AddFaculty"><i class="glyphicon glyphicon-list"> </i>&nbsp; Edit Tags</button>
+                                </label>
+                            </div>
+
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="width:5px;">#</th>
+                                        <th>Tag Text</th>
+                                        <th style="width:150px;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody ng-repeat="Q in TagsList | filter:StudentFilter">
+                                    <tr>
+                                        <td>
+                                            {{$index+1}}.
+                                        </td>
+                                        <td>
+                                            <span><strong>{{Q.TagText}}</strong></span>
+                                        </td>
+                                        <td>
+                                            <span ng-click="DeleteTag(Q.QTagID)" style="cursor:pointer;" class="fa fa-times-circle-o"></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="box-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div>
-                            <label class="col-lg-3">
-                                <input type="text" ng-model="NewTagText" name="Landline" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter new tag...">
-                            </label>
-                            <label>
-                                <button type="button" class="btn btn-block btn-success btn-sm" ng-click="CreateTags(NewTagText)"><span class="glyphicon glyphicon-ok"></span> Create</button>
-                            </label>
-                        </div>
+        </section>
 
-                        <table class="table table-hover table-bordered">
-                            <thead>
-                                <tr>
-                                    <th style="width:5px;">#</th>
-                                    <th>Tag Text</th>
-                                    <th style="width:150px;">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody ng-repeat="Q in TagsList | filter:StudentFilter">
-                                <tr>
-                                    <td>
-                                        {{$index+1}}.
-                                    </td>
-                                    <td>
-                                        <span><strong>{{Q.TagText}}</strong></span>
-                                    </td>
-                                    <td>
-                                        <span ng-click="DeleteTag(Q.QTagID)" style="cursor:pointer;" class="fa fa-times-circle-o"></span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+        @* Popup to Show Program Window *@
+        <div class="modal" id="AddFaculty" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3 class="text-info">Edit Tags</h3>
+                    </div>
+                    <div class="modal-body" style="margin:0px 10px 0px 10px;">
+                        <form class="form-horizontal" name="AddEntityForm">
+                            <div class="form-group">
+                                <label>Select Tag</label>
+                                <select class="form-control" id="drpProgramName" style="width: 100%;" data-ng-model="QTagID" data-ng-options="c.QTagID as c.TagText for c in TagsList">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="text-info"> New Tag Text</label>
+                                <input type="text" name="Email" ng-model="UpdateTagText" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter...">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" ng-click="EditTag()" id="btnUpdate" data-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-</div>
+        @* Popup to Show Program Window *@
+
+    </div>
 
