@@ -91,7 +91,7 @@
 				contact.id = GENERAL;  // general chat 
 				contact.onclick = displayMessages;
 				text.className = "contact-text";
-				text.textContent = "Studio - General";
+				text.textContent = "Session Chat";
 				var newMessage = document.createElement("div");
 				newMessage.id = "nm";
 				contact.appendChild(newMessage);
@@ -107,7 +107,7 @@
 				contact2.onclick = displayMessages;
 				contact2.id = PRIVATE; // private chat
 				text2.className = "contact-text";
-				text2.textContent = "Studio - Private";
+				text2.textContent = "Support Chat";
 				newMessage = document.createElement("div");
 				newMessage.id = "nm";
 				contact2.appendChild(newMessage);

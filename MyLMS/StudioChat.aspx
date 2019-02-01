@@ -87,7 +87,7 @@
 				contact.onclick = displayMessages;
 				contact.id = GROUP;
 				text.className = "contact-text";
-				text.textContent = "Group Message";
+				text.textContent = "Session Chat";
 				var newMessage = document.createElement("div");
 				newMessage.id = "nm";
 				contact.appendChild(newMessage);
