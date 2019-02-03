@@ -77,7 +77,7 @@
                                             <button type="button" class="btn btn-primary" id="addColor" ng-disabled="Session.SessionStatus=='InActive'" ng-click='StartChat(Session.SessionID, Session.CenterID)'>Start 2WayChat</button>
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-warning" id="yellow" ng-click='ShowStreamKey(Session.StreamKey)'>Get Stream Key</button>
+                                            <button type="button" class="btn btn-warning" id="yellow" ng-disabled="Session.SessionStatus=='InActive'" ng-click='ShowStreamKey(Session.StreamKey)'>Get Stream Key</button>
                                         </td>
                                         <th>
                                             &nbsp;
