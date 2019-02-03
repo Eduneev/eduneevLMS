@@ -10,6 +10,7 @@ using UtilityClass;
 
 namespace MyLMS.Controllers
 {
+    [SessionExpire]
     public class QuestionBankController : Controller
     {
         // GET: QuestionBank

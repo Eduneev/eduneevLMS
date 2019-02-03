@@ -8,6 +8,7 @@ using UtilityClass;
 
 namespace MyLMS.Controllers
 {
+    [SessionExpire]
     public class OrganisationController : Controller
     {
         // GET: Organisation

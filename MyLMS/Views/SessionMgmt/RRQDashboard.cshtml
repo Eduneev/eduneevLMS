@@ -56,7 +56,7 @@
                                                 <button type="button" class="btn btn-outline btn-circle btn-xl right" style="float:right;">
                                                     <div style="font-size: 20px; font-weight:bold;" id="RRQName"></div>
                                                 </button>
-                                            </div>                                            
+                                            </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
@@ -83,6 +83,7 @@
                                                 <div class="box">
                                                     <div class="box-header with-border">
                                                         <h3 class="box-title">Question Response</h3>
+                                                        <h3 class="box-title"> Q-{{QuestionList[0].Question.QUES_NO}}</h3>
                                                         <div class="box-tools pull-right">
                                                             <button type="button" class="btn btn-box-tool" data-toggle="modal" data-target="#QRModal"><i class="fa fa-search-plus"></i></button>
 
@@ -140,28 +141,32 @@
                                                             <div class="box box-default">
                                                                 <div class="box-body text-center ">
                                                                     <div id="bar-chart" style="height: 200px;">
-                                                                        <div class="progress vertical" style="width:26px;"><strong>A</strong> 
+                                                                        <div class="progress vertical" style="width:26px;">
+                                                                            <strong>A</strong>
                                                                             <div class="progress-bar progress-bar-green" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="height: {{OPTION_1_PRCNT}}%">
                                                                                 <span class="sr-only">{{OPTION_1_PRCNT}}</span>
-                                                                                <strong>{{OPTION_1_PRCNT}}%</strong> 
+                                                                                <strong>{{OPTION_1_PRCNT}}%</strong>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="progress vertical" style="width:26px;"><strong>B</strong> 
+                                                                        <div class="progress vertical" style="width:26px;">
+                                                                            <strong>B</strong>
                                                                             <div class="progress-bar progress-bar-aqua" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="height: {{OPTION_2_PRCNT}}%">
                                                                                 <span class="sr-only">{{OPTION_2_PRCNT}}</span>
                                                                                 <strong>{{OPTION_2_PRCNT}}%</strong>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="progress vertical" style="width:26px;"><strong>C</strong>
+                                                                        <div class="progress vertical" style="width:26px;">
+                                                                            <strong>C</strong>
                                                                             <div class="progress-bar progress-bar-yellow" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="height: {{OPTION_3_PRCNT}}%">
                                                                                 <span class="sr-only">{{OPTION_3_PRCNT}}</span>
-                                                                                <strong>{{OPTION_3_PRCNT}}%</strong> 
+                                                                                <strong>{{OPTION_3_PRCNT}}%</strong>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="progress vertical" style="width:26px;"><strong>D</strong>
+                                                                        <div class="progress vertical" style="width:26px;">
+                                                                            <strong>D</strong>
                                                                             <div class="progress-bar progress-bar-red" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="height: {{OPTION_4_PRCNT}}%">
                                                                                 <span class="sr-only">{{OPTION_4_PRCNT}}</span>
-                                                                                <strong>{{OPTION_4_PRCNT}}%</strong> 
+                                                                                <strong>{{OPTION_4_PRCNT}}%</strong>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -211,117 +216,121 @@
                                                     </div>
                                                 </div>
                                                 <!-- BAR CHART -->
-                                               @*<div class="box box-success collapsed-box">*@
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <!-- Custom Tabs -->
-                                                            <div class="nav-tabs-custom">
-                                                                <ul class="nav nav-tabs">
-                                                                    <li class="active"><a href="#tab_1" data-toggle="tab">Top 10</a></li>
-                                                                    <!--<li><a href="#tab_2" data-toggle="tab">FFF</a></li>-->                                                                    
-                                                                </ul>
-                                                                <div class="tab-content">
-                                                                    <div class="tab-pane active" id="tab_1">
-                                                                        <div class="box-body chart-responsive" style="height:250px; overflow:auto;">
-                                                                            <table class="table table-hover table-bordered">
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th>Student Name</th>
-                                                                                        <th>Center Name</th>
-                                                                                        <th>Score</th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody ng-repeat="Stud in Top10Students">
-                                                                                    <tr>
-                                                                                        <td>
-                                                                                            <span><strong>{{Stud.StudentName}}</strong></span>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <span><strong>{{Stud.CenterName}}</strong></span>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <span><strong>{{Stud.TotalMarks}}</strong></span>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!-- /.tab-pane -->
-                                                                    <div class="tab-pane" id="tab_2">
-                                                                        <div class="box-body chart-responsive" style="height:250px; overflow:auto;">
-                                                                            <table class="table table-hover table-bordered">
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th>Sl No.</th>
-                                                                                        <th>Student Name</th>
-                                                                                        <th>Center Name</th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody ng-repeat="Stud in Top10FastestStudents">
-                                                                                    <tr>
-                                                                                        <td>
-                                                                                            <span><strong>{{Stud.StudentName}}</strong></span>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <span><strong>{{Stud.CenterName}}</strong></span>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!-- /.tab-pane -->
+                                                @*<div class="box box-success collapsed-box">*@
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <!-- Custom Tabs -->
+                                                        <div class="nav-tabs-custom">
+                                                            <ul class="nav nav-tabs">
+                                                                <li class="active"><a href="#tab_1" data-toggle="tab">Top 10</a></li>
+                                                                <!--<li><a href="#tab_2" data-toggle="tab">FFF</a></li>-->
+                                                                <div class="box-tools pull-right">
+                                                                    <button type="button" class="btn btn-box-tool" data-toggle="modal" data-target="#T20Modal"><i class="fa fa-search-plus"></i></button>
                                                                 </div>
-                                                                <!-- /.tab-content -->
+                                                            </ul>
+                                                            <div class="tab-content">
+                                                                <div class="tab-pane active" id="tab_1">
+                                                                    <div class="box-body chart-responsive" style="height:250px; overflow:auto;">
+                                                                        <table class="table table-hover table-bordered">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Student Name</th>
+                                                                                    <th>Center Name</th>
+                                                                                    <th>Score</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody ng-repeat="Stud in Top10Students">
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <span><strong>{{Stud.StudentName}}</strong></span>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <span><strong>{{Stud.CenterName}}</strong></span>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <span><strong>{{Stud.TotalMarks}}</strong></span>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- /.tab-pane -->
+                                                                <div class="tab-pane" id="tab_2">
+                                                                    <div class="box-body chart-responsive" style="height:250px; overflow:auto;">
+                                                                        <table class="table table-hover table-bordered">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Sl No.</th>
+                                                                                    <th>Student Name</th>
+                                                                                    <th>Center Name</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody ng-repeat="Stud in Top10FastestStudents">
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <span><strong>{{Stud.StudentName}}</strong></span>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <span><strong>{{Stud.CenterName}}</strong></span>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- /.tab-pane -->
                                                             </div>
-                                                            <!-- nav-tabs-custom -->
+                                                            <!-- /.tab-content -->
                                                         </div>
+                                                        <!-- nav-tabs-custom -->
                                                     </div>
-                                                    @*<div class="box-header with-border">
-                                                        <h3 class="box-title">Top 10 Students</h3>
-                                                        <div class="box-tools pull-right">
-                                                            <button type="button" class="btn btn-box-tool"><i class="fa fa-search-plus"></i></button>
-                                                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                                                                <i class="fa fa-minus"></i>
-                                                            </button>
-                                                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="box-body chart-responsive" style="height:265px; overflow:auto;">
-                                                       <table class="table table-hover table-bordered">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Sl No.</th>
-                                                                    <th>Student Name</th>
-                                                                    <th>Center Name</th>
-                                                                    <th>Score</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody ng-repeat="Stud in Top10Students">
-                                                                <tr>
-                                                                    <td>
-                                                                        {{$index+1}}
-                                                                    </td>
-                                                                    <td>
-                                                                        <span><strong>{{Stud.StudentName}}</strong></span>
-                                                                    </td>
-                                                                    <td>
-                                                                        <span><strong>{{Stud.CenterName}}</strong></span>
-                                                                    </td>
-                                                                    <td>
-                                                                        <span><strong> </strong></span>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>*@
+                                                </div>
+                                                @*<div class="box-header with-border">
+                                                <h3 class="box-title">Top 10 Students</h3>
+                                                <div class="box-tools pull-right">
+                                                    <button type="button" class="btn btn-box-tool"><i class="fa fa-search-plus"></i></button>
+                                                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                        <i class="fa fa-minus"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                                </div>
+                                            </div>
+                                            <div class="box-body chart-responsive" style="height:265px; overflow:auto;">
+                                               <table class="table table-hover table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Sl No.</th>
+                                                            <th>Student Name</th>
+                                                            <th>Center Name</th>
+                                                            <th>Score</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody ng-repeat="Stud in Top10Students">
+                                                        <tr>
+                                                            <td>
+                                                                {{$index+1}}
+                                                            </td>
+                                                            <td>
+                                                                <span><strong>{{Stud.StudentName}}</strong></span>
+                                                            </td>
+                                                            <td>
+                                                                <span><strong>{{Stud.CenterName}}</strong></span>
+                                                            </td>
+                                                            <td>
+                                                                <span><strong> </strong></span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>*@
                                                 @*</div>*@
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="box box-default">
                                                     <div class="box-header with-border">
                                                         <h3 class="box-title">Student Response</h3>
+                                                        <h3 class="box-title"> Q-{{QuestionList[0].Question.QUES_NO}}</h3>
                                                         <div class="box-tools pull-right">
                                                             <button type="button" class="btn btn-box-tool" data-widget="collapse">
                                                                 <i class="fa fa-minus"></i>
@@ -353,7 +362,7 @@
                                                                     <th>Center</th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody>                                                                
+                                                            <tbody>
                                                                 <tr ng-repeat="Student in StudentsListByResp">
                                                                     <td>
                                                                         {{$index+1}}
@@ -364,7 +373,7 @@
                                                                     <td>
                                                                         {{Student.CenterName}}
                                                                     </td>
-                                                                </tr>                                                               
+                                                                </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -393,6 +402,7 @@
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                             <h1 class="text-info">Question Response</h1>
+                            <h1 class="text-info"> Q-{{QuestionList[0].Question.QUES_NO}}</h1>
                         </div>
                         <div class="modal-body" style="margin:0px 10px 0px 10px;">
                             <div class="box-body">
@@ -431,14 +441,14 @@
                                                     <strong>A</strong>
                                                     <div class="progress-bar progress-bar-green" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="height: {{OPTION_1_PRCNT}}%">
                                                         <span class="sr-only">{{OPTION_1_PRCNT}}</span>
-                                                        <div style="font-size:15px; font-weight:bold;">{{OPTION_1_PRCNT}}%</div>                                                        
+                                                        <div style="font-size:15px; font-weight:bold;">{{OPTION_1_PRCNT}}%</div>
                                                     </div>
                                                 </div>
                                                 <div class="progress vertical" style="height:280px;width:35px;">
                                                     <strong>B</strong>
                                                     <div class="progress-bar progress-bar-aqua" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="height: {{OPTION_2_PRCNT}}%">
                                                         <span class="sr-only">{{OPTION_2_PRCNT}}</span>
-                                                        <div style="font-size:15px; font-weight:bold;">{{OPTION_2_PRCNT}}%</div> 
+                                                        <div style="font-size:15px; font-weight:bold;">{{OPTION_2_PRCNT}}%</div>
                                                     </div>
                                                 </div>
                                                 <div class="progress vertical" style="height:280px;width:35px;">
@@ -462,7 +472,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">                            
+                        <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
                     </div>
@@ -492,7 +502,7 @@
                                             <td colspan="3">
                                                 <div style="margin-left:10px; padding:5px; font-size:30px; font-weight:bold;">
                                                     <table class="col-lg-12" ng-repeat="O in Q.Options">
-                                                        <tr style="border:1px solid #808080;" >
+                                                        <tr style="border:1px solid #808080;">
                                                             <td style="background-color:darkseagreen; width:20px; padding-left:4px;">{{O.OptionChar}} </td>
                                                             <td style="padding-left:5px;">{{O.OptionText}} </td>
                                                         </tr>
@@ -547,6 +557,49 @@
                                                         </tr>
                                                     </table>
                                                 </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @* Popup to Show Course Window *@
+
+            @* Popup to Question Response *@
+            <div class="modal" id="T20Modal" role="dialog">
+                <div class="modal-dialog" style="width:900px; height:800px;">
+                    <div class="modal-content" style="width: 100%;">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h1 class="text-info">Top 10 Students</h1>
+                        </div>
+                        <div class="modal-body" style="margin:0px 10px 0px 10px;">
+                            <div class="box-body">
+                                <table class="table table-hover table-bordered" style="height:100px">
+                                    <thead>
+                                        <tr>
+                                            <th>Student Name</th>
+                                            <th>Center Name</th>
+                                            <th>Score</th>
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tbody ng-repeat="Stud in Top10Students">
+                                        <tr style="font-size:25px; font-weight:bold;">
+                                            <td>
+                                                <span><strong>{{Stud.StudentName}}</strong></span>
+                                            </td>
+                                            <td>
+                                                <span><strong>{{Stud.CenterName}}</strong></span>
+                                            </td>
+                                            <td>
+                                                <span><strong>{{Stud.TotalMarks}}</strong></span>
                                             </td>
                                         </tr>
                                     </tbody>

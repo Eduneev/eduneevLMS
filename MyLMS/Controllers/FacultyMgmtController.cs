@@ -11,6 +11,7 @@ using UtilityClass;
 
 namespace MyLMS.Controllers
 {
+    [SessionExpire]
     public class FacultyMgmtController : Controller
     {
         // GET: FacultyMgmt

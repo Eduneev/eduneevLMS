@@ -174,7 +174,6 @@
     <Compile Include="Controllers\BillingMgmtController.cs" />
     <Compile Include="Controllers\CenterMgmtController.cs" />
     <Compile Include="Controllers\CourseMgmtController.cs" />
-    <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\EntityController.cs" />
     <Compile Include="Controllers\FacultyMgmtController.cs" />
     <Compile Include="Controllers\HelpdeskController.cs" />

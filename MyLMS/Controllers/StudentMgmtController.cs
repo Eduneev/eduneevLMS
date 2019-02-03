@@ -14,6 +14,7 @@ using System.Text.RegularExpressions;
 
 namespace MyLMS.Controllers
 {
+    [SessionExpire]
     public class StudentMgmtController : Controller
     {
         // GET: StudentMgmt
