@@ -274,14 +274,16 @@
 
     // DeleteQuestion
     $scope.DeleteTag = function (QTagID) {
-        $http({
-            method: 'POST',
-            url: '/QuestionBank/DeleteTag',
-            data: { QTagID: QTagID }
-        }).then(function (result) {
-            alert('Deleted Successfully!!');
-            GetTags()
-        });
+        var ask = confirm("Are you sure you wish to delete Tag? You will not be able to sort questions using this tag again!");
+        if (ask)
+            $http({
+                method: 'POST',
+                url: '/QuestionBank/DeleteTag',
+                data: { QTagID: QTagID }
+            }).then(function (result) {
+                alert('Deleted Successfully!!');
+                GetTags()
+            });
     }
 
     $scope.CreateTags = function (TagText) {

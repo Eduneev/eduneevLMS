@@ -41,7 +41,7 @@
 	
 	const TESTINGURI = "ws://localhost:4000";
     const PRODURI = "ws://52.15.186.193:4000";
-    const SERVERURI = - 'http://twowaylive.us-east-2.elasticbeanstalk.com/';
+    const SERVERURI = 'http://twowaylive.us-east-2.elasticbeanstalk.com/api/';
 	var statusBar;
 
 	var urlParams = parseURLParams(window.location.href);
@@ -50,7 +50,8 @@
 	var CenterID
 
 	if ("SessionID" in urlParams) {
-		SESSION = urlParams["SessionID"][0];
+        SESSION = urlParams["SessionID"][0];
+        console.log(SESSION);
 	} else {
 		alert("Exception: Unable to read Session from URL");
 	}
