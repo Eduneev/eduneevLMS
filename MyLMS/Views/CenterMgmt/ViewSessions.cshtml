@@ -62,10 +62,10 @@
                                             <span>{{Session.CourseName}}</span> :: <span>{{Session.SubjectName}}</span>
                                         </td>
                                         <td>
-                                            <div ng-if="Session.SessionStatus == 'Started'">
+                                            <div ng-if="Session.SessionStatus == 'Active'">
                                                 <span class="label label-success">{{Session.SessionStatus}}</span>
                                             </div>
-                                            <div ng-if="Session.SessionStatus == 'End'">
+                                            <div ng-if="Session.SessionStatus == 'InActive'">
                                                 <span class="label label-danger">{{Session.SessionStatus}}</span>
                                             </div>
 
@@ -74,7 +74,7 @@
                                             <span>{{Session.ChannelName}}</span>
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-primary" id="addColor" ng-click='StartChat(Session.SessionID, Session.CenterID)'>Start 2WayChat</button>
+                                            <button type="button" class="btn btn-primary" id="addColor" ng-disabled="Session.SessionStatus=='InActive'" ng-click='StartChat(Session.SessionID, Session.CenterID)'>Start 2WayChat</button>
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-warning" id="yellow" ng-click='ShowStreamKey(Session.StreamKey)'>Get Stream Key</button>
