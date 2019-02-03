@@ -54,6 +54,21 @@ namespace MyLMS.Models
             return res;
         }
 
+        public string EditUser(SqlParameter[] sparams)
+        {
+            string res = "Failure..";
+            try
+            {
+                res = DAL.ExecuteScalar("EditUser", sparams);
+            }
+            catch (Exception ex)
+            {
+                res = ex.Message;
+                throw;
+            }
+            return res;
+        }
+
         public string UpdatePassword(SqlParameter[] sparams)
         {
             string res = "Failure..";

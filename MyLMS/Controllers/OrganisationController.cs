@@ -203,6 +203,37 @@ namespace MyLMS.Controllers
             }
         }
 
+        [HttpPost]
+        public void EditUser(string UserName, string Password, string FullName, string EmailID, string Mobile, int RoleID, int UserID)
+        {
+            OrganisationModel OrgObj = new OrganisationModel();
+            SqlParameter[] SParam = new SqlParameter[7];
+
+            SParam[0] = new SqlParameter("@UserID", SqlDbType.Int);
+            SParam[0].Value = UserID;
+            SParam[1] = new SqlParameter("@UserName", SqlDbType.VarChar);
+            SParam[1].Value = UserName;
+            SParam[2] = new SqlParameter("@Password", SqlDbType.VarChar);
+            SParam[2].Value = EDHelper.EncryptTripleDES(Password);
+            SParam[3] = new SqlParameter("@FullName", SqlDbType.VarChar);
+            SParam[3].Value = FullName;
+            SParam[4] = new SqlParameter("@EmailID", SqlDbType.VarChar);
+            SParam[4].Value = EmailID;
+            SParam[5] = new SqlParameter("@Mobile", SqlDbType.VarChar);
+            SParam[5].Value = Mobile;
+            SParam[6] = new SqlParameter("@RoleID", SqlDbType.Int);
+            SParam[6].Value = RoleID;
+
+            try
+            {
+                OrgObj.EditUser(SParam);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
         [HttpGet]
         public string GetReceiversList(int ID)
         {
