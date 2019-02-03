@@ -7,6 +7,7 @@
 
     var Labels = [];
     var Questions = [];
+    var chart;
     $scope.RevealAnswer = false;
 
     function GetRRQID(url) {
@@ -75,7 +76,7 @@
                 PrepareGraphData();
 
                 var ctx = document.getElementById("canvas").getContext("2d");
-                var chart = new Chart(ctx).HorizontalBar(barChartData, {
+                chart = new Chart(ctx).HorizontalBar(barChartData, {
                     responsive: true,
                     barShowStroke: false
                 });
@@ -112,7 +113,7 @@
         labels: Labels,
         datasets: [
             {
-                fillColor: "rgba(0,128,128,0.5)",
+                fillColor: "rgba(0,60,128,0.7)",
                 strokeColor: "rgba(220,220,220,0.8)",
                 highlightFill: "rgba(220,220,220,0.75)",
                 highlightStroke: "rgba(220,220,220,1)",
@@ -120,6 +121,25 @@
             }
         ]
     };
+
+    $("canvas").click(
+        function (evt) {
+            console.log(chart)
+            var activeBars = chart.getBarsAtEvent(evt)[0];
+
+            var q = activeBars.label;
+            var Ques_num = q.substring(q.indexOf('-') + 1);
+            for (var i = 0; i < $scope.RRQQuestions.length; i++) {
+                e = $scope.RRQQuestions[i];
+                if (e.QUES_NO == Ques_num) {
+                    $scope.GetRRQQuestionAndOptions(e.QID);
+                    break;
+                }
+            }
+
+            
+        }
+    );
 
     $scope.GetStudentsByResponse = function (OptionSeq) {
         $http.get('/SessionMgmt/GetStudentsByResponse/' + $scope.QID + '?OptionSeq=' + OptionSeq)
