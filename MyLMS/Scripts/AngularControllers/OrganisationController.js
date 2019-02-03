@@ -66,6 +66,45 @@ myapp.controller('OrgUserCntrl', function ($scope, $http) {
         });
     }
 
+    $scope.GetOrgUserDetails = function () {
+        var _UserID = $scope.UserID;
+        for (var i = 0; i < $scope.OrgUserList.length; i++) {
+            e = $scope.OrgUserList[i];
+            console.log(e.UserID);
+            if (e.UserID == _UserID) {
+                $scope.FullName = e.FullName;
+                $scope.UserName = e.UserName;
+                $scope.Password = e.Password;
+                $scope.EmailID = e.EmailID;
+                $scope.Mobile = e.Mobile;
+                $scope.RoleID = e.RoleID;
+            }
+        }
+    }
+
+    $scope.EditOrgUser = function () {
+        var _UserName = $scope.UserName
+        var _Password = $scope.Password;
+        var _FullName = $scope.FullName;
+        var _EmailID = $scope.EmailID;
+        var _Mobile = $scope.Mobile;
+        var _RoleID = $scope.RoleID;
+        var _UserID = $scope.UserID;
+
+        $http({
+            method: 'POST',
+            url: '/Organisation/EditUser',
+            data: { UserName: _UserName, Password: _Password, FullName: _FullName, EmailID: _EmailID, Mobile: _Mobile, RoleID: _RoleID, UserID: _UserID }
+        }).then(function (result) {
+            alert("Updated!")
+            $http.get('/Organisation/GetOrgUserList')
+                .then(function (result) {
+                    $scope.OrgUserList = result.data;
+                });
+        });
+
+    }
+
     $scope.UpdatePassword = function () {
         debugger;
 
@@ -105,6 +144,22 @@ myapp.controller('EntityUserCntrl', function ($scope, $http) {
         });
     }
 
+    $scope.GetEntityUserDetails = function () {
+        var _UserID = $scope.UserID;
+        for (var i = 0; i < $scope.EntityUserList.length; i++) {
+            e = $scope.EntityUserList[i];
+            console.log(e.UserID);
+            if (e.UserID == _UserID) {
+                $scope.FullName = e.FullName;
+                $scope.UserName = e.UserName;
+                $scope.Password = e.Password;
+                $scope.EmailID = e.EmailID;
+                $scope.Mobile = e.Mobile;
+            }
+        }
+
+    }
+
     function GetRoles() {
         $http.get('/Organisation/GetEntityAdminRole')
         .then(function (result) {
@@ -135,6 +190,31 @@ myapp.controller('EntityUserCntrl', function ($scope, $http) {
             });
         });
     }
+
+    $scope.EditEntityUser = function () {
+        debugger;
+        var _UserName = $scope.UserName
+        var _Password = $scope.Password;
+        var _FullName = $scope.FullName;
+        var _EmailID = $scope.EmailID;
+        var _Mobile = $scope.Mobile;
+        var _RoleID = $scope.RoleID;
+        var _UserID = $scope.UserID;
+
+        $http({
+            method: 'POST',
+            url: '/Organisation/EditUser',
+            data: { UserName: _UserName, Password: _Password, FullName: _FullName, EmailID: _EmailID, Mobile: _Mobile, RoleID: _RoleID, UserID: _UserID }
+        }).then(function (result) {
+            alert("Updated!")
+            $http.get('/Organisation/GetEntityUserList/' + $scope.EntityID)
+                .then(function (result) {
+                    $scope.EntityUserList = result.data;
+                    GetRoles();
+                });
+        });
+    }
+
 });
 
 myapp.controller('ReceiverCntrl', function ($scope, $http) {
