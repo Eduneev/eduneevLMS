@@ -146,6 +146,45 @@ myapp.controller('CenterUserCntrl', function ($scope, $http) {
         });
     }
 
+    $scope.GetCenterUserDetails = function () {
+        var _UserID = $scope.UserID;
+        for (var i = 0; i < $scope.CenterUserList.length; i++) {
+            e = $scope.CenterUserList[i];
+            if (e.UserID == _UserID) {
+                $scope.FullName = e.FullName;
+                $scope.UserName = e.UserName;
+                $scope.Password = e.Password;
+                $scope.EmailID = e.EmailID;
+                $scope.Mobile = e.Mobile;
+                $scope.RoleID = e.RoleID;
+            }
+        }
+    }
+
+    $scope.EditCenterUser = function () {
+        var _UserName = $scope.UserName
+        var _Password = $scope.Password;
+        var _FullName = $scope.FullName;
+        var _EmailID = $scope.EmailID;
+        var _Mobile = $scope.Mobile;
+        var _RoleID = $scope.RoleID;
+        var _UserID = $scope.UserID;
+
+        $http({
+            method: 'POST',
+            url: '/Organisation/EditUser',
+            data: { UserName: _UserName, Password: _Password, FullName: _FullName, EmailID: _EmailID, Mobile: _Mobile, RoleID: _RoleID, UserID: _UserID }
+        }).then(function (result) {
+            alert("Updated!")
+            $http.get('/Entity/GetCenterUserList/' + $scope.CenterID)
+                .then(function (result) {
+                    $scope.CenterUserList = result.data;
+                    GetRoles();
+                });
+        });
+
+    }
+
     $scope.UpdatePassword = function () {
         debugger;
 

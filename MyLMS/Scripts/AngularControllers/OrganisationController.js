@@ -105,21 +105,6 @@ myapp.controller('OrgUserCntrl', function ($scope, $http) {
 
     }
 
-    $scope.UpdatePassword = function () {
-        debugger;
-
-        var _UserID = $scope.UserID
-        var _Password = $scope.Password;
-
-        $http({
-            method: 'POST',
-            url: '/Organisation/UpdatePassword',
-            data: { UserID: _UserID, Password: _Password }
-        }).then(function (result) {
-
-        });
-    }
-
 });
 
 myapp.controller('EntityUserCntrl', function ($scope, $http) {
