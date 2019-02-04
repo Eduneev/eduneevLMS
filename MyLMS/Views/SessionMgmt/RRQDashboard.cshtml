@@ -64,6 +64,7 @@
                                                 <div class="box box-pane" style="height:450px;">
                                                     <div class="box-header">
                                                         <h3 class="box-title">Degree of Difficulty</h3>
+                                                        <h5 class="box-title"> (% incorrect)</h5>
                                                         <div class="box-tools pull-right">
                                                             <button type="button" class="btn btn-box-tool" data-widget="collapse">
                                                                 <i class="fa fa-minus"></i>
@@ -226,7 +227,11 @@
                                                                 <!--<li><a href="#tab_2" data-toggle="tab">FFF</a></li>-->
                                                                 <div class="box-tools pull-right">
                                                                     <button type="button" class="btn btn-box-tool" data-toggle="modal" data-target="#T20Modal"><i class="fa fa-search-plus"></i></button>
-                                                                </div>
+                                                                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                                        <i class="fa fa-minus"></i>
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                                                    </div>
                                                             </ul>
                                                             <div class="tab-content">
                                                                 <div class="tab-pane active" id="tab_1">
@@ -236,7 +241,7 @@
                                                                                 <tr>
                                                                                     <th>Student Name</th>
                                                                                     <th>Center Name</th>
-                                                                                    <th>Score</th>
+                                                                                    <th>Score (%)</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody ng-repeat="Stud in Top10Students">
@@ -248,7 +253,7 @@
                                                                                         <span><strong>{{Stud.CenterName}}</strong></span>
                                                                                     </td>
                                                                                     <td>
-                                                                                        <span><strong>{{Stud.TotalMarks}}</strong></span>
+                                                                                        <span><strong>{{Stud.TotalMarks/Stud.TotalRRQMarks * 100}}</strong></span>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
@@ -357,7 +362,7 @@
                                                         <table class="table table-hover table-bordered">
                                                             <thead>
                                                                 <tr>
-                                                                    <th>#</th>
+                                                                    <th>FFF</th>
                                                                     <th>Name</th>
                                                                     <th>Center</th>
                                                                 </tr>

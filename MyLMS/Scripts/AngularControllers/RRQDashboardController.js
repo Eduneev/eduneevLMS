@@ -12,7 +12,6 @@
 
     function GetRRQID(url) {
         var params = parseURLParams(url);
-        console.log(params)
         if ("RRQID" in params) {
             $scope.RRQ_ID = params["RRQID"][0];
 
@@ -42,8 +41,8 @@
 
         $http.get('/QuestionBank/GetRRQQuestionAndOptions/' + QID)
             .then(function (result) {
-                console.log(result.data);
-            $scope.QuestionList = result.data;
+                $scope.QuestionList = result.data;
+                $scope.StudentsListByResp = "";
             });
 
         GetDashboardData($scope.QID);
@@ -57,6 +56,7 @@
         .then(function (result) {
             $scope.Top10Students = result.data;
         });
+
     }
 
     // Get Top 10 Fastest Correct Students
@@ -71,7 +71,6 @@
         
         $http.get('/SessionMgmt/GetDegreeOfDifficulty/' + $scope.RRQ_ID)
             .then(function (result) {
-                console.log(result.data)
                 $scope.GraphData = result.data;
                 PrepareGraphData();
 
@@ -84,19 +83,36 @@
             
     }
     function PrepareGraphData() {
+        var q = [];
+        var l = [];
         angular.forEach($scope.RRQQuestions, function (val, key) {
-            Labels.push('Q-' + val.QUES_NO.toString());
+            l.push('Q-' + val.QUES_NO.toString());
             var check = false;
             angular.forEach($scope.GraphData, function (value, key) {
                 if (value.QUES_NO.toString() == val.QUES_NO.toString()) {
                     check = true;
-                    Questions.push(Math.round((1 - (value.TOTAL_CorrectResp / value.TOTAL_RESP)) * 100));
+                    q.push(Math.round((1 - (value.TOTAL_CorrectResp / value.TOTAL_RESP)) * 100));
                 }
             });
             if (!check)
-                Questions.push(100);
+               q.push(100);
 
         });
+
+        var list = []
+        for (var j = 0; j < l.length; j++)
+            list.push({ 'label': l[j], 'age': q[j] });
+
+        //2) sort:
+        list.sort(function (a, b) {
+            return ((a.age < b.age) ? 1 : ((a.age == b.age) ? 0 : -1));
+        });
+
+        //3) separate them back out:
+        for (var k = 0; k < list.length; k++) {
+             Labels.push(list[k].label);
+             Questions.push(list[k].age);
+        }
 
         /*angular.forEach($scope.GraphData, function (value, key) {
             Labels.push('Q-' + value.QUES_NO.toString());
@@ -124,7 +140,6 @@
 
     $("canvas").click(
         function (evt) {
-            console.log(chart)
             var activeBars = chart.getBarsAtEvent(evt)[0];
 
             var q = activeBars.label;
@@ -152,11 +167,8 @@
     }
     ///////// Get Top 10 Students ////////
     function GetDashboardData(QID) {
-        console.log(QID);
-        console.log($scope.RRQ_ID);
         $http.get('/SessionMgmt/GetDashboardData/' + QID)
             .then(function (result) {
-                console.log(result.data)
                 $scope.DashboardData = result.data;
                 $scope.ResponsesPrcnt = $scope.DashboardData[0].ResponsesPrcnt
                 $scope.NoResponsesPrcnt = $scope.DashboardData[0].NoResponsesPrcnt
