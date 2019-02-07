@@ -42,48 +42,9 @@
                 alert("Error in retrieving RRQ. Select RRQ again!")
         }
         catch (e) {
-            
+            console.log(e);
         }
     }
-
-    /*
-    $http({
-        method: 'GET',
-        url: '/SessionMgmt/GetSession'
-    }).then(function (result) {
-        result.data = parseInt(result.data);
-        if (result.data == -1)
-            alert("Error in retrieving session. Click Start Session again!")
-        else {
-            $scope.SessionID = result.data;
-            console.log($scope.SessionID);
-
-            $scope.ws = Socket.StartSocket();
-            $scope.ws.onOpen(function () {
-                console.log("Started socket.");
-                $scope.ws.send(JSON.stringify({
-                    profile: Constants.Profile['RRQ'],
-                    type: Constants.Events['CONNECTION'],
-                    action: Constants.Action['TEACHERCONNECTION'],
-                    SessionID: $scope.SessionID
-                }));
-
-            });
-        }
-    });
-
-    $http({
-        method: 'GET',
-        url: '/SessionMgmt/GetSessionRRQ'
-    }).then(function (result) {
-        result.data = parseInt(result.data);
-        if (result.data == -1)
-            alert("Error in retrieving RRQ. Select RRQ again!")
-        else
-            $scope.RRQID = result.data;
-        console.log($scope.RRQID);
-    });
-    */
 
     $scope.AddQuestion = function () {
         window.location.pathname = "/QuestionBank/AddQuestion";
@@ -98,6 +59,11 @@
         }).then(function (result) {
             alert('Deleted Successfully!!');
         });
+    }
+
+    $scope.GetSelectedQuestionDetails = function (index) {
+        console.log(index)
+        console.log($scope.QuestionList[index])
     }
 
     $scope.SaveQuestion = function () {
@@ -272,44 +238,6 @@
             });
     }
 
-    // DeleteQuestion
-    $scope.DeleteTag = function (QTagID) {
-        var ask = confirm("Are you sure you wish to delete Tag? You will not be able to sort questions using this tag again!");
-        if (ask)
-            $http({
-                method: 'POST',
-                url: '/QuestionBank/DeleteTag',
-                data: { QTagID: QTagID }
-            }).then(function (result) {
-                alert('Deleted Successfully!!');
-                GetTags()
-            });
-    }
-
-    $scope.CreateTags = function (TagText) {
-        $http({
-            method: 'POST',
-            url: '/QuestionBank/CreateTags',
-            data: { TagText: TagText }
-        }).then(function (result) {
-            alert('Created Successfully!!');
-            GetTags()
-        });
-    }
-
-    $scope.EditTag = function () {
-        var _TagText = $scope.UpdateTagText;
-        var _QTagID = $scope.QTagID;
-        if (_QTagID !== null)
-            $http({
-                method: 'POST',
-                url: '/QuestionBank/EditTag',
-                data: { QTagID: _QTagID, TagText: _TagText }
-            }).then(function (result) {
-                GetTags()
-            });
-    }
-
     function GetRRQAnswerPercentage() {
         console.log($scope.RRQQuestionList[$scope.currentPage].Question.QID)
         $http.get('/QuestionBank/GetRRQAnswerPercentage/' + $scope.RRQQuestionList[$scope.currentPage].Question.QID)
@@ -403,5 +331,58 @@ myapp.filter('startFrom', function () {
     return function (input, start) {
         start = +start; //parse to int
         return input.slice(start);
+    }
+});
+
+myapp.controller('QuestionBankCntrl', function ($scope, $http) {
+
+    GetTags();
+});
+
+myapp.controller('TagCntrl', function ($scope, $http) {
+    GetTags();
+
+    function GetTags() {
+        $http.get('/QuestionBank/GetTags')
+            .then(function (result) {
+                $scope.TagsList = result.data;
+            });
+    }
+
+    $scope.DeleteTag = function (QTagID) {
+        var ask = confirm("Are you sure you wish to delete Tag? You will not be able to sort questions using this tag again!");
+        if (ask)
+            $http({
+                method: 'POST',
+                url: '/QuestionBank/DeleteTag',
+                data: { QTagID: QTagID }
+            }).then(function (result) {
+                alert('Deleted Successfully!!');
+                GetTags()
+            });
+    }
+
+    $scope.CreateTags = function (TagText) {
+        $http({
+            method: 'POST',
+            url: '/QuestionBank/CreateTags',
+            data: { TagText: TagText }
+        }).then(function (result) {
+            alert('Created Successfully!!');
+            GetTags()
+        });
+    }
+
+    $scope.EditTag = function () {
+        var _TagText = $scope.UpdateTagText;
+        var _QTagID = $scope.QTagID;
+        if (_QTagID !== null)
+            $http({
+                method: 'POST',
+                url: '/QuestionBank/EditTag',
+                data: { QTagID: _QTagID, TagText: _TagText }
+            }).then(function (result) {
+                GetTags()
+            });
     }
 });
