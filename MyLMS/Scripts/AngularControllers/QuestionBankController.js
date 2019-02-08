@@ -62,7 +62,7 @@
     }
 
     $scope.GetSelectedQuestionDetails = function (QID) {
-        window.location.pathname = "/QuestionBank/EditQuestion?QID=" + QID;
+        window.location.href = "/QuestionBank/EditQuestion" + "?QID=" + QID;
     }
 
     $scope.SaveQuestion = function () {
