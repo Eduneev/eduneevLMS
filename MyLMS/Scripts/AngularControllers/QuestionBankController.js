@@ -61,9 +61,8 @@
         });
     }
 
-    $scope.GetSelectedQuestionDetails = function (index) {
-        console.log(index)
-        console.log($scope.QuestionList[index])
+    $scope.GetSelectedQuestionDetails = function (QID) {
+        window.location.pathname = "/QuestionBank/EditQuestion?QID=" + QID;
     }
 
     $scope.SaveQuestion = function () {
@@ -212,7 +211,6 @@
         return Math.ceil($scope.RRQQuestionList.length / $scope.RRQpageSize);
     }
 
-
     $scope.TagTextToShow = "All Question Tags";
     function GetTags() {
         $http.get('/QuestionBank/GetTags')
@@ -237,6 +235,7 @@
                 $scope.QuestionList = result.data;
             });
     }
+
 
     function GetRRQAnswerPercentage() {
         console.log($scope.RRQQuestionList[$scope.currentPage].Question.QID)
@@ -337,6 +336,221 @@ myapp.filter('startFrom', function () {
 myapp.controller('QuestionBankCntrl', function ($scope, $http) {
 
     GetTags();
+
+
+    $scope.TagTextToShow = "All Question Tags";
+    function GetTags() {
+        $http.get('/QuestionBank/GetTags')
+            .then(function (result) {
+                $scope.TagsList = result.data;
+            });
+    }
+
+    $scope.SetTagFilter = function () {
+        console.log($scope.QTagID);
+
+        if ($scope.QTagID == null)
+            $scope.GetQuestionDetails();
+        else
+            GetQuestionByTag();
+    }
+
+
+    function GetQuestionByTag() {
+        $http.get('/QuestionBank/GetQuestionsByTag/' + $scope.QTagID)
+            .then(function (result) {
+                $scope.QuestionList = result.data;
+            });
+    }
+});
+
+myapp.controller('EditQuestionCntrl', function ($scope, $http) {
+    GetTags();
+
+    SetParams(window.location.href);
+
+    function GetTags() {
+        $http.get('/QuestionBank/GetTags')
+            .then(function (result) {
+                $scope.TagsList = result.data;
+                GetQuestionDetails($scope.QID);
+            });
+    }
+
+    function SetParams(url) {
+        try {
+            var params = parseURLParams(url);
+            if ('QID' in params) {
+                $scope.QID = params['QID'][0];
+            }
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    function GetQuestionDetails(QID) {
+        $http.get('/QuestionBank/GetQuestionAndOptions/' + QID)
+            .then(function (result) {
+                $scope.Question = result.data;
+                console.log($scope.Question)
+                $scope.QuestionText = $scope.Question[0].Question.QuestionText;
+
+                var QTagID = $scope.Question[0].Question.QTagID;
+                for (var i = 0; i < $scope.TagsList.length; i++) {
+                    if (QTagID == $scope.TagsList[i].QTagID) {
+                        $scope.QTagID = QTagID;
+                        $('#drpQuestionTags').val(QTagID);
+                        break;
+                    }
+                }
+
+                $scope.DisplayTime = $scope.Question[0].Question.QTime;
+
+                var options = $scope.Question[0].Options;
+                console.log(options)
+                $scope.IsOption1Correct = options[0].IsCorrect;
+                $scope.Option1Mark = options[0].Mark;
+                $scope.Option1Text = options[0].OptionText;
+                $scope.Option1ID = options[0].OptionID;
+
+                $scope.IsOption2Correct = options[1].IsCorrect;
+                $scope.Option2Mark = options[1].Mark;
+                $scope.Option2Text = options[1].OptionText;
+                $scope.Option2ID = options[1].OptionID;
+
+                $scope.IsOption3Correct = options[2].IsCorrect;
+                $scope.Option3Mark = options[2].Mark;
+                $scope.Option3Text = options[2].OptionText;
+                $scope.Option3ID = options[2].OptionID;
+
+                $scope.IsOption4Correct = options[3].IsCorrect;
+                $scope.Option4Mark = options[3].Mark;
+                $scope.Option4Text = options[3].OptionText;
+                $scope.Option4ID = options[3].OptionID;
+
+            });
+    }
+
+    $scope.SaveQuestion = function () {
+        debugger;
+        var _QuestionText = $scope.QuestionText
+        var _QTagID = $scope.QTagID
+        var _DisplayTime = $scope.DisplayTime
+        if (_DisplayTime == null)
+            _DisplayTime = 20;
+        $http({
+            method: 'POST',
+            url: '/QuestionBank/SaveQuestion',
+            data: { QuestionText: _QuestionText, QTagID: _QTagID, DisplayTime: _DisplayTime }
+        }).then(function (result) {
+
+            // 
+
+            ////// Save Options //////
+            $http({
+                method: 'POST',
+                url: '/QuestionBank/SaveOptions',
+                data: { OptionSeq: 1, OptionText: $scope.Option1Text, OptionMark: $scope.Option1Mark, IsOptionCorrect: $scope.IsOption1Correct }
+            }).then(function (result) {
+            });
+
+            $http({
+                method: 'POST',
+                url: '/QuestionBank/SaveOptions',
+                data: { OptionSeq: 2, OptionText: $scope.Option2Text, OptionMark: $scope.Option2Mark, IsOptionCorrect: $scope.IsOption2Correct }
+            }).then(function (result) {
+            });
+
+
+            $http({
+                method: 'POST',
+                url: '/QuestionBank/SaveOptions',
+                data: { OptionSeq: 3, OptionText: $scope.Option3Text, OptionMark: $scope.Option3Mark, IsOptionCorrect: $scope.IsOption3Correct }
+            }).then(function (result) {
+            });
+
+            $http({
+                method: 'POST',
+                url: '/QuestionBank/SaveOptions',
+                data: { OptionSeq: 4, OptionText: $scope.Option4Text, OptionMark: $scope.Option4Mark, IsOptionCorrect: $scope.IsOption4Correct }
+            }).then(function (result) {
+            });
+
+        });
+        alert('Saved Successfully!!');
+        /////////////
+    }
+
+    $scope.EditQuestion = function () {
+        debugger;
+        var _QuestionText = $scope.QuestionText
+        var _QTagID = $scope.QTagID
+        var _DisplayTime = $scope.DisplayTime
+        if (_DisplayTime == null)
+            _DisplayTime = 20;
+        var _QID = $scope.QID;
+        $http({
+            method: 'POST',
+            url: '/QuestionBank/EditQuestion',
+            data: { QuestionText: _QuestionText, QTagID: _QTagID, DisplayTime: _DisplayTime, QID: _QID }
+        }).then(function (result) {
+
+            // 
+
+            ////// Edit Options //////
+            $http({
+                method: 'POST',
+                url: '/QuestionBank/EditOptions',
+                data: { OptionSeq: 1, OptionText: $scope.Option1Text, OptionMark: $scope.Option1Mark, IsOptionCorrect: $scope.IsOption1Correct, OptionID: $scope.Option1ID }
+            }).then(function (result) {
+            });
+
+            $http({
+                method: 'POST',
+                url: '/QuestionBank/EditOptions',
+                data: { OptionSeq: 2, OptionText: $scope.Option2Text, OptionMark: $scope.Option2Mark, IsOptionCorrect: $scope.IsOption2Correct, OptionID: $scope.Option2ID }
+            }).then(function (result) {
+            });
+
+
+            $http({
+                method: 'POST',
+                url: '/QuestionBank/EditOptions',
+                data: { OptionSeq: 3, OptionText: $scope.Option3Text, OptionMark: $scope.Option3Mark, IsOptionCorrect: $scope.IsOption3Correct, OptionID: $scope.Option3ID }
+            }).then(function (result) {
+            });
+
+            $http({
+                method: 'POST',
+                url: '/QuestionBank/EditOptions',
+                data: { OptionSeq: 4, OptionText: $scope.Option4Text, OptionMark: $scope.Option4Mark, IsOptionCorrect: $scope.IsOption4Correct, OptionID: $scope.Option4ID }
+            }).then(function (result) {
+            });
+
+        });
+        alert('Saved Successfully!!');
+    }
+
+    function parseURLParams(url) {
+        var queryStart = url.indexOf("?") + 1,
+            queryEnd = url.indexOf("#") + 1 || url.length + 1,
+            query = url.slice(queryStart, queryEnd - 1),
+            pairs = query.replace(/\+/g, " ").split("&"),
+            parms = {}, i, n, v, nv;
+
+        if (query === url || query === "") return;
+
+        for (i = 0; i < pairs.length; i++) {
+            nv = pairs[i].split("=", 2);
+            n = decodeURIComponent(nv[0]);
+            v = decodeURIComponent(nv[1]);
+
+            if (!parms.hasOwnProperty(n)) parms[n] = [];
+            parms[n].push(nv.length === 2 ? v : null);
+        }
+        return parms;
+    }
 });
 
 myapp.controller('TagCntrl', function ($scope, $http) {
