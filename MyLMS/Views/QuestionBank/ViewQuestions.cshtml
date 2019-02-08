@@ -68,7 +68,7 @@
                                             <span ng-click="DeleteQuestion(Q.Question.QID)" style="cursor:pointer;" class="fa fa-times-circle-o"></span>
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-block btn-default btn-sm" ng-click="GetSelectedQuestionDetails(Q.Question.QID)" data-toggle="modal" data-target="#EditQuestion"><i class="glyphicon glyphicon-list"> </i>Edit</button>
+                                            <button type="button" class="btn btn-block btn-default btn-sm" ng-click="GetSelectedQuestionDetails(Q.Question.QID)" data-toggle="modal"><i class="glyphicon glyphicon-list"> </i>Edit</button>
                                         </td>
                                     </tr>
                                     <tr>
@@ -103,10 +103,21 @@
                     </div>
                     <div class="modal-body" style="margin:0px 10px 0px 10px;">
                         <form class="form-horizontal" name="AddEntityForm">
+                            <div class="form-group">
+                                <label class="text-info"> Question Text</label>
+                                <input type="text" name="EntityName" ng-model="QuestionText" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter...">
+                            </div>
+                            <div class="form-group">
+                                <label class="text-info"> Options</label>
+                                <input type="text" name="EntityCode" ng-model="Option1" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter...">
+                                <input type="text" name="ManagerName" ng-model="Option2" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter...">
+                                <input type="text" name="Email" ng-model="Option3" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter...">
+                                <input type="text" name="Email" ng-model="Option4" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter...">
+                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" ng-click="EditOrgUser()" id="btnUpdate" data-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-success" ng-click="EditQuestion()" id="btnUpdate" data-dismiss="modal">Save</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
