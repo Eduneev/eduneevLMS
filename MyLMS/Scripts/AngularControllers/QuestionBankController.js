@@ -47,7 +47,7 @@
     }
 
     $scope.AddQuestion = function () {
-        window.location.pathname = "/QuestionBank/AddQuestion";
+        window.location.href = "/QuestionBank/AddQuestion";
     }
 
     // DeleteQuestion
