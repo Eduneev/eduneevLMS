@@ -24,6 +24,21 @@ namespace MyLMS.Models
             return res;
         }
 
+        public string EditQuestion(SqlParameter[] sparams)
+        {
+            string res = "Failure..";
+            try
+            {
+                res = DAL.ExecuteScalar("EditQuestion", sparams);
+            }
+            catch (Exception ex)
+            {
+                res = ex.Message;
+                throw;
+            }
+            return res;
+        }
+
         public string DeleteQuestion(SqlParameter[] sparams)
         {
             string res = "Failure..";
@@ -45,6 +60,21 @@ namespace MyLMS.Models
             try
             {
                 res = DAL.ExecuteScalar("SaveOptions", sparams);
+            }
+            catch (Exception ex)
+            {
+                res = ex.Message;
+                throw;
+            }
+            return res;
+        }
+
+        public string EditOptions(SqlParameter[] sparams)
+        {
+            string res = "Failure..";
+            try
+            {
+                res = DAL.ExecuteScalar("EditOptions", sparams);
             }
             catch (Exception ex)
             {
