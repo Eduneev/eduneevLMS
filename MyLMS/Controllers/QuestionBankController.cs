@@ -30,6 +30,11 @@ namespace MyLMS.Controllers
             return View();
         }
 
+        public ActionResult EditQuestion()
+        {
+            return View();
+        }
+
         [HttpPost]
         public void SaveQuestion(string QuestionText, int QTagID, int DisplayTime)
         {
@@ -48,6 +53,33 @@ namespace MyLMS.Controllers
             try
             {
                 Session["QID"] = QuesObj1.SaveQuestion(SParam).ToString();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        [HttpPost]
+        public void EditQuestion(string QuestionText, int QTagID, int DisplayTime, int QID)
+        {
+            QuestionModel QuesObj1 = new QuestionModel();
+            SqlParameter[] SParam = new SqlParameter[5];
+
+            SParam[0] = new SqlParameter("@QuestionText", SqlDbType.NVarChar);
+            SParam[0].Value = QuestionText;
+            SParam[1] = new SqlParameter("@QTagID", SqlDbType.Int);
+            SParam[1].Value = QTagID;
+            SParam[2] = new SqlParameter("@DisplayTime", SqlDbType.Int);
+            SParam[2].Value = DisplayTime;
+            SParam[3] = new SqlParameter("@UserID", SqlDbType.Int);
+            SParam[3].Value = Convert.ToInt32(Session["USER_ID"]);
+            SParam[4] = new SqlParameter("@QID", SqlDbType.Int);
+            SParam[4].Value = QID;
+
+            try
+            {
+                QuesObj1.EditQuestion(SParam).ToString();
             }
             catch (Exception ex)
             {
@@ -151,6 +183,32 @@ namespace MyLMS.Controllers
             try
             {
                 QuesObj1.SaveOptions(SParam);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        [HttpPost]
+        public void EditOptions(int OptionSeq, string OptionText, int OptionMark, bool IsOptionCorrect, int OptionID)
+        {
+            QuestionModel QuesObj1 = new QuestionModel();
+            SqlParameter[] SParam = new SqlParameter[5];
+            SParam[0] = new SqlParameter("@OptionID", SqlDbType.Int);
+            SParam[0].Value = OptionID;
+            SParam[1] = new SqlParameter("@OptionSeq", SqlDbType.Int);
+            SParam[1].Value = OptionSeq;
+            SParam[2] = new SqlParameter("@OptionText", SqlDbType.NVarChar);
+            SParam[2].Value = OptionText;
+            SParam[3] = new SqlParameter("@OptionMark", SqlDbType.Int);
+            SParam[3].Value = OptionMark;
+            SParam[4] = new SqlParameter("@IsOptionCorrect", SqlDbType.Bit);
+            SParam[4].Value = IsOptionCorrect;
+
+            try
+            {
+                QuesObj1.EditOptions(SParam);
             }
             catch (Exception ex)
             {
@@ -302,10 +360,10 @@ namespace MyLMS.Controllers
             {
                 Question Question = new Question();
                 Question.QID = Convert.ToInt32(QuestionsList.Rows[i]["QID"]);
-                Question.QUES_NO = QuestionsList.Rows[i]["QUES_NO"].ToString();
-                Question.QTypeID = Convert.ToInt32(QuestionsList.Rows[i]["QTypeID"].ToString());
+                Question.QTagID = Convert.ToInt32(QuestionsList.Rows[i]["QTagID"].ToString());
                 Question.QuestionText = QuestionsList.Rows[i]["QuestionText"].ToString();
                 Question.IsCompulsory = Convert.ToBoolean(QuestionsList.Rows[i]["IsCompulsory"]);
+                Question.QTime = Convert.ToInt32(QuestionsList.Rows[i]["QTime"]);
                 QuestionList.Add(Question);
 
                 SParam[0] = new SqlParameter("@QID", SqlDbType.Int);
