@@ -7,12 +7,12 @@
 @section scripts{
     <script src="~/Scripts/AngularControllers/QuestionBankController.js"></script>
 }
-<div data-ng-controller="QuestionCntrl" data-ng-init="GetQuestionDetails()">
+<div data-ng-controller="QuestionCntrl">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Question Bank
-            <small>View all questions</small>
+            RRQ Question Addition
+            <small>Add questions to RRQ</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="/Home"><i class="fa fa-dashboard"></i>Home</a></li>
@@ -25,11 +25,20 @@
         <div class="box box-default">
             <div class="box-header with-border">
                 <div class="pull-left">
-                </div>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                </div>
+                <label>
+                <select class="form-control" id="drpClassroomName" style="width: 100%;" data-ng-model="QTagID" data-ng-options="c.QTagID as c.TagText for c in TagsList" data-ng-change="SetTagFilter()">
+                    <option value="">{{TagTextToShow}}</option>
+                </select>
+                </label>
+
             </div>
+            <div class="box-tools pull-right">
+                <label>
+                    <input type="text" name="table_search" ng-model="StudentFilter" class="form-control" placeholder="Search Question..">
+                </label>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            </div>
+        </div>
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
@@ -38,6 +47,7 @@
                                 <tr>
                                     <th style="width:5px;">#</th>
                                     <th>Questions & Options</th>
+                                    <th style="width:250px;">Question Tag</th>
                                 </tr>
                             </thead>
                             <tbody ng-repeat="Q in QuestionList | startFrom:currentPage*pageSize | limitTo:pageSize">
@@ -49,6 +59,9 @@
                                     </td>
                                     <td>
                                         <span><strong>{{Q.Question.QuestionText}}</strong></span>
+                                    </td>
+                                    <td>
+                                        <span>{{Q.Question.TagText}}</span>
                                     </td>
                                 </tr>
                                 <tr>
