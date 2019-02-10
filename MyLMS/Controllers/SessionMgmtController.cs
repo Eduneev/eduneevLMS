@@ -53,6 +53,13 @@ namespace MyLMS.Controllers
             return View();
         }
 
+        public ActionResult EditRRQ(int id)
+        {
+            Session["RRQ_ID"] = id;
+            Session["RRQ_ID_Display"] = id;
+            return View();
+        }
+
         public ActionResult AddQuestionsToRRQ(int id)
         {
             Session["RRQ_ID"] = id;

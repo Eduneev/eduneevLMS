@@ -418,6 +418,7 @@ namespace MyLMS.Controllers
                 Question.QID = Convert.ToInt32(QuestionsList.Rows[i]["QID"]);
                 Question.QuestionText = QuestionsList.Rows[i]["QuestionText"].ToString();
                 Question.QTime = Convert.ToInt32(QuestionsList.Rows[i]["QTime"].ToString());
+                Question.TagText = QuestionsList.Rows[i]["TagText"].ToString();
                 QuestionList.Add(Question);
 
                 SParam[0] = new SqlParameter("@QID", SqlDbType.Int);
