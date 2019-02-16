@@ -446,6 +446,27 @@ namespace MyLMS.Controllers
             }
         }
 
+        [HttpPost]
+        public void DeleteRRQ(int SessionID, int RRQ_ID)
+        {
+            //int SessionID = Convert.ToInt32(Session["SessionID"]);
+
+            SessionModel SessionObj3 = new SessionModel();
+            SqlParameter[] RRQParam = new SqlParameter[2];
+            RRQParam[0] = new SqlParameter("@SessionID", SqlDbType.Int);
+            RRQParam[0].Value = SessionID;
+            RRQParam[1] = new SqlParameter("@RRQ_ID", SqlDbType.VarChar);
+            RRQParam[1].Value = RRQ_ID;
+            try
+            {
+                SessionObj3.DeleteRRQ(RRQParam);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
         [HttpGet]
         public string GetSessionsRRQ(int id)
         {

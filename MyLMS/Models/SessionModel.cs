@@ -57,6 +57,21 @@ namespace MyLMS.Models
             return res;
         }
 
+        public string DeleteRRQ(SqlParameter[] sparams)
+        {
+            string res = "Failure..";
+            try
+            {
+                res = DAL.ExecuteScalar("DeleteRRQ", sparams);
+            }
+            catch (Exception ex)
+            {
+                res = ex.Message;
+                throw;
+            }
+            return res;
+        }
+
         public string GetRRQQuestions(SqlParameter[] sparams)
         {
             string res = "Failure..";
