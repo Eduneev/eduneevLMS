@@ -319,7 +319,11 @@
 		var id = this.id // get the contact id
 		var c = currentId;
 		// display on{ly the private chat messages for that id
-		if (c != id){
+		if (id == PRIVATE) {
+            var result = authenticatePrivateMessage(function(data) { console.log("The data is:", data); if (!result) return; });
+		}
+
+        if (c != id) {            
 			if(id==PRIVATE){
 				if(currentStudentId){
 					document.getElementById(currentStudentId).className = "contact";
@@ -332,7 +336,9 @@
 			typedMessage.value = "";
 			messagesPanel.innerHTML = "";
 			var messageList = messages[id];                    
-		}
+        }
+
+        console.log("getting here");
 	
 		var g = document.getElementById(currentId);
 		var s = g.childNodes.item("nm");
@@ -348,6 +354,28 @@
 				else
 					addMessage(mess.data, false, mess.time);
 			});
+	}
+
+	function authenticatePrivateMessage(callback) {
+		// prompt the user for credentials
+		var pass = prompt("Enter credentials:")
+		const url = SERVERURI + "AuthenticateSupportChat/" + pass;
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == XMLHttpRequest.DONE) {
+				var students = xhr.response;
+				console.log(students);
+                if (students == false) {
+                    alert("Incorrect auth");
+                    callback(false);
+                }
+                else
+                    callback(true);
+			}
+		}
+		xhr.responseType='json';
+        xhr.open('GET', url, true);
+		xhr.send(null);
 	}
 
 	function addMessage(message, left, time="") {
