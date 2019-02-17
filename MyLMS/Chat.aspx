@@ -320,7 +320,7 @@
 		var c = currentId;
 		// display on{ly the private chat messages for that id
 		if (id == PRIVATE) {
-            var result = authenticatePrivateMessage(function(data) { console.log("The data is:", data); if (!result) return; });
+            var result = authenticatePrivateMessage(function(data) { if (!result) return; });
 		}
 
         if (c != id) {            
@@ -337,8 +337,6 @@
 			messagesPanel.innerHTML = "";
 			var messageList = messages[id];                    
         }
-
-        console.log("getting here");
 	
 		var g = document.getElementById(currentId);
 		var s = g.childNodes.item("nm");
@@ -364,7 +362,6 @@
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == XMLHttpRequest.DONE) {
 				var students = xhr.response;
-				console.log(students);
                 if (students == false) {
                     alert("Incorrect auth");
                     callback(false);
