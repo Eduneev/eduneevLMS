@@ -251,46 +251,16 @@
 	return true;
 	}
 
-	function addStudents(){
+	function addStudents() {
 
         list = document.getElementById("contacts");
-
-        /*
-        var hardcoded = [
-			["Bob", "https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg"],
-			["Ross", "https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_02.jpg"],
-			["Max", "https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_03.jpg"],
-			["Claire", "https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_04.jpg"]
-		];
-
-		for(i=0;i<hardcoded.length;i++){
-			var student = document.createElement("div");
-			student.className = "contact";
-			student.id = hardcoded[i][0];
-			var image_placeholder = document.createElement("img");
-			image_placeholder.src = hardcoded[i][1];
-			image_placeholder.id = "image";
-
-			var text = document.createElement("span");
-			text.className = "contact-text2";
-			text.id = "text";
-			text.textContent = hardcoded[i][0];
-			
-			student.appendChild(image_placeholder);
-			student.appendChild(text);
-
-			student.onclick = setCurrentStudentId;
-
-			list.appendChild(student);					
-		}
-		*/
 
         const url = SERVERURI + SESSION + "/" + CenterID + "/getAttendingStudents";
 		var xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == XMLHttpRequest.DONE) {
 				var students = xhr.response;
-				for (let i=0; i < students.length; i++){
+				for (let i=0; i < students.length; i++) {
 					var data = students[i];
 					var student = document.createElement('div');
 					student.className = 'contact';
@@ -303,7 +273,7 @@
 					text.className = "contact-text2";
 					text.id = "text";
 					text.textContent = data['StudentName'];
-					
+
 					student.appendChild(image_placeholder);
 					student.appendChild(text);
 
@@ -311,24 +281,24 @@
 
 					list.appendChild(student);
 				}
-            }            	
+            }
 		}
 		xhr.responseType='json';
 		xhr.open('GET', url, true);
 		xhr.send(null);
-			}
+	}
 
-	function addUnread(id){
-			var unread = studio[id][UNREAD];
-			unread = unread+1;
-			studio[id][UNREAD] = unread;
-			var group = document.getElementById(id);
-			var m = group.childNodes.item("nm");
-			m.className = "new-message";
-			m.textContent = unread;
-		}
+	function addUnread(id) {
+		var unread = studio[id][UNREAD];
+		unread = unread+1;
+		studio[id][UNREAD] = unread;
+		var group = document.getElementById(id);
+		var m = group.childNodes.item("nm");
+		m.className = "new-message";
+		m.textContent = unread;
+	}
 
-	function setCurrentStudentId(evt){
+	function setCurrentStudentId(evt) {
 		var name = evt.target;
 		var id = this.id;
 
@@ -343,43 +313,42 @@
 			document.getElementById(currentStudentId).className = "active-student";
 		}
 	}
+
 	function displayMessages(evt){
-			var name = evt.target;
-			var id = this.id // get the contact id
-			var c = currentId;
-			// display on{ly the private chat messages for that id
-			if (c != id){
-				if(id==PRIVATE){
-					if(currentStudentId){
-						document.getElementById(currentStudentId).className = "contact";
-						currentStudentId = null;
-					}
+		var name = evt.target;
+		var id = this.id // get the contact id
+		var c = currentId;
+		// display on{ly the private chat messages for that id
+		if (c != id){
+			if(id==PRIVATE){
+				if(currentStudentId){
+					document.getElementById(currentStudentId).className = "contact";
+					currentStudentId = null;
 				}
-				document.getElementById(id).className ="new-message-contact active-contact";
-				document.getElementById(currentId).className = "new-message-contact"; 
-				currentId = id;
-				typedMessage.value = "";
-				messagesPanel.innerHTML = "";
-				var messageList = messages[id];                    
 			}
-		
-			var g = document.getElementById(currentId);
-			var s = g.childNodes.item("nm");
-			s.className = "";
-			s.textContent = "";
-			studio[currentId][UNREAD] = 0;
-
-			// display appropriate messages
-			messageList.forEach(function(mess){
-					if(mess.type == "you"){
-						addMessage(mess.data, true, mess.time);
-					}
-					else
-						addMessage(mess.data, false, mess.time);
-				});
+			document.getElementById(id).className ="new-message-contact active-contact";
+			document.getElementById(currentId).className = "new-message-contact"; 
+			currentId = id;
+			typedMessage.value = "";
+			messagesPanel.innerHTML = "";
+			var messageList = messages[id];                    
 		}
+	
+		var g = document.getElementById(currentId);
+		var s = g.childNodes.item("nm");
+		s.className = "";
+		s.textContent = "";
+		studio[currentId][UNREAD] = 0;
 
-
+		// display appropriate messages
+		messageList.forEach(function(mess){
+				if(mess.type == "you"){
+					addMessage(mess.data, true, mess.time);
+				}
+				else
+					addMessage(mess.data, false, mess.time);
+			});
+	}
 
 	function addMessage(message, left, time="") {
 		var flexBox = document.createElement('div');if (!left)
