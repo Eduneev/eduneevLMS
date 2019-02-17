@@ -377,5 +377,14 @@ namespace MyLMS.Controllers
             return false;
         }
 
+        [Route("api/AuthenticateSupportChat/{Response}")]
+        [HttpGet]
+        public bool AuthenticateSupportChat(string Response)
+        {
+            if (Response.Equals("2WayLive"))
+                return true;
+            return false;
+        }
+
     }
 }
