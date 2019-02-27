@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -662,6 +663,29 @@ namespace MyLMS.Controllers
             string JSONString = string.Empty;
             JSONString = JsonConvert.SerializeObject(Student);
             return JSONString;
+        }
+
+        public string StartRecording(string url, string EntityCode)
+        {
+            // Send a command to Streaming Server with url to start recording
+            String ServerIP = "18.224.156.241";
+            String ServerUrl = "http://sanat:sanat@" + ServerIP + ":8086/livestreamrecord?" +
+                "app=" + EntityCode + "&streamname=" + url + "&action=startRecording";
+            Uri u = new Uri(ServerUrl);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(u);
+            String response = request.GetResponse().ToString();
+            return response;
+        }
+
+        public string StopRecording(string url, string EntityCode)
+        {
+            String ServerIP = "18.224.156.241";
+            String ServerUrl = "http://sanat:sanat@" + ServerIP + ":8086/livestreamrecord?" +
+                "app=" + EntityCode + "&streamname=" + url + "&action=stopRecording";
+            Uri u = new Uri(ServerUrl);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(u);
+            String response = request.GetResponse().ToString();
+            return response;
         }
     }
 
