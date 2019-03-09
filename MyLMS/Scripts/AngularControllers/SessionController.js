@@ -124,6 +124,13 @@
         form.submit();
     };
 
+    $scope.SaveRRQSession = function () {
+        $scope.FacultyID = 0;
+        $scope.PlannedCoverage = "";
+        $scope.StudioID = 0;
+
+        $scope.SaveSession();
+    }
 
     $scope.SaveSession = function () {
         debugger;
@@ -435,6 +442,10 @@
 
     $scope.ShowSessions = function () {
         window.location.href = "/SessionMgmt/ViewSessions";
+    }
+
+    $scope.ShowRRQSessions = function () {
+        window.location.href = "/SessionMgmt/ViewRRQSessions";
     }
 
 }]);
