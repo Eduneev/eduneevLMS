@@ -53,6 +53,11 @@ namespace MyLMS.Controllers
             return View();
         }
 
+        public ActionResult ViewRRQSessions()
+        {
+            return View();
+        }
+
         public ActionResult AllocateReceiver()
         {
             return View();

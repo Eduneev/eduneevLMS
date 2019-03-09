@@ -786,6 +786,8 @@
     <Content Include="Views\FacultyMgmt\ManageFaculty.cshtml" />
     <Content Include="Views\QuestionBank\EditQuestion.cshtml" />
     <Content Include="Views\SessionMgmt\EditRRQ.cshtml" />
+    <Content Include="Views\SessionMgmt\ViewRRQSessions.cshtml" />
+    <Content Include="Views\CenterMgmt\ViewRRQSessions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
