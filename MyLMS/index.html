@@ -45,7 +45,14 @@
 		
 	}]);
 
-    })();
+      })();
+
+     window.addEventListener("message", receiveMessage, false);
+
+      function receiveMessage(event) {
+          if (event.data == "imagedata")
+              window.parent.postMessage(document.getElementById("ImageData").textContent, "*");
+     }
   </script>
   
   <!-- REQUIRED 3/3 - the image crop directive -->
@@ -85,7 +92,7 @@
     }
   </style>
   </head>
-  <body>
+  <body>      
      <div ng-controller="MainController">
       
 		<div ng-show="imageCropStep == 1">		

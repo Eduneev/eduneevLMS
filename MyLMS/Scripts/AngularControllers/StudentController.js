@@ -158,14 +158,20 @@ myapp.controller('StudentViewCntrl', function ($scope, $http) {
     $scope.SaveImage = function () {
         debugger;
         //var _StudentImage = $('#mce').contents().find('#select_name').val();
-        var _StudentImage = $('#mce').contents().find('#ImageData').val();
-        $http({
-            method: 'POST',
-            url: '/StudentMgmt/SetStudentPhoto',
-            data: { StudentID: $scope.StudentID, StudentImage: _StudentImage }
-        }).then(function (result) {
+        window.frames[0].postMessage("imagedata", "*");
 
-        });
+        window.addEventListener("message", receiveMessage, false);
+
+        function receiveMessage(event) {
+            console.log(event);
+            var _StudentImage = event.data;
+            $http({
+                method: 'POST',
+                url: '/StudentMgmt/SetStudentPhoto',
+                data: { StudentID: $scope.StudentID, StudentImage: _StudentImage }
+            }).then(function (result) {
+            });
+        }
     }
 
     $scope.clear = function () {
