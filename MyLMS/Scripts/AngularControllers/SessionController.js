@@ -324,6 +324,69 @@
        
     };
 
+    $scope.StartStopRRQSession = function (btnType) {
+        //debugger;
+        var _SessionID = $scope.SessionID;
+
+        if (_SessionID === 0) {
+            alert("Please select a session!");
+        }
+        else {
+            $scope.header = 'Success Message';
+            if (btnType === 'Start') {
+                $scope.body = 'Session started successfully!!';
+                // Start websoket connection
+
+                var ws = Socket.StartSocket();
+
+                ws.onError(function () {
+                    alert("Unable to Connect to RRQ Server.");
+                });
+
+                $http({
+                    method: 'POST',
+                    url: '/SessionMgmt/SetSession',
+                    data: { SessionID: $scope.SessionID }
+                }).then(function (result) {
+                });
+
+                ws.onOpen(function () {
+                    ws.send(JSON.stringify({
+                        profile: Constants.Profile['RRQ'],
+                        type: Constants.Events['CONNECTION'],
+                        action: Constants.Action['TEACHERCONNECTION'],
+                        SessionID: _SessionID
+                    }));
+
+                });
+
+
+            }
+            else if (btnType === 'Stop') {
+                $scope.body = 'Session stopped successfully!!';
+                // Stop websocket connection
+
+                var ws = Socket.StartSocket();
+                ws.onOpen(function () {
+                    ws.send(JSON.stringify({
+                        profile: Constants.Profile['RRQ'],
+                        type: Constants.Events['CLOSE'],
+                        SessionID: _SessionID
+                    }));
+                })
+            }
+
+            $http({
+                method: 'POST',
+                url: '/SessionMgmt/StartStopSession',
+                data: { SessionID: $scope.SessionID, Status: btnType }
+            }).then(function (result) {
+                $scope.GetSessions();
+                $('#pop').modal('show');
+            });
+        }
+    };
+
     $scope.DisplayClassrooms = function () {
         var _SessionID = $scope.SessionID;
 
