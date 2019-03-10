@@ -26,11 +26,19 @@
         <div class="box box-default">
             <div class="box-header with-border">
                 <div class="pull-left">
-                    @*<button type="button" class="btn btn-info" id="btnCreateRRQ" data-toggle="modal" data-target="#NewRRQModalSelector">
-                            <i class="glyphicon glyphicon-tasks"></i> Create RRQ
-                        </button>*@
+                    <label>
+                        <select class="form-control" id="drpProgramName" style="width: 100%;" data-ng-model="SessionName" data-ng-options="c.SessionName as c.SessionName for c in SessionsList" data-ng-change="GetSessionRRQ()">
+                            <option value="">{{RRQTextToShow}}</option>
+                        </select>
+                    </label>
                 </div>
                 <div class="box-tools pull-right">
+                    <div class="input-group input-group-sm " style="width:250px; height:30px;">
+                        <input id="rrq_search" type="text" name="table_search" ng-model="RRQFilter" class="form-control" placeholder="Search">
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                 </div>
             </div>
