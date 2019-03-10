@@ -1,8 +1,30 @@
 ﻿myapp.controller('RRQCntrl', function ($scope, $http) {
 
+    GetSessionList();
+
+    function GetSessionList() {
+        $http.get('/SessionMgmt/GetSessions')
+            .then(function (result) {
+                $scope.SessionsList = result.data;
+                $scope.RRQTextToShow = "Select..";
+            });
+    }
+
+    $scope.GetSessionRRQ = function () {
+        var _SessionName = $scope.SessionName;
+        console.log(_SessionName)
+
+        if (_SessionName === null) {
+            $("#rrq_search").val("");
+            GetSessionList();
+        }
+        else
+            $("#rrq_search").val(_SessionName);
+    };
+
     $scope.CreateNewRRQ = function () {
         window.location.href = "/SessionMgmt/NewRRQ/";
-    }
+    };
 
     $scope.GetRRQ = function () {
         $http.get('/SessionMgmt/GetRRQList')

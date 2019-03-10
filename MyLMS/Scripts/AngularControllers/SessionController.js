@@ -259,7 +259,6 @@
                             ind = result.data.lastIndexOf('/');
                             server = result.data.substr(0, ind);
                             key = result.data.substr(ind + 1);
-                            console.log(server + " " + key);
                             obs.startStreaming({
                                 "stream": {
                                     "settings": {

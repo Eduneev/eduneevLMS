@@ -163,8 +163,7 @@ myapp.controller('StudentViewCntrl', function ($scope, $http) {
         window.addEventListener("message", receiveMessage, false);
 
         function receiveMessage(event) {
-            console.log(event);
-            var _StudentImage = event.data;
+            var _StudentImage = "" + event.data;
             $http({
                 method: 'POST',
                 url: '/StudentMgmt/SetStudentPhoto',
