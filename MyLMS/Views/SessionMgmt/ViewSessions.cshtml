@@ -66,7 +66,10 @@
                                 <tr>
                                     <th></th>
                                     <th>Sl No.</th>
-                                    <th>Session Name</th>
+                                    <th>
+                                        <button ng-click="sortBy('SessionName')">Session Name</button>
+                                        <span class="sortorder" ng-show="propertyName === 'SessionName'" ng-class="{reverse: reverse}"></span>
+                                    </th>
                                     <th>Session Date</th>
                                     <th>Scheduled / Actual Time</th>
                                     <th>Course &amp; Subject</th>
@@ -76,7 +79,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="Session in SessionsList | filter: CourseFilter">
+                                <tr ng-repeat="Session in SessionsList | filter: CourseFilter | orderBy:propertyName:reverse">
                                     <td>
                                         <input type="radio" value="No" class="minimal" ng-click="SelectSession(Session.SessionID)" id="SelectionRadio" name="SelectionRadio" />
                                     </td>

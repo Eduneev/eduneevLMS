@@ -1,6 +1,8 @@
 ﻿myapp.controller('SessionCntrl', ['$scope', '$http', 'Socket', 'TwoWaySocket', 'Constants', '$rootScope', function ($scope, $http, Socket, TwoWaySocket, Constants, $rootScope) {
 
     $scope.SessionID = 0;
+    $scope.propertyName = '';
+    $scope.reverse = true;
 
     GetStudio();
     GetPrograms();
@@ -27,6 +29,11 @@
                 $scope.SessionNameTextToShow = "System Generated"
             });
     }
+
+    $scope.sortBy = function (propertyName) {
+        $scope.reverse = (propertyName !== null && $scope.propertyName === propertyName) ? !$scope.reverse : false;
+        $scope.propertyName = propertyName;
+    };
 
     $scope.GetCourse = function GetCourse() {
         $http.get('/CourseMgmt/GetCourse/' + $scope.ProgID)
