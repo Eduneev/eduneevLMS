@@ -53,8 +53,13 @@
     // Get Top 10 Students
     function GetTop10Students() {
         $http.get('/SessionMgmt/GetTop10Students/' + $scope.RRQ_ID)
-        .then(function (result) {
-            $scope.Top10Students = result.data;
+            .then(function (result) {
+                var data = result.data;
+                for (var i = 0; i < data.length; i++) {
+                    d = data[i];
+                    data[i].TotalMarks = Math.round((d.TotalMarks / d.TotalRRQMarks) * 10000) / 100;
+                }
+            $scope.Top10Students = data;
         });
 
     }
@@ -62,7 +67,7 @@
     // Get Top 10 Fastest Correct Students
     function GetTop10FastestStudents(QID) {
         $http.get('/SessionMgmt/GetTop10FastestStudents/' + $scope.QID)
-            .then(function (result) {
+            .then(function (result) {                
                 $scope.Top10FastestStudents = result.data;
             });
     }
