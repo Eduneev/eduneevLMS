@@ -22,7 +22,7 @@
             })
 
             GetRRQQuestions();
-            GetTop10Students();
+            //GetTop10Students();
         }
     }
 
@@ -51,7 +51,7 @@
     }
 
     // Get Top 10 Students
-    function GetTop10Students() {
+    $scope.GetTop10Students = function () {
         $http.get('/SessionMgmt/GetTop10Students/' + $scope.RRQ_ID)
             .then(function (result) {
                 var data = result.data;
