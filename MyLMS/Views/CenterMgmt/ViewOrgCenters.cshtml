@@ -112,6 +112,7 @@
                                     <th>Classroom Name</th>
                                     <th>Sitting Capacity</th>
                                     <th>Is Active</th>
+                                    <th>License Key</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -129,7 +130,10 @@
                                         <span>{{Classroom.SittingCapacity}}</span>
                                     </td>
                                     <td>
-                                        <span>{{Center.IsActive}}</span>
+                                        <span>{{Classroom.IsActive}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{Classroom.Auth}}</span>
                                     </td>
                                 </tr>
                             </tbody>

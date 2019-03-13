@@ -2,7 +2,7 @@
 
     $scope.SessionID = 0;
     $scope.propertyName = '';
-    $scope.reverse = true;
+    $scope.reverse = false;
 
     GetStudio();
     GetPrograms();
@@ -11,7 +11,7 @@
         $http.get('/SessionMgmt/GetStudios')
             .then(function (result) {
                 $scope.StudioList = result.data;
-                $scope.StudioTextToShow = 'Please select studio..'
+                $scope.StudioTextToShow = 'Please select studio..';
             });
     }
     function GetSessionStudio(SessionID) {
@@ -53,7 +53,6 @@
 
 
     $scope.GetTopic = function GetTopic() {
-
         $scope.FacultyTextToShow = 'Please select faculty...'
         $http.get('/CourseMgmt/GetTopics/' + $scope.SubjectID)
             .then(function (result) {
