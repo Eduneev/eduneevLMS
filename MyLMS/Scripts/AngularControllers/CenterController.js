@@ -61,6 +61,43 @@
     }
 });
 
+myapp.controller('ClassroomCntrl', function ($scope, $http) {
+
+    GetCenter();
+
+    function GetCenter() {
+        $http.get('/CenterMgmt/GetCenters')
+            .then(function (result) {
+                console.log(result.data)
+                var CentersList = result.data;
+                $scope.Center = CentersList[0];
+                $scope.CenterID = $scope.Center.CenterID;
+
+                GetClassrooms();
+            });
+    }
+
+    function GetClassrooms() {
+        $http.get('/CenterMgmt/GetClassroomsForCenter/' + $scope.CenterID)
+            .then(function (result) {
+                $scope.ClassroomList = result.data;
+            });
+    }
+
+    $scope.SaveClassroom = function () {
+        debugger;
+
+        $http({
+            method: 'POST',
+            url: '/CenterMgmt/SaveClassroom',
+            data: { ClassRoomName: $scope.ClassroomName, CenterID: $scope.CenterID, SittingCapacity: $scope.SittingCapacity }
+        }).then(function (result) {
+            alert('Saved Successfully!!');
+            GetClassrooms();
+        });
+    }
+});
+
 myapp.controller('OrgCntrl', function ($scope, $http) {
     GetEntityList();
     function GetEntityList() {
