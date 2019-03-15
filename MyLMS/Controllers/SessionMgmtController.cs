@@ -517,10 +517,10 @@ namespace MyLMS.Controllers
             return JSONString;
         }
 
-        private string createRandomKey()
+        public static string createRandomKey(int size=5)
         {
             string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            char[] stringChars = new char[8];
+            char[] stringChars = new char[size];
             Random random = new Random();
 
             for (int i = 0; i < stringChars.Length; i++)
