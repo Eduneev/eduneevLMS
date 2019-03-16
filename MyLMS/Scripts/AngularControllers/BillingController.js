@@ -55,8 +55,12 @@
         dates = GetDate();
         $http.get('/BillingMgmt/GetStreamLogsForClassroom/' + $scope.ClassRoomID + "/" + dates[0] + "/" + dates[1])
             .then(function (result) {
-                console.log(result.data)
                 $scope.StreamList = result.data;
+
+                var total = 0;
+                for (var Stream of $scope.StreamList)
+                    total += Stream.Amount;
+                document.getElementById("total").textContent = total;
             });
     }
 
