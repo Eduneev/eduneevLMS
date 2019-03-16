@@ -130,6 +130,7 @@ namespace MyLMS.Controllers
         [HttpPost]
         public void SetStudentPhoto(int StudentID, string StudentImage)
         {
+            // Server loses images every time on restart. Need to find a way to not let this happen.
             string cleanImage = Regex.Replace(StudentImage, "data:image/png;base64,", "");
             byte[] encodedDataAsBytes = System.Convert.FromBase64String(cleanImage);
             string Path = Server.MapPath("~/StudentsImage/" + StudentID + ".jpg");
