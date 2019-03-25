@@ -64,6 +64,28 @@
             });
     }
 
+    $scope.download = function () {
+        var table = document.getElementById("billingTable");
+        var csvString = '';
+        for (var i = 0; i < table.rows.length; i++) {
+            var rowData = table.rows[i].cells;
+            for (var j = 0; j < rowData.length; j++) {
+                var temp = rowData[j].textContent
+                csvString = csvString + temp.replace(/\s+/g, ' ').trim() + ","
+            }
+            csvString = csvString.substring(0, csvString.length - 1);
+            csvString = csvString + "\n";
+        }
+        csvString = csvString.substring(0, csvString.length - 1);
+        var a = $('<a/>', {
+            style: 'display:none',
+            href: 'data:application/octet-stream;base64,' + btoa(csvString),
+            download: 'billing.csv'
+        }).appendTo('body');
+        a[0].click();
+        a.remove();
+    }
+
     function GetDate() {
         startDate = $scope.StartDate;
         console.log(startDate)
