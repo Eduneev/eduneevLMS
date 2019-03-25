@@ -53,6 +53,9 @@
                     <label>
                         <button class="btn btn-success" ng-click="GetStreamList()">Go</button>
                     </label>
+                    <label>
+                        <button ng-click="download()">Download Stats</button>
+                    </label>
                 </div>
                 <div class="pull-right">
                     <label>
@@ -68,7 +71,7 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table table-hover">
+                        <table id="billingTable" class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>Sl No.</th>
