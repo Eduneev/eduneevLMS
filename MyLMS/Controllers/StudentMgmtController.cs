@@ -1,16 +1,13 @@
 ﻿using MyLMS.Models;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using UtilityClass;
-using System.IO;
-using System.Drawing;
 using System.Text.RegularExpressions;
+using Amazon.S3;
+using Amazon.S3.Transfer;
 
 namespace MyLMS.Controllers
 {
@@ -37,6 +34,10 @@ namespace MyLMS.Controllers
         {
             return View();
         }
+
+        public static String bucket = "sanats/";
+        public static String url = "https://s3-us-west-2.amazonaws.com/";
+        private static IAmazonS3 s3Client;
 
 
 
@@ -133,7 +134,7 @@ namespace MyLMS.Controllers
             // Server loses images every time on restart. Need to find a way to not let this happen.
             string cleanImage = Regex.Replace(StudentImage, "data:image/png;base64,", "");
             byte[] encodedDataAsBytes = System.Convert.FromBase64String(cleanImage);
-            string Path = Server.MapPath("~/StudentsImage/" + StudentID + ".jpg");
+            string Path = Server.MapPath(url + bucket + StudentID + ".jpg");
             System.IO.File.WriteAllBytes(Path, encodedDataAsBytes);
 
             SqlParameter[] FObj = new SqlParameter[1];
