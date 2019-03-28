@@ -174,6 +174,7 @@ myapp.controller('StudentViewCntrl', function ($scope, $http) {
     }
 
     $scope.clear = function () {
+        debugger;
         $scope.imageCropStep = 1;
         delete $scope.imgSrc;
         delete $scope.result;
