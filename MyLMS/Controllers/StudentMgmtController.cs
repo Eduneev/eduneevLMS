@@ -8,6 +8,10 @@ using UtilityClass;
 using System.Text.RegularExpressions;
 using Amazon.S3;
 using Amazon.S3.Transfer;
+using Amazon;
+using System.Threading.Tasks;
+using Amazon.S3.Model;
+using System.Diagnostics;
 
 namespace MyLMS.Controllers
 {
@@ -35,11 +39,15 @@ namespace MyLMS.Controllers
             return View();
         }
 
-        public static String bucket = "sanats/";
+        public static String bucket = "sanats";
         public static String url = "https://s3-us-west-2.amazonaws.com/";
+        private static readonly RegionEndpoint bucketRegion = RegionEndpoint.USWest2;
         private static IAmazonS3 s3Client;
 
-
+        public StudentMgmtController()
+        {
+            s3Client = new AmazonS3Client(bucketRegion);
+        }
 
         [HttpPost]
         public void SaveStudent(string StudentName, string Code,int ProgramID, int CourseID, int SubjectID, string Email, string Mobile, string Landline, string Address, string Pincode, string Gender, string BirthPlace, string SchoolName, string GuardianName, string GuardianContactNo)
@@ -134,12 +142,17 @@ namespace MyLMS.Controllers
             // Server loses images every time on restart. Need to find a way to not let this happen.
             string cleanImage = Regex.Replace(StudentImage, "data:image/png;base64,", "");
             byte[] encodedDataAsBytes = System.Convert.FromBase64String(cleanImage);
-            string Path = Server.MapPath(url + bucket + StudentID + ".jpg");
-            System.IO.File.WriteAllBytes(Path, encodedDataAsBytes);
+            System.IO.Stream stream = new System.IO.MemoryStream(encodedDataAsBytes);
+            
+            string Path = url + bucket + "/" + StudentID + ".jpg";
+            //System.IO.File.WriteAllBytes(Path, encodedDataAsBytes);
+            UploadStudentImageAsync(stream, StudentID);
 
-            SqlParameter[] FObj = new SqlParameter[1];
+            SqlParameter[] FObj = new SqlParameter[2];
             FObj[0] = new SqlParameter("@StudentID", SqlDbType.Int);
             FObj[0].Value = StudentID;
+            FObj[1] = new SqlParameter("@Path", SqlDbType.VarChar);
+            FObj[1].Value = Path;
 
             StudentModel s = new StudentModel();
             try
@@ -151,7 +164,33 @@ namespace MyLMS.Controllers
 
             }
         }
+        private static async Task UploadStudentImageAsync(System.IO.Stream Image, int StudentID)
+        {
+            try
+            {                
+                var putRequest1 = new PutObjectRequest
+                {
+                    BucketName = bucket,
+                    Key = StudentID.ToString() + ".jpg",
+                    InputStream = Image,
+                    ContentType = "image/jpg"
+                };
 
+                PutObjectResponse response1 = await s3Client.PutObjectAsync(putRequest1);
+                //await fileTransferUtility.UploadAsync(Image, bucket, StudentID.ToString());
+                Console.WriteLine("Upload completed");
+
+            }
+            catch (AmazonS3Exception e)
+            {
+                Console.WriteLine("Error encountered on server. Message:'{0}' when writing an object", e.Message);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Unknown encountered on server. Message:'{0}' when writing an object", e.Message);
+            }
+
+        }
 
         [HttpPost]
         public void SetStudentID(int StudentID)
