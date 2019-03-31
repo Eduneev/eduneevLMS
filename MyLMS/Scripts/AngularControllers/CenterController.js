@@ -127,6 +127,16 @@ myapp.controller('OrgCntrl', function ($scope, $http) {
                 $scope.ClassroomList = result.data;
             });
     }
+
+    $scope.DownloadAuth = function(auth) {
+        var a = $('<a/>', {
+            style: 'display:none',
+            href: 'data:application/octet-stream;base64,' + btoa(auth),
+            download: 'auth.pem'
+        }).appendTo('body');
+        a[0].click();
+        a.remove();
+    }
 });
 
 myapp.controller('AllocateReceiverCntrl', function ($scope, $http) {
