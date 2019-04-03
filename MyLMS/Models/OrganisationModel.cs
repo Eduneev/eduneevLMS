@@ -23,6 +23,20 @@ namespace MyLMS.Models
             }
             return res;
         }
+        public string EditEntity(SqlParameter[] sparams)
+        {
+            string res = "Failure..";
+            try
+            {
+                res = DAL.ExecuteScalar("EditEntity", sparams);
+            }
+            catch (Exception ex)
+            {
+                res = ex.Message;
+                throw;
+            }
+            return res;
+        }
 
         public string AddEntityUser(SqlParameter[] sparams)
         {

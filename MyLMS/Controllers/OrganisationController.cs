@@ -74,6 +74,39 @@ namespace MyLMS.Controllers
             }
         }
 
+        [HttpPost]
+        public void EditEntity(int EntityID, string EntityName, string EntityCode, string ManagerName, string Email, string Mobile, string Landline, string Address)
+        {
+            OrganisationModel OrgObj = new OrganisationModel();
+            SqlParameter[] SParam = new SqlParameter[8];
+
+            SParam[0] = new SqlParameter("@EntityID", SqlDbType.Int);
+            SParam[0].Value = EntityID;
+            SParam[1] = new SqlParameter("@EntityName", SqlDbType.VarChar);
+            SParam[1].Value = EntityName;
+            SParam[2] = new SqlParameter("@EntityCode", SqlDbType.VarChar);
+            SParam[2].Value = EntityCode;
+            SParam[3] = new SqlParameter("@ManagerName", SqlDbType.VarChar);
+            SParam[3].Value = ManagerName;
+            SParam[4] = new SqlParameter("@Email", SqlDbType.VarChar);
+            SParam[4].Value = Email;
+            SParam[5] = new SqlParameter("@Mobile", SqlDbType.VarChar);
+            SParam[5].Value = Mobile;
+            SParam[6] = new SqlParameter("@Landline", SqlDbType.VarChar);
+            SParam[6].Value = Landline;
+            SParam[7] = new SqlParameter("@Address", SqlDbType.Text);
+            SParam[7].Value = Address;
+
+            try
+            {
+                OrgObj.EditEntity(SParam);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
         [HttpGet]
         public string GetOrgUserList()
         {
