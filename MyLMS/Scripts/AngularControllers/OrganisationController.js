@@ -29,6 +29,43 @@
     $scope.OpenViewEntityList = function () {
         window.location.href = "/Organisation/Entity/";
     }
+
+    $scope.GetEntityDetails = function () {
+        var _UserID = $scope.EntityID;
+        for (var i = 0; i < $scope.EntityList.length; i++) {
+            e = $scope.EntityList[i];
+            console.log(e.EntityID);
+            if (e.EntityID == _UserID) {
+                $scope.EntityName = e.EntityName;
+                $scope.EntityCode = e.EntityCode;
+                $scope.ManagerName = e.ManagerName;
+                $scope.Email = e.Email;
+                $scope.Mobile = e.Mobile;
+                $scope.Landline = e.Landline;
+                $scope.Address = e.Address;
+            }
+        }
+    }
+
+    $scope.EditEntity = function () {
+        var _EntityID = $scope.EntityID;
+        var _EntityName = $scope.EntityName
+        var _EntityCode = $scope.EntityCode;
+        var _ManagerName = $scope.ManagerName;
+        var _Email = $scope.Email;
+        var _Mobile = $scope.Mobile;
+        var _Landline = $scope.Landline;
+        var _Address = $scope.Address;
+
+        $http({
+            method: 'POST',
+            url: '/Organisation/EditEntity',
+            data: { EntityID: _EntityID, EntityName: _EntityName, EntityCode: _EntityCode, ManagerName: _ManagerName, Email: _Email, Mobile: _Mobile, Landline: _Landline, Address: _Address }
+        }).then(function (result) {
+            alert("Updated!");
+            GetEntityList();
+        });
+    }
 });
 
 myapp.controller('OrgUserCntrl', function ($scope, $http) {
