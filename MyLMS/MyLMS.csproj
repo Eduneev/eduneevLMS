@@ -757,7 +757,6 @@
     <Content Include="Views\Shared\_LayoutDashboard.cshtml" />
     <Content Include="Views\Entity\EntityUsers.cshtml" />
     <Content Include="Views\Organisation\Entity.cshtml" />
-    <Content Include="Views\Organisation\CreateUser.cshtml" />
     <Content Include="Views\Organisation\CreateEntityUser.cshtml" />
     <Content Include="Views\Organisation\ShippingReceiver.cshtml" />
     <Content Include="Views\Organisation\ShippingRemote.cshtml" />
