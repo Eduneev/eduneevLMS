@@ -301,6 +301,7 @@ myapp.controller('FacultyCntrl', function ($scope, $http) {
                 data: { FacultyName: _FacultyName, ProgramID: _ProgramID, CourseID: _CourseID, SubjectID: _SubjectID, Email: _Email, Mobile: _Mobile, Address: _Address, Pincode: _Pincode, Gender: _Gender }
             }).then(function (result) {
                 alert("Faculty Saved Successfully");
+                $scope.GetFaculty();
             });
         }
     }

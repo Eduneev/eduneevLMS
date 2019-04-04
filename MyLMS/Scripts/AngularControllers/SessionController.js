@@ -63,9 +63,10 @@
     }
 
     function GetFaculty() {
-        $http.get('/FaciltyMgmt/GetFaculty/' + $scope.SubjectID)
+        $http.get('/FacultyMgmt/GetFaculty/' + $scope.SubjectID)
             .then(function (result) {
                 $scope.Faculties = result.data;
+
             });
     }
 
