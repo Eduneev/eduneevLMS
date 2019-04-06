@@ -106,4 +106,9 @@
             $scope.CourseList = result.data;
         });            
     }
+
+    $scope.sortBy = function (propertyName) {
+        $scope.reverse = (propertyName !== null && $scope.propertyName === propertyName) ? !$scope.reverse : false;
+        $scope.propertyName = propertyName;
+    };
 });
