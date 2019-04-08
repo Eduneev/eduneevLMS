@@ -1,5 +1,6 @@
 ﻿myapp.controller('BillingCntrl', function ($scope,$http) {
     GetCenters();
+    GetClassrooms();
     GetEntityList();
     $scope.CenterID = 0;
     $scope.EntityID = 0;
@@ -32,6 +33,14 @@
             .then(function (result) {
                 $scope.CentersList = result.data;
                 $scope.CenterTextToShow = 'Please select..';
+            });
+    }
+
+    function GetClassrooms() {
+        $http.get("/CenterMgmt/GetClassrooms")
+            .then(function (result) {
+                $scope.ClassroomList = result.data;
+                $scope.ClassroomTextToShow = 'Please select..';
             });
     }
 
