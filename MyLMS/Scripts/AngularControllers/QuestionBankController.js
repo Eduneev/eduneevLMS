@@ -146,6 +146,8 @@
         window.location.pathname = '/SessionMgmt/ViewRRQ'
     }
 
+    $scope.RRQEnd = false;
+
     $scope.StopQuestion = function () {
         $scope.ws.send(JSON.stringify({
             profile: Constants.Profile['RRQ'],
@@ -185,6 +187,7 @@
     }
 
     $scope.EndRRQ = function () {
+        $scope.RRQEnd = true;
         $scope.ws.send(JSON.stringify({
             profile: Constants.Profile['RRQ'],
             type: Constants.Events['MESSAGE'],
@@ -198,6 +201,10 @@
         window.clearInterval(prcntclock);
         CallstartTimer(0, display);
 
+    }
+
+    $scope.DisplayDashboard = function() {
+        window.location.href = "/SessionMgmt/RRQDashboard/" + $scope.RRQID + "?RRQID=" + $scope.RRQID;
     }
 
     $scope.currentPage = 0;
