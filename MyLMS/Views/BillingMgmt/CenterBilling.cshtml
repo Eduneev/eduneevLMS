@@ -1,0 +1,137 @@
+﻿
+@{
+    ViewBag.Title = "Billing";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+@section scripts{
+    <script src="~/Scripts/AngularControllers/BillingController.js"></script>
+}
+
+<div ng-controller="BillingCntrl">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Usage and Billing
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="/Home"><i class="fa fa-dashboard"></i>Home</a></li>
+            <li><a href="#">Billing</a></li>
+            @*<li class="active">Add Course</li>*@
+        </ol>
+    </section>
+
+    <!-- Form Body (Page body)-->
+    <section class="content">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <div class="pull-left">
+                    <label>
+                        <select class="form-control" id="drpClassroomName" style="width: 100%;" data-ng-model="ClassRoomID" data-ng-options="c.ClassRoomID as c.ClassRoomName for c in ClassroomList">
+                            <option value="">{{ClassroomTextToShow}}</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        <span style="width: 100%;">Select Start Date:</span>
+                        <input type="date" ng-model="StartDate" placeholder='Pick a Date'>
+                    </label>
+
+                    <label>
+                        <span style="width: 100%;">Select End Date:</span>
+                        <input type="date" ng-model='EndDate' placeholder='Pick a Date'>
+                    </label>
+                    <label>
+                        <button type="button" class="btn btn-success btn-sm" ng-click="GetStreamList()">Go</button>
+                    </label>
+                    <label>
+                        <button ng-click="download()">Download Stats</button>
+                    </label>
+                </div>
+                <div class="pull-right">
+                    <label>
+                        <span style="width: 100%; height:50px">Total: </span>
+                        <strong><span style="width: 100%;color:red" id="total"></span></strong>
+                    </label>
+                    <label>
+                        <input type="text" name="table_search" ng-model="CourseFilter" class="form-control" placeholder="Search..">
+                    </label>
+                </div>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="billingTable" class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Sl No.</th>
+                                    <th>
+                                        <button ng-click="sortBy('Date')">Date</button>
+                                        <span class="sortorder" ng-show="propertyName === 'Date'" ng-class="{reverse: reverse}"></span>
+                                    </th>
+                                    <th>
+                                        <button ng-click="sortBy('Stream')">Stream</button>
+                                        <span class="sortorder" ng-show="propertyName === 'Stream'" ng-class="{reverse: reverse}"></span>
+                                    </th>
+                                    <th>
+                                        <button ng-click="sortBy('Bytes')">Bytes</button>
+                                        <span class="sortorder" ng-show="propertyName === 'Bytes'" ng-class="{reverse: reverse}"></span>
+                                    </th>
+                                    <th>
+                                        <button ng-click="sortBy('Duration')">Duration(minutes)</button>
+                                        <span class="sortorder" ng-show="propertyName === 'Duration'" ng-class="{reverse: reverse}"></span>
+                                    </th>
+                                    <th>
+                                        <button ng-click="sortBy('Amount')">Amount</button>
+                                        <span class="sortorder" ng-show="propertyName === 'Amount'" ng-class="{reverse: reverse}"></span>
+                                    </th>
+                                    @*<th></th>*@
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="Stream in StreamList | filter: CourseFilter | orderBy:propertyName:reverse">
+                                    <td>
+                                        {{$index+1}}.
+                                    </td>
+                                    <td>
+                                        <span>{{Stream.Date}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{Stream.Stream}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{Stream.Bytes}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{Stream.Duration}}</span>
+                                    </td>
+                                    <td>
+                                        <strong><span>{{Stream.Amount}}</span></strong>
+                                    </td>
+                                    @*<th>
+                                            <span ng-click="SurveyAttemptReport(Survey.SURVEY_ID)" style="cursor:pointer;" class="fa fa-file-text-o"></span>&nbsp;
+                                        </th>*@
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script src="~/Template/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+<script>
+    $(function () {
+        //Date picker
+        $('#datepicker').datepicker({
+            autoclose: true
+        });
+
+        $('#datepicker2').datepicker({
+            autoclose: true
+        });
+    });
+</script>
