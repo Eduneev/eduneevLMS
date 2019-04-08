@@ -152,6 +152,19 @@ namespace MyLMS.Controllers
         }
 
         [HttpGet]
+        public string GetClassrooms()
+        {
+            SqlParameter[] FObj = new SqlParameter[1];
+            FObj[0] = new SqlParameter("@UserID", SqlDbType.Int);
+            FObj[0].Value = Convert.ToInt32(Session["USER_ID"]);
+            DataTable CentersList = DAL.GetDataTable("GetClassrooms", FObj);
+
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(CentersList);
+            return JSONString;
+        }
+
+        [HttpGet]
         public string GetClassroomReceiver()
         {
             SqlParameter[] FObj = new SqlParameter[1];

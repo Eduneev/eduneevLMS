@@ -30,6 +30,11 @@ namespace MyLMS.Controllers
             return View();
         }
 
+        public ActionResult CenterBilling()
+        {
+            return View();
+        }
+
         [HttpPost]
         public void CreateEntityBilling(int EntityID, int BillingTypeID, int StreamTypeID, int Cost)
         {
