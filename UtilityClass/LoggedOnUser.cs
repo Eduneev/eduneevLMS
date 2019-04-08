@@ -15,5 +15,6 @@ namespace UtilityClass
         public int RoleID;
         public bool IsActive;
         public int CreatedBy;
+        public int AccountID;
     }
 }

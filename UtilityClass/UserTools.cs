@@ -32,10 +32,10 @@ namespace UtilityClass
                 UserDetails.UserName = Convert.IsDBNull(dt.Rows[0]["UserName"]) ? "" : dt.Rows[0]["UserName"].ToString();
                 UserDetails.FullName = Convert.IsDBNull(dt.Rows[0]["FullName"]) ? "" : dt.Rows[0]["FullName"].ToString();
                 UserDetails.EmailID = Convert.IsDBNull(dt.Rows[0]["EmailID"]) ? "" : dt.Rows[0]["EmailID"].ToString();
-                //UserDetails.AccountID = int.Parse(Convert.IsDBNull(dt.Rows[0]["AccountID"]) ? "0" : dt.Rows[0]["AccountID"].ToString());
                 UserDetails.RoleID = int.Parse(Convert.IsDBNull(dt.Rows[0]["RoleID"]) ? "0" : dt.Rows[0]["RoleID"].ToString());
                 UserDetails.IsActive = (bool)(Convert.IsDBNull(dt.Rows[0]["IsActive"]) ? false : dt.Rows[0]["IsActive"]);
                 UserDetails.CreatedBy = int.Parse(Convert.IsDBNull(dt.Rows[0]["CreatedBy"]) ? "0" : dt.Rows[0]["CreatedBy"].ToString());
+                UserDetails.AccountID = int.Parse(Convert.IsDBNull(dt.Rows[0]["AccountID"]) ? "0" : dt.Rows[0]["AccountID"].ToString());
             }
             return UserDetails;
         }      
