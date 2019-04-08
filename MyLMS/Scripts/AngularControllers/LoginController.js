@@ -12,9 +12,9 @@
         $http.get('/Home/ValidateUser', {
             params: { UserName: _UserName, Password: _Password }
         }).then(function (result) {
-            if (result.data == 'True')
+            if (result.data !="false")
             {              
-                window.location.href = "/CourseMgmt/CourseMgmt/";
+                window.location.href = result.data;
             }
             else
             {
