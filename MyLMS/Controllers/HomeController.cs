@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Web.Mvc;
 using System.Web.UI;
 using UtilityClass;
@@ -62,7 +63,7 @@ namespace MyLMS.Controllers
         }
 
 
-       public bool ValidateUser(string UserName, string Password)
+       public string ValidateUser(string UserName, string Password)
         {
             LoggedOnUser LOU = (Session["LoggedOnUserDetails"] == null ? UserTools.getLoggedOnUserDetails(UserName, Password) : (LoggedOnUser)Session["LoggedOnUserDetails"]);
             if(UserTools.authenticateUserOnDefault(LOU) == true)
@@ -71,12 +72,23 @@ namespace MyLMS.Controllers
                 Session["USER_NAME"] = LOU.FullName;
                 Session["EMAIL"] = LOU.EmailID;
                 Session["RoleID"] = LOU.RoleID;
+                Session["AccountID"] = LOU.AccountID;
 
-                return true;
+                string UrlPath = string.Empty;
+                //Organization Login
+                if (LOU.AccountID == 1)
+                    UrlPath = "/Organisation/Entity";
+                //Entity Login
+                else if (LOU.AccountID == 2)
+                    UrlPath = "/SessionMgmt/ViewSessions";
+                //Center Login
+                else if (LOU.AccountID == 3)
+                    UrlPath = "/CenterMgmt/ViewSessions";
+                return UrlPath;
             }
             else
             {
-                return false;
+                return "false";
             }
         }
     }
