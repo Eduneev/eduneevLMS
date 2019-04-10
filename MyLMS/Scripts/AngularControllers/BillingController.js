@@ -67,8 +67,11 @@
                 $scope.StreamList = result.data;
 
                 var total = 0;
-                for (var Stream of $scope.StreamList)
-                    total += Stream.Amount;
+                for (var i = 0; i < $scope.StreamList.length; i++) {
+                    total += $scope.StreamList[i].Amount;
+                    $scope.StreamList[i].Bytes = Math.round($scope.StreamList[i].Bytes/10000)/100
+                    
+                }
                 document.getElementById("total").textContent = total;
             });
     }
