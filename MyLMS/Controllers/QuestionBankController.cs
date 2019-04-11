@@ -534,6 +534,42 @@ namespace MyLMS.Controllers
         }
 
         [HttpPost]
+        public void StartRRQ(int RRQID)
+        {
+            SqlParameter[] SParam = new SqlParameter[1];
+            RRQ RRQModel = new RRQ();
+
+            SParam[0] = new SqlParameter("@RRQ_ID", SqlDbType.Int);
+            SParam[0].Value = RRQID;
+
+            try
+            {
+                RRQModel.StartRRQ(SParam);
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+        [HttpPost]
+        public void EndRRQ(int RRQID)
+        {
+            SqlParameter[] SParam = new SqlParameter[1];
+            RRQ RRQModel = new RRQ();
+
+            SParam[0] = new SqlParameter("@RRQ_ID", SqlDbType.Int);
+            SParam[0].Value = RRQID;
+
+            try
+            {
+                RRQModel.EndRRQ(SParam);
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+        [HttpPost]
         public static bool SaveQuestionResponse(int RRQId, int QId, int studentId, int optionSeq) // response could be A,B,C,D or E
         {
             SqlParameter[] SParam = new SqlParameter[4];
@@ -561,12 +597,12 @@ namespace MyLMS.Controllers
             return false;
         }
 
+
         [HttpPost]
         public static bool SaveMobileQuestionResponse(int RRQID, int QuesNo, int StudentID, int OptionSeq)
         {
             SqlParameter[] SParam = new SqlParameter[4];
 
-            // how do we map from response to optionId? Mapping to OptionSeq instead
             SParam[0] = new SqlParameter("@RRQ_ID", SqlDbType.Int);
             SParam[0].Value = RRQID;
             SParam[1] = new SqlParameter("@QUES_NO", SqlDbType.Int);
@@ -588,5 +624,6 @@ namespace MyLMS.Controllers
             }
             return false;
         }
+
     }
 }
