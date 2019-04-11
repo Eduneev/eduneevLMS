@@ -73,8 +73,14 @@
                                     <th>Session Date</th>
                                     <th>Scheduled / Actual Time</th>
                                     <th>Course &amp; Subject</th>
-                                    <th>Studio</th>
-                                    <th>Status</th>
+                                    <th>
+                                        <button ng-click="sortBy('StudioName')">Studio</button>
+                                        <span class="sortorder" ng-show="propertyName === 'StudioName'" ng-class="{reverse: reverse}"></span>
+                                    </th>
+                                    <th>
+                                        <button ng-click="sortBy('SessionStatus')">Status</button>
+                                        <span class="sortorder" ng-show="propertyName === 'SessionStatus'" ng-class="{reverse: reverse}"></span>
+                                    </th>
                                     <th></th>
                                 </tr>
                             </thead>

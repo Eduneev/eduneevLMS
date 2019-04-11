@@ -32,17 +32,28 @@
                                 <thead>
                                     <tr>
                                         <th>Sl No.</th>
-                                        <th>Session No.</th>
+                                        <th>
+                                            <button ng-click="sortBy('SessionName')">Session Name</button>
+                                            <span class="sortorder" ng-show="propertyName === 'SessionName'" ng-class="{reverse: reverse}"></span>
+                                        </th>
                                         <th>Session Date</th>
                                         <th>Scheduled / Actual Time</th>
                                         <th>Course &amp; Subject</th>
-                                        <th>Status</th>
+                                        <th>
+                                            <button ng-click="sortBy('SessionStatus')">Status</button>
+                                            <span class="sortorder" ng-show="propertyName === 'SessionStatus'" ng-class="{reverse: reverse}"></span>
+                                        </th>
+                                        <th>
+                                            <button ng-click="sortBy('ChannelName')">2WayCall ID</button>
+                                            <span class="sortorder" ng-show="propertyName === 'ChannelName'" ng-class="{reverse: reverse}"></span>
+                                        </th>
+
                                         <th>2WayCall ID</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="Session in SessionsList | filter: CourseFilter">
+                                    <tr ng-repeat="Session in SessionsList | filter: CourseFilter | orderBy:propertyName:reverse">
                                         <td>
                                             {{$index+1}}.
                                         </td>
