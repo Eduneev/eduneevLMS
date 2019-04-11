@@ -21,7 +21,7 @@ namespace MyLMS.Controllers
         }
 
         [HttpPost]
-        public void SaveFaculty(string FacultyName, int ProgramID, int CourseID, int SubjectID, string Email, string Mobile, string Address, string Pincode, string Gender)
+        public void SaveFaculty(string FacultyName, int ProgramID, int CourseID, int SubjectID, string Email, string Mobile, string Gender)
         {
             FacultyModel ModelObj1 = new FacultyModel();
             SqlParameter[] SParam = new SqlParameter[10];
@@ -38,10 +38,6 @@ namespace MyLMS.Controllers
             SParam[4].Value = Email;
             SParam[5] = new SqlParameter("@Mobile", SqlDbType.VarChar);
             SParam[5].Value = Mobile;
-            SParam[6] = new SqlParameter("@Address", SqlDbType.Text);
-            SParam[6].Value = Address;
-            SParam[7] = new SqlParameter("@Pincode", SqlDbType.VarChar);
-            SParam[7].Value = Pincode;
             SParam[8] = new SqlParameter("@Gender", SqlDbType.VarChar);
             SParam[8].Value = Gender;
             SParam[9] = new SqlParameter("@UserID", SqlDbType.Int);
