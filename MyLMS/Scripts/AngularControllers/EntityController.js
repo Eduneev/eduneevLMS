@@ -292,13 +292,10 @@ myapp.controller('FacultyCntrl', function ($scope, $http) {
             var _SubjectID = SubjectID;
             var _Email = $scope.Email;
             var _Mobile = $scope.Mobile;
-            var _Address = $scope.Address;
-            var _Pincode = $scope.PinCode;
-
             $http({
                 method: 'POST',
                 url: '/FacultyMgmt/SaveFaculty',
-                data: { FacultyName: _FacultyName, ProgramID: _ProgramID, CourseID: _CourseID, SubjectID: _SubjectID, Email: _Email, Mobile: _Mobile, Address: _Address, Pincode: _Pincode, Gender: _Gender }
+                data: { FacultyName: _FacultyName, ProgramID: _ProgramID, CourseID: _CourseID, SubjectID: _SubjectID, Email: _Email, Mobile: _Mobile, Gender: _Gender }
             }).then(function (result) {
                 alert("Faculty Saved Successfully");
                 $scope.GetFaculty();
