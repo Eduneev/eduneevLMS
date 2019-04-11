@@ -142,8 +142,14 @@
             });
     }
 
-    $scope.StartRRQ = function () {
-        window.location.pathname = '/SessionMgmt/ViewRRQ'
+    $scope.StartRRQ = function (RRQID) {
+        $http({
+            method: 'POST',
+            url: '/QuestionBank/StartRRQ',
+            data: { RRQID: RRQID }
+        }).then(function (result) {
+            window.location.pathname = '/SessionMgmt/ViewRRQ'
+        });
     }
 
     $scope.RRQEnd = false;
@@ -201,6 +207,11 @@
         window.clearInterval(prcntclock);
         CallstartTimer(0, display);
 
+        $http({
+            method: 'POST',
+            url: '/QuestionBank/EndRRQ',
+            data: { RRQID: $scope.RRQID }
+        });
     }
 
     $scope.DisplayDashboard = function() {
