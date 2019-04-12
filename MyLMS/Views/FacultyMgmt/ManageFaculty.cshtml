@@ -64,6 +64,7 @@
                                         <th>Name</th>
                                         <th>Contact</th>
                                         <th>Course Info</th>
+                                        <th>Remove</th>
                                     </tr>
                                 </thead>
                                 <tbody style="font-size:16px;">
@@ -83,6 +84,9 @@
                                             <span>Program: {{Faculty.ProgramName}}</span><br />
                                             <span>Course: {{Faculty.CourseName}}</span><br />
                                             <span>Subject: {{Faculty.SubjectName}}</span>
+                                        </td>
+                                        <td>
+                                            <span ng-click="RemoveFaculty(Faculty.FacultyID)" style="cursor:pointer;" class="fa fa-times-circle-o"></span>
                                         </td>
                                     </tr>
                                 </tbody>

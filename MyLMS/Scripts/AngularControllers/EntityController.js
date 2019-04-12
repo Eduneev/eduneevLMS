@@ -303,4 +303,15 @@ myapp.controller('FacultyCntrl', function ($scope, $http) {
         }
     }
 
+    $scope.RemoveFaculty = function(FacultyID) {
+        $http({
+            method: 'POST',
+            url: '/FacultyMgmt/DeleteFaculty',
+            data: { FacultyID: FacultyID, SubjectID: $scope.SubjectID }
+        }).then(function (result) {
+            alert("Faculty Saved Successfully");
+            $scope.GetFaculty();
+        });
+    }
+
 });
