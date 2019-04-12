@@ -25,5 +25,21 @@ namespace MyLMS.Models
             return res;
 
         }
+
+        public string DeleteFaculty(SqlParameter[] sparams)
+        {
+            string res = "Failure..";
+            try
+            {
+                res = DAL.ExecuteScalar("DeleteFaculty", sparams);
+            }
+            catch (Exception ex)
+            {
+                res = ex.Message;
+                throw;
+            }
+            return res;
+
+        }
     }
 }
