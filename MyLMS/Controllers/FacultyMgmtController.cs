@@ -52,6 +52,29 @@ namespace MyLMS.Controllers
             }
         }
 
+        [HttpPost]
+        public void DeleteFaculty(int FacultyID, int SubjectID)
+        {
+            FacultyModel ModelObj1 = new FacultyModel();
+            SqlParameter[] SParam = new SqlParameter[3];
+
+            SParam[0] = new SqlParameter("@FacultyID", SqlDbType.Int);
+            SParam[0].Value = FacultyID;
+            SParam[1] = new SqlParameter("@SubjectID", SqlDbType.Int);
+            SParam[1].Value = SubjectID;
+            SParam[2] = new SqlParameter("@UserID", SqlDbType.Int);
+            SParam[2].Value = Convert.ToInt32(Session["USER_ID"]);
+
+            try
+            {
+                ModelObj1.DeleteFaculty(SParam);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
         [HttpGet]
         public string GetFaculty(int ID)
         {
