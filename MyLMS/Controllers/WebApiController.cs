@@ -68,7 +68,7 @@ namespace MyLMS.Controllers
         {
             string[] VlcCommand = new string[2];
             VlcCommand[0] = "\"C:\\Program Files (x86)\\2WayLive\\2WayLivePlayer\\2WLPlayer.exe\""; 
-            VlcCommand[1] = "--no-sout-video --one-instance --embedded-video --key-record=  -I --disable-qt ";
+            VlcCommand[1] = "--no-sout-video --no-plugins-scan --one-instance --embedded-video --key-record=  -I --disable-qt ";
             return VlcCommand;
         }
 
