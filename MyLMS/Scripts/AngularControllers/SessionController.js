@@ -71,7 +71,7 @@
     }
 
     function GetSessionName() {
-        $http.get('/CourseMgmt/GetSessionName/' + $scope.SubjectID)
+        $http.get('/SessionMgmt/GetSessionName/' + $scope.SubjectID + "/" + $scope.CourseID)
             .then(function (result) {
                 $scope.SessionName = result.data;
             });
