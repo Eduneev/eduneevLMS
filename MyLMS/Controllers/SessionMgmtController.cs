@@ -241,6 +241,21 @@ namespace MyLMS.Controllers
             return JSONString;
         }
 
+        [HttpGet]
+        [Route("SessionMgmt/GetSessionName/{SubjectID:int}/{CourseID:int}")]
+        public string GetSessionName(int SubjectID, int CourseID)
+        {
+            string SessionName;
+            SqlParameter[] TopicsObj = new SqlParameter[2];
+            TopicsObj[0] = new SqlParameter("@SubjectID", SqlDbType.Int);
+            TopicsObj[0].Value = SubjectID;
+            TopicsObj[1] = new SqlParameter("@CourseID", SqlDbType.Int);
+            TopicsObj[1].Value = CourseID;
+            DataTable SessionNo = DAL.GetDataTable("GenerateSessionNo", TopicsObj);
+            SessionName = SessionNo.Rows[0]["SessionName"].ToString();
+            return SessionName.Trim();
+        }
+
         [HttpPost]
         public void SaveSession(string SessionName, DateTime SessionDate, string StartTime, string EndTime, int StudioID, int ProgID, string ProgCode, int CourseID, string CourseCode, int SubjectID, string SubjectCode, string TopicID, int FacultyID, string PlannedCoverage)
         {

@@ -180,18 +180,6 @@ namespace MyLMS.Controllers
         }
 
         [HttpGet]
-        public string GetSessionName(int ID)
-        {
-            string SessionName;
-            SqlParameter[] TopicsObj = new SqlParameter[1];
-            TopicsObj[0] = new SqlParameter("@SubjectID", SqlDbType.Int);
-            TopicsObj[0].Value = ID;
-            DataTable SessionNo = DAL.GetDataTable("GenerateSessionNo", TopicsObj);
-            SessionName = SessionNo.Rows[0]["SessionName"].ToString();
-            return SessionName.Trim();
-        }
-
-        [HttpGet]
         public string GetCourseDetails()
         {
             SqlParameter[] FObj = new SqlParameter[1];
