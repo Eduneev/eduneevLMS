@@ -256,7 +256,7 @@
             var obs = new OBSWebSocket();
             obs.connect({ address: 'localhost:4444' })
                 .catch(err => {
-                    alert("Unable to Connect to 2WayLiveStudio. Please start streaming manually.")
+                    alert("Unable to Connect to 2WayLiveStudio. Please manage streaming manually.")
                 });
             obs.onConnectionOpened(() => {
                 if (btnType === 'Start') {
