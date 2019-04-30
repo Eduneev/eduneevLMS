@@ -7,11 +7,11 @@ using System.Web.Mvc;
 using UtilityClass;
 using System.Text.RegularExpressions;
 using Amazon.S3;
-using Amazon.S3.Transfer;
 using Amazon;
 using System.Threading.Tasks;
 using Amazon.S3.Model;
-using System.Diagnostics;
+using RestSharp;
+using RestSharp.Authenticators;
 
 namespace MyLMS.Controllers
 {
@@ -130,6 +130,22 @@ namespace MyLMS.Controllers
             FObj[1] = new SqlParameter("SubjectID", SqlDbType.Int);
             FObj[1].Value = id;
             DataTable StudentsList = DAL.GetDataTable("GetStudentsBySubject", FObj);
+
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(StudentsList);
+            return JSONString;
+        }
+
+        [HttpGet]
+        [Route("StudentMgmt/GetStudentsByStudentCode/{StudentCode}")]
+        public string GetStudentsByStudentCode(string StudentCode)
+        {
+            SqlParameter[] FObj = new SqlParameter[2];
+            FObj[0] = new SqlParameter("@UserID", SqlDbType.Int);
+            FObj[0].Value = Convert.ToInt32(Session["USER_ID"]);
+            FObj[1] = new SqlParameter("Code", SqlDbType.VarChar);
+            FObj[1].Value = StudentCode;
+            DataTable StudentsList = DAL.GetDataTable("GetStudentsByCode", FObj);
 
             string JSONString = string.Empty;
             JSONString = JsonConvert.SerializeObject(StudentsList);
@@ -295,6 +311,25 @@ namespace MyLMS.Controllers
             {
 
             }
+        }
+
+        // Send RRQ Reports to all Students
+        public static IRestResponse SendSimpleMessage()
+        {
+            RestClient client = new RestClient();
+            client.BaseUrl = new Uri("https://api.mailgun.net/v3"); 
+
+            client.Authenticator = new HttpBasicAuthenticator("api", "YOUR_API_KEY");
+            RestRequest request = new RestRequest();
+            request.AddParameter("domain", "eduneev.in", ParameterType.UrlSegment);
+            request.Resource = "{domain}/messages";
+            request.AddParameter("from", "mailgun@YOUR_DOMAIN_NAME>");
+            request.AddParameter("to", "bar@example.com");
+            request.AddParameter("to", "YOU@YOUR_DOMAIN_NAME");
+            request.AddParameter("subject", "Hello");
+            request.AddParameter("text", "Testing some Mailgun awesomness!");
+            request.Method = Method.POST;
+            return client.Execute(request);
         }
     }
 }
