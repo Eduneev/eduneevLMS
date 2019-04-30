@@ -76,6 +76,7 @@
                                     <th>Course Info</th>
                                     <th>Created By</th>
                                     <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody style="font-size:16px;">
@@ -106,9 +107,12 @@
                                     <td>
                                         <span>{{Student.FullName}}</span>
                                     </td>
-                                    <th>
+                                    <td>
                                         <button type="submit" data-toggle="modal" data-target="#DisplayRRQSelector" class="btn btn-default" ng-click="SelectStudent(Student.StudentID)"><i class="fa fa-search"></i></button>
-                                    </th>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-block btn-default btn-sm" ng-click="EditStudent(Student.Code)" data-toggle="modal"><i class="glyphicon glyphicon-list"> </i>Edit</button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
