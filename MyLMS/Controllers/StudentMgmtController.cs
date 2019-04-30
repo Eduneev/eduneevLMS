@@ -39,6 +39,11 @@ namespace MyLMS.Controllers
             return View();
         }
 
+        public ActionResult EditStudent()
+        {
+            return View();
+        }
+
         public static String bucket = "sanats";
         public static String url = "https://s3-us-west-2.amazonaws.com/";
         private static readonly RegionEndpoint bucketRegion = RegionEndpoint.USWest2;
@@ -95,6 +100,72 @@ namespace MyLMS.Controllers
             }
         }
 
+        [HttpPost]
+        public void EditStudent(int StudentID, string StudentName, string Code, int ProgramID, int CourseID, int SubjectID, string Email, string Mobile, string Landline, string Address, string Pincode, string Gender, string BirthPlace, string SchoolName, string GuardianName, string GuardianContactNo)
+        {
+            StudentModel ModelObj1 = new StudentModel();
+            SqlParameter[] SParam = new SqlParameter[16];
+
+            SParam[0] = new SqlParameter("@StudentName", SqlDbType.VarChar);
+            SParam[0].Value = StudentName;
+            SParam[1] = new SqlParameter("@Code", SqlDbType.VarChar);
+            SParam[1].Value = Code;
+            SParam[2] = new SqlParameter("@ProgID", SqlDbType.Int);
+            SParam[2].Value = ProgramID;
+            SParam[3] = new SqlParameter("@CourseID", SqlDbType.Int);
+            SParam[3].Value = CourseID;
+            SParam[4] = new SqlParameter("@SubjectID", SqlDbType.Int);
+            SParam[4].Value = SubjectID;
+            SParam[5] = new SqlParameter("@Email", SqlDbType.VarChar);
+            SParam[5].Value = Email;
+            SParam[6] = new SqlParameter("@Mobile", SqlDbType.VarChar);
+            SParam[6].Value = Mobile;
+            SParam[7] = new SqlParameter("@Landline", SqlDbType.VarChar);
+            SParam[7].Value = Landline;
+            SParam[8] = new SqlParameter("@Address", SqlDbType.Text);
+            SParam[8].Value = Address;
+            SParam[9] = new SqlParameter("@Pincode", SqlDbType.VarChar);
+            SParam[9].Value = Pincode;
+            SParam[10] = new SqlParameter("@Gender", SqlDbType.VarChar);
+            SParam[10].Value = Gender;
+            SParam[11] = new SqlParameter("@UserID", SqlDbType.Int);
+            SParam[11].Value = Convert.ToInt32(Session["USER_ID"]);
+            SParam[12] = new SqlParameter("@SchoolName", SqlDbType.VarChar);
+            SParam[12].Value = SchoolName;
+            SParam[13] = new SqlParameter("@GuardianName", SqlDbType.VarChar);
+            SParam[13].Value = GuardianName;
+            SParam[14] = new SqlParameter("@GuardianContactNo", SqlDbType.VarChar);
+            SParam[14].Value = GuardianContactNo;
+            SParam[15] = new SqlParameter("@StudentID", SqlDbType.Int);
+            SParam[15].Value = StudentID;
+            try
+            {
+                ModelObj1.EditStudent(SParam);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        [HttpPost]
+        public void DeleteStudent(int StudentID)
+        {
+            StudentModel ModelObj1 = new StudentModel();
+            SqlParameter[] FObj = new SqlParameter[2];
+            FObj[0] = new SqlParameter("@UserID", SqlDbType.Int);
+            FObj[0].Value = Convert.ToInt32(Session["USER_ID"]);
+            FObj[1] = new SqlParameter("@StudentID", SqlDbType.Int);
+            FObj[1].Value = StudentID;
+            try
+            {
+                ModelObj1.DeleteStudent(FObj);
+            }
+            catch (Exception ex)
+            {            
+            }
+        }
+
         [HttpGet]
         public string GenerateStudentCode()
         {
@@ -137,7 +208,7 @@ namespace MyLMS.Controllers
         }
 
         [HttpGet]
-        [Route("StudentMgmt/GetStudentsByStudentCode/{StudentCode}")]
+        [Route("StudentMgmt/GetStudentsByCode/{StudentCode}")]
         public string GetStudentsByStudentCode(string StudentCode)
         {
             SqlParameter[] FObj = new SqlParameter[2];
@@ -150,6 +221,27 @@ namespace MyLMS.Controllers
             string JSONString = string.Empty;
             JSONString = JsonConvert.SerializeObject(StudentsList);
             return JSONString;
+        }
+
+        [HttpPost]
+        // Only called by the EditStudent page
+        public void SaveNewStudentPhoto(int StudentID, string Path)
+        {
+            SqlParameter[] FObj = new SqlParameter[2];
+            FObj[0] = new SqlParameter("@StudentID", SqlDbType.Int);
+            FObj[0].Value = StudentID;
+            FObj[1] = new SqlParameter("@Path", SqlDbType.VarChar);
+            FObj[1].Value = Path;
+
+            StudentModel s = new StudentModel();
+            try
+            {
+                s.SaveStudentImage(FObj);
+            }
+            catch
+            {
+
+            }
         }
 
         [HttpPost]
