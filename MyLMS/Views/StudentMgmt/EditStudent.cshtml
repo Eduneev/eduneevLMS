@@ -1,0 +1,163 @@
+﻿
+@{
+    ViewBag.Title = "EditStudent";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+@section scripts{
+    <script src="~/Scripts/AngularControllers/StudentController.js"></script>
+}
+
+<div ng-controller="EditStudentCntrl">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Edit Student            
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="~/Home"><i class="fa fa-dashboard"></i>Home</a></li>
+            <li><a href="#">Edit Student</a></li>
+            @*<li class="active">Add Course</li>*@
+        </ol>
+    </section>
+
+    <!-- Form Body (Page body)-->
+    <section class="content">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <div class="pull-left">
+                    <button type="button" class="btn btn-success btn-sm" id="btnViewCenters" ng-click="ViewStudentsList()"><i class="glyphicon glyphicon-list"> </i>&nbsp; View Students</button>
+                </div>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Student Name</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                <input type="text" ng-model="StudentName" name="StudentName" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter student name...">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Roll No</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-tag"></i></span>
+                                <input type="text" ng-model="Code" readonly="readonly" name="Code" placeholder="System Generated" style="font-weight:bold; color:coral;" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <select class="form-control" ng-model="Gender" id="drpGender" style="width: 100%;">
+                                <option value="" selected="selected">Please select...</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Program</label>
+                            <select class="form-control" id="drpProgramName" style="width: 100%;" data-ng-model="ProgID" data-ng-options="c.ProgID as c.ProgramName for c in ProgramsList">
+                                <option value="">{{ProgramTextToShow}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Course</label>
+                            <select class="form-control" id="drpCourseName" style="width: 100%;" data-ng-model="CourseID" data-ng-options="c.CourseID as c.CourseName for c in CoursesList">
+                                <option value="">{{CourseTextToShow}}</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <table class="table table-hover table-bordered">
+                                <tbody ng-repeat="Q in SubjectsList">
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" name="r2" ng-model="Q.selected" value="{{Q.SubjectID}}"
+                                                   ng-checked="Q.selected == true"
+                                                   ng-click="AddRemoveSubject(Q.SubjectID)">
+                                        </td>
+                                        <td>
+                                            <span><strong>{{Q.SubjectName}}</strong></span>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                <input type="email" ng-model="Email" class="form-control" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Mobile</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                <input type="text" ng-model="Mobile" name="CenterName" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter center name...">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Landline </label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-fax"></i></span>
+                                <input type="text" ng-model="Landline" name="Landline" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter landline number...">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Guardian Name </label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-users"></i></span>
+                                <input type="text" ng-model="GuardianName" name="GuardianName" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter guardian name...">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Guardian Contact Number </label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                <input type="text" ng-model="GuardianContactNo" name="GuardianContactNo" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter guardian contact number...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        @*<div class="form-group">
+                                <label>Birth Place </label>
+                                <input type="text" ng-model="BirthPlace" name="BirthPlace" style="font-weight:bold; color:coral;" class="form-control" placeholder="Birth place...">
+                            </div>*@
+                        <div class="form-group">
+                            <label>Present School Name </label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-institution"></i></span>
+                                <input type="text" ng-model="SchoolName" name="SchoolName" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter present school name...">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Permanent Address</label>
+                            <textarea class="form-control" ng-model="Address" rows="4" style="height:108px;" placeholder="Enter complete address..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Pin Code</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-at"></i></span>
+                                <input type="text" ng-model="PinCode" name="PinCode" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter pin code...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer">
+                <button type="submit" ng-click="EditStudent()" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-default">Cancel</button>
+            </div>
+        </div>
+    </section>
+</div>
+
