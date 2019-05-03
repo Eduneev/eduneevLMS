@@ -17,9 +17,9 @@ namespace MyLMS.Models
             {
                 SqlParameter[] SParam;
                 string stream = "rtsp://18.224.156.241:1935/" + EntityCode + "/" + EntityCode + "_" + ProgCode + "_" + CourseCode + "_" + SubjectCode; // replace eduneev with server ip
-                string stream_low = stream + "_SD";
-                string stream_med = stream + "_DVD";
-                string stream_high = stream + "_HD";
+                string stream_low = stream + "_DVD";
+                string stream_med = stream + "_HD";
+                string stream_high = stream + "_FHD";
                 string stream_obs = stream;
                 
                 SParam = new SqlParameter[3];
