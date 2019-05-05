@@ -69,7 +69,7 @@ namespace MyLMS.Controllers
             string[] VlcCommand = new string[2];
             //VlcCommand[0] = "\"C:\\Program Files (x86)\\2WayLive\\2WayLivePlayer\\2WLPlayer.exe\"";
             VlcCommand[0] = "\"C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe\""; 
-            VlcCommand[1] = "--sub-filter=marq --marq-marquee=\"@2WayLive\" --marq-x 29 --marq-y 350 --marq-size=20 --marq-opacity=55 --no-sout-video --network-caching=300 --one-instance --embedded-video --key-record=  -I --disable-qt ";
+            VlcCommand[1] = "--sub-filter=marq --marq-marquee=\"@2WayLive\" --marq-x 29 --marq-y 350 --marq-size=20 --marq-opacity=55  --video-title-timeout=2000 --no-video-deco --no-sout-video --network-caching=300 --one-instance --high-priority --embedded-video --key-record=  -I --disable-qt ";
             return VlcCommand;
         }
 
