@@ -433,6 +433,21 @@ namespace MyLMS.Controllers
         }
 
         [HttpGet]
+        public string GetSessionBySessionID(int id)
+        {
+            SqlParameter[] SessionObj = new SqlParameter[2];
+            SessionObj[0] = new SqlParameter("@SessionID", SqlDbType.Int);
+            SessionObj[0].Value = id;
+            SessionObj[1] = new SqlParameter("@UserID", SqlDbType.Int);
+            SessionObj[1].Value = Convert.ToInt32(Session["USER_ID"]);
+            DataTable SessionDetails = DAL.GetDataTable("GetSessionBySessionID", SessionObj);
+
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(SessionDetails);
+            return JSONString;
+        }
+
+        [HttpGet]
         public string GetCenterNameFromSession(int id)
         {
             SqlParameter[] CenterNameObj = new SqlParameter[1];
