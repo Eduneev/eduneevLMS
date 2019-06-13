@@ -27,6 +27,21 @@ namespace MyLMS.Models
             return res;
         }
 
+        public string EditSession(SqlParameter[] sparams)
+        {
+            string res = "Failure..";
+            try
+            {
+                res = DAL.ExecuteScalar("EditSession", sparams);
+            }
+            catch (Exception ex)
+            {
+                res = ex.Message;
+                throw;
+            }
+            return res;
+        }
+
         public string StartStopSession(SqlParameter[] sparams)
         {
             string res = "Failure..";
