@@ -9,16 +9,15 @@
     <script src="~/Scripts/AngularControllers/SessionController.js"></script>
 }
 
-<div ng-controller="SessionCntrl">
+<div ng-controller="EditSessionCntrl">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            New Session
-            <small>Create New Session</small>
+            Edit Session
         </h1>
         <ol class="breadcrumb">
             <li><a href="/Home"><i class="fa fa-dashboard"></i>Home</a></li>
-            <li><a href="#">New Session</a></li>
+            <li><a href="#">Edit Session</a></li>
             @*<li class="active">Add Course</li>*@
         </ol>
     </section>
@@ -39,19 +38,19 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Program</label>
-                            <select class="form-control" id="drpProgramName" style="width: 100%;" data-ng-model="ProgID" data-ng-options="p.ProgID as p.ProgramName for p in Programs" data-ng-change="GetCourse()">
+                            <select class="form-control" id="drpProgramName" style="width: 100%;" data-ng-model="ProgID" data-ng-options="p.ProgID as p.ProgramName for p in Programs">
                                 <option value="">{{ProgramTextToShow}}</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Course</label>
-                            <select class="form-control" id="drpCourseName" style="width: 100%;" data-ng-model="CourseID" data-ng-options="c.CourseID as c.CourseName for c in Courses" data-ng-change="GetSubject()">
+                            <select class="form-control" id="drpCourseName" style="width: 100%;" data-ng-model="CourseID" data-ng-options="c.CourseID as c.CourseName for c in Courses">
                                 <option value="">{{CourseTextToShow}}</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Subject</label>
-                            <select class="form-control" id="drpSubjectName" style="width: 100%;" data-ng-model="SubjectID" data-ng-options="s.SubjectID as s.SubjectName for s in Subjects" data-ng-change="GetTopic()">
+                            <select class="form-control" id="drpSubjectName" style="width: 100%;" data-ng-model="SubjectID" data-ng-options="s.SubjectID as s.SubjectName for s in Subjects">
                                 <option value="">{{SubjectTextToShow}}</option>
                             </select>
                         </div>
@@ -126,7 +125,7 @@
                 </div>
             </div>
             <div class="box-footer">
-                <button type="submit" ng-click="EditSession()" class="btn btn-primary">Create Session</button>
+                <button type="submit" ng-click="EditSession()" class="btn btn-primary">Save Session</button>
                 <button type="submit" class="btn btn-default">Cancel</button>
             </div>
         </div>
