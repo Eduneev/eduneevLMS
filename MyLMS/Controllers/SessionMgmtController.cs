@@ -23,6 +23,11 @@ namespace MyLMS.Controllers
             return View();
         }
 
+        public ActionResult EditSession()
+        {
+            return View();
+        }
+
         public ActionResult NewRRQSession()
         {
             return View();

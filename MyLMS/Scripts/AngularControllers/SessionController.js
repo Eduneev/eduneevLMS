@@ -453,6 +453,9 @@
     $scope.ShowRRQSessions = function () {
         window.location.href = "/SessionMgmt/ViewRRQSessions";
     }
+    $scope.EditSession = function (SessionID) {
+        window.location.href = "/SessionMgmt/EditSession?SessionID=" + SessionID;
+    }
 
 }]);
 
