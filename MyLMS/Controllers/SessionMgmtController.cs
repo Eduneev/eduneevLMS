@@ -23,6 +23,11 @@ namespace MyLMS.Controllers
             return View();
         }
 
+        public ActionResult EditSession()
+        {
+            return View();
+        }
+
         public ActionResult NewRRQSession()
         {
             return View();
@@ -260,7 +265,7 @@ namespace MyLMS.Controllers
         public void SaveSession(string SessionName, DateTime SessionDate, string StartTime, string EndTime, int StudioID, int ProgID, string ProgCode, int CourseID, string CourseCode, int SubjectID, string SubjectCode, string TopicID, int FacultyID, string PlannedCoverage)
         {
             SessionModel SessionObj1 = new SessionModel();
-            SqlParameter[] SParam = new SqlParameter[11];
+            SqlParameter[] SParam = new SqlParameter[12];
 
             SParam[0] = new SqlParameter("@SessionName", SqlDbType.VarChar);
             SParam[0].Value = SessionName;
@@ -282,7 +287,8 @@ namespace MyLMS.Controllers
             SParam[8].Value = FacultyID;
             SParam[9] = new SqlParameter("@CreatedBy", SqlDbType.Int);
             SParam[9].Value = Convert.ToInt32(Session["USER_ID"]);
-
+            SParam[11] = new SqlParameter("@PlannedCoverage", SqlDbType.Text);
+            SParam[11].Value = PlannedCoverage;
             bool KeyUnique = false;
             string streamKey = string.Empty;
             // Create session stream key
@@ -329,6 +335,39 @@ namespace MyLMS.Controllers
             Stream stream = new Stream();
             stream.SaveStream(SessionID, EntityCode, ProgCode, CourseCode, SubjectCode);
 
+        }
+
+        [HttpPost]
+        public void EditSession(int SessionID, string SessionName, DateTime SessionDate, string StartTime, string EndTime, int StudioID, int ProgID, int CourseID, int SubjectID, int FacultyID, string PlannedCoverage, string StreamKey)
+        {
+            SessionModel SessionObj1 = new SessionModel();
+            SqlParameter[] SParam = new SqlParameter[12];
+
+            SParam[0] = new SqlParameter("@SessionID", SqlDbType.Int);
+            SParam[0].Value = SessionID;
+            SParam[1] = new SqlParameter("@SessionName", SqlDbType.VarChar);
+            SParam[1].Value = SessionName;
+            SParam[2] = new SqlParameter("@SessionDate", SqlDbType.DateTime);
+            SParam[2].Value = SessionDate;
+            SParam[3] = new SqlParameter("@StartTime", SqlDbType.VarChar);
+            SParam[3].Value = StartTime;
+            SParam[4] = new SqlParameter("@EndTime", SqlDbType.VarChar);
+            SParam[4].Value = EndTime;
+            SParam[5] = new SqlParameter("@StudioID", SqlDbType.Int);
+            SParam[5].Value = StudioID;
+            SParam[6] = new SqlParameter("@ProgID", SqlDbType.Int);
+            SParam[6].Value = ProgID;
+            SParam[7] = new SqlParameter("@CourseID", SqlDbType.Int);
+            SParam[7].Value = CourseID;
+            SParam[8] = new SqlParameter("@SubjectID", SqlDbType.Int);
+            SParam[8].Value = SubjectID;
+            SParam[9] = new SqlParameter("@FacultyID", SqlDbType.Int);
+            SParam[9].Value = FacultyID;
+            SParam[10] = new SqlParameter("@Key", SqlDbType.VarChar);
+            SParam[10].Value = StreamKey;
+            SParam[11] = new SqlParameter("@PlannedCoverage", SqlDbType.Text);
+            SParam[11].Value = PlannedCoverage;
+            SessionObj1.EditSession(SParam);
         }
 
         [HttpGet]
@@ -395,6 +434,21 @@ namespace MyLMS.Controllers
 
             string JSONString = string.Empty;
             JSONString = JsonConvert.SerializeObject(SessionsList);
+            return JSONString;
+        }
+
+        [HttpGet]
+        public string GetSessionBySessionID(int id)
+        {
+            SqlParameter[] SessionObj = new SqlParameter[2];
+            SessionObj[0] = new SqlParameter("@SessionID", SqlDbType.Int);
+            SessionObj[0].Value = id;
+            SessionObj[1] = new SqlParameter("@UserID", SqlDbType.Int);
+            SessionObj[1].Value = Convert.ToInt32(Session["USER_ID"]);
+            DataTable SessionDetails = DAL.GetDataTable("GetSessionBySessionID", SessionObj);
+
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(SessionDetails);
             return JSONString;
         }
 
