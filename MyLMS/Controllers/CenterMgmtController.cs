@@ -100,7 +100,7 @@ namespace MyLMS.Controllers
         [HttpPost]
         public void SaveClassroom(string ClassRoomName, int CenterID, int SittingCapacity)
         {
-            CenterModel CentObj1 = new CenterModel();
+            ClassRoomModel CentObj1 = new ClassRoomModel();
             SqlParameter[] SParam = new SqlParameter[5];
             SParam[0] = new SqlParameter("@ClassRoomName", SqlDbType.VarChar);
             SParam[0].Value = ClassRoomName;
@@ -124,6 +124,22 @@ namespace MyLMS.Controllers
             }
         }
 
+        [HttpPost]
+        public void DeleteClassroom(int ClassRoomID)
+        {
+            ClassRoomModel CentObj1 = new ClassRoomModel();
+            SqlParameter[] SParam = new SqlParameter[1];
+            SParam[0] = new SqlParameter("@ClassRoomID", SqlDbType.Int);
+            SParam[0].Value = ClassRoomID;
+
+            try
+            {
+                CentObj1.DeleteClassRoom(SParam);
+            }
+            catch (Exception ex)
+            {
+            }
+        }
 
         [HttpGet]
         public string GetCenters()
