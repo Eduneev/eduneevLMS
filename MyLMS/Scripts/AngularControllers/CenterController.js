@@ -96,6 +96,19 @@ myapp.controller('ClassroomCntrl', function ($scope, $http) {
             GetClassrooms();
         });
     }
+
+    $scope.DeleteClassroom = function (ClassRoomID) {
+        if (confirm("Are you sure you want to Delete this Classroom?"))
+            $http({
+                method: 'POST',
+                url: '/CenterMgmt/DeleteClassroom',
+                data: { ClassRoomID: ClassRoomID }
+            }).then(function (result) {
+                alert('Deleted Successfully!!');
+                GetClassrooms();
+            });
+    }
+
 });
 
 myapp.controller('OrgCntrl', function ($scope, $http) {
