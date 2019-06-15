@@ -43,7 +43,7 @@
                                     <th>Email</th>
                                     <th>Address</th>
                                     <th>Pin Code</th>
-                                    <th>Is Active</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -70,7 +70,7 @@
                                         <span>{{Center.PinCode}}</span>
                                     </td>
                                     <td>
-                                        <span>{{Center.IsActive}}</span>
+                                        <span ng-click="DeleteClassroom(Classroom.ClassRoomID)" style="cursor:pointer;" class="fa fa-times-circle-o"></span>
                                     </td>
                                 </tr>
                             </tbody>
