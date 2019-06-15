@@ -119,11 +119,9 @@
                                     <td>
                                         <button type="button" class="btn btn-primary" id="addColor" ng-disabled="Session.SessionStatus=='InActive'" ng-click='StartStudioChat(Session.SessionID, Session.StudioName)'>Start 2WayChat</button>
                                     </td>
-
-                                    <th>
-                                        &nbsp;
-                                        <span ng-click="SurveyAttemptReport(Survey.SURVEY_ID)" style="cursor:pointer;" class="fa fa-pencil-square-o"></span>&nbsp;
-                                    </th>
+                                    <td>
+                                        <button type="button" class="btn btn-block btn-default btn-sm" ng-click="EditSession(Session.SessionID)" data-toggle="modal"><i class="glyphicon glyphicon-list"> </i>Edit</button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

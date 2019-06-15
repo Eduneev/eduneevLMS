@@ -453,8 +453,127 @@
     $scope.ShowRRQSessions = function () {
         window.location.href = "/SessionMgmt/ViewRRQSessions";
     }
+    $scope.EditSession = function (SessionID) {
+        window.location.href = "/SessionMgmt/EditSession?SessionID=" + SessionID;
+    }
 
 }]);
+
+myapp.controller('EditSessionCntrl', function ($scope, $http) {
+
+    params = parseURLParams(window.location.href);
+    if ('SessionID' in params) {
+        try {
+            $scope.SessionID = params['SessionID'][0];
+            GetStudio();
+            GetSessionDetails();
+        }
+        catch {
+            alert("Something went wrong. Go back and try again.")
+        }
+    }
+
+    function GetSessionDetails() {
+        $http.get('/SessionMgmt/GetSessionBySessionID/' + $scope.SessionID)
+            .then(function (result) {
+                data = result.data[0]
+                console.log(data)
+                $scope.ProgramTextToShow = "Please select program";
+                $scope.CourseTextToShow = "Please select course";
+                $scope.SubjectTextToShow = "Please select subject";
+                $scope.ProgID = data.ProgID;
+                $scope.ProgramName = data.ProgramName;
+                $scope.CourseID = data.CourseID;
+                $scope.CourseName = data.CourseName;
+                $scope.SubjectID = data.SubjectID;
+                $scope.SubjectName = data.SubjectName;
+                $scope.Programs = [{ "ProgID": $scope.ProgID, "ProgramName": $scope.ProgramName }];
+                $scope.Courses = [{ "CourseID": $scope.CourseID, "CourseName": $scope.CourseName }];
+                $scope.Subjects = [{ "SubjectID": $scope.SubjectID, "SubjectName": $scope.SubjectName }];
+                $scope.FacultyID = data.FacultyID;
+                $scope.FacultyName = data.FacultyName;
+                $scope.PlannedCoverage = data.PlannedCoverage;
+                $scope.SessionDate = data.SessionDate;
+                $scope.StartTime = data.StartTime;
+                $scope.EndTime = data.EndTime;
+                $scope.StudioID = data.StudioID;
+                $scope.StudioName = data.StudioName;
+                $scope.SessionName = data.SessionName;
+                $scope.StreamKey = data.StreamKey;
+                GetTopic();
+                GetFaculty();
+            });
+    }
+
+
+    function GetTopic() {
+        $scope.FacultyTextToShow = 'Please select faculty...'
+        $http.get('/CourseMgmt/GetTopics/' + $scope.SubjectID)
+            .then(function (result) {
+                $scope.Topics = result.data;
+            });
+    }
+
+    function GetStudio() {
+        $http.get('/SessionMgmt/GetStudios')
+            .then(function (result) {
+                $scope.StudioList = result.data;
+                $scope.StudioTextToShow = 'Please select studio..';
+            });
+    }
+
+    function GetFaculty() {
+        $http.get('/FacultyMgmt/GetFaculty/' + $scope.SubjectID)
+            .then(function (result) {
+                $scope.Faculties = result.data;
+
+            });
+    }
+
+    $scope.EditSession = function () {        
+        var _SessionID = $scope.SessionID;
+        var _SessionName = $scope.SessionName;
+        var _SessionDate = $scope.SessionDate;
+        var _StartTime = $scope.StartTime;
+        var _EndTime = $scope.EndTime;
+        var _StudioID = $scope.StudioID;
+        var _ProgID = $scope.ProgID;
+        var _CourseID = $scope.CourseID;
+        var _SubjectID = $scope.SubjectID;
+        var _TopicID = $scope.TopicID;
+        var _FacultyID = $scope.FacultyID;
+        var _PlannedCoverage = $scope.PlannedCoverage;
+        var _StreamKey = $scope.StreamKey
+
+        $http({
+            method: 'POST',
+            url: '/SessionMgmt/EditSession',
+            data: { SessionID: _SessionID, SessionName: _SessionName, SessionDate: _SessionDate, StartTime: _StartTime, EndTime: _EndTime, StudioID: _StudioID, ProgID: _ProgID, CourseID: _CourseID, SubjectID: _SubjectID, TopicID: _TopicID, FacultyID: _FacultyID, PlannedCoverage: _PlannedCoverage, StreamKey: _StreamKey }
+        }).then(function (result) {
+            alert("Session Successfully saved!");
+        });
+    };
+
+    function parseURLParams(url) {
+        var queryStart = url.indexOf("?") + 1,
+            queryEnd = url.indexOf("#") + 1 || url.length + 1,
+            query = url.slice(queryStart, queryEnd - 1),
+            pairs = query.replace(/\+/g, " ").split("&"),
+            parms = {}, i, n, v, nv;
+
+        if (query === url || query === "") return;
+
+        for (i = 0; i < pairs.length; i++) {
+            nv = pairs[i].split("=", 2);
+            n = decodeURIComponent(nv[0]);
+            v = decodeURIComponent(nv[1]);
+
+            if (!parms.hasOwnProperty(n)) parms[n] = [];
+            parms[n].push(nv.length === 2 ? v : null);
+        }
+        return parms;
+    }
+});
 
 myapp.controller('SessionAttendanceCntrl', function ($scope, $http) {
     GetProgramsList();
