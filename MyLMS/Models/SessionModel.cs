@@ -42,6 +42,21 @@ namespace MyLMS.Models
             return res;
         }
 
+        public string DeleteSession(SqlParameter[] sparams)
+        {
+            string res = "Failure..";
+            try
+            {
+                res = DAL.ExecuteScalar("DeleteSession", sparams);
+            }
+            catch (Exception ex)
+            {
+                res = ex.Message;
+                throw;
+            }
+            return res;
+        }
+
         public string StartStopSession(SqlParameter[] sparams)
         {
             string res = "Failure..";
