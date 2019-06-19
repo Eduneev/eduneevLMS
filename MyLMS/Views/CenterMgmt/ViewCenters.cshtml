@@ -27,7 +27,12 @@
                 <div class="box-header with-border">
                     <div class="pull-left">
                         <div ng-if="AccountID == 2">
-                            <button type="button" class="btn btn-success" id="btnViewCenters" data-toggle="modal" data-target="#AddEquipment"><i class="glyphicon glyphicon-plus"> </i>&nbsp; Ship Equipments</button>
+                            <label>
+                                <button type="button" class="btn btn-success" id="btnViewCenters" data-toggle="modal" data-target="#AddEquipment"><i class="glyphicon glyphicon-plus"> </i>&nbsp; Ship Equipments</button>
+                            </label>
+                            <label>
+                                <button type="button" class="btn btn-block btn-default btn-sm" id="btnEditCenter" data-toggle="modal" data-target="#EditCenter"><i class="glyphicon glyphicon-list"> </i>&nbsp; Edit Center</button>
+                            </label>
                         </div>
                         <div ng-if="AccountID == 3">
                             <button type="button" class="btn btn-success" id="btnViewCenters" data-toggle="modal" data-target="#AddClassroom"><i class="glyphicon glyphicon-plus"> </i>&nbsp; Add Classroom</button>
@@ -75,7 +80,7 @@
                                             <span>{{Center.CenterCode}}</span>
                                         </td>
                                         <td>
-                                            <span>{{Center.ContactNumber}}</span>
+                                            <span>{{Center.Landline1}} / {{Center.Mobile}}</span>
                                         </td>
                                         <td>
                                             <span>{{Center.Email}}</span>
@@ -142,6 +147,57 @@
             </div>
         </div>
         @* Popup to Show Add Class Coordinator Window *@
+
+        @*Popup to Show Edit Center Window*@
+        <div class="modal" id="EditCenter" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3 class="text-info">Edit Center</h3>
+                    </div>
+                    <div class="modal-body" style="margin:0px 10px 0px 10px;">
+                        <form class="form-horizontal" name="UpdateEmployeeForm">
+                            <div class="form-group">
+                                <label class="text-info"> Select User</label>
+                                <select class="form-control" id="drpRole" style="width: 100%;" data-ng-model="CenterID" data-ng-options="c.CenterID as c.CenterName for c in CentersList" data-ng-change="GetCenterDetails()">
+                                    <option value="">Please Select..</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="text-info"> Center Name</label>
+                                <input type="text" name="CenterName" ng-model="CenterName" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter center name...">
+                            </div>
+                            <div class="form-group">
+                                <label class="text-info"> Center Code</label>
+                                <input type="text" name="CenterCode" ng-model="CenterCode" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter center code...">
+                            </div>
+                            <div class="form-group">
+                                <label class="text-info"> Email</label>
+                                <input type="text" name="ManagerName" ng-model="Email" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter email...">
+                            </div>
+                            <div class="form-group">
+                                <label class="text-info"> Landline</label>
+                                <input type="text" name="Email" ng-model="Landline1" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter landline...">
+                            </div>
+                            <div class="form-group">
+                                <label class="text-info"> Mobile</label>
+                                <input type="text" name="Mobile" ng-model="Mobile" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter mobile no...">
+                            </div>
+                            <div class="form-group">
+                                <label class="text-info"> Pincode</label>
+                                <input type="text" name="Mobile" ng-model="PinCode" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter pincode...">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" ng-click="EditCenter()" id="btnUpdate" data-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*Popup to Show Edit Center Window*@
 
         @* Popup to Show Add Classroom Window *@
         <div class="modal" id="AddClassroom" role="dialog">
