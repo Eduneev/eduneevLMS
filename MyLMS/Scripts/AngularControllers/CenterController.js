@@ -22,9 +22,47 @@
         });
     }
 
+    $scope.EditCenter = function () {
+        var _CenterID = $scope.CenterID;
+        var _CenterName = $scope.CenterName;
+        var _Email = $scope.Email;
+        var _CenterCode = $scope.CenterCode;
+        var _Landline1 = $scope.Landline1;
+        var _Mobile = $scope.Mobile;
+        var _Address = $scope.Address;
+        var _PinCode = $scope.PinCode;
+
+        $http({
+            method: 'POST',
+            url: '/CenterMgmt/EditCenter',
+            data: { CenterID: _CenterID, CenterName: _CenterName, CenterCode: _CenterCode, Email: _Email, Landline1: _Landline1, Mobile: _Mobile, Address: _Address, PinCode: _PinCode }
+        }).then(function (result) {
+            alert('Saved Successfully!!');
+            GetCentersList();
+        });
+    }
+
+    $scope.GetCenterDetails = function () {
+        var _CenterID = $scope.CenterID;
+        for (var i = 0; i < $scope.CentersList.length; i++) {
+            e = $scope.CentersList[i];
+            if (_CenterID == e.CenterID) {
+                $scope.CenterName = e.CenterName;
+                $scope.CenterCode = e.CenterCode;
+                $scope.Email = e.Email;
+                $scope.Landline1 = e.Landline1;
+                $scope.Landline2 = e.Landline2;
+                $scope.Mobile = e.Mobile;
+                $scope.Address = e.Address;
+                $scope.PinCode = e.PinCode;
+            }
+        }
+    }
+
     function GetCentersList() {
         $http.get('/CenterMgmt/GetCenters')
-        .then(function (result) {
+            .then(function (result) {
+            console.log(result.data)
             $scope.CentersList = result.data;
         });
     }
