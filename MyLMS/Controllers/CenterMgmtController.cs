@@ -98,6 +98,40 @@ namespace MyLMS.Controllers
         }
 
         [HttpPost]
+        public void EditCenter(int CenterID, string CenterName, string CenterCode, string Email, string Landline1, string Mobile, string Address, string PinCode)
+        {
+            CenterModel CentObj1 = new CenterModel();
+            SqlParameter[] SParam = new SqlParameter[9];
+
+            SParam[0] = new SqlParameter("@CenterID", SqlDbType.Int);
+            SParam[0].Value = CenterID;
+            SParam[1] = new SqlParameter("@CenterName", SqlDbType.VarChar);
+            SParam[1].Value = CenterName;
+            SParam[2] = new SqlParameter("@CenterCode", SqlDbType.VarChar);
+            SParam[2].Value = CenterCode;
+            SParam[3] = new SqlParameter("@Email", SqlDbType.VarChar);
+            SParam[3].Value = Email;
+            SParam[4] = new SqlParameter("@Landline1", SqlDbType.VarChar);
+            SParam[4].Value = Landline1;
+            SParam[5] = new SqlParameter("@Mobile", SqlDbType.VarChar);
+            SParam[5].Value = Mobile;
+            SParam[6] = new SqlParameter("@Address", SqlDbType.VarChar);
+            SParam[6].Value = Address;
+            SParam[7] = new SqlParameter("@PinCode", SqlDbType.VarChar);
+            SParam[7].Value = PinCode;
+            SParam[8] = new SqlParameter("@UserID", SqlDbType.Int);
+            SParam[8].Value = Convert.ToInt32(Session["USER_ID"]);
+            try
+            {
+                CentObj1.EditCenter(SParam);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        [HttpPost]
         public void SaveClassroom(string ClassRoomName, int CenterID, int SittingCapacity)
         {
             ClassRoomModel CentObj1 = new ClassRoomModel();
