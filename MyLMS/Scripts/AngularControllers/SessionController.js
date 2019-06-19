@@ -456,6 +456,17 @@
     $scope.EditSession = function (SessionID) {
         window.location.href = "/SessionMgmt/EditSession?SessionID=" + SessionID;
     }
+    $scope.DeleteSession = function (SessionID) {
+        if (confirm("Are you sure you want to Delete this Session? You will lose all data associated with the Session, including RRQ data"))
+            $http({
+                method: 'POST',
+                url: '/SessionMgmt/DeleteSession',
+                data: { SessionID: SessionID }
+            }).then(function (result) {
+                alert('Deleted Successfully!!');
+                $scope.GetSessions();
+            });
+    }
 
 }]);
 
