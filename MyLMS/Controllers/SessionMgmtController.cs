@@ -370,6 +370,20 @@ namespace MyLMS.Controllers
             SessionObj1.EditSession(SParam);
         }
 
+        [HttpPost]
+        public void DeleteSession(int SessionID)
+        {
+            SessionModel SessionObj1 = new SessionModel();
+            SqlParameter[] SParam = new SqlParameter[2];
+
+            SParam[0] = new SqlParameter("@SessionID", SqlDbType.Int);
+            SParam[0].Value = SessionID;
+            SParam[1] = new SqlParameter("@UserID", SqlDbType.Int);
+            SParam[1].Value = Convert.ToInt32(Session["USER_ID"]);
+
+            SessionObj1.DeleteSession(SParam);
+        }
+
         [HttpGet]
         public string GetStream(int SessionID, int type=1)
         {
