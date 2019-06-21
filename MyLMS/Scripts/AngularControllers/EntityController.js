@@ -125,8 +125,8 @@ myapp.controller('CenterUserCntrl', function ($scope, $http) {
 
     $scope.AddCenterUser = function () {
         debugger;
-        var _CenterID = $scope.CenterID
-        var _UserName = $scope.UserName
+        var _CenterID = $scope.CenterID;
+        var _UserName = $scope.EmailID;
         var _Password = $scope.Password;
         var _FullName = $scope.FullName;
         var _EmailID = $scope.EmailID;
@@ -162,7 +162,7 @@ myapp.controller('CenterUserCntrl', function ($scope, $http) {
     }
 
     $scope.EditCenterUser = function () {
-        var _UserName = $scope.UserName
+        var _UserName = $scope.EmailID;
         var _Password = $scope.Password;
         var _FullName = $scope.FullName;
         var _EmailID = $scope.EmailID;

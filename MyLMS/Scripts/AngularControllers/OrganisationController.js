@@ -49,7 +49,7 @@
 
     $scope.EditEntity = function () {
         var _EntityID = $scope.EntityID;
-        var _EntityName = $scope.EntityName
+        var _EntityName = $scope.Email;
         var _EntityCode = $scope.EntityCode;
         var _ManagerName = $scope.ManagerName;
         var _Email = $scope.Email;
@@ -85,7 +85,7 @@ myapp.controller('OrgUserCntrl', function ($scope, $http) {
     $scope.AddOrgUser = function () {
         debugger;
 
-        var _UserName = $scope.UserName
+        var _UserName = $scope.EmailID;
         var _Password = $scope.Password;
         var _FullName = $scope.FullName;
         var _EmailID = $scope.EmailID;
@@ -120,7 +120,7 @@ myapp.controller('OrgUserCntrl', function ($scope, $http) {
     }
 
     $scope.EditOrgUser = function () {
-        var _UserName = $scope.UserName
+        var _UserName = $scope.EmailID;
         var _Password = $scope.Password;
         var _FullName = $scope.FullName;
         var _EmailID = $scope.EmailID;
@@ -192,8 +192,8 @@ myapp.controller('EntityUserCntrl', function ($scope, $http) {
 
     $scope.AddEntityUser = function () {
         debugger;
-        var _EntityID = $scope.EntityID
-        var _UserName = $scope.UserName
+        var _EntityID = $scope.EntityID;
+        var _UserName = $scope.EmailID;
         var _Password = $scope.Password;
         var _FullName = $scope.FullName;
         var _EmailID = $scope.EmailID;
@@ -205,6 +205,7 @@ myapp.controller('EntityUserCntrl', function ($scope, $http) {
             url: '/Organisation/AddEntityUser',
             data: {EntityID: _EntityID, UserName: _UserName, Password: _Password, FullName: _FullName, EmailID: _EmailID, Mobile: _Mobile, RoleID: _RoleID }
         }).then(function (result) {
+            alert("User saved successfully!");
             $http.get('/Organisation/GetEntityUserList/' + $scope.EntityID)
             .then(function (result) {
                 $scope.EntityUserList = result.data;
@@ -215,7 +216,7 @@ myapp.controller('EntityUserCntrl', function ($scope, $http) {
 
     $scope.EditEntityUser = function () {
         debugger;
-        var _UserName = $scope.UserName
+        var _UserName = $scope.EmailID;
         var _Password = $scope.Password;
         var _FullName = $scope.FullName;
         var _EmailID = $scope.EmailID;
