@@ -55,6 +55,7 @@
                                         <th>Email (Username)</th>
                                         <th>Mobile</th>
                                         <th>User Type</th>
+                                        <td></td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -77,9 +78,9 @@
                                         <td>
                                             <span>{{User.RoleName}}</span>
                                         </td>
-                                        @*<th>
-                                              <span ng-click="SurveyAttemptReport(Survey.SURVEY_ID)" style="cursor:pointer;" class="fa fa-file-text-o"></span>&nbsp;
-                                        </th>*@
+                                        <td>
+                                            <span ng-click="DeleteUser(User.UserID)" style="cursor:pointer;" class="fa fa-times-circle-o"></span>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>

@@ -49,6 +49,7 @@
                                         <th>Email (UserName)</th>
                                         <th>Mobile</th>
                                         <th>User Type</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -67,6 +68,9 @@
                                         </td>
                                         <td>
                                             <span>{{User.RoleName}}</span>
+                                        </td>
+                                        <td>
+                                            <span ng-click="DeleteUser(User.UserID)" style="cursor:pointer;" class="fa fa-times-circle-o"></span>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -91,7 +95,7 @@
                                 <label class="text-info"> User Full Name</label>
                                 <input type="text" name="EntityName" ng-model="FullName" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter full name...">
                             </div>
-                            div class="form-group">
+                            <div class="form-group">
                                 <label class="text-info"> Email ID (UserName)</label>
                                 <input type="text" name="Email" ng-model="EmailID" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter Email ID...">
                             </div>                            
@@ -99,7 +103,7 @@
                                 <label class="text-info"> Password</label>
                                 <input type="text" name="ManagerName" ng-model="Password" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter password...">
                             </div>
-                            <<div class="form-group">
+                            <div class="form-group">
                                 <label class="text-info"> Mobile</label>
                                 <input type="text" name="Mobile" ng-model="Mobile" style="font-weight:bold; color:coral;" class="form-control" placeholder="Enter manager mobile no...">
                             </div>
