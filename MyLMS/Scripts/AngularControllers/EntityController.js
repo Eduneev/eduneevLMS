@@ -185,6 +185,18 @@ myapp.controller('CenterUserCntrl', function ($scope, $http) {
 
     }
 
+    $scope.DeleteUser = function (UserID) {
+        if (confirm("Are you sure you want to Delete this User?"))
+            $http({
+                method: 'POST',
+                url: '/Organisation/DeleteUser',
+                data: { DeleteUserID: UserID }
+            }).then(function (result) {
+                alert('Deleted Successfully!!');
+                $scope.GetCenterUsers();
+            });
+    }
+
     $scope.UpdatePassword = function () {
         debugger;
 
@@ -226,6 +238,17 @@ myapp.controller('EntityUserCntrl', function ($scope, $http) {
         });
     }
 
+    $scope.DeleteUser = function (UserID) {
+        if (confirm("Are you sure you want to Delete this User?"))
+            $http({
+                method: 'POST',
+                url: '/Organisation/DeleteUser',
+                data: { DeleteUserID: UserID }
+            }).then(function (result) {
+                alert('Deleted Successfully!!');
+                GetEntityUsersList();
+            });
+    }
 });
 
 myapp.controller('FacultyCntrl', function ($scope, $http) {

@@ -75,7 +75,6 @@ myapp.controller('OrgUserCntrl', function ($scope, $http) {
 
 
     function GetOrgList() {
-        debugger;
         $http.get('/Organisation/GetOrgUserList')
             .then(function (result) {
                 $scope.OrgUserList = result.data;
@@ -140,6 +139,17 @@ myapp.controller('OrgUserCntrl', function ($scope, $http) {
                 });
         });
 
+    }
+    $scope.DeleteUser = function (UserID) {
+        if (confirm("Are you sure you want to Delete this User?"))
+            $http({
+                method: 'POST',
+                url: '/Organisation/DeleteUser',
+                data: { DeleteUserID: UserID }
+            }).then(function (result) {
+                alert('Deleted Successfully!!');
+                GetOrgList();
+            });
     }
 
 });
@@ -236,6 +246,17 @@ myapp.controller('EntityUserCntrl', function ($scope, $http) {
                     GetRoles();
                 });
         });
+    }
+    $scope.DeleteUser = function (UserID) {
+        if (confirm("Are you sure you want to Delete this User?"))
+            $http({
+                method: 'POST',
+                url: '/Organisation/DeleteUser',
+                data: { DeleteUserID: UserID }
+            }).then(function (result) {
+                alert('Deleted Successfully!!');
+                $scope.GetEntityUsers()
+            });
     }
 
 });
