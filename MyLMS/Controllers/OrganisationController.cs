@@ -268,6 +268,27 @@ namespace MyLMS.Controllers
             }
         }
 
+        [HttpPost]
+        public void DeleteUser(int DeleteUserID)
+        {
+            OrganisationModel OrgObj = new OrganisationModel();
+            SqlParameter[] FObj = new SqlParameter[2];
+
+            FObj[0] = new SqlParameter("@UserID", SqlDbType.Int);
+            FObj[0].Value = Convert.ToInt32(Session["USER_ID"]);
+            FObj[1] = new SqlParameter("@DeleteUserID", SqlDbType.Int);
+            FObj[1].Value = DeleteUserID;
+
+            try
+            {
+                OrgObj.DeleteUser(FObj);
+            }
+            catch (Exception ex)
+            {
+            }
+
+        }
+
         [HttpGet]
         public string GetReceiversList(int ID)
         {

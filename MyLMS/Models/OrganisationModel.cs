@@ -83,6 +83,21 @@ namespace MyLMS.Models
             return res;
         }
 
+        public string DeleteUser(SqlParameter[] sparams)
+        {
+            string res = "Failure..";
+            try
+            {
+                res = DAL.ExecuteScalar("DeleteUser", sparams);
+            }
+            catch (Exception ex)
+            {
+                res = ex.Message;
+                throw;
+            }
+            return res;
+        }
+
         public string UpdatePassword(SqlParameter[] sparams)
         {
             string res = "Failure..";
