@@ -132,6 +132,23 @@ namespace MyLMS.Controllers
         }
 
         [HttpPost]
+        public void DeleteCenter(int CenterID)
+        {
+            CenterModel CentObj1 = new CenterModel();
+            SqlParameter[] SParam = new SqlParameter[2];
+
+            SParam[0] = new SqlParameter("@UserID", SqlDbType.Int);
+            SParam[0].Value = Convert.ToInt32(Session["USER_ID"]);
+            SParam[1] = new SqlParameter("@CenterID", SqlDbType.Int);
+            SParam[1].Value = CenterID;
+            try
+            {
+                CentObj1.DeleteCenter(SParam);
+            }
+            catch { }
+        }
+
+        [HttpPost]
         public void SaveClassroom(string ClassRoomName, int CenterID, int SittingCapacity)
         {
             ClassRoomModel CentObj1 = new ClassRoomModel();
