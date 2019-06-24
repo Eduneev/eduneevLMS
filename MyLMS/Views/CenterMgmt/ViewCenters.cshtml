@@ -94,8 +94,8 @@
                                         <td>
                                             <span>{{Center.IsActive}}</span>
                                         </td>
-                                        <th>
-                                            <span ng-click="SurveyAttemptReport(Survey.SURVEY_ID)" style="cursor:pointer;" class="fa fa-file-text-o"></span>&nbsp;
+                                        <th ng-if="AccountID == 2">
+                                            <span ng-click="DeleteCenter(Center.CenterID)" style="cursor:pointer;" class="fa fa-times-circle-o"></span>
                                         </th>
                                     </tr>
                                 </tbody>

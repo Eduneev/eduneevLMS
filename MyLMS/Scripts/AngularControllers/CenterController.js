@@ -59,6 +59,19 @@
         }
     }
 
+    $scope.DeleteCenter = function (CenterID) {
+        if (confirm("Are you sure you want to Delete this Center?")) {
+            $http({
+                method: 'POST',
+                url: '/CenterMgmt/DeleteCenter',
+                data: { CenterID: CenterID }
+            }).then(function (result) {
+                alert('Deleted Successfully!!');
+                GetCentersList();
+            });
+        }
+    }
+
     function GetCentersList() {
         $http.get('/CenterMgmt/GetCenters')
             .then(function (result) {
