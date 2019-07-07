@@ -47,6 +47,19 @@
         });
     }
 
+    $scope.DeleteRRQ = function (RRQId) {
+        $http({
+            method: 'POST',
+            url: '/SessionMgmt/DeleteRRQ',
+            data: { RRQ_ID: RRQId }
+        }).then(function (result) {
+            $http.get('/SessionMgmt/GetRRQList')
+                .then(function (result) {
+                    $scope.RRQList = result.data;
+                });
+        });
+    }
+
 });
 
 myapp.controller('NewRRQCntrl', function ($scope, $http) {
