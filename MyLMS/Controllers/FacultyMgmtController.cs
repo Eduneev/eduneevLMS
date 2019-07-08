@@ -24,7 +24,7 @@ namespace MyLMS.Controllers
         public void SaveFaculty(string FacultyName, int ProgramID, int CourseID, int SubjectID, string Email, string Mobile, string Gender)
         {
             FacultyModel ModelObj1 = new FacultyModel();
-            SqlParameter[] SParam = new SqlParameter[10];
+            SqlParameter[] SParam = new SqlParameter[8];
 
             SParam[0] = new SqlParameter("@StudentName", SqlDbType.VarChar);
             SParam[0].Value = FacultyName;
@@ -38,10 +38,10 @@ namespace MyLMS.Controllers
             SParam[4].Value = Email;
             SParam[5] = new SqlParameter("@Mobile", SqlDbType.VarChar);
             SParam[5].Value = Mobile;
-            SParam[8] = new SqlParameter("@Gender", SqlDbType.VarChar);
-            SParam[8].Value = Gender;
-            SParam[9] = new SqlParameter("@UserID", SqlDbType.Int);
-            SParam[9].Value = Convert.ToInt32(Session["USER_ID"]);
+            SParam[6] = new SqlParameter("@Gender", SqlDbType.VarChar);
+            SParam[6].Value = Gender;
+            SParam[7] = new SqlParameter("@UserID", SqlDbType.Int);
+            SParam[7].Value = Convert.ToInt32(Session["USER_ID"]);
             try
             {
                 ModelObj1.SaveFaculty(SParam);
