@@ -329,11 +329,18 @@ namespace MyLMS.Controllers
             DataTable val = DAL.GetDataTable("GetEntity", SParam);
 
             string EntityCode = string.Empty;
+            string StreamSetName = string.Empty; 
             if (val.Rows.Count > 0)
+            {
                 EntityCode = Convert.ToString(Convert.IsDBNull(val.Rows[0]["EntityCode"]) ? string.Empty : val.Rows[0]["EntityCode"]);
+                StreamSetName = Convert.ToString(Convert.IsDBNull(val.Rows[0]["StreamSetName"]) ? string.Empty : val.Rows[0]["StreamSetName"]);
+            }
 
             Stream stream = new Stream();
-            stream.SaveStream(SessionID, EntityCode, ProgCode, CourseCode, SubjectCode);
+            if (StreamSetName.Equals("Passthrough"))
+                stream.SaveStream(SessionID, EntityCode, ProgCode, CourseCode, SubjectCode, false);
+            else
+                stream.SaveStream(SessionID, EntityCode, ProgCode, CourseCode, SubjectCode);
 
         }
 
