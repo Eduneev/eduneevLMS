@@ -16,6 +16,19 @@
 
     SetParams(window.location.href);
 
+    $scope.HandleFiles = function () {
+        console.log("handling file")
+        l = document.getElementById("left");
+        var x = document.createElement("INPUT");
+        x.id = "files";
+        x.setAttribute("type", "file");
+        left.appendChild(x);
+
+        $(document).ready(function () {
+            $('#files').bind('change', handleCSVFile);
+        });
+    }
+
     function SetParams(url) {
         try {
             var params = parseURLParams(url);
@@ -57,12 +70,108 @@
             url: '/QuestionBank/DeleteQuestion',
             data: { QID: QID }
         }).then(function (result) {
-            alert('Deleted Successfully!!');
+           alert('Deleted Successfully!!');
         });
     }
 
     $scope.GetSelectedQuestionDetails = function (QID) {
         window.location.href = "/QuestionBank/EditQuestion" + "?QID=" + QID;
+    }
+
+
+    function handleCSVFile(event) {
+        console.log("GETTING HERE");
+        var files = event.target.files;
+        var file = files[0]
+        var reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = function (event) {
+            var csv = event.target.result;
+            var data = $.csv.toObjects(csv);
+            var added = 0;
+            var not_added = 0;
+            for (obj of data) {
+                var val = SaveCSVQuestion(obj);
+                if (val == 1)
+                    added += 1
+                else
+                    not_added += 1
+            }
+            s = "Added " + added + " questions. Error in adding " + not_added + " questions";
+            alert(s);
+        }
+    }
+    
+
+    function SaveCSVQuestion(data) {
+        console.log(data)
+        try {
+            var QTag = data.QTag
+            for (tag of $scope.TagsList) {
+                if (QTag == tag.TagText) {
+                    var _QTagID = tag.QTagID;
+                    var _QuestionText = data.QuestionText;
+                    var _DisplayTime = parseInt(data.DisplayTime);
+                    var Option1Text = data.Option1Text;
+                    var Option1Mark = parseInt(data.Option1Mark);
+                    var IsOption1Correct = (data.Option1Correct.toLowerCase() == "true");
+                    var Option2Text = data.Option2Text;
+                    var Option2Mark = parseInt(data.Option2Mark);
+                    var IsOption2Correct = (data.Option2Correct.toLowerCase() == "true");
+                    var Option3Text = data.Option3Text;
+                    var Option3Mark = parseInt(data.Option3Mark);
+                    var IsOption3Correct = (data.Option3Correct.toLowerCase() == "true");
+                    var Option4Text = data.Option4Text;
+                    var Option4Mark = parseInt(data.Option4Mark);
+                    var IsOption4Correct = (data.Option4Correct.toLowerCase() == "true");
+
+
+                    if (_DisplayTime == null)
+                        _DisplayTime = 60;
+                    $http({
+                        method: 'POST',
+                        url: '/QuestionBank/SaveQuestion',
+                        data: { QuestionText: _QuestionText, QTagID: _QTagID, DisplayTime: _DisplayTime }
+                    }).then(function (result) {
+                        ////// Save Options //////
+                        $http({
+                            method: 'POST',
+                            url: '/QuestionBank/SaveOptions',
+                            data: { OptionSeq: 1, OptionText: Option1Text, OptionMark: Option1Mark, IsOptionCorrect: IsOption1Correct }
+                        }).then(function (result) {
+                        });
+
+                        $http({
+                            method: 'POST',
+                            url: '/QuestionBank/SaveOptions',
+                            data: { OptionSeq: 2, OptionText: Option2Text, OptionMark: Option2Mark, IsOptionCorrect: IsOption2Correct }
+                        }).then(function (result) {
+                        });
+
+
+                        $http({
+                            method: 'POST',
+                            url: '/QuestionBank/SaveOptions',
+                            data: { OptionSeq: 3, OptionText: Option3Text, OptionMark: Option3Mark, IsOptionCorrect: IsOption3Correct }
+                        }).then(function (result) {
+                        });
+
+                        $http({
+                            method: 'POST',
+                            url: '/QuestionBank/SaveOptions',
+                            data: { OptionSeq: 4, OptionText: Option4Text, OptionMark: Option4Mark, IsOptionCorrect: IsOption4Correct }
+                        }).then(function (result) {
+                        });
+                    });
+                    return 1;
+                }
+            }
+            return 0;
+        }
+        catch{
+            return 0;
+        }
+        return 0
     }
 
     $scope.SaveQuestion = function () {
