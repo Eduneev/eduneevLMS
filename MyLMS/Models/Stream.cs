@@ -17,9 +17,10 @@ namespace MyLMS.Models
             {
                 SqlParameter[] SParam;
                 string stream = "rtsp://18.224.156.241:1935/" + EntityCode + "/" + EntityCode + "_" + ProgCode + "_" + CourseCode + "_" + SubjectCode; // replace eduneev with server ip
-                string stream_low = stream + "_DVD";
-                string stream_med = stream + "_HD";
-                string stream_high = stream + "_FHD";
+                string player_stream = "rtsp://18.224.156.241:543/" + EntityCode + "/" + EntityCode + "_" + ProgCode + "_" + CourseCode + "_" + SubjectCode;
+                string stream_low = player_stream + "_DVD";
+                string stream_med = player_stream + "_HD";
+                string stream_high = player_stream + "_FHD";
                 string stream_obs = stream;
                 
                 SParam = new SqlParameter[3];
@@ -46,7 +47,7 @@ namespace MyLMS.Models
                 }
                 else
                 {
-                    SParam[1].Value = stream_obs;
+                    SParam[1].Value = player_stream;
                     SParam[2].Value = 1;
                     DAL.ExecuteScalar("CreateStream", SParam);
                 }
