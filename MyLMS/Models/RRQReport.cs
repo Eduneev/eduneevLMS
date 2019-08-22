@@ -10,7 +10,7 @@ namespace MyLMS.Models
     {
         public int RRQID { get; set; }
         public string RRQNo { get; set; }
-        public List<Dictionary<Int32,Option>> Questions { get; set; }
+        public List<Option> Questions { get; set; }
         public int TotalMarks { get; set; }
     }
 
@@ -18,8 +18,13 @@ namespace MyLMS.Models
     {
         public int StudentID { get; set; }
         public string StudentName { get; set; }
-        public List<Dictionary<Int32,Option>> Responses { get; set; }
+        public List<Option> Responses { get; set; }
         public int TotalMarks { get; set; }
     }
 
+    public class RRQReport
+    {
+        public RRQDetails RRQ { get; set; }
+        public List<StudentReport> StudentReports { get; set; }
+    }
 }

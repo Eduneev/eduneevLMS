@@ -218,6 +218,7 @@
     <Compile Include="Models\Question.cs" />
     <Compile Include="Models\QuestionModel.cs" />
     <Compile Include="Models\QuestionOptions.cs" />
+    <Compile Include="Models\RRQReport.cs" />
     <Compile Include="Models\SessionModel.cs" />
     <Compile Include="Models\Stream.cs" />
     <Compile Include="Models\StudentModel.cs" />
@@ -817,6 +818,7 @@
     <Folder Include="Template\plugins\datatables\images\" />
     <Folder Include="Views\Admin\" />
     <Folder Include="Views\FacultyModel\" />
+    <Folder Include="Views\RRQReport\" />
     <Folder Include="Views\TroubleTicket\" />
   </ItemGroup>
   <ItemGroup>
