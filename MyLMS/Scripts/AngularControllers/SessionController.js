@@ -479,7 +479,7 @@ myapp.controller('EditSessionCntrl', function ($scope, $http) {
             GetStudio();
             GetSessionDetails();
         }
-        catch {
+        catch(err) {
             alert("Something went wrong. Go back and try again.")
         }
     }
