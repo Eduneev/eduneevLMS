@@ -16,7 +16,7 @@ namespace MyLMS
 
             routes.MapRoute(
                 name: "Details",
-                url: "SessionMgmt/RRQDashboard/{id}/{OptionSeq}",
+                url: "RRQReport/RRQDashboard/{id}/{OptionSeq}",
                 defaults: new { controller = "SessionMgmt", action = "Details", id = UrlParameter.Optional, Article = UrlParameter.Optional }
             );
 
