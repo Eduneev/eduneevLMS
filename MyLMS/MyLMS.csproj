@@ -192,7 +192,7 @@
     <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\OrganisationController.cs" />
     <Compile Include="Controllers\QuestionBankController.cs" />
-    <Compile Include="Controllers\RRQDashBoardController.cs" />
+    <Compile Include="Controllers\RRQReportController.cs" />
     <Compile Include="Controllers\SessionMgmtController.cs" />
     <Compile Include="Controllers\StudentMgmtController.cs" />
     <Compile Include="Controllers\WebAdminController.cs" />
@@ -747,7 +747,6 @@
     <Content Include="Views\StudentMgmt\RegisterStudent.cshtml" />
     <Content Include="Views\SessionMgmt\NewSession.cshtml" />
     <Content Include="Views\QuestionBank\AddQuestion.cshtml" />
-    <Content Include="Views\RRQDashBoard\RRQDashboard.cshtml" />
     <Content Include="Views\SessionMgmt\ViewSessions.cshtml" />
     <Content Include="Views\QuestionBank\ViewQuestions.cshtml" />
     <Content Include="Views\SessionMgmt\AddRRQ.cshtml" />
@@ -771,7 +770,7 @@
     <Content Include="Views\Entity\Studios.cshtml" />
     <Content Include="Views\SessionMgmt\DisplayRRQ.cshtml" />
     <Content Include="Views\Shared\_LayoutRRQ.cshtml" />
-    <Content Include="Views\SessionMgmt\RRQDashboard.cshtml" />
+    <Content Include="Views\RRQReport\RRQDashboard.cshtml" />
     <Content Include="Views\SessionMgmt\RRQIntroduction.cshtml" />
     <Content Include="Views\Notifications\ViewAll.cshtml" />
     <Content Include="Views\SessionMgmt\NameFaceScreen.cshtml" />
@@ -784,7 +783,6 @@
     <Content Include="Views\CenterMgmt\Dashboard.cshtml" />
     <Content Include="Views\StudentMgmt\RRQManualEntry.cshtml" />
     <Content Include="Views\SessionMgmt\CreateRRQ.cshtml" />
-    <Content Include="Views\SessionMgmt\NewRRQ.cshtml" />
     <Content Include="Views\BillingMgmt\OrgBilling.cshtml" />
     <Content Include="Views\BillingMgmt\Billing.cshtml" />
     <Content Include="Views\CenterMgmt\AllocateReceiver.cshtml" />
@@ -802,6 +800,7 @@
     <Content Include="Views\BillingMgmt\CenterBilling.cshtml" />
     <Content Include="Views\StudentMgmt\EditStudent.cshtml" />
     <Content Include="Views\SessionMgmt\EditSession.cshtml" />
+    <Content Include="Views\RRQReport\RRQReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -818,7 +817,6 @@
     <Folder Include="Template\plugins\datatables\images\" />
     <Folder Include="Views\Admin\" />
     <Folder Include="Views\FacultyModel\" />
-    <Folder Include="Views\RRQReport\" />
     <Folder Include="Views\TroubleTicket\" />
   </ItemGroup>
   <ItemGroup>
