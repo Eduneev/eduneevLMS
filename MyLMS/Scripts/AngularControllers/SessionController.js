@@ -443,7 +443,7 @@
     }
 
     $scope.ShowRRQDashboard = function (RRQ_ID) {
-        window.location.href = "/SessionMgmt/RRQDashboard/" + RRQ_ID + "?RRQID=" + RRQ_ID;
+        window.location.href = "/RRQReport/RRQDashboard/" + RRQ_ID + "?RRQID=" + RRQ_ID;
     };
 
     $scope.ShowSessions = function () {

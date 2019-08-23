@@ -223,3 +223,122 @@
         return parms;
     }
 });
+
+myapp.controller('RRQReportCntrl', function ($scope, $http) {
+    GetRRQID(window.location.href);
+    $scope.RRQTable = []
+
+
+    function GetRRQID(url) {
+        var params = parseURLParams(url);
+        if ("RRQID" in params) {
+            $scope.RRQ_ID = params["RRQID"][0];
+            GenerateReport();
+        }
+    }
+
+    function GenerateReport() {
+        $http.get('/StudentMgmt/GenerateRRQStudentReports/' + $scope.RRQ_ID)
+            .then(function (result) {
+                console.log(result.data);
+
+                var RRQ = result.data.RRQ;
+                var ReportData = result.data.StudentReports;
+
+                var RRQRows = []; var RRQCols = [];                
+                for (var i in RRQ) {
+                    if (i == 'Questions') {
+                        for (var j in RRQ.Questions) {
+                            RRQCols.push("Q "+ (parseInt(j) + 1));
+                            RRQRows.push(RRQ.Questions[j].OptionChar);
+                        }                        
+                    }
+                    else {
+                        RRQCols.push(i)
+                        RRQRows.push(RRQ[i])
+                    }
+                }
+                $scope.RRQTable.push({ rows: [RRQRows], cols: RRQCols });
+
+                RRQRows = []; RRQCols = [];
+                for (i in ReportData) {
+                    currRow = []
+                    for (j in ReportData[i]) {
+                        if (j == 'Responses') {
+                            for (var k in ReportData[i].Responses) {
+                                if (parseInt(i) == 0)
+                                    RRQCols.push("Q " + (parseInt(k) + 1));
+                                currRow.push(ReportData[i].Responses[k].OptionChar);
+                            }
+                        }
+                        else if (j != 'StudentID') {
+                            if (parseInt(i)==0)
+                                RRQCols.push(j)
+                            currRow.push(ReportData[i][j])
+                        }
+                    }
+                    RRQRows.push(currRow)
+                }
+                $scope.RRQTable.push({ rows: RRQRows, cols: RRQCols });
+            
+                console.log($scope.RRQTable)
+                
+            });
+    }
+
+    $scope.Download = function () {
+        CreateReportCSV();
+    }
+
+    function CreateReportCSV() {
+        var tableDiv = document.getElementById("reportTable");
+        var tables = tableDiv.getElementsByTagName('table');
+        var csvString = '';
+        count = 0
+        for (var table of tables) {
+            for (var i = 0; i < table.rows.length; i++) {
+                var rowData = table.rows[i].cells;
+                for (var j = 0; j < rowData.length; j++) {
+                    var temp = rowData[j].textContent
+                    if (temp.substring(temp.length - 3, temp.length) == '...')
+                        temp = $scope.RRQTable[count]["rows"][i - 1][j];
+
+                    csvString = csvString + temp.replace(/\s+/g, ' ').trim() + ",";
+                }
+                csvString = csvString.substring(0, csvString.length - 1);
+                csvString = csvString + "\n";
+            }
+            csvString = csvString + "\n";
+            count += 1;
+        }
+        csvString = csvString.substring(0, csvString.length - 1);
+
+        var a = $('<a/>', {
+            style: 'display:none',
+            href: 'data:application/octet-stream;base64,' + btoa(csvString),
+            download: 'RRQReport.csv'
+        }).appendTo('body');
+        a[0].click();
+        a.remove();
+    }
+
+    function parseURLParams(url) {
+        var queryStart = url.indexOf("?") + 1,
+            queryEnd = url.indexOf("#") + 1 || url.length + 1,
+            query = url.slice(queryStart, queryEnd - 1),
+            pairs = query.replace(/\+/g, " ").split("&"),
+            parms = {}, i, n, v, nv;
+
+        if (query === url || query === "") return;
+
+        for (i = 0; i < pairs.length; i++) {
+            nv = pairs[i].split("=", 2);
+            n = decodeURIComponent(nv[0]);
+            v = decodeURIComponent(nv[1]);
+
+            if (!parms.hasOwnProperty(n)) parms[n] = [];
+            parms[n].push(nv.length === 2 ? v : null);
+        }
+        return parms;
+    }
+});

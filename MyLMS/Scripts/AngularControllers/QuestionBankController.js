@@ -324,7 +324,7 @@
     }
 
     $scope.DisplayDashboard = function() {
-        window.location.href = "/SessionMgmt/RRQDashboard/" + $scope.RRQID + "?RRQID=" + $scope.RRQID;
+        window.location.href = "/RRQReport/RRQDashboard/" + $scope.RRQID + "?RRQID=" + $scope.RRQID;
     }
 
     $scope.currentPage = 0;
