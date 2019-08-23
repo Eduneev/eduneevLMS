@@ -13,7 +13,7 @@ namespace MyLMS.Models
         public DataTable RRQInfoDataTable = new DataTable();
         public string RRQNo, Subject, CurrentDate;
         public int RRQID;
-        public RRQData()
+        public RRQData()                                                                                                      
         {
 
         }

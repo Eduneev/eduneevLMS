@@ -18,6 +18,7 @@ namespace MyLMS.Models
     {
         public int StudentID { get; set; }
         public string StudentName { get; set; }
+        public string Email { get; set; }
         public List<Option> Responses { get; set; }
         public int TotalMarks { get; set; }
     }
