@@ -64,10 +64,6 @@ namespace MyLMS.Controllers
         {
             return View();
         }
-        public ActionResult NewRRQ()
-        {
-            return View();
-        }
 
         public ActionResult EditRRQ(int id)
         {
@@ -100,14 +96,6 @@ namespace MyLMS.Controllers
         {
             DashboardData DashboardObj = new DashboardData();
             DashboardObj.GetRespPrcnt(id);            
-            ViewBag.VBDashboard = DashboardObj;
-            return View();
-        }
-
-        public ActionResult RRQDashboard(int id)
-        {
-            DashboardData DashboardObj = new DashboardData();
-            DashboardObj.GetRespPrcnt(id);
             ViewBag.VBDashboard = DashboardObj;
             return View();
         }

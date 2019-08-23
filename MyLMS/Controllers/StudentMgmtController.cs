@@ -12,12 +12,16 @@ using System.Threading.Tasks;
 using Amazon.S3.Model;
 using RestSharp;
 using RestSharp.Authenticators;
+using System.IO.Compression;
+using System.Collections.Generic;
 
 namespace MyLMS.Controllers
 {
     [SessionExpire]
     public class StudentMgmtController : Controller
     {
+        //private new ZipArchive();
+
         // GET: StudentMgmt
         public ActionResult RegisterStudent()
         {
@@ -403,6 +407,107 @@ namespace MyLMS.Controllers
             {
 
             }
+        }
+
+        [HttpGet]
+        public string GenerateRRQStudentReports(int id)
+        {
+            int RRQID = id;
+            RRQDetails RRQ = new RRQDetails();
+            List<StudentReport> StudentReports = new List<StudentReport>();
+            RRQReport RRQReport = new RRQReport();
+
+            SqlParameter[] FObj = new SqlParameter[1];
+            FObj[0] = new SqlParameter("@RRQ_ID", SqlDbType.Int);
+            FObj[0].Value = RRQID;
+            DataTable RRQQuestions = DAL.GetDataTable("GetRRQQuestions", FObj);
+
+            // Construct RRQ Details 
+            RRQ.TotalMarks = 0;
+            RRQ.Questions = new List<Option>();
+            for (int i=0; i < RRQQuestions.Rows.Count; i++)
+            {
+                RRQ.RRQID = Convert.ToInt32(Convert.IsDBNull(RRQQuestions.Rows[i]["RRQ_ID"]) ? 0 : RRQQuestions.Rows[i]["RRQ_ID"]);
+                RRQ.RRQNo = Convert.ToString(Convert.IsDBNull(RRQQuestions.Rows[i]["RRQName"]) ? string.Empty : RRQQuestions.Rows[i]["RRQName"]);
+                int mark = Convert.ToInt32(Convert.IsDBNull(RRQQuestions.Rows[i]["Mark"]) ? 0 : RRQQuestions.Rows[i]["Mark"]);
+                RRQ.TotalMarks += mark;
+                Option Option = new Option();
+                Option.QID = Convert.ToInt32(Convert.IsDBNull(RRQQuestions.Rows[i]["QID"]) ? 0 : RRQQuestions.Rows[i]["QID"]);
+                Option.OptionChar = Convert.ToString(Convert.IsDBNull(RRQQuestions.Rows[i]["OptionChar"]) ? string.Empty : RRQQuestions.Rows[i]["OptionChar"]);
+                Option.Mark = mark;
+                RRQ.Questions.Add(Option);
+            }
+
+            // Construct Student Responses
+            FObj = new SqlParameter[1];
+            FObj[0] = new SqlParameter("@RRQ_ID", SqlDbType.Int);
+            FObj[0].Value = RRQID;
+            DataTable Reports = DAL.GetDataTable("GetStudentReports", FObj);
+
+            Dictionary<int, int> StudentMapper = new Dictionary<int, int>();
+            Dictionary<int, Dictionary<int, Option>> StudentResponses = new Dictionary<int, Dictionary<int, Option>>();
+            for (int i=0; i < Reports.Rows.Count; i++)
+            {
+                int StudentID = Convert.ToInt32(Convert.IsDBNull(Reports.Rows[i]["StudentID"]) ? 0 : Reports.Rows[i]["StudentID"]);
+                if (StudentMapper.ContainsKey(StudentID))
+                {
+                    // Existing Student - append to the dictionary
+                    Option Option = new Option();
+                    Option.QID = Convert.ToInt32(Convert.IsDBNull(Reports.Rows[i]["QID"]) ? 0 : Reports.Rows[i]["QID"]);
+                    Option.OptionChar = Convert.ToString(Convert.IsDBNull(Reports.Rows[i]["Response"]) ? string.Empty : Reports.Rows[i]["Response"]);
+                    Option.Mark = Convert.ToInt32(Convert.IsDBNull(Reports.Rows[i]["Mark"]) ? 0 : Reports.Rows[i]["Mark"]);
+                    StudentResponses[StudentID].Add(Option.QID, Option);
+                }
+                else
+                {
+                    // Create new Student
+                    StudentReport Student = new StudentReport();
+                    Student.StudentID = StudentID;
+                    Student.StudentName = Convert.ToString(Convert.IsDBNull(Reports.Rows[i]["StudentName"]) ? string.Empty : Reports.Rows[i]["StudentName"]);
+                    Student.Email = Convert.ToString(Convert.IsDBNull(Reports.Rows[i]["StudentEmail"]) ? string.Empty : Reports.Rows[i]["StudentEmail"]);
+                    Student.TotalMarks = Convert.ToInt32(Convert.IsDBNull(Reports.Rows[i]["TotalMarks"]) ? 0 : Reports.Rows[i]["TotalMarks"]);
+                    Option Option = new Option();
+                    Option.QID = Convert.ToInt32(Convert.IsDBNull(Reports.Rows[i]["QID"]) ? 0 : Reports.Rows[i]["QID"]);
+                    Option.OptionChar = Convert.ToString(Convert.IsDBNull(Reports.Rows[i]["Response"]) ? string.Empty : Reports.Rows[i]["Response"]);
+                    Option.IsCorrect = Convert.ToBoolean(Convert.IsDBNull(Reports.Rows[i]["IsCorrect"]) ? 0 : Reports.Rows[i]["IsCorrect"]);
+                    Option.Mark = Convert.ToInt32(Convert.IsDBNull(Reports.Rows[i]["Mark"]) ? 0 : Reports.Rows[i]["Mark"]);
+                    StudentResponses[StudentID] = new Dictionary<int, Option> { { Option.QID, Option } };
+                    StudentReports.Add(Student);
+                    // Add to StudentMapper
+                    StudentMapper.Add(StudentID, StudentReports.Count - 1);
+                }
+            }
+
+            // Loop through each Student and Add N/A for all questions that are unanswered
+            for (int i=0; i < StudentReports.Count; i++)
+            {
+                int StudentID = StudentReports[i].StudentID;
+                List<Option> Responses = new List<Option>();
+                foreach (Option Option in RRQ.Questions)
+                {
+                    if (StudentResponses[StudentID].ContainsKey(Option.QID))
+                    {
+                        Responses.Add(StudentResponses[StudentID][Option.QID]);
+                    }
+                    else
+                    {
+                        Option o = new Option();
+                        o.OptionChar = "NA";
+                        o.IsCorrect = false;
+                        o.QID = Option.QID;
+                        Responses.Add(o);
+                    }
+                }
+                StudentReports[i].Responses = Responses;
+            }
+
+            // Construct the RRQReport Object
+            RRQReport.RRQ = RRQ;
+            RRQReport.StudentReports = StudentReports;
+
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(RRQReport);
+            return JSONString;
         }
 
         // Send RRQ Reports to all Students
