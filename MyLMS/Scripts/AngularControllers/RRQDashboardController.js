@@ -286,8 +286,12 @@ myapp.controller('RRQReportCntrl', function ($scope, $http) {
             });
     }
 
-    $scope.Download = function () {
+    $scope.DownloadReport = function () {
         CreateReportCSV();
+    }
+
+    $scope.DownloadIntegrationReport = function () {
+        CreateIntegrationReport();
     }
 
     function CreateReportCSV() {
@@ -320,6 +324,54 @@ myapp.controller('RRQReportCntrl', function ($scope, $http) {
         }).appendTo('body');
         a[0].click();
         a.remove();
+    }
+
+    function CreateIntegrationReport() {
+        var tableDiv = document.getElementById("reportTable");
+        var tables = tableDiv.getElementsByTagName('table');
+        var csvString = '';
+        count = 0
+        cols = ['FirstName', 'LastName', 'Email']
+        for (var table of $scope.RRQTable) {
+            if (count == 0) {
+                // First table with RRQ Info
+                console.log(table.rows)
+                secondRow = table.rows[0];
+                var RRQNo = secondRow[1];
+                cols.push(RRQNo);
+                for (var temp of cols)
+                    csvString = csvString + temp.replace(/\s+/g, ' ').trim() + ",";
+
+                csvString = csvString.substring(0, csvString.length - 1);
+                csvString = csvString + "\n";
+            }
+            else {
+                // Data Table
+                for (var i = 0; i < table.rows.length; i++) {
+                    var rowData = table.rows[i]
+                    console.log(rowData)
+                    rowarr = rowData[0].split(' ')
+                    rowarr.push(rowData[1])
+                    rowarr.push(rowData[rowData.length - 1].toString())
+                    for (temp of rowarr)
+                        csvString = csvString + temp.replace(/\s+/g, ' ').trim() + ",";
+                    csvString = csvString.substring(0, csvString.length - 1);
+                    csvString = csvString + "\n";
+                }
+            }
+            count += 1;
+        }
+        csvString = csvString.substring(0, csvString.length - 1);
+
+        var a = $('<a/>', {
+            style: 'display:none',
+            href: 'data:application/octet-stream;base64,' + btoa(csvString),
+            download: 'IntegrationReport.csv'
+        }).appendTo('body');
+        a[0].click();
+        a.remove();
+
+       
     }
 
     function parseURLParams(url) {
