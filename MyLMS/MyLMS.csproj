@@ -294,6 +294,9 @@
     <Content Include="Scripts\table.js" />
     <Content Include="Scripts\TableNav\jquery.tablenavigator.js" />
     <Content Include="Scripts\_references.js" />
+	<Content Include="Scripts\wget.exe" />
+    <Content Include="Scripts\unzip.exe" />
+    <Content Include="Scripts\zip.exe" />
     <Content Include="StudentsImage\avatar2.png" />
     <Content Include="StudentsImage\avatar5.png" />
     <Content Include="StudioChat.aspx" />
