@@ -15,5 +15,5 @@ copy ".\auth.pem" ".\2WayLive\Center Login"
 move ".\auth.pem" ".\2WayLive\2WayCall"
 echo "zipping again"
 zip -r 2WayLive.zip "./2WayLive"
-rmdir  2WayLive
+rmdir /Q /S 2WayLive
 
