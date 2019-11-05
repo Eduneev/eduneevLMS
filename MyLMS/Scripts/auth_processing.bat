@@ -5,7 +5,7 @@ echo "Creating auth file"
 echo %arg1% > auth.pem
 if exist "./2WayLive.zip" (
     echo "Removing old zip"
-    rm "./2WayLive.zip"
+    del "./2WayLive.zip"
 )
 
 
@@ -17,5 +17,5 @@ cp ".\auth.pem" ".\2WayLive\Center Login"
 mv ".\auth.pem" ".\2WayLive\2WayCall"
 echo "zipping again"
 zip -r 2WayLive.zip "./2WayLive"
-rm -rf 2WayLive
+rmdir  2WayLive
 
