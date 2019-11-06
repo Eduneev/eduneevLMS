@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using UtilityClass;
@@ -242,6 +244,21 @@ namespace MyLMS.Controllers
             string JSONString = string.Empty;
             JSONString = JsonConvert.SerializeObject(CentersList);
             return JSONString;
+        }
+
+        [HttpGet]
+        [Route("CenterMgmt/GetClassroomPackage/{auth}")]
+        public string GetClassroomPackage(string auth)
+        {
+            // Local test computer
+            //string target_dir = @"C:\Users\sanat\Documents\Github\eduneevLMS\MyLMS\Scripts";
+
+            // Prod
+            string target_dir = @"C:\inetpub\wwwroot\Scripts";
+            string target_file = target_dir + "/" + "auth_processing.bat";
+            string args = "/c " + target_file + " " + auth + " " + target_dir;
+            System.Diagnostics.Process.Start("cmd.exe", args);
+            return "Success";
         }
 
         [HttpPost]
