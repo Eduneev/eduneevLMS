@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -252,13 +253,45 @@ namespace MyLMS.Controllers
         {
             // Local test computer
             //string target_dir = @"C:\Users\sanat\Documents\Github\eduneevLMS\MyLMS\Scripts";
+            //string second_param = "C:\\Users\\sanat\\Documents\\Github\\eduneevLMS\\MyLMS\\Scripts";
 
             // Prod
             string target_dir = @"C:\inetpub\wwwroot\Scripts";
-            string target_file = target_dir + "/" + "auth_processing.bat";
-            string args = "/c " + target_file + " " + auth + " " + target_dir;
-            System.Diagnostics.Process.Start("cmd.exe", args);
-            return "Success";
+            string second_param = "C:\\inetpub\\wwwroot\\Scripts";
+            string target_file = target_dir + "\\" + "auth_processing.bat";
+            string[] args = new string[3] { target_file, auth, second_param };
+
+            return ExecuteCommand(args);
+        }
+
+        static string ExecuteCommand(string[] args)
+        {
+            int exitCode;
+            ProcessStartInfo processInfo;
+            Process process;
+
+            //processInfo = new ProcessStartInfo("cmd.exe", args);
+            processInfo = new ProcessStartInfo("cmd.exe");
+            processInfo.CreateNoWindow = false;
+            processInfo.UseShellExecute = false;
+            // *** Redirect the output ***
+            processInfo.RedirectStandardError = true;
+            processInfo.RedirectStandardOutput = true;
+
+            process = new Process();
+            process.StartInfo.FileName = args[0];
+            process.StartInfo.Arguments = " " + args[1] + " " + args[2];
+            //process = Process.Start(processInfo);
+            process.Start();
+            //process = Process.Start("cmd.exe " + args);
+            // Wait upto 30 seconds
+            process.WaitForExit();
+
+            
+            exitCode = process.ExitCode;
+
+            process.Close();
+            return "Done";
         }
 
         [HttpPost]

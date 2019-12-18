@@ -297,6 +297,7 @@
 	<Content Include="Scripts\wget.exe" />
     <Content Include="Scripts\unzip.exe" />
     <Content Include="Scripts\zip.exe" />
+	<Content Include="Scripts\auth_processing.bat" />
     <Content Include="StudentsImage\avatar2.png" />
     <Content Include="StudentsImage\avatar5.png" />
     <Content Include="StudioChat.aspx" />
