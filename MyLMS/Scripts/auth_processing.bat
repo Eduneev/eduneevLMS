@@ -1,7 +1,8 @@
-cd %2
-echo %cd%
 set arg1=%1
 echo %arg1%
+set arg2=%2
+echo %arg2%
+cd %arg2%
 echo "Creating auth file"
 echo %arg1% > auth.pem
 if exist "./2WayLive.zip" (
