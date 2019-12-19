@@ -70,7 +70,7 @@ namespace MyLMS.Controllers
             VlcCommand[0] = "\"C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe\"";
             //VlcCommand[0] = "\"C:\\Program Files (x86)\\2WayLive\\2WayLivePlayer\\2WLPlayer.exe\"";
             //VlcCommand[0] = "\"C:\\Program Files (x86)\\2WayLive\\2WL\\2WLPlayer.exe\""; 
-            VlcCommand[1] = "--rtsp-tcp --no-video-title-show --sub-filter=marq --qt-auto-raise=3 --marq-marquee=\"@2WayLive\" --marq-x 29 --marq-y 350 --marq-size=20 --marq-opacity=55  --video-title-timeout=2000 --no-video-deco --no-sout-video --network-caching=300 --one-instance --high-priority --embedded-video --key-record=  -I --disable-qt ";
+            VlcCommand[1] = "--rtsp-tcp --no-video-title-show --sub-filter=marq --marq-marquee=\"@2WayLive\" --marq-x 29 --marq-y 350 --marq-size=20 --marq-opacity=55  --video-title-timeout=2000 --no-video-deco --no-sout-video --network-caching=300 --one-instance --high-priority --embedded-video --key-record=  -I --disable-qt ";
             return VlcCommand;
         }
 
@@ -386,6 +386,28 @@ namespace MyLMS.Controllers
             if (Response.Equals("2WayLive"))
                 return true;
             return false;
+        }
+
+        //---Server Allocation
+        [Route("api/GetRRQServer/{SessionID:int}")]
+        [HttpGet]
+        public string GetRRQServer(int SessionID)
+        {
+            // Determine entity and retrieve IP
+            string result = String.Empty;
+            SqlParameter[] SParam = new SqlParameter[1];
+            SParam[0] = new SqlParameter("@SessionID", SqlDbType.Int);
+            SParam[0].Value = SessionID;
+
+            DataTable val = DAL.GetDataTable("GetRRQServer", SParam);
+            result = Convert.ToString(Convert.IsDBNull(val.Rows[0]["Address"]) ? "Failure" : val.Rows[0]["Address"]);
+            if(!result.Equals("Failure"))
+            {
+                // RRQ Server is on port 3000
+                result = "ws://" + result + ":3000";
+            } 
+
+            return result;
         }
 
     }
