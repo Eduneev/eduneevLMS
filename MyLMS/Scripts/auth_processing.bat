@@ -4,7 +4,7 @@ set arg2=%2
 echo %arg2%
 cd %arg2%
 echo "Creating auth file"
-echo %arg1% > auth.pem
+echo %arg1%> auth.pem
 if not exist "./2WayLive" (
     
     echo "Removing old zip"
