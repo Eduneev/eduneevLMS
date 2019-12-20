@@ -410,5 +410,25 @@ namespace MyLMS.Controllers
             return result;
         }
 
+        [Route("api/GetCallServer/{ClassroomID:int}")]
+        [HttpGet]
+        public string GetCallServer(int ClassroomID)
+        {
+            // Determine entity and retrieve IP
+            string result = String.Empty;
+            SqlParameter[] SParam = new SqlParameter[1];
+            SParam[0] = new SqlParameter("@ClassRoomID", SqlDbType.Int);
+            SParam[0].Value = ClassroomID;
+
+            DataTable val = DAL.GetDataTable("GetCallServer", SParam);
+            result = Convert.ToString(Convert.IsDBNull(val.Rows[0]["Address"]) ? "Failure" : val.Rows[0]["Address"]);
+            if (!result.Equals("Failure"))
+            {
+                // Call Server is on port 2000
+                result = "ws://" + result + ":2000";
+            }
+
+            return result;
+        }
     }
 }
