@@ -256,5 +256,29 @@ namespace MyLMS.Controllers
 
             }
         }
+
+        [HttpGet]
+        [Route("Entity/CheckEntityAndCenter/{EntityName}/{CenterName}")]
+        public string CheckEntityAndCenter(string EntityName, string CenterName)
+        {
+            SqlParameter[] FObj = new SqlParameter[3];
+
+            FObj[0] = new SqlParameter("@UserID", SqlDbType.Int);
+            FObj[0].Value = Convert.ToInt32(Session["USER_ID"]);
+            FObj[1] = new SqlParameter("@EntityName", SqlDbType.VarChar);
+            FObj[1].Value = EntityName;
+            FObj[2] = new SqlParameter("@CenterName", SqlDbType.VarChar);
+            FObj[2].Value = CenterName;
+
+            DataTable entity = DAL.GetDataTable("CheckEntityAndCenter", FObj);
+
+            string JSONString = string.Empty;
+            if (entity.Rows.Count > 0)
+                JSONString = "Success";
+            else
+                JSONString = "Failure";
+
+            return JSONString;
+        }
     }
 }
