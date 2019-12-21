@@ -191,5 +191,31 @@ namespace MyLMS.Controllers
             JSONString = JsonConvert.SerializeObject(QuestionsList);
             return JSONString;
         }
+
+        [HttpGet]
+        [Route("CourseMgmt/CheckProgramCourseAndSubject/{ProgramName}/{CourseName}/{SubjectName}")]
+        public string CheckProgramCourseAndSubject(string ProgramName, string CourseName, string SubjectName)
+        {
+            SqlParameter[] FObj = new SqlParameter[4];
+
+            FObj[0] = new SqlParameter("@UserID", SqlDbType.Int);
+            FObj[0].Value = Convert.ToInt32(Session["USER_ID"]);
+            FObj[1] = new SqlParameter("@ProgramName", SqlDbType.VarChar);
+            FObj[1].Value = ProgramName;
+            FObj[2] = new SqlParameter("@CourseName", SqlDbType.VarChar);
+            FObj[2].Value = CourseName;
+            FObj[3] = new SqlParameter("@SubjectName", SqlDbType.VarChar);
+            FObj[3].Value = SubjectName;
+
+            DataTable entity = DAL.GetDataTable("CheckProgramCourseAndSubject", FObj);
+
+            string JSONString = string.Empty;
+            if (entity.Rows.Count > 0)
+                JSONString = "Success";
+            else
+                JSONString = "Failure";
+
+            return JSONString;
+        }
     }
 }
