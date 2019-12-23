@@ -56,7 +56,6 @@
                                         <th>Address</th>
                                         <th>Pin Code</th>
                                         <th>Is Active</th>
-                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -86,9 +85,6 @@
                                         </td>
                                         <td>
                                             <span>{{Center.IsActive}}</span>
-                                        </td>
-                                        <td>
-                                            <a href="https://s3-us-west-2.amazonaws.com/sanats/2WayLive.zip" download="2WayLive">Download Package</a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -139,7 +135,7 @@
                                         <span>{{Classroom.Auth}}</span>
                                     </td>
                                     <td>
-                                        <button ng-click="DownloadAuth(Classroom.Auth)">Download</button>
+                                        <button ng-click="DownloadBatch(Classroom.ClassRoomID, Classroom.ClassRoomName)">Download</button>
                                     </td>
                                 </tr>
                             </tbody>
