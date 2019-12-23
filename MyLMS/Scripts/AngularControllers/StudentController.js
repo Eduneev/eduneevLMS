@@ -60,7 +60,7 @@
                     $http({
                         method: 'POST',
                         url: '/StudentMgmt/SaveStudent',
-                        data: { StudentName: _StudentName, Code: _Code, Gender: _Gender, ProgramID: _ProgramID, CourseID: _CourseID, SubjectID: _SubjectID, Email: _Email, Mobile: _Mobile, Landline: _Landline, GuardianName: _GuardianName, GuardianContactNo: _GuardianContactNo, BirthPlace: _BirthPlace, SchoolName: _SchoolName, Address: _Address, Pincode: _Pincode }
+                        data: { StudentName: _StudentName, Code: _Code, Gender: _Gender, ProgramID: _ProgramID, CourseID: _CourseID, SubjectID: _SubjectID, Email: _Email, Mobile: _Mobile, Landline: _Landline, GuardianName: _GuardianName, GuardianContactNo: _GuardianContactNo, SchoolName: _SchoolName, Address: _Address, Pincode: _Pincode }
                     }).then(function (result) {
                     });
                 }
@@ -89,10 +89,12 @@
                 var data = $.csv.toObjects(csv);            
             }
             catch {
+                removeFileElement();
                 alert("Error Reading CSV");
             }
 
             if (!CheckCSVColumns(data[0])) {
+                removeFileElement();
                 alert("Error: Incorrect CSV Columns");
                 return;
             }
@@ -100,26 +102,32 @@
             for (const[idx,obj]  of data.entries()) {
                 var val = CheckValidStudent(obj, idx);
                 if (val == 0) {
+                    removeFileElement();
                     alert("Error in row " + idx + ".Students not added");
                     return;
                 }
             }
 
-            $q.all(promises).then(function (data) {
+            $q.all(promises).then(function (results) {
                 console.log("ALL HTTP requests done");
-                console.log(data)
-                for (val of data) {
-                    if (val[0] == 0) {
-                        alert("Error in row " + val[1] + ".Students not added");
+                console.log(results)
+                for (result of results) {
+                    if (result[0] == 0) {
+                        removeFileElement();
+                        alert("Error in row " + result[1] + ".Students not added");
                         return;
                     }
                 }
 
                 console.log("Data correct. Adding students");
+                for (val of data)
+                    SaveCSVStudent(val);
+
+                res = "Saved " + data.length + " students successfully!";
+                removeFileElement();
+                alert(res);
             });
 
-            s = "Added " + added + " questions. Error in adding " + not_added + " questions";
-            alert(s);
         }
     }
 
@@ -168,6 +176,45 @@
         return 1;
     }
 
+    function SaveCSVStudent(data) {
+        $http.get('/StudentMgmt/GenerateStudentCode')
+            .then(function (result) {
+                var _Code = result.data[0].StudentEnrollmentNo;
+                var _StudentName = data.StudentName;
+                var _EntityName = data.EntityName;
+                var _CenterName = data.CenterName;
+                var _ProgramName = data.ProgramName;
+                var _CourseName = data.CourseName;
+                var Subjects = [];
+                Subjects.push(data.SubjectName1);
+                Subjects.push(data.SubjectName2);
+                Subjects.push(data.SubjectName3);
+                Subjects.push(data.SubjectName4);
+                Subjects.push(data.SubjectName5);
+
+                Subjects = Subjects.filter(function (el) { return el; });
+                var _Email = data.Email;
+                var _Mobile = data.Mobile;
+                var _Address = data.Address;
+                var _Pincode = data.Pincode;
+                var _Gender = data.Gender;
+                var _Landline = data.Landline;
+                var _SchoolName = data.SchoolName;
+                var _GuardianName = data.GuardianName;
+                var _GuardianContactNo = data.GuardianContactNo;
+
+                for (_SubjectName of Subjects) {
+                    $http({
+                        method: 'POST',
+                        url: '/StudentMgmt/SaveCSVStudent',
+                        data: { EntityName: _EntityName, CenterName: _CenterName, StudentName: _StudentName, Code: _Code, Gender: _Gender, ProgramName: _ProgramName, CourseName: _CourseName, SubjectName: _SubjectName, Email: _Email, Mobile: _Mobile, Landline: _Landline, GuardianName: _GuardianName, GuardianContactNo: _GuardianContactNo, SchoolName: _SchoolName, Address: _Address, Pincode: _Pincode }
+                    }).then(function (result) {
+                    });
+
+                }
+            });
+
+    }
 
     function CheckCSVColumns(data) {
         console.log(data)
@@ -197,6 +244,9 @@
         return true
     }
 
+    function removeFileElement() {
+        document.getElementById("files").remove();
+    }
 
     $scope.HandleFiles = function () {
         console.log("handling file")
@@ -209,6 +259,7 @@
         $(document).ready(function () {
             $('#files').bind('change', handleCSVFile);
         });
+       
     }
 
 });
@@ -437,7 +488,7 @@ myapp.controller('EditStudentCntrl', function ($scope, $http) {
                 $http({
                     method: 'POST',
                     url: '/StudentMgmt/EditStudent',
-                    data: { StudentID: $scope.StudentSubjects[SubjectID], StudentName: _StudentName, Code: _Code, Gender: _Gender, ProgramID: _ProgramID, CourseID: _CourseID, SubjectID: _SubjectID, Email: _Email, Mobile: _Mobile, Landline: _Landline, GuardianName: _GuardianName, GuardianContactNo: _GuardianContactNo, BirthPlace: _BirthPlace, SchoolName: _SchoolName, Address: _Address, Pincode: _Pincode }
+                    data: { StudentID: $scope.StudentSubjects[SubjectID], StudentName: _StudentName, Code: _Code, Gender: _Gender, ProgramID: _ProgramID, CourseID: _CourseID, SubjectID: _SubjectID, Email: _Email, Mobile: _Mobile, Landline: _Landline, GuardianName: _GuardianName, GuardianContactNo: _GuardianContactNo, SchoolName: _SchoolName, Address: _Address, Pincode: _Pincode }
                 }).then(function (result) {
                 });
             }
