@@ -28,6 +28,21 @@ namespace MyLMS.Models
             return res;
         }
 
+        public string SaveCSVStudent(SqlParameter[] sparams)
+        {
+            string res = "Failure..";
+            try
+            {
+                res = DAL.ExecuteScalar("SaveCSVStudent", sparams);
+            }
+            catch (Exception ex)
+            {
+                res = ex.Message;
+                throw;
+            }
+            return res;
+        }
+
         public string EditStudent(SqlParameter[] sparams)
         {
             string res = "Failure..";
