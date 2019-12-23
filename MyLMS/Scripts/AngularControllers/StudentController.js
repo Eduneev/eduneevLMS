@@ -1,4 +1,4 @@
-﻿myapp.controller('StudentCntrl', function ($scope, $http) {
+﻿myapp.controller('StudentCntrl', function ($scope, $http, $q) {
     GetProgramsList();
     $scope.SubjectSet = new Set();
 
@@ -74,7 +74,146 @@
         window.location.href = "/StudentMgmt/ViewStudents/";
     }
 
+    // ---- Add Student by CSV handling part
+
+    
+    promises = []
+    function handleCSVFile(event) {
+        var files = event.target.files;
+        var file = files[0]
+        var reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = function (event) {
+            try {
+                var csv = event.target.result;
+                var data = $.csv.toObjects(csv);            
+            }
+            catch {
+                alert("Error Reading CSV");
+            }
+
+            if (!CheckCSVColumns(data[0])) {
+                alert("Error: Incorrect CSV Columns");
+                return;
+            }
+            
+            for (const[idx,obj]  of data.entries()) {
+                var val = CheckValidStudent(obj, idx);
+                if (val == 0) {
+                    alert("Error in row " + idx + ".Students not added");
+                    return;
+                }
+            }
+
+            $q.all(promises).then(function (data) {
+                console.log("ALL HTTP requests done");
+                console.log(data)
+                for (val of data) {
+                    if (val[0] == 0) {
+                        alert("Error in row " + val[1] + ".Students not added");
+                        return;
+                    }
+                }
+
+                console.log("Data correct. Adding students");
+            });
+
+            s = "Added " + added + " questions. Error in adding " + not_added + " questions";
+            alert(s);
+        }
+    }
+
+    function CheckValidStudent(data, idx) {
+        try {
+            console.log(data);
+            var StudentName = data.StudentName;
+            var EntityName = data.EntityName;
+            var CenterName = data.CenterName;
+            var ProgramName = data.ProgramName;
+            var CourseName = data.CourseName;
+            var Subjects = [];
+            Subjects.push(data.SubjectName1);
+            Subjects.push(data.SubjectName2);
+            Subjects.push(data.SubjectName3);
+            Subjects.push(data.SubjectName4);
+            Subjects.push(data.SubjectName5);
+
+            Subjects = Subjects.filter(function (el) { return el; });            
+
+            // Check data validity
+
+            if (Subjects.length == 0) return 0;
+
+            //MakeValidityCalls(EntityName, CenterName, ProgramName, CourseName)
+            var result = $http.get('/Entity/CheckEntityAndCenter/' + EntityName + "/" + CenterName)
+                .then(function (result) {
+                    if (result.data == 'Failure') return [0, idx];
+                    return [1, idx];
+                });
+            promises.push(result)
+
+
+            for (SubjectName of Subjects) {
+                result = $http.get('/CourseMgmt/CheckProgramCourseAndSubject/' + ProgramName + "/" + CourseName + "/" + SubjectName)
+                    .then(function (result) {
+                        if (result.data == 'Failure') return [0, idx];
+                        return [1, idx];
+                    });
+                promises.push(result)
+            }
+        }
+        catch{
+            return 0;
+        }
+        return 1;
+    }
+
+
+    function CheckCSVColumns(data) {
+        console.log(data)
+        var StudentName = data.StudentName;
+        var EntityName = data.EntityName;
+        var CenterName = data.CenterName;
+        var ProgramName = data.ProgramName;
+        var CourseName = data.CourseName;
+        var Subjects = [];
+        Subjects.push(data.SubjectName1);
+        Subjects.push(data.SubjectName2);
+        Subjects.push(data.SubjectName3);
+        Subjects.push(data.SubjectName4);
+        Subjects.push(data.SubjectName5);
+
+        var Email = data.Email;
+        var Mobile = data.Mobile;
+        var Address = data.Address;
+        var Pincode = data.Pincode;
+        var Gender = data.Gender;
+        var SchoolName = data.SchoolName;
+        var GuardianName = data.GuardianName;
+        var GuardianContactNo = data.GuardianContactNo;
+        console.log(Subjects.length)
+        if (StudentName == undefined || EntityName == undefined || CenterName == undefined || ProgramName == undefined || CourseName == undefined || Email == undefined || Mobile == undefined || Address == undefined || Pincode == undefined || Gender == undefined || SchoolName == undefined || GuardianName == undefined || GuardianContactNo == undefined || Subjects.length != 5)
+            return false
+        return true
+    }
+
+
+    $scope.HandleFiles = function () {
+        console.log("handling file")
+        l = document.getElementById("left");
+        var x = document.createElement("INPUT");
+        x.id = "files";
+        x.setAttribute("type", "file");
+        left.appendChild(x);
+
+        $(document).ready(function () {
+            $('#files').bind('change', handleCSVFile);
+        });
+    }
+
 });
+
+
 
 myapp.controller('StudentViewCntrl', function ($scope, $http) {
     //GetStudents();
