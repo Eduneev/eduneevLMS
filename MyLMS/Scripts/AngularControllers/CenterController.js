@@ -182,6 +182,10 @@ myapp.controller('OrgCntrl', function ($scope, $http) {
 
     $scope.SelectedCenter = function (SelectedCenterID) {
         $scope.CenterID = SelectedCenterID;
+        for (Center of $scope.CentersList) {
+            if (Center.CenterID == SelectedCenterID)
+                $scope.CenterName = Center.CenterName;
+        }
         GetClassrooms();
     }
 
@@ -192,7 +196,40 @@ myapp.controller('OrgCntrl', function ($scope, $http) {
             });
     }
 
-    $scope.DownloadAuth = function(auth) {
+    $scope.DownloadBatch = function (ClassroomID, ClassroomName) {
+
+        var result = "SET /a classroom=" + ClassroomID + "\n";
+        result = result + "SET /a i=0\nsetlocal EnableDelayedExpansion\nSET RES=\nFOR /F %%X IN ('wmic baseboard get serialnumber') DO (";
+        result = result + "SET VAR=%%X\nIF !i! EQU 1 (SET RES=!VAR!)\nSET /a i+=1\n@echo !i!\n)\n";
+        result = result + "SET URL=http://portal.2WayLive.com/api/SetClassroomAuth/!classroom!/!RES!\ncurl !URL!";
+        name = $scope.CenterName + "-" + ClassroomName + ".bat";
+        var a = $('<a/>', {
+            style: 'display:none',
+            href: 'data:application/octet-stream;base64,' + btoa(result),
+            download: name
+        }).appendTo('body');
+        a[0].click();
+        a.remove();
+    }
+
+    $scope.DownloadAuth = function (auth) {
+        
+        $http.get('/CenterMgmt/GetClassroomPackage/' + auth)
+            .then(function (result) {
+                
+                var a = $('<a/>', {
+                    style: 'display:none',
+                    href: "http://portal.2WayLive.com/Scripts/2WayLive.zip",
+                    download: '2WayLive.zip'
+                }).appendTo('body');
+                a[0].click();
+                a.remove();
+                
+            });
+
+        setTimeout(function () { alert('Please wait as package is being created'); }, 1);
+        
+        /*
         var a = $('<a/>', {
             style: 'display:none',
             href: 'data:application/octet-stream;base64,' + btoa(auth),
@@ -200,6 +237,7 @@ myapp.controller('OrgCntrl', function ($scope, $http) {
         }).appendTo('body');
         a[0].click();
         a.remove();
+        */
     }
 });
 
