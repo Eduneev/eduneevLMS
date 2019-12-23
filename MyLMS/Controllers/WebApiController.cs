@@ -249,6 +249,23 @@ namespace MyLMS.Controllers
             return result;
         }
 
+        [Route("api/SetClassroomAuth/{ClassroomID:int}/{Auth}")]
+        [HttpGet]
+        public string SaveClassroomAuth(int ClassroomID, string Auth)
+        {
+            string result = string.Empty;
+            SqlParameter[] SParam = new SqlParameter[2];
+            SParam[0] = new SqlParameter("ClassRoomID", SqlDbType.Int);
+            SParam[0].Value = ClassroomID;
+            SParam[1] = new SqlParameter("Auth", SqlDbType.VarChar);
+            SParam[1].Value = Auth;
+
+            DataTable val = DAL.GetDataTable("SaveClassroomAuth", SParam);
+            result= Convert.ToString(Convert.IsDBNull(val.Rows[0]["results"]) ? "-1" : val.Rows[0]["results"]);
+
+            return result;
+        }
+
         // ------Mobile RRQ section
 
         public static string SenderID = "TWLRRQ";
