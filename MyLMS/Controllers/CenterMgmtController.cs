@@ -155,7 +155,7 @@ namespace MyLMS.Controllers
         public void SaveClassroom(string ClassRoomName, int CenterID, int SittingCapacity)
         {
             ClassRoomModel CentObj1 = new ClassRoomModel();
-            SqlParameter[] SParam = new SqlParameter[5];
+            SqlParameter[] SParam = new SqlParameter[4];
             SParam[0] = new SqlParameter("@ClassRoomName", SqlDbType.VarChar);
             SParam[0].Value = ClassRoomName;
             SParam[1] = new SqlParameter("@CenterID", SqlDbType.Int);
@@ -164,10 +164,10 @@ namespace MyLMS.Controllers
             SParam[2].Value = SittingCapacity;
             SParam[3] = new SqlParameter("@LastUsedCommand", SqlDbType.Int);
             SParam[3].Value = "";
-            SParam[4] = new SqlParameter("@Auth", SqlDbType.VarChar);
+            //SParam[4] = new SqlParameter("@Auth", SqlDbType.VarChar);
 
-            string auth = SessionMgmtController.createRandomKey(10);
-            SParam[4].Value = auth;
+            //string auth = SessionMgmtController.createRandomKey(10);
+            //SParam[4].Value = auth;
 
             try
             {
