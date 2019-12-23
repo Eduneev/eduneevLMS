@@ -110,7 +110,7 @@
     $scope.StartChat = function (SessionID, CenterID) {
         debugger;
         var promise = GetCenterNameFromSession(CenterID).then(function (response) {
-            var url = "http://twowaylive.us-east-2.elasticbeanstalk.com/Chat.aspx?SessionID=" + SessionID + "&CenterName=" + response + "&CenterID=" + CenterID;
+            var url = "http://portal.2waylive.com/Chat.aspx?SessionID=" + SessionID + "&CenterName=" + response + "&CenterID=" + CenterID;
             var form = document.createElement("form");
             form.method = "POST";
             form.action = url;
@@ -122,7 +122,7 @@
 
     $scope.StartStudioChat = function (SessionID, StudioName) {
         //debugger;
-        var url = "http://twowaylive.us-east-2.elasticbeanstalk.com/StudioChat.aspx?SessionID=" + SessionID + "&StudioName=" + StudioName;
+        var url = "http://portal.2waylive.com/StudioChat.aspx?SessionID=" + SessionID + "&StudioName=" + StudioName;
         var form = document.createElement("form");
         form.method = "POST";
         form.action = url;
