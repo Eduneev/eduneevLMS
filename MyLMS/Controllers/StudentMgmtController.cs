@@ -14,6 +14,8 @@ using RestSharp;
 using RestSharp.Authenticators;
 using System.IO.Compression;
 using System.Collections.Generic;
+//using SendGrid;
+
 
 namespace MyLMS.Controllers
 {
@@ -59,7 +61,7 @@ namespace MyLMS.Controllers
         }
 
         [HttpPost]
-        public void SaveStudent(string StudentName, string Code,int ProgramID, int CourseID, int SubjectID, string Email, string Mobile, string Landline, string Address, string Pincode, string Gender, string BirthPlace, string SchoolName, string GuardianName, string GuardianContactNo)
+        public void SaveStudent(string StudentName, string Code,int ProgramID, int CourseID, int SubjectID, string Email, string Mobile, string Landline, string Address, string Pincode, string Gender, string SchoolName, string GuardianName, string GuardianContactNo)
         {
             StudentModel ModelObj1 = new StudentModel();
             SqlParameter[] SParam = new SqlParameter[15];
@@ -105,7 +107,57 @@ namespace MyLMS.Controllers
         }
 
         [HttpPost]
-        public void EditStudent(int StudentID, string StudentName, string Code, int ProgramID, int CourseID, int SubjectID, string Email, string Mobile, string Landline, string Address, string Pincode, string Gender, string BirthPlace, string SchoolName, string GuardianName, string GuardianContactNo)
+        public void SaveCSVStudent(string EntityName, string CenterName, string StudentName, string Code, string ProgramName, string CourseName, string SubjectName, string Email, string Mobile, string Landline, string Address, string Pincode, string Gender, string SchoolName, string GuardianName, string GuardianContactNo)
+        {
+            StudentModel ModelObj1 = new StudentModel();
+            SqlParameter[] SParam = new SqlParameter[17];
+
+            SParam[0] = new SqlParameter("@EntityName", SqlDbType.VarChar);
+            SParam[0].Value = EntityName;
+            SParam[1] = new SqlParameter("@CenterName", SqlDbType.VarChar);
+            SParam[1].Value = CenterName;
+            SParam[2] = new SqlParameter("@StudentName", SqlDbType.VarChar);
+            SParam[2].Value = StudentName;
+            SParam[3] = new SqlParameter("@Code", SqlDbType.VarChar);
+            SParam[3].Value = Code;
+            SParam[4] = new SqlParameter("@ProgramName", SqlDbType.VarChar);
+            SParam[4].Value = ProgramName;
+            SParam[5] = new SqlParameter("@CourseName", SqlDbType.VarChar);
+            SParam[5].Value = CourseName;
+            SParam[6] = new SqlParameter("@SubjectName", SqlDbType.VarChar);
+            SParam[6].Value = SubjectName;
+            SParam[7] = new SqlParameter("@Email", SqlDbType.VarChar);
+            SParam[7].Value = Email;
+            SParam[8] = new SqlParameter("@Mobile", SqlDbType.VarChar);
+            SParam[8].Value = Mobile;
+            SParam[9] = new SqlParameter("@Landline", SqlDbType.VarChar);
+            SParam[9].Value = Landline;
+            SParam[10] = new SqlParameter("@Address", SqlDbType.Text);
+            SParam[10].Value = Address;
+            SParam[11] = new SqlParameter("@Pincode", SqlDbType.VarChar);
+            SParam[11].Value = Pincode;
+            SParam[12] = new SqlParameter("@Gender", SqlDbType.VarChar);
+            SParam[12].Value = Gender;
+            SParam[13] = new SqlParameter("@UserID", SqlDbType.Int);
+            SParam[13].Value = Convert.ToInt32(Session["USER_ID"]);
+            SParam[14] = new SqlParameter("@SchoolName", SqlDbType.VarChar);
+            SParam[14].Value = SchoolName;
+            SParam[15] = new SqlParameter("@GuardianName", SqlDbType.VarChar);
+            SParam[15].Value = GuardianName;
+            SParam[16] = new SqlParameter("@GuardianContactNo", SqlDbType.VarChar);
+            SParam[16].Value = GuardianContactNo;
+            try
+            {
+                ModelObj1.SaveCSVStudent(SParam);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        [HttpPost]
+        public void EditStudent(int StudentID, string StudentName, string Code, int ProgramID, int CourseID, int SubjectID, string Email, string Mobile, string Landline, string Address, string Pincode, string Gender, string SchoolName, string GuardianName, string GuardianContactNo)
         {
             StudentModel ModelObj1 = new StudentModel();
             SqlParameter[] SParam = new SqlParameter[16];
@@ -514,6 +566,7 @@ namespace MyLMS.Controllers
         public static IRestResponse SendSimpleMessage()
         {
             RestClient client = new RestClient();
+            
             client.BaseUrl = new Uri("https://api.mailgun.net/v3"); 
 
             client.Authenticator = new HttpBasicAuthenticator("api", "YOUR_API_KEY");
@@ -528,5 +581,20 @@ namespace MyLMS.Controllers
             request.Method = Method.POST;
             return client.Execute(request);
         }
+
+        /*
+        static async Task Execute()
+        {
+            var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress("test@example.com", "Example User");
+            var subject = "Sending with Twilio SendGrid is Fun";
+            var to = new EmailAddress("test@example.com", "Example User");
+            var plainTextContent = "and easy to do anywhere, even with C#";
+            var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            var response = await client.SendEmailAsync(msg);
+        }
+        */
     }
 }
