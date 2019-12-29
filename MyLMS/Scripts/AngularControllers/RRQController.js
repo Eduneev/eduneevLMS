@@ -15,11 +15,12 @@
         console.log(_SessionName)
 
         if (_SessionName === null) {
-            $("#rrq_search").val("");
-            GetSessionList();
+            $("#rrq_search").val("").trigger('input');
+            //GetSessionList();
         }
         else
-            $("#rrq_search").val(_SessionName);
+            $("#rrq_search").val(_SessionName).trigger('input');
+            
     };
 
     $scope.CreateNewRRQ = function () {
