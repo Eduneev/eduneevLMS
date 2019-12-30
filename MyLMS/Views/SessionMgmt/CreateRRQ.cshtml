@@ -51,9 +51,11 @@
                                 <tr>
                                     <th>Sl No.</th>
                                     <th>RRQ No</th>
+                                    <th>View Report</th>
                                     <th>Session Name</th>
                                     <th>Session Date</th>
                                     <th>Course Details</th>
+                                    <th>Status</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -66,6 +68,9 @@
                                         <span><a href="/SessionMgmt/EditRRQ/{{RRQ.RRQ_ID}}?RRQ_ID={{RRQ.RRQ_ID}}">{{RRQ.RRQNo}}</a></span>
                                     </td>
                                     <td>
+                                        <a class="btn btn-sm btn-success" ng-disabled="RRQ.IsStarted==0" href="/RRQReport/RRQReport?RRQID={{RRQ.RRQ_ID}}">Report</a></span>
+                                    </td>
+                                    <td>
                                         <span>{{RRQ.SessionName}}</span>
                                     </td>
                                     <td>
@@ -73,6 +78,17 @@
                                     </td>
                                     <td>
                                         <span>{{RRQ.COURSE_DETAILS}}</span>
+                                    </td>
+                                    <td>
+                                        <div ng-if="RRQ.IsCompleted == 1">
+                                            <span class="label label-success">Completed</span>
+                                        </div>
+                                        <div ng-if="RRQ.IsCompleted==0 && RRQ.IsStarted==1">
+                                            <span class="label label-warning">Started</span>
+                                        </div>
+                                        <div ng-if="RRQ.IsStarted==0">
+                                            <span class="label label-default">Not Started</span>
+                                        </div>
                                     </td>
                                     <td>
                                         <span ng-click="DeleteRRQ(RRQ.RRQ_ID)" style="cursor:pointer;" class="fa fa-times-circle-o"></span>
