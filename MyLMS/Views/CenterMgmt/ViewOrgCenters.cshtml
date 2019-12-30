@@ -112,7 +112,8 @@
                                     <th>Sitting Capacity</th>
                                     <th>Is Active</th>
                                     <th>License Key</th>
-                                    <th></th>
+                                    <th>Download Install License</th>
+                                    <th>Download Center Package</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -135,7 +136,10 @@
                                         <span>{{Classroom.Auth}}</span>
                                     </td>
                                     <td>
-                                        <button ng-click="DownloadBatch(Classroom.ClassRoomID, Classroom.ClassRoomName)">Download</button>
+                                        <button class="btn btn-linkedin btn-sm" ng-click="DownloadBatch(Classroom.ClassRoomID, Classroom.ClassRoomName)">Download</button>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-soundcloud btn-sm" href="https://sanats.s3-us-west-2.amazonaws.com/2WayLive-CenterPackage.zip" download="2WayLive.zip">Download</a>
                                     </td>
                                 </tr>
                             </tbody>
