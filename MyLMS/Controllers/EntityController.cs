@@ -280,5 +280,27 @@ namespace MyLMS.Controllers
 
             return JSONString;
         }
+
+        [HttpGet]
+        [Route("Entity/CheckEntity/{EntityName}")]
+        public string CheckEntity(string EntityName)
+        {
+            SqlParameter[] FObj = new SqlParameter[3];
+
+            FObj[0] = new SqlParameter("@UserID", SqlDbType.Int);
+            FObj[0].Value = Convert.ToInt32(Session["USER_ID"]);
+            FObj[1] = new SqlParameter("@EntityName", SqlDbType.VarChar);
+            FObj[1].Value = EntityName;
+
+            DataTable entity = DAL.GetDataTable("CheckEntity", FObj);
+
+            string JSONString = string.Empty;
+            if (entity.Rows.Count > 0)
+                JSONString = "Success";
+            else
+                JSONString = "Failure";
+
+            return JSONString;
+        }
     }
 }
