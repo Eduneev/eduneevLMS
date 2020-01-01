@@ -29,6 +29,9 @@
                             <select class="form-control" id="drpEntityName" style="width: 100%;" data-ng-model="EntityID" data-ng-options="c.EntityID as c.EntityName for c in EntityList" data-ng-change="GetCentersForEntity()">
                                 <option value="">{{EntityTextToShow}}</option>
                             </select>
+                        </label>                        
+                        <label ng-controller="CSVCenterCntrl" id="left">
+                            <button type="button" class="btn btn-linkedin btn-sm" ng-click="HandleFiles()">Add Centers Through CSV</button>
                         </label>
                     </div>
 

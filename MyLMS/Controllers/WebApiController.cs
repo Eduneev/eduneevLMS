@@ -405,7 +405,7 @@ namespace MyLMS.Controllers
             return false;
         }
 
-        //---Server Allocation
+        // -----Server Allocation
         [Route("api/GetRRQServer/{SessionID:int}")]
         [HttpGet]
         public string GetRRQServer(int SessionID)
