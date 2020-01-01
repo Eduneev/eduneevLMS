@@ -162,6 +162,150 @@ myapp.controller('ClassroomCntrl', function ($scope, $http) {
 
 });
 
+myapp.controller('CSVCenterCntrl', function ($scope, $http, $q) {
+    promises = []
+    function handleCSVFile(event) {
+        var files = event.target.files;
+        var file = files[0]
+        var reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = function (event) {
+            try {
+                var csv = event.target.result;
+                var data = $.csv.toObjects(csv);
+            }
+            catch {
+                removeFileElement(); alert("Error Reading CSV");
+            }
+
+            if (!CheckCSVColumns(data[0])) {
+                removeFileElement(); alert("Error: Incorrect CSV Columns");
+                return;
+            }
+
+            for (const [idx, obj] of data.entries()) {
+                var val = CheckValidRow(obj, idx);
+                if (val == 0) {
+                    removeFileElement(); alert("Error in row " + idx + ".Students not added");
+                    return;
+                }
+            }
+
+            $q.all(promises).then(function (results) {
+                console.log("ALL HTTP requests done");
+                console.log(results)
+                for (result of results) {
+                    if (result[0] == 0) {
+                        removeFileElement(); alert("Error in row " + result[1] + ".Centers not added");
+                        return;
+                    }
+                }
+
+                for (val of data)
+                    SaveCSVRow(val);
+
+                res = "Saved " + data.length + " centers successfully!";
+                removeFileElement();
+                alert(res);
+            });
+
+        }
+    }
+
+    function CheckValidRow(data, idx) {
+        try {
+            var EntityName = data.Entity;
+            var Classrooms = [];
+            Classrooms.push(data.Classroom1);
+            Classrooms.push(data.Classroom2);
+            Classrooms.push(data.Classroom3);
+            Classrooms.push(data.Classroom4);
+
+            Classrooms = Classrooms.filter(function (el) { return el; });
+
+            // Check data validity
+
+            if (Classrooms.length == 0) throw '';
+
+            var result = $http.get('/Entity/CheckEntity/' + EntityName)
+                .then(function (result) {
+                    if (result.data == 'Failure') return [0, idx];
+                    return [1, idx];
+                });
+            promises.push(result)
+        }
+        catch{
+            return 0;
+        }
+        return 1;
+    }
+
+    function removeFileElement() {
+        document.getElementById("files").remove();
+    }
+
+    function SaveCSVRow(data) {
+        var _EntityName = data.Entity;
+        var _CenterName = data.Center;
+        var _CenterCode = data.CenterCode;
+        var _Classrooms = [];
+        _Classrooms.push(data.Classroom1);
+        _Classrooms.push(data.Classroom2);
+        _Classrooms.push(data.Classroom3);
+        _Classrooms.push(data.Classroom4);
+        _Classrooms = _Classrooms.filter(function (el) { return el; });
+
+        var _Email = data.Email;
+        var _Mobile = data.Mobile;
+        var _Landline = data.Landline;
+        var _Address = data.Address;
+        var _Pincode = data.PinCode;
+
+        $http({
+            method: 'POST',
+            url: '/CenterMgmt/SaveCSVCenterAndClassroom',
+            data: { EntityName: _EntityName, CenterName: _CenterName, CenterCode: _CenterCode, Email: _Email, Mobile: _Mobile, Landline1: _Landline, Address: _Address, PinCode: _Pincode, Classrooms: _Classrooms }
+        }).then(function (result) {
+        });
+    }
+
+    function CheckCSVColumns(data) {
+        console.log(data)
+        var EntityName = data.Entity;
+        var CenterName = data.Center;
+        var CenterCode = data.CenterCode;
+        var Classrooms = [];
+        Classrooms.push(data.Classroom1);
+        Classrooms.push(data.Classroom2);
+        Classrooms.push(data.Classroom3);
+        Classrooms.push(data.Classroom4);
+
+        var Email = data.Email;
+        var Mobile = data.Mobile;
+        var Landline = data.Landline;
+        var Address = data.Address;
+        var Pincode = data.PinCode;
+
+        if (EntityName == undefined || CenterName == undefined || CenterCode == undefined || Email == undefined || Mobile == undefined || Landline == undefined || Address == undefined || Pincode == undefined || Classrooms.includes(undefined))
+            return false
+        return true
+    }
+
+    $scope.HandleFiles = function () {
+        l = document.getElementById("left");
+        var x = document.createElement("INPUT");
+        x.id = "files";
+        x.setAttribute("type", "file");
+        left.appendChild(x);
+
+        $(document).ready(function () {
+            $('#files').bind('change', handleCSVFile);
+        });
+
+    }
+
+});
+
 myapp.controller('OrgCntrl', function ($scope, $http) {
     GetEntityList();
     function GetEntityList() {
