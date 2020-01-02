@@ -101,7 +101,7 @@ namespace MyLMS.Controllers
         }
 
         [HttpPost]
-        public void SaveCSVCenterAndClassroom(string EntityName, string CenterName, string CenterCode, string Email, string Mobile, string Landline1, string Address, string PinCode, string[] Classrooms)
+        public void SaveCSVCenterAndClassroomAndCoordinator(string EntityName, string CenterName, string CenterCode, string Password, string Fullname, string Email, string Mobile, string Landline1, string Address, string PinCode, string[] Classrooms)
         {
             CenterModel CentObj1 = new CenterModel();
             SqlParameter[] SParam = new SqlParameter[9];
@@ -133,6 +133,12 @@ namespace MyLMS.Controllers
                 SaveClassroom(ClassroomName, CenterID, 50);
             }
 
+            var RoleTable = DAL.GetDataTable("GetCenterCoordinatorRole");
+            int RoleID = Convert.ToInt32(Convert.IsDBNull(RoleTable.Rows[0]["RoleID"]) ? "-1" : RoleTable.Rows[0]["RoleID"]);
+            
+            var e = new EntityController{ ControllerContext = ControllerContext};
+            
+            e.AddCenterUser(CenterID, Email, Password, Fullname, Email, Mobile, RoleID);
         }
 
         [HttpPost]

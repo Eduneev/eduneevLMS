@@ -220,12 +220,16 @@ myapp.controller('CSVCenterCntrl', function ($scope, $http, $q) {
             Classrooms.push(data.Classroom2);
             Classrooms.push(data.Classroom3);
             Classrooms.push(data.Classroom4);
+            var Email = data.Email;
+            var Password = data.Password;
 
             Classrooms = Classrooms.filter(function (el) { return el; });
 
             // Check data validity
 
             if (Classrooms.length == 0) throw '';
+
+            if (Email == '' || Password == '') throw '';
 
             var result = $http.get('/Entity/CheckEntity/' + EntityName)
                 .then(function (result) {
@@ -256,6 +260,8 @@ myapp.controller('CSVCenterCntrl', function ($scope, $http, $q) {
         _Classrooms = _Classrooms.filter(function (el) { return el; });
 
         var _Email = data.Email;
+        var _Password = data.Password;
+        var _Fullname = data.CoordinatorName;
         var _Mobile = data.Mobile;
         var _Landline = data.Landline;
         var _Address = data.Address;
@@ -263,8 +269,8 @@ myapp.controller('CSVCenterCntrl', function ($scope, $http, $q) {
 
         $http({
             method: 'POST',
-            url: '/CenterMgmt/SaveCSVCenterAndClassroom',
-            data: { EntityName: _EntityName, CenterName: _CenterName, CenterCode: _CenterCode, Email: _Email, Mobile: _Mobile, Landline1: _Landline, Address: _Address, PinCode: _Pincode, Classrooms: _Classrooms }
+            url: '/CenterMgmt/SaveCSVCenterAndClassroomAndCoordinator',
+            data: { EntityName: _EntityName, CenterName: _CenterName, CenterCode: _CenterCode, Password: _Password, Fullname: _Fullname, Email: _Email, Mobile: _Mobile, Landline1: _Landline, Address: _Address, PinCode: _Pincode, Classrooms: _Classrooms }
         }).then(function (result) {
         });
     }
@@ -285,8 +291,10 @@ myapp.controller('CSVCenterCntrl', function ($scope, $http, $q) {
         var Landline = data.Landline;
         var Address = data.Address;
         var Pincode = data.PinCode;
+        var Password = data.Password;
+        var Fullname = data.CoordinatorName;
 
-        if (EntityName == undefined || CenterName == undefined || CenterCode == undefined || Email == undefined || Mobile == undefined || Landline == undefined || Address == undefined || Pincode == undefined || Classrooms.includes(undefined))
+        if (EntityName == undefined || CenterName == undefined || CenterCode == undefined || Password == undefined || Fullname == undefined || Email == undefined || Mobile == undefined || Landline == undefined || Address == undefined || Pincode == undefined || Classrooms.includes(undefined))
             return false
         return true
     }
