@@ -805,6 +805,7 @@
     <Content Include="Views\StudentMgmt\EditStudent.cshtml" />
     <Content Include="Views\SessionMgmt\EditSession.cshtml" />
     <Content Include="Views\RRQReport\RRQReport.cshtml" />
+    <Content Include="Views\Shared\Error404.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
