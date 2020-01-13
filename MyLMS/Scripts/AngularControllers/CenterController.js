@@ -351,7 +351,7 @@ myapp.controller('OrgCntrl', function ($scope, $http) {
     $scope.DownloadBatch = function (ClassroomID, ClassroomName) {
 
         var result = "SET /a classroom=" + ClassroomID + "\n";
-        result = result + "SET /a i=0\nsetlocal EnableDelayedExpansion\nSET RES=\nFOR /F %%X IN ('wmic baseboard get serialnumber') DO (";
+        result = result + "SET /a i=0\nsetlocal EnableDelayedExpansion\nSET RES=\nFOR /F %%X IN ('wmic path win32_computersystemproduct get uuid') DO (";
         result = result + "SET VAR=%%X\nIF !i! EQU 1 (SET RES=!VAR!)\nSET /a i+=1\n@echo !i!\n)\n";
         result = result + "SET URL=http://portal.2WayLive.com/api/SetClassroomAuth/!classroom!/!RES!\ncurl !URL!";
         name = $scope.CenterName + "-" + ClassroomName + ".bat";
