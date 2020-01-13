@@ -33,7 +33,8 @@ namespace MyLMS.Controllers
             string JSONString = string.Empty;
 
             DataTable keys = DAL.GetDataTable("GetSession", SParam);
-            if (keys.Rows.Count == 1)
+            //if (keys.Rows.Count == 1)  Tying in a workaround
+            if (keys.Rows.Count >=1)
             {
                 SessionId = Convert.ToInt32(keys.Rows[0]["SessionID"]);
             }
