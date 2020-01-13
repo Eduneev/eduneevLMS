@@ -484,6 +484,10 @@ myapp.controller('EditSessionCntrl', function ($scope, $http) {
         }
     }
 
+    $scope.ShowSessions = function () {
+        window.location.href = "/SessionMgmt/ViewSessions";
+    }
+
     function GetSessionDetails() {
         $http.get('/SessionMgmt/GetSessionBySessionID/' + $scope.SessionID)
             .then(function (result) {
