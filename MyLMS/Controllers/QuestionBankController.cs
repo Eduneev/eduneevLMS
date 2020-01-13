@@ -456,9 +456,11 @@ namespace MyLMS.Controllers
         {
             List<QuestionOptions> CO = new List<QuestionOptions>();
 
-            SqlParameter[] QParam = new SqlParameter[1];
-            QParam[0] = new SqlParameter("@QID", SqlDbType.Int);
-            QParam[0].Value = ID;
+            SqlParameter[] QParam = new SqlParameter[2];
+            QParam[0] = new SqlParameter("@RRQ_ID", SqlDbType.Int);
+            QParam[0].Value = Convert.ToInt32(Session["RRQ_ID_Display"].ToString());
+            QParam[1] = new SqlParameter("@QID", SqlDbType.Int);
+            QParam[1].Value = ID;
             DataTable QuestionsList = DAL.GetDataTable("GetRRQQuestionsAndOptions", QParam);
             SqlParameter[] SParam = new SqlParameter[1];
             List<Question> QuestionList = new List<Question>();
