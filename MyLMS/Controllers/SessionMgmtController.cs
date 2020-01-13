@@ -92,14 +92,6 @@ namespace MyLMS.Controllers
             return View();
         }
 
-        public ActionResult Dashboard(int id)
-        {
-            DashboardData DashboardObj = new DashboardData();
-            DashboardObj.GetRespPrcnt(id);            
-            ViewBag.VBDashboard = DashboardObj;
-            return View();
-        }
-
         public ActionResult AddRRQ()
         {
             Session["SessionID"] = Request.QueryString["ID"];
