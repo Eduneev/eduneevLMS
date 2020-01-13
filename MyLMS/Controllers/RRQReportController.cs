@@ -17,6 +17,7 @@ namespace MyLMS.Controllers
         public ActionResult RRQDashboard(int id)
         {
             DashboardData DashboardObj = new DashboardData();
+            Session["RRQ_ID_Display"] = id;
             DashboardObj.GetRespPrcnt(id);
             ViewBag.VBDashboard = DashboardObj;
             return View();
