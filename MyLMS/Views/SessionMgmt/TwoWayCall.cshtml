@@ -33,6 +33,9 @@
                     </div>
                 </div>
                 <div class="box-tools pull-right">
+                    <label>
+                        <input type="text" name="table_search" ng-model="StudentFilter" class="form-control" placeholder="Search Question..">
+                    </label>
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                 </div>
             </div>
@@ -48,7 +51,7 @@
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody ng-repeat="data in ConnectedList">
+                            <tbody ng-repeat="data in ConnectedList | filter:StudentFilter">
                                 <tr>
                                     <td>
                                         {{$index+1}}.

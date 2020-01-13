@@ -50,7 +50,7 @@
                                     <th style="width:250px;">Question Tag</th>
                                 </tr>
                             </thead>
-                            <tbody ng-repeat="Q in QuestionList | startFrom:currentPage*pageSize | limitTo:pageSize">
+                            <tbody ng-repeat="Q in QuestionList | filter:studentFilter | startFrom:currentPage*pageSize | limitTo:pageSize">
                                 <tr>
                                     <td>
                                         <input type="checkbox" name="r2" ng-model="selectedObjs" value="{{Q.Question.QID}}"
