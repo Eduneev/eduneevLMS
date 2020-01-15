@@ -38,19 +38,19 @@
                     </label>
 
                     <label>
-                        <span style="width: 100%;">Select Start Date:</span>
+                        <span style="width: 100%;">Start Date:</span>
                         <input type="date" ng-model="StartDate" placeholder='Pick a Date'>
                     </label>
 
                     <label>
-                        <span style="width: 100%;">Select End Date:</span>
+                        <span style="width: 100%;">End Date:</span>
                         <input type="date" ng-model='EndDate' placeholder='Pick a Date'>
                     </label>
                     <label>
                         <button type="button" class="btn btn-success btn-sm" ng-click="GetStreamList()">Go</button>
                     </label>
                     <label>
-                        <button ng-click="download()">Download Stats</button>
+                        <button ng-click="download()">Download CSV</button>
                     </label>
                 </div>
                 <div class="pull-right">
@@ -80,11 +80,11 @@
                                         <span class="sortorder" ng-show="propertyName === 'Stream'" ng-class="{reverse: reverse}"></span>
                                     </th>
                                     <th>
-                                        <button ng-click="sortBy('Bytes')">Bytes (Mb)</button>
+                                        <button ng-click="sortBy('Bytes')">M Bytes</button>
                                         <span class="sortorder" ng-show="propertyName === 'Bytes'" ng-class="{reverse: reverse}"></span>
                                     </th>
                                     <th>
-                                        <button ng-click="sortBy('Duration')">Duration(minutes)</button>
+                                        <button ng-click="sortBy('Duration')">Minutes</button>
                                         <span class="sortorder" ng-show="propertyName === 'Duration'" ng-class="{reverse: reverse}"></span>
                                     </th>
                                     <th>
