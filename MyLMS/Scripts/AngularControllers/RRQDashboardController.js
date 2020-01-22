@@ -134,7 +134,7 @@
         labels: Labels,
         datasets: [
             {
-                fillColor: "rgba(0,60,128,0.7)",
+                fillColor: "rgba(84,105,238,0.8)",
                 strokeColor: "rgba(220,220,220,0.8)",
                 highlightFill: "rgba(220,220,220,0.75)",
                 highlightStroke: "rgba(220,220,220,1)",
