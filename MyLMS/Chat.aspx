@@ -41,7 +41,7 @@
 	
 	const TESTINGURI = "ws://localhost:4000";
     const PRODURI = "ws://52.15.186.193:4000";
-    const SERVERURI = 'http://twowaylive.us-east-2.elasticbeanstalk.com/api/';
+    const SERVERURI = 'http://portal.2waylive.com/api/';
 	var statusBar;
 
 	var urlParams = parseURLParams(window.location.href);
