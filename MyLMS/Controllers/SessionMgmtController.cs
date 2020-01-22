@@ -614,19 +614,23 @@ namespace MyLMS.Controllers
             return JSONString;
         }
 
+        [HttpGet]
         public string GetStudentsByResponse(int id, int OptionSeq)
         {
-            SqlParameter[] FObj = new SqlParameter[2];
-            FObj[0] = new SqlParameter("@QID", SqlDbType.Int);
-            FObj[0].Value = id;
-            FObj[1] = new SqlParameter("@OptionSeq", SqlDbType.Int);
-            FObj[1].Value = OptionSeq;
+            SqlParameter[] FObj = new SqlParameter[3];
+            FObj[0] = new SqlParameter("@RRQ_ID", SqlDbType.Int);
+            FObj[0].Value = Convert.ToInt32(Session["RRQ_ID"].ToString());
+            FObj[1] = new SqlParameter("@QID", SqlDbType.Int);
+            FObj[1].Value = id;
+            FObj[2] = new SqlParameter("@OptionSeq", SqlDbType.Int);
+            FObj[2].Value = OptionSeq;
             DataTable StudentsDetails = DAL.GetDataTable("GetStudentsByResponse", FObj);
             string JSONString = string.Empty;
             JSONString = JsonConvert.SerializeObject(StudentsDetails);
             return JSONString;
         }
 
+        [HttpGet]
         public string GetTop10FastestStudents(int id)
         {
             SqlParameter[] FObj = new SqlParameter[2];
@@ -662,6 +666,7 @@ namespace MyLMS.Controllers
             }
         }
 
+        [HttpGet]
         public string GetDashboardOptionGraph(int id)
         {
             SqlParameter[] FObj = new SqlParameter[2];
@@ -685,6 +690,7 @@ namespace MyLMS.Controllers
         //    return JSONString;
         //}
 
+        [HttpGet]
         public string GetCentersForEntity()
         {
             SqlParameter[] CenterSessionObj = new SqlParameter[1];
@@ -734,6 +740,7 @@ namespace MyLMS.Controllers
             return JSONString;
         }
 
+        [HttpGet]
         public string GetStudentsByID(int id)
         {
             SqlParameter[] StudObj = new SqlParameter[1];
