@@ -1,8 +1,8 @@
 ﻿myapp.controller('CourseCntrl', function ($scope, $http) {
     GetCourseDetails();
     $scope.ProgramTextToShow = 'Select Program..';
-    $scope.CourseTextToShow = 'Select Course..'
-    $scope.SubjectTextToShow = 'Select Subject..'
+    $scope.CourseTextToShow = 'Select Course..';
+    $scope.SubjectTextToShow = 'Select Subject..';
     
     $scope.SaveProgram = function () {
         debugger;
@@ -14,6 +14,29 @@
             data: { ProgramName: _ProgramName, ProgramCode: _ProgramCode }
         }).then(function (result) {
             GetCourseDetails();
+            $scope.ProgID = null;
+            $scope.ProgrameName = null;
+            $scope.ProgramCode = null;
+        });
+    }
+
+    $scope.EditProgram = function () {
+        debugger;
+        var _ProgID = $scope.ProgID;
+        var _ProgramName = $scope.ProgramName;
+        var _ProgramCode = $scope.ProgramCode;
+        $http({
+            method: 'POST',
+            url: '/CourseMgmt/EditProgram',
+            data: { ProgID: _ProgID, ProgramName: _ProgramName, ProgramCode: _ProgramCode }
+        }).then(function (result) {
+            GetCourseDetails();
+            $scope.ProgID = null;
+            $scope.ProgrameName = null;
+            $scope.ProgramCode = null;
+            $scope.CourseID = null;
+            $scope.CourseName = null;
+            $scope.CourseCode = null;
         });
     }
 
@@ -28,7 +51,34 @@
             url: '/CourseMgmt/SaveCourse',
             data: { ProgID: _ProgID, CourseName: _CourseName, CourseCode: _CourseCode }
         }).then(function (result) {
+            $scope.ProgID = null;
+            $scope.ProgrameName = null;
+            $scope.ProgramCode = null;
+            $scope.CourseID = null;
+            $scope.CourseName = null;
+            $scope.CourseCode = null;
             GetCourseDetails();
+        });
+    }
+
+    $scope.EditCourse = function () {
+        debugger;
+        var _CourseID = $scope.CourseID
+        var _CourseName = $scope.CourseName;
+        var _CourseCode = $scope.CourseCode;
+
+        $http({
+            method: 'POST',
+            url: '/CourseMgmt/EditCourse',
+            data: { CourseID: _CourseID, CourseName: _CourseName, CourseCode: _CourseCode }
+        }).then(function (result) {
+            GetCourseDetails();
+            $scope.ProgID = null;
+            $scope.ProgrameName = null;
+            $scope.ProgramCode = null;
+            $scope.CourseID = null;
+            $scope.CourseName = null;
+            $scope.CourseCode = null;
         });
     }
 
@@ -43,6 +93,38 @@
             data: { CourseID: _CourseID, SubjectName: _SubjectName, SubjectCode: _SubjectCode }
         }).then(function (result) {
             GetCourseDetails();
+            $scope.ProgID = null;
+            $scope.ProgrameName = null;
+            $scope.ProgramCode = null;
+            $scope.CourseID = null;
+            $scope.CourseName = null;
+            $scope.CourseCode = null;
+            $scope.SubjectID = null;
+            $scope.SubjectName = null;
+            $scope.SubjectCode = null;
+        });
+    }
+
+    $scope.EditSubject = function () {
+        debugger;
+        var _SubjectID = $scope.SubjectID
+        var _SubjectName = $scope.SubjectName;
+        var _SubjectCode = $scope.SubjectCode;
+        $http({
+            method: 'POST',
+            url: '/CourseMgmt/EditSubject',
+            data: { SubjectID: _SubjectID, SubjectName: _SubjectName, SubjectCode: _SubjectCode }
+        }).then(function (result) {
+            GetCourseDetails();
+            $scope.ProgID = null;
+            $scope.ProgrameName = null;
+            $scope.ProgramCode = null;
+            $scope.CourseID = null;
+            $scope.CourseName = null;
+            $scope.CourseCode = null;
+            $scope.SubjectID = null;
+            $scope.SubjectName = null;
+            $scope.SubjectCode = null;
         });
     }
 
@@ -79,6 +161,13 @@
         $('#AddTopic').modal('show');
     }
 
+    function GetProgramsList() {
+        $http.get('/CourseMgmt/GetPrograms')
+            .then(function (result) {
+                $scope.ProgramsList = result.data;
+            });
+    }
+
     $scope.GetProgramsList = function() {
         $http.get('/CourseMgmt/GetPrograms')
         .then(function (result) {
@@ -104,7 +193,41 @@
         $http.get('/CourseMgmt/GetCourseDetails')
         .then(function (result) {
             $scope.CourseList = result.data;
-        });            
+            });
+        GetProgramsList();
+    }
+
+    $scope.GetProgramDetails = function () {
+        var _ProgID = $scope.ProgID;
+        for (var i = 0; i < $scope.ProgramsList.length; i++) {
+            e = $scope.ProgramsList[i];
+            if (e.ProgID == _ProgID) {
+                $scope.ProgramName = e.ProgramName;
+                $scope.ProgramCode = e.ProgramCode;
+            }
+        }
+    }
+
+    $scope.GetCourseDetailsByID = function () {
+        var _CourseID = $scope.CourseID;
+        for (var i = 0; i < $scope.CoursesList.length; i++) {
+            e = $scope.CoursesList[i];
+            if (e.CourseID == _CourseID) {
+                $scope.CourseName = e.CourseName;
+                $scope.CourseCode = e.CourseCode;
+            }
+        }
+    }
+
+    $scope.GetSubjectDetails = function () {
+        var _SubjectID = $scope.SubjectID;
+        for (var i = 0; i < $scope.SubjectsList.length; i++) {
+            e = $scope.SubjectsList[i];
+            if (e.SubjectID == _SubjectID) {
+                $scope.SubjectName = e.SubjectName;
+                $scope.SubjectCode = e.SubjectCode;
+            }
+        }
     }
 
     $scope.sortBy = function (propertyName) {
