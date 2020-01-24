@@ -42,6 +42,29 @@ namespace MyLMS.Controllers
         }
 
         [HttpPost]
+        public void EditProgram(int ProgID, string ProgramName, string ProgramCode)
+        {
+            CourseModel ModelObj1 = new CourseModel();
+            SqlParameter[] SParam = new SqlParameter[4];
+            SParam[0] = new SqlParameter("@UserID", SqlDbType.Int);
+            SParam[0].Value = Convert.ToInt32(Session["USER_ID"]);
+            SParam[1] = new SqlParameter("@ProgID", SqlDbType.Int);
+            SParam[1].Value = ProgID;
+            SParam[2] = new SqlParameter("@ProgramName", SqlDbType.VarChar);
+            SParam[2].Value = ProgramName;
+            SParam[3] = new SqlParameter("@ProgramCode", SqlDbType.NChar);
+            SParam[3].Value = ProgramCode;
+            try
+            {
+                ModelObj1.EditProgram(SParam);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        [HttpPost]
         public void SaveCourse(int ProgID, string CourseName, string CourseCode)
         {
             CourseModel ModelObj1 = new CourseModel();
@@ -67,6 +90,31 @@ namespace MyLMS.Controllers
         }
 
         [HttpPost]
+        public void EditCourse(int CourseID, string CourseName, string CourseCode)
+        {
+            CourseModel ModelObj1 = new CourseModel();
+            SqlParameter[] SParam = new SqlParameter[4];
+
+            SParam[0] = new SqlParameter("@UserID", SqlDbType.Int);
+            SParam[0].Value = Convert.ToInt32(Session["USER_ID"]);
+            SParam[1] = new SqlParameter("@CourseID", SqlDbType.Int);
+            SParam[1].Value = CourseID;
+            SParam[2] = new SqlParameter("@CourseName", SqlDbType.VarChar);
+            SParam[2].Value = CourseName;
+            SParam[3] = new SqlParameter("@CourseCode", SqlDbType.NChar);
+            SParam[3].Value = CourseCode;
+
+            try
+            {
+                ModelObj1.EditCourse(SParam);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        [HttpPost]
         public void SaveSubject(int CourseID, string SubjectName, string SubjectCode)
         {
             CourseModel ModelObj1 = new CourseModel();
@@ -83,6 +131,28 @@ namespace MyLMS.Controllers
             try
             {
                 ModelObj1.SaveSubject(SParam);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        [HttpPost]
+        public void EditSubject(int SubjectID, string SubjectName, string SubjectCode)
+        {
+            CourseModel ModelObj1 = new CourseModel();
+            SqlParameter[] SParam = new SqlParameter[3];
+
+            SParam[0] = new SqlParameter("@SubjectID", SqlDbType.Int);
+            SParam[0].Value = SubjectID;
+            SParam[1] = new SqlParameter("@SubjectName", SqlDbType.VarChar);
+            SParam[1].Value = SubjectName;
+            SParam[2] = new SqlParameter("@SubjectCode", SqlDbType.NChar);
+            SParam[2].Value = SubjectCode;
+            try
+            {
+                ModelObj1.EditSubject(SParam);
             }
             catch (Exception ex)
             {
