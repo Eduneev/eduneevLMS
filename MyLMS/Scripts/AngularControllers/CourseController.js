@@ -8,6 +8,9 @@
         debugger;
         var _ProgramName = $scope.ProgramName;
         var _ProgramCode = $scope.ProgramCode;
+        if (_ProgramCode.includes(" ") || _ProgramCode.includes("-")) {
+            alert("Program Code cannot have '-' or spaces in it"); return;
+        }
         $http({
             method: 'POST',
             url: '/CourseMgmt/SaveProgram',
@@ -25,6 +28,9 @@
         var _ProgID = $scope.ProgID;
         var _ProgramName = $scope.ProgramName;
         var _ProgramCode = $scope.ProgramCode;
+        if (_ProgramCode.includes(" ") || _ProgramCode.includes("-")) {
+            alert("Program Code cannot have '-' or spaces in it"); return;
+        }
         $http({
             method: 'POST',
             url: '/CourseMgmt/EditProgram',
@@ -45,7 +51,9 @@
         var _ProgID = $scope.ProgID
         var _CourseName = $scope.CourseName;
         var _CourseCode = $scope.CourseCode;
-        
+        if (_CourseCode.includes(" ") || _CourseCode.includes("-")) {
+            alert("Course Code cannot have '-' or spaces in it"); return;
+        }
         $http({
             method: 'POST',
             url: '/CourseMgmt/SaveCourse',
@@ -66,7 +74,10 @@
         var _CourseID = $scope.CourseID
         var _CourseName = $scope.CourseName;
         var _CourseCode = $scope.CourseCode;
-
+        if (_CourseCode.includes(" ") || _CourseCode.includes("-")) {
+            alert("Course Code cannot have '-' or spaces in it");
+            return;
+        }
         $http({
             method: 'POST',
             url: '/CourseMgmt/EditCourse',
@@ -87,6 +98,9 @@
         var _CourseID = $scope.CourseID
         var _SubjectName = $scope.SubjectName;
         var _SubjectCode = $scope.SubjectCode;
+        if (_SubjectCode.includes(" ") || _SubjectCode.includes("-")) {
+            alert("Subject Code cannot have '-' or spaces in it"); return;
+        }
         $http({
             method: 'POST',
             url: '/CourseMgmt/SaveSubject',
@@ -110,6 +124,9 @@
         var _SubjectID = $scope.SubjectID
         var _SubjectName = $scope.SubjectName;
         var _SubjectCode = $scope.SubjectCode;
+        if (_SubjectCode.includes(" ") || _SubjectCode.includes("-")) {
+            alert("Subject Code cannot have '-' or spaces in it"); return;
+        }
         $http({
             method: 'POST',
             url: '/CourseMgmt/EditSubject',
