@@ -106,6 +106,14 @@
             });
     };
 
+    $scope.ShowConnectedClassrooms = function () {
+        console.log("HERER")
+        if ($scope.SessionID == 0) {
+            alert("Please select a session"); return;
+        }
+        window.location.href = "/SessionMgmt/ConnectedClassroom?SessionID=" + $scope.SessionID;
+    }
+
 
     $scope.StartChat = function (SessionID, CenterID) {
         debugger;
@@ -683,3 +691,46 @@ myapp.controller('NameFaceScreenCntrl', function ($scope, $http) {
     }
 });
 
+myapp.controller('ConnectedClassroomCntrl', function ($scope, $http) {
+    params = parseURLParams(window.location.href);
+    if ('SessionID' in params) {
+        $scope.SessionID = params['SessionID'][0];
+        GetConnectedClassrooms();
+    }
+
+    function GetConnectedClassrooms() {
+        $http.get('/SessionMgmt/GetConnectedClassrooms/' + $scope.SessionID)
+            .then(function (result) {
+                $scope.ConnectedList = result.data;
+                var a = new Date()
+                $('#time').text(a.toLocaleString());
+            });
+    }
+
+    $scope.sortBy = function (propertyName) {
+        $scope.reverse = (propertyName !== null && $scope.propertyName === propertyName) ? !$scope.reverse : false;
+        $scope.propertyName = propertyName;
+    };
+
+    var myVar = setInterval(GetConnectedClassrooms, 15000);
+
+    function parseURLParams(url) {
+        var queryStart = url.indexOf("?") + 1,
+            queryEnd = url.indexOf("#") + 1 || url.length + 1,
+            query = url.slice(queryStart, queryEnd - 1),
+            pairs = query.replace(/\+/g, " ").split("&"),
+            parms = {}, i, n, v, nv;
+
+        if (query === url || query === "") return;
+
+        for (i = 0; i < pairs.length; i++) {
+            nv = pairs[i].split("=", 2);
+            n = decodeURIComponent(nv[0]);
+            v = decodeURIComponent(nv[1]);
+
+            if (!parms.hasOwnProperty(n)) parms[n] = [];
+            parms[n].push(nv.length === 2 ? v : null);
+        }
+        return parms;
+    }
+});
