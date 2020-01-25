@@ -103,6 +103,10 @@ namespace MyLMS.Controllers
             return View();
         }
 
+        public ActionResult ConnectedClassroom()
+        {
+            return View();
+        }
 
         [HttpGet]
         public string GetStudios()
@@ -773,6 +777,19 @@ namespace MyLMS.Controllers
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(u);
             String response = request.GetResponse().ToString();
             return response;
+        }
+
+        public string GetConnectedClassrooms(int id)
+        {
+            SqlParameter[] SessObj = new SqlParameter[2];
+            SessObj[0] = new SqlParameter("@UserID", SqlDbType.Int);
+            SessObj[0].Value = Convert.ToInt32(Session["USER_ID"]);
+            SessObj[1] = new SqlParameter("@SessionID", SqlDbType.Int);
+            SessObj[1].Value = id;
+            DataTable ClS = DAL.GetDataTable("GetConnectedClassrooms", SessObj);
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(ClS);
+            return JSONString;
         }
     }
 
