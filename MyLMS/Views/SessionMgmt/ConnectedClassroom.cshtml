@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "Connected Classrooms";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+@section scripts{
+    <script src="~/Scripts/AngularControllers/SessionController.js"></script>
+}
+<div data-ng-controller="ConnectedClassroomCntrl">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Session Connections
+            <small>View connected classrooms</small>            
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="/Home"><i class="fa fa-dashboard"></i>Home</a></li>
+            <li><a href="#">ConnectedClassroooms</a></li>
+        </ol>
+    </section>
+
+    <!-- Form Body (Page body)-->
+    <section class="content">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <div class="pull-left">
+                    <div class="btn-group">
+                        <span>Updated: </span>
+                        <span style="color:darkred" id="time"></span>
+                    </div>
+                </div>
+                <div class="box-tools pull-right">
+                    <label>
+                        <input type="text" name="table_search" ng-model="StudentFilter" class="form-control" placeholder="Search..">
+                    </label>
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Sl No.</th>
+                                    <th>
+                                        <button ng-click="sortBy('CenterName')">Studio</button>
+                                        <span class="sortorder" ng-show="propertyName === 'CenterName'" ng-class="{reverse: reverse}"></span>
+                                    </th>
+                                    <th>
+                                        <button ng-click="sortBy('ClassroomName')">Classroom</button>
+                                        <span class="sortorder" ng-show="propertyName === 'ClassroomName'" ng-class="{reverse: reverse}"></span>
+                                    </th>
+                                    <th>
+                                        <button ng-click="sortBy('Stream')">Stream</button>
+                                        <span class="sortorder" ng-show="propertyName === 'Stream'" ng-class="{reverse: reverse}"></span>
+                                    </th>
+                                    <th>
+                                        <button ng-click="sortBy('Status')">Status</button>
+                                        <span class="sortorder" ng-show="propertyName === 'Status'" ng-class="{reverse: reverse}"></span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody ng-repeat="data in ConnectedList | filter:StudentFilter| orderBy:propertyName:reverse"">
+                                <tr>
+                                    <td>
+                                        {{$index+1}}.
+                                    </td>
+                                    <td>
+                                        <span>{{data.CenterName}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{data.ClassroomName}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{data.Stream}}</span>
+                                    </td>
+                                    <td>
+                                        <div ng-if="data.Status == 'play'">
+                                            <span class="label label-success">Playing</span>
+                                        </div>
+                                        <div ng-if="data.Status == 'stop' || data.Status == 'destroy'">
+                                            <span class="label label-danger">Stopped</span>
+                                        </div>
+                                        <div ng-if="!data.Status">
+                                            <span class="label label-danger">Not Started</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
