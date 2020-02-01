@@ -107,6 +107,27 @@ namespace MyLMS.Controllers
             }
         }
 
+        [HttpPost]
+        public void DeleteEntity(int EntityID)
+        {
+            OrganisationModel OrgObj = new OrganisationModel();
+            SqlParameter[] SParam = new SqlParameter[2];
+
+            SParam[0] = new SqlParameter("@UserID", SqlDbType.Int);
+            SParam[0].Value = Convert.ToInt32(Session["USER_ID"]);
+            SParam[1] = new SqlParameter("@EntityID", SqlDbType.Int);
+            SParam[1].Value = EntityID;
+
+            try
+            {
+                OrgObj.DeleteEntity(SParam);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
         [HttpGet]
         public string GetOrgUserList()
         {
