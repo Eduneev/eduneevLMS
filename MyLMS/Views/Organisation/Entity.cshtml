@@ -52,6 +52,7 @@
                                         <th>Mobile</th>
                                         <th>Landline</th>
                                         <th>Address</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -80,6 +81,7 @@
                                         <td>
                                             <span>{{Entity.Address}}</span>
                                         </td>
+                                        <td><span ng-click="DeleteEntity(Entity.EntityID)" style="cursor:pointer;" class="fa fa-times-circle-o"></span></td>
                                         @*<th>
                                               <span ng-click="SurveyAttemptReport(Survey.SURVEY_ID)" style="cursor:pointer;" class="fa fa-file-text-o"></span>&nbsp;
                                         </th>*@

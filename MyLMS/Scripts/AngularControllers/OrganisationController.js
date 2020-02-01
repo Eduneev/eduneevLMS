@@ -49,7 +49,7 @@
 
     $scope.EditEntity = function () {
         var _EntityID = $scope.EntityID;
-        var _EntityName = $scope.Email;
+        var _EntityName = $scope.EntityName;
         var _EntityCode = $scope.EntityCode;
         var _ManagerName = $scope.ManagerName;
         var _Email = $scope.Email;
@@ -66,6 +66,18 @@
             GetEntityList();
         });
     }
+
+    $scope.DeleteEntity = function (EntityID) {
+        if (confirm("Are you sure you want to Delete this Entity?"))
+            $http({
+                method: 'POST',
+                url: '/Organisation/DeleteEntity',
+                data: { EntityID: EntityID }
+            }).then(function (result) {
+                alert('Deleted Successfully!!');
+                GetEntityList();
+            });
+    };
 });
 
 myapp.controller('OrgUserCntrl', function ($scope, $http) {
