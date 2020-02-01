@@ -38,6 +38,21 @@ namespace MyLMS.Models
             return res;
         }
 
+        public string DeleteEntity(SqlParameter[] sparams)
+        {
+            string res = "Failure..";
+            try
+            {
+                res = DAL.ExecuteScalar("DeleteEntity", sparams);
+            }
+            catch (Exception ex)
+            {
+                res = ex.Message;
+                throw;
+            }
+            return res;
+        }
+
         public string AddEntityUser(SqlParameter[] sparams)
         {
             string res = "Failure..";
