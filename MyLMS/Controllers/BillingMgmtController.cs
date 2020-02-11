@@ -125,7 +125,10 @@ namespace MyLMS.Controllers
                 Bill.Client = Convert.ToInt32(StreamList.Rows[i]["Client"]);
                 Bill.Bytes = Convert.ToInt64(StreamList.Rows[i]["Bytes"]);
                 Bill.Date = StreamList.Rows[i]["date"].ToString();
+                Bill.Time = StreamList.Rows[i]["time"].ToString();
                 Bill.Stream = StreamList.Rows[i]["Stream"].ToString();
+                Bill.CenterName = StreamList.Rows[i]["CenterName"].ToString();
+                Bill.ClassroomName = StreamList.Rows[i]["ClassroomName"].ToString();
 
                 string xduration = StreamList.Rows[i]["Duration"].ToString();
                 int EntityID = Convert.ToInt32(StreamList.Rows[i]["EntityID"]);
@@ -140,6 +143,90 @@ namespace MyLMS.Controllers
                     int BillingFactor = Convert.ToInt32(StreamList.Rows[i]["BillingFactor"]);
                     Bill.Duration = (int)Math.Ceiling(Duration / BillingFactor) * BillingFactor;
                     int StreamTypeID=0;
+
+                    // AUTOMATE THE BELOW STUFF RATHER THAN HARDCODE VALUES
+                    string StreamEnd = Bill.Stream.Substring(Bill.Stream.Length - 5);
+                    if (StreamEnd.Contains("SD"))
+                        StreamTypeID = 1;
+                    else if (StreamEnd.Contains("DVD"))
+                        StreamTypeID = 2;
+                    else if (StreamEnd.Contains("FHD"))
+                        StreamTypeID = 4;
+                    else if (StreamEnd.Contains("HD"))
+                        StreamTypeID = 3;
+
+                    SqlParameter[] FObj = new SqlParameter[3];
+                    FObj[0] = new SqlParameter("@EntityID", SqlDbType.Int);
+                    FObj[0].Value = EntityID;
+                    FObj[1] = new SqlParameter("@BillingTypeID", SqlDbType.Int);
+                    FObj[1].Value = BillingTypeID;
+                    FObj[2] = new SqlParameter("@StreamTypeID", SqlDbType.Int);
+                    FObj[2].Value = StreamTypeID;
+
+                    DataTable C = DAL.GetDataTable("GetBillingCost", FObj);
+                    if (C.Rows.Count > 0)
+                    {
+                        int Cost = Convert.ToInt32(C.Rows[0]["Cost"]);
+                        Bill.Amount = (int)Math.Ceiling(Duration / BillingFactor) * Cost;
+                    }
+                }
+                BillingList.Add(Bill);
+            }
+
+            string JSONString = string.Empty;
+            JSONString = JsonConvert.SerializeObject(BillingList);
+            return JSONString;
+        }
+
+        [HttpGet]
+        [Route("BillingMgmt/GetStreamLogsForEntity/{id:int}/{StartDate}/{EndDate}")]
+        public string GetStreamLogsForEntity(int id, string StartDate, string EndDate)
+        {
+            if (StartDate == "0" && EndDate == "0")
+            {
+                StartDate = null;
+                EndDate = null;
+            }
+
+            List<BillingModel> BillingList = new List<BillingModel>();
+            SqlParameter[] StreamObj = new SqlParameter[4];
+            StreamObj[0] = new SqlParameter("@UserID", SqlDbType.Int);
+            StreamObj[0].Value = Convert.ToInt32(Session["USER_ID"]);
+            StreamObj[1] = new SqlParameter("@EntityID", SqlDbType.Int);
+            StreamObj[1].Value = id;
+            StreamObj[2] = new SqlParameter("@StartDate", SqlDbType.VarChar);
+            StreamObj[2].Value = StartDate;
+            StreamObj[3] = new SqlParameter("@EndDate", SqlDbType.VarChar);
+            StreamObj[3].Value = EndDate;
+            DataTable StreamList = DAL.GetDataTable("GetAllStreamLogs", StreamObj);
+
+            for (int i = 0; i < StreamList.Rows.Count; i++)
+            {
+                // For each stream, if xduration is not null, check the stream type and then retrieve the cost for that 
+                // combination. (EntityID, BillingTypeID, StreamTypeID). 
+                // Once cost is retrieved, assign amount as Ceiling(xduration/xfactor)*cost
+                BillingModel Bill = new BillingModel();
+                Bill.Client = Convert.ToInt32(StreamList.Rows[i]["Client"]);
+                Bill.Bytes = Convert.ToInt64(StreamList.Rows[i]["Bytes"]);
+                Bill.Date = StreamList.Rows[i]["date"].ToString();
+                Bill.Time = StreamList.Rows[i]["time"].ToString();
+                Bill.Stream = StreamList.Rows[i]["Stream"].ToString();
+                Bill.CenterName = StreamList.Rows[i]["CenterName"].ToString();
+                Bill.ClassroomName = StreamList.Rows[i]["ClassroomName"].ToString();
+
+                string xduration = StreamList.Rows[i]["Duration"].ToString();
+                int EntityID = Convert.ToInt32(StreamList.Rows[i]["EntityID"]);
+                int BillingTypeID = Convert.ToInt32(StreamList.Rows[i]["BillingTypeID"]);
+
+                if (BillingTypeID == 3) //----------FIXED BILLING--------
+                {
+                }
+                else if (xduration != null)
+                {
+                    double Duration = Convert.ToDouble(xduration) / 60.0;
+                    int BillingFactor = Convert.ToInt32(StreamList.Rows[i]["BillingFactor"]);
+                    Bill.Duration = (int)Math.Ceiling(Duration / BillingFactor) * BillingFactor;
+                    int StreamTypeID = 0;
 
                     // AUTOMATE THE BELOW STUFF RATHER THAN HARDCODE VALUES
                     string StreamEnd = Bill.Stream.Substring(Bill.Stream.Length - 5);
