@@ -49,20 +49,42 @@
             .then(function (result) {
                 $scope.CentersList = result.data;
                 $scope.CenterTextToShow = 'Please select..';
+                $scope.ADD = "ADD";
             });
     }
 
-    $scope.GetClassrooms = function() {
-        $http.get('/CenterMgmt/GetClassroomsForCenter/' + $scope.CenterID)
-            .then(function (result) {
-                $scope.ClassroomList = result.data;
-                $scope.ClassroomTextToShow = 'Please select..';
-            });
+    $scope.GetClassrooms = function () {
+        if ($scope.CenterID != 0)
+            $http.get('/CenterMgmt/GetClassroomsForCenter/' + $scope.CenterID)
+                .then(function (result) {
+                    $scope.ClassroomList = result.data;
+                    $scope.ClassroomTextToShow = 'Please select..';
+                });
     }
 
     $scope.GetStreamList = function () {
         dates = GetDate();
-        $http.get('/BillingMgmt/GetStreamLogsForClassroom/' + $scope.ClassRoomID + "/" + dates[0] + "/" + dates[1])
+        if ($scope.CenterID == 0)
+            GetAllStreamList($scope.EntityID, dates)
+        else
+            $http.get('/BillingMgmt/GetStreamLogsForClassroom/' + $scope.ClassRoomID + "/" + dates[0] + "/" + dates[1])
+                .then(function (result) {
+                    $scope.StreamList = result.data;
+
+                    var total = 0;
+                    for (var i = 0; i < $scope.StreamList.length; i++) {
+                        total += $scope.StreamList[i].Amount;
+                        $scope.StreamList[i].Bytes = Math.round($scope.StreamList[i].Bytes / 10000) / 100;
+                    
+                    }
+                    document.getElementById("total").textContent = total;
+                });
+    }
+
+    function GetAllStreamList(EntityID, dates) {
+        if (EntityID == undefined)
+            EntityID = 0;
+        $http.get('/BillingMgmt/GetStreamLogsForEntity/' + EntityID + "/" + dates[0] + "/" + dates[1])
             .then(function (result) {
                 $scope.StreamList = result.data;
 
@@ -70,7 +92,7 @@
                 for (var i = 0; i < $scope.StreamList.length; i++) {
                     total += $scope.StreamList[i].Amount;
                     $scope.StreamList[i].Bytes = Math.round($scope.StreamList[i].Bytes / 10000) / 100;
-                    
+
                 }
                 document.getElementById("total").textContent = total;
             });
@@ -101,11 +123,11 @@
     function GetDate() {
         startDate = $scope.StartDate;
         console.log(startDate)
-        day = startDate.getUTCDate(); if (day < 10) { day = "0" + day; }
+        day = startDate.getDate(); if (day < 10) { day = "0" + day; }
         month = startDate.getMonth() + 1; if (month < 10) { month = "0" + month;}
         s = startDate.getFullYear() + "-" + month + "-" + day;
         endDate = $scope.EndDate;
-        day = endDate.getUTCDate(); if (day < 10) { day = "0" + day; }
+        day = endDate.getDate(); if (day < 10) { day = "0" + day; }
         month = endDate.getMonth() + 1; if (month < 10) { month = "0" + month; }
         t = endDate.getFullYear() + "-" + month + "-" + day;
 
