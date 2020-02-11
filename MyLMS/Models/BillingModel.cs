@@ -9,10 +9,12 @@ namespace MyLMS.Models
 {
     public class BillingModel
     {
-
+        public string CenterName { get; set; }
+        public string ClassroomName { get; set; }
         public int Client { get; set; }
         public long Bytes { get; set; }
         public string Date { get; set; }
+        public string Time { get; set; }
         public string Stream { get; set; }
         public int Duration { get; set; }
         public int Amount { get; set; }
