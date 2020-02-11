@@ -34,6 +34,7 @@
                     <label>
                         <select class="form-control" id="drpCenterName" style="width: 100%;" data-ng-model="CenterID" data-ng-options="c.CenterID as c.CenterName for c in CentersList" data-ng-change="GetClassrooms()">
                             <option value="">{{CenterTextToShow}}</option>
+                            <option value="">{{NA}}</option>
                         </select>
                     </label>
                     <label>
@@ -76,7 +77,15 @@
                                 <tr>
                                     <th>Sl No.</th>
                                     <th>
-                                        <button ng-click="sortBy('Date')">Date</button>
+                                        <button ng-click="sortBy('Center')">Center</button>
+                                        <span class="sortorder" ng-show="propertyName === 'Center'" ng-class="{reverse: reverse}"></span>
+                                    </th>
+                                    <th>
+                                        <button ng-click="sortBy('Classroom')">Classroom</button>
+                                        <span class="sortorder" ng-show="propertyName === 'Classroom'" ng-class="{reverse: reverse}"></span>
+                                    </th>
+                                    <th>
+                                        <button ng-click="sortBy('Date')">Date / Time</button>
                                         <span class="sortorder" ng-show="propertyName === 'Date'" ng-class="{reverse: reverse}"></span>
                                     </th>
                                     <th>
@@ -104,7 +113,13 @@
                                         {{$index+1}}.
                                     </td>
                                     <td>
-                                        <span>{{Stream.Date}}</span>
+                                        <span>{{Stream.CenterName}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{Stream.ClassroomName}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{Stream.Date}} / {{Stream.Time}}</span>
                                     </td>
                                     <td>
                                         <span>{{Stream.Stream}}</span>
@@ -119,8 +134,8 @@
                                         <strong><span>{{Stream.Amount}}</span></strong>
                                     </td>
                                     @*<th>
-                                    <span ng-click="SurveyAttemptReport(Survey.SURVEY_ID)" style="cursor:pointer;" class="fa fa-file-text-o"></span>&nbsp;
-                                </th>*@
+            <span ng-click="SurveyAttemptReport(Survey.SURVEY_ID)" style="cursor:pointer;" class="fa fa-file-text-o"></span>&nbsp;
+        </th>*@
                                 </tr>
                             </tbody>
                         </table>
