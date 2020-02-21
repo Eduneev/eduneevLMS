@@ -62,8 +62,13 @@ namespace MyLMS.Controllers
             return View();
         }
 
+        [HttpPost]
+        public JsonResult KeepSessionAlive()
+        {
+            return new JsonResult { Data = "Success" };
+        }
 
-       public string ValidateUser(string UserName, string Password)
+        public string ValidateUser(string UserName, string Password)
         {
             LoggedOnUser LOU = (Session["LoggedOnUserDetails"] == null ? UserTools.getLoggedOnUserDetails(UserName, Password) : (LoggedOnUser)Session["LoggedOnUserDetails"]);
             if(UserTools.authenticateUserOnDefault(LOU) == true)
