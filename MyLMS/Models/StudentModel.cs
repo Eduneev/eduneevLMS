@@ -12,6 +12,7 @@ namespace MyLMS.Models
         public int StudentID { get; set; }
         public string StudentName { get; set; }
         public string StudentImageURL { get; set; }
+        public int Present { get; set; }
 
         public string SaveStudent(SqlParameter[] sparams)
         {

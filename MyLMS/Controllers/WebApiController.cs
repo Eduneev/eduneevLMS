@@ -126,6 +126,7 @@ namespace MyLMS.Controllers
                 s.StudentID = Convert.ToInt32(Convert.IsDBNull(val.Rows[i]["StudentID"]) ? "-1" : val.Rows[i]["StudentID"]);
                 s.StudentName = Convert.ToString(Convert.IsDBNull(val.Rows[i]["StudentName"]) ? "-1" : val.Rows[i]["StudentName"]);
                 s.StudentImageURL = Convert.ToString(Convert.IsDBNull(val.Rows[i]["StudentImageURL"]) ? "-1" : val.Rows[i]["StudentImageURL"]);
+                s.Present = Convert.ToInt32(Convert.IsDBNull(val.Rows[i]["Present"]) ? "0" : val.Rows[i]["Present"]);
                 result[i] = s;
             }
             return result;
