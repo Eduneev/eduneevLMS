@@ -255,19 +255,22 @@
 
         list = document.getElementById("contacts");
 
-        const url = SERVERURI + SESSION + "/" + CenterID + "/getAttendingStudents";
-		var xhr = new XMLHttpRequest();
+        //const url = SERVERURI + SESSION + "/" + CenterID + "/getAttendingStudents";
+        const url = "http://localhost:55082/api/" + SESSION + "/" + CenterID + "/getAttendingStudents";
+		
+        var xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == XMLHttpRequest.DONE) {
 				var students = xhr.response;
 				for (let i=0; i < students.length; i++) {
-					var data = students[i];
+                    var data = students[i];
+                    console.log(data)
 					var student = document.createElement('div');
 					student.className = 'contact';
 					student.id = data['StudentID'];
 					var image_placeholder = document.createElement("img");
 					image_placeholder.src = data['StudentImageURL'];
-					image_placeholder.id = "image";
+                    image_placeholder.id = "image";
 
 					var text = document.createElement("span");
 					text.className = "contact-text2";
@@ -275,9 +278,11 @@
 					text.textContent = data['StudentName'];
 
 					student.appendChild(image_placeholder);
-					student.appendChild(text);
-
-					student.onclick = setCurrentStudentId;
+                    student.appendChild(text);
+                    if (data['Present'] == 0)
+                        student.disabled = true;
+                    else
+    					student.onclick = setCurrentStudentId;
 
 					list.appendChild(student);
 				}

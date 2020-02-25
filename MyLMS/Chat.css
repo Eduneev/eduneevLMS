@@ -133,7 +133,7 @@ i {
 }
 
 .contact, .active-contact, .new-message-contact, .active-student {
-    height: 70px;
+    height: 50px;
     background-color: #eeeeee;
     display: flex;
     width: 100%;
@@ -159,16 +159,16 @@ i {
 }
 
 .contact {
-    height: 55px;
+    height: 45px;
 }
 
 
 
     .contact img, .active-contact img, .new-message-contact img {
-        width: 60px;
-        height: 50px;
+        width: 55px;
+        height: 40px;
         margin-left: 15px;
-        margin-top: 2px;
+        margin-top: 0px;
         border-radius: 60%;
         vertical-align: middle;
     }
