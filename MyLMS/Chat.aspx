@@ -222,6 +222,38 @@
 		}
 	}
 
+    function filterFunction() {
+        var input, filter, ul, li, a, i, txtValue, arr;
+        arr = [];
+        input = document.getElementById("search");
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("contacts");
+        arr.push(ul.getElementsByClassName("contact"));
+        arr.push(ul.getElementsByClassName("disabled-contact"));
+        arr.forEach(function (li) {
+            for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("span")[0];
+                txtValue = a.textContent || a.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+        });
+
+        li = ul.getElementsByClassName("contact");
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("span")[0];
+            txtValue = a.textContent || a.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+    }
+
 	function parseURLParams(url) {
 		var queryStart = url.indexOf("?") + 1,
 				queryEnd   = url.indexOf("#") + 1 || url.length + 1,
@@ -255,8 +287,8 @@
 
         list = document.getElementById("contacts");
 
-        //const url = SERVERURI + SESSION + "/" + CenterID + "/getAttendingStudents";
-        const url = "http://localhost:55082/api/" + SESSION + "/" + CenterID + "/getAttendingStudents";
+        const url = SERVERURI + SESSION + "/" + CenterID + "/getAttendingStudents";
+        //const url = "http://localhost:55082/api/" + SESSION + "/" + CenterID + "/getAttendingStudents";
 		
         var xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function() {
@@ -264,7 +296,6 @@
 				var students = xhr.response;
 				for (let i=0; i < students.length; i++) {
                     var data = students[i];
-                    console.log(data)
 					var student = document.createElement('div');
 					student.className = 'contact';
 					student.id = data['StudentID'];
@@ -279,8 +310,10 @@
 
 					student.appendChild(image_placeholder);
                     student.appendChild(text);
-                    if (data['Present'] == 0)
+                    if (data['Present'] == 0) {
+                        student.className = 'disabled-contact'
                         student.disabled = true;
+                    }
                     else
     					student.onclick = setCurrentStudentId;
 
@@ -421,7 +454,7 @@
 			<div class="wrap-search">
 				<div class="search">
 					<i class="fa fa-search fa" aria-hidden="true"></i>
-					<input type="text" class="input-search" placeholder="Search">
+					<input id="search" onkeyup="filterFunction()" type="text" class="input-search" placeholder="Search">
 				</div>
 			</div>
 			<div class="contact-list" id="contacts"></div>
