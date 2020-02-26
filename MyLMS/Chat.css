@@ -141,6 +141,15 @@ i {
     border-bottom: 1px solid black;
 }
 
+    .disabled-contact {
+        height: 50px;
+        background-color: #c0c0c0;
+        display: flex;
+        width: 100%;
+        display: block;
+        border-bottom: 1px solid black;
+    }
+    
 .contact-text {
     font-size: 20px;
     text-align: center;
@@ -164,7 +173,7 @@ i {
 
 
 
-    .contact img, .active-contact img, .new-message-contact img {
+    .contact img, .active-contact img, .new-message-contact img, .disabled-contact img {
         width: 55px;
         height: 40px;
         margin-left: 15px;
