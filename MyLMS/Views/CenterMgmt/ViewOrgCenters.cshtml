@@ -59,6 +59,7 @@
                                         <th>Address</th>
                                         <th>Pin Code</th>
                                         <th>Is Active</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -89,6 +90,9 @@
                                         <td>
                                             <span>{{Center.IsActive}}</span>
                                         </td>
+                                        <th>
+                                            <span ng-click="DeleteCenter(Center.CenterID)" style="cursor:pointer;" class="fa fa-times-circle-o"></span>
+                                        </th>
                                     </tr>
                                 </tbody>
                             </table>
