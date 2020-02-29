@@ -364,6 +364,19 @@ myapp.controller('OrgCntrl', function ($scope, $http) {
         a.remove();
     }
 
+    $scope.DeleteCenter = function (CenterID) {
+        if (confirm("Are you sure you want to Delete this Center?")) {
+            $http({
+                method: 'POST',
+                url: '/CenterMgmt/DeleteCenter',
+                data: { CenterID: CenterID }
+            }).then(function (result) {
+                alert('Deleted Successfully!!');
+                $scope.GetCentersForEntity();
+            });
+        }
+    }
+
     $scope.DownloadAuth = function (auth) {
         
         $http.get('/CenterMgmt/GetClassroomPackage/' + auth)
