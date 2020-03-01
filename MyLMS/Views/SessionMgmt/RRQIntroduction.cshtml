@@ -15,24 +15,21 @@
 <div ng-controller="QuestionCntrl">
     <div class="box-body">
         <div class="row">
-            <div class="col-md-12" style="background-color:#FF5733;height:100px;">
-                <div style="margin-top:36px; color:white;">
+            <div class="col-md-12" style="margin-top:0px; background-color:#ee6352;height:120px;">
+                <div style="margin-top:10px; color:white;">
                     <h2>RRQ Introduction</h2>
                 </div>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-12" style="margin-top:20px; background-color:#02232C; height:450px;">
-                <div class="row">
-                    <div class="col-lg-3">
-
-                    </div>
-                    <div class="col-lg-6">
-                        <h1 style="color:white;">RRQID : @RRQData.RRQID  </h1><br/>
-                        <h2 style="color:white;">RRQ Name : @RRQData.RRQNo</h2><br />
-                        <h2 style="color:white;">Subject Name : @RRQData.Subject</h2><br />
-                        <h2 style="color:white;">Date : @RRQData.CurrentDate</h2><br /><br />
+            <div class="col-md-12" style="background-color:#54b4ce; height:550px;">
+                <div class="row">                    
+                    <div class="col-lg-6" style="margin-top:20px; margin-left:10px">
+                        <h1 style="color:white;"><strong>RRQID : @RRQData.RRQID </strong> </h1><br/>
+                        <h2 style="color:white">RRQ Name : @RRQData.RRQNo</h2><br />
+                        <h2 style="color:white">Subject Name : @RRQData.Subject</h2><br />
+                        <h2 style="color:white">Date : @RRQData.CurrentDate</h2><br /><br />
 
                         <button type="button" class="btn btn-lg btn-success" ng-click="StartRRQ(@RRQData.RRQID)" id="btnAddTopic" data-dismiss="modal">Start RRQ</button>
                     </div>
