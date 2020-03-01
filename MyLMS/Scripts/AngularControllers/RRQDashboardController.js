@@ -134,11 +134,12 @@
         labels: Labels,
         datasets: [
             {
-                fillColor: "rgba(84,105,238,0.8)",
+                barThickness: "flex" ,
+                fillColor: "rgba(25,186,171,0.85)",
                 strokeColor: "rgba(220,220,220,0.8)",
                 highlightFill: "rgba(220,220,220,0.75)",
                 highlightStroke: "rgba(220,220,220,1)",
-                data: Questions
+                data: Questions                
             }
         ]
     };

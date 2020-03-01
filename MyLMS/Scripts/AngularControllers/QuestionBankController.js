@@ -301,6 +301,11 @@
         $scope.DisplayOption = 'False';
     }
 
+    $scope.PreviousQuestion = function () {
+        $scope.currentPage = $scope.currentPage - 1;
+        $scope.DisplayOptions = 'False';
+    }
+
     $scope.EndRRQ = function () {
         $scope.RRQEnd = true;
         $scope.ws.send(JSON.stringify({
