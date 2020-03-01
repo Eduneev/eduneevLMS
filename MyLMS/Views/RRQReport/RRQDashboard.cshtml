@@ -39,7 +39,7 @@
 <body ng-app="MyModule">
     <div ng-controller="RRQDashboardCntrl">
         <!-- Form Body (Page body)-->
-        <section class="content">
+        <section class="content" >
             <div class="row">
                 <div class="col-xs-12">
                     <div class="nav-tabs-custom">
@@ -48,7 +48,7 @@
                             <div class="tab-pane active" id="fa-icons">
                                 <section id="new">
                                     <div>
-                                        <div class="callout callout-danger">
+                                        <div class="callout" style="background-color:#08a3ce">
                                             <div>
                                                 <button type="button" id="{{Q.QID}}" ng-click="GetRRQQuestionAndOptions(Q.QID)" ng-repeat="Q in RRQQuestions" class="btn btn-outline btn-circle btn-xl">
                                                     <div style="font-size: 20px; font-weight:bold;">Q-{{Q.QUES_NO}}</div>
@@ -75,7 +75,7 @@
                                                     <div class="box-body chart-responsive" style="height:420px; border-top: 3px solid #0c75db;">
                                                         <div>
                                                             <div>
-                                                                <canvas id="canvas" height="420" width="600"></canvas>
+                                                                <canvas id="canvas" height="460" width="600"></canvas>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -144,28 +144,28 @@
                                                                     <div id="bar-chart" style="height: 200px;">
                                                                         <div class="progress vertical" style="width:26px;">
                                                                             <strong>A</strong>
-                                                                            <div class="progress-bar progress-bar-green" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="height: {{OPTION_1_PRCNT}}%">
+                                                                            <div class="progress-bar progress-bar-green" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="height: {{OPTION_1_PRCNT}}%; background-color:#08a3ce">
                                                                                 <span class="sr-only">{{OPTION_1_PRCNT}}</span>
                                                                                 <strong>{{OPTION_1_PRCNT}}%</strong>
                                                                             </div>
                                                                         </div>
                                                                         <div class="progress vertical" style="width:26px;">
                                                                             <strong>B</strong>
-                                                                            <div class="progress-bar progress-bar-aqua" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="height: {{OPTION_2_PRCNT}}%">
+                                                                            <div class="progress-bar progress-bar-aqua" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="height: {{OPTION_2_PRCNT}}%;  background-color:#08a3ce">
                                                                                 <span class="sr-only">{{OPTION_2_PRCNT}}</span>
                                                                                 <strong>{{OPTION_2_PRCNT}}%</strong>
                                                                             </div>
                                                                         </div>
                                                                         <div class="progress vertical" style="width:26px;">
                                                                             <strong>C</strong>
-                                                                            <div class="progress-bar progress-bar-yellow" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="height: {{OPTION_3_PRCNT}}%">
+                                                                            <div class="progress-bar progress-bar-yellow" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="height: {{OPTION_3_PRCNT}}%; background-color:#08a3ce">
                                                                                 <span class="sr-only">{{OPTION_3_PRCNT}}</span>
                                                                                 <strong>{{OPTION_3_PRCNT}}%</strong>
                                                                             </div>
                                                                         </div>
                                                                         <div class="progress vertical" style="width:26px;">
                                                                             <strong>D</strong>
-                                                                            <div class="progress-bar progress-bar-red" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="height: {{OPTION_4_PRCNT}}%">
+                                                                            <div class="progress-bar progress-bar-red" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="height: {{OPTION_4_PRCNT}}%; background-color:#08a3ce">
                                                                                 <span class="sr-only">{{OPTION_4_PRCNT}}</span>
                                                                                 <strong>{{OPTION_4_PRCNT}}%</strong>
                                                                             </div>
@@ -205,7 +205,7 @@
                                                                         <div style="padding:5px; font-weight:bold;">
                                                                             <table ng-repeat="O in Q.Options" class="table">
                                                                                 <tr style="border:1px solid #808080;">
-                                                                                    <td style="background-color:#DD4B39; width:20px; padding-left:4px; font-size:25px;">{{O.OptionChar}} </td>
+                                                                                    <td style="background-color:#db93b0; width:20px; padding-left:4px; font-size:25px;">{{O.OptionChar}} </td>
                                                                                     <td style="padding-left:5px; font-size:20px;">{{O.OptionText}}</td>
                                                                                 </tr>
                                                                             </table>
@@ -343,8 +343,8 @@
                                                             <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                                                         </div>
                                                     </div>
-                                                    <div class="box-body chart-responsive" style="border-top: 3px solid #0c75db;">
-                                                        <div style="background-color:#808080">
+                                                    <div class="box-body chart-responsive" style="border-top: 3px solid #af9fa5;">
+                                                        <div style="background-color:#af9fa5">
                                                             <button type="button" id="A" ng-click="GetStudentsByResponse(1)" class="btn btn-outline btn-circle btn-xl">
                                                                 A
                                                             </button>
@@ -508,8 +508,8 @@
                                                 <div style="margin-left:10px; padding:5px; font-size:30px; font-weight:bold;">
                                                     <table class="col-lg-12" ng-repeat="O in Q.Options">
                                                         <tr style="border:1px solid #808080;">
-                                                            <td style="background-color:#DD4B39; width:30px; padding-left:4px;">{{O.OptionChar}} </td>
-                                                            <td style="padding-left:5px;">{{O.OptionText}} </td>
+                                                            <td style="background-color:#db93b0; width:40px; padding-left:4px;">{{O.OptionChar}} </td>
+                                                            <td style="padding-left:10px;">{{O.OptionText}} </td>
                                                         </tr>
                                                         <tr style="height:10px;">
                                                             <td></td>
@@ -553,7 +553,7 @@
                                                 <div style="margin-left:10px; padding:5px; font-size:30px; font-weight:bold;">
                                                     <table class="col-lg-12" ng-repeat="O in Q.Options">
                                                         <tr style="border:1px solid #808080;">
-                                                            <td style="background-color:burlywood; width:20px; padding-left:4px;">{{O.OptionChar}}.</td>
+                                                            <td style="background-color:#5DFDCB; width:30px; padding-left:8px;">{{O.OptionChar}}.</td>
                                                             <td style="padding-left:5px;">{{O.OptionText}} </td>
                                                         </tr>
                                                         <tr style="height:10px;">
