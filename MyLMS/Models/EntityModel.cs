@@ -54,6 +54,21 @@ namespace MyLMS.Models
             return res;
         }
 
+        public string DeleteStudio(SqlParameter[] sparams)
+        {
+            string res = "Failure..";
+            try
+            {
+                res = DAL.ExecuteScalar("DeleteStudio", sparams);
+            }
+            catch (Exception ex)
+            {
+                res = ex.Message;
+                throw;
+            }
+            return res;
+        }
+
         public string AddCenterUser(SqlParameter[] sparams)
         {
             string res = "Failure..";
