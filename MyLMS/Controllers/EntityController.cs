@@ -161,10 +161,10 @@ namespace MyLMS.Controllers
         }
 
         [HttpPost]
-        public void SaveStudio(string StudioName, string StudioLocation, string Remarks, string ChannelName)
+        public void SaveStudio(string StudioName, string StudioLocation, string StudioIP, string Remarks, string ChannelName)
         {
             EntityModel ModelObj1 = new EntityModel();
-            SqlParameter[] SParam = new SqlParameter[5];
+            SqlParameter[] SParam = new SqlParameter[6];
 
             SParam[0] = new SqlParameter("@UserID", SqlDbType.Int);
             SParam[0].Value = Convert.ToInt32(Session["USER_ID"]);
@@ -172,14 +172,35 @@ namespace MyLMS.Controllers
             SParam[1].Value = StudioName;
             SParam[2] = new SqlParameter("@StudioLocation", SqlDbType.VarChar);
             SParam[2].Value = StudioLocation;
-            SParam[3] = new SqlParameter("@Remarks", SqlDbType.Text);
-            SParam[3].Value = Remarks;
-            SParam[4] = new SqlParameter("@ChannelName", SqlDbType.VarChar);
-            SParam[4].Value = ChannelName;
+            SParam[3] = new SqlParameter("@SatelliteIP", SqlDbType.VarChar);
+            SParam[3].Value = StudioIP;
+            SParam[4] = new SqlParameter("@Remarks", SqlDbType.Text);
+            SParam[4].Value = Remarks;
+            SParam[5] = new SqlParameter("@ChannelName", SqlDbType.VarChar);
+            SParam[5].Value = ChannelName;
 
             try
             {
                 ModelObj1.CreateStudio(SParam);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        [HttpPost]
+        public void DeleteStudio(int StudioID)
+        {
+            EntityModel ModelObj1 = new EntityModel();
+            SqlParameter[] SParam = new SqlParameter[1];
+
+            SParam[0] = new SqlParameter("@StudioID", SqlDbType.Int);
+            SParam[0].Value = StudioID;
+
+            try
+            {
+                ModelObj1.DeleteStudio(SParam);
             }
             catch (Exception ex)
             {

@@ -63,15 +63,35 @@ namespace MyLMS.Controllers
             return url;
         }
 
-        [Route("api/getVLCCommand")]
+        [Route("api/{sessionId:int}/getVLCCommand")]
         [HttpGet]
-        public string[] GetVLCCommand()
+        public string[] GetVLCCommand(int sessionId=-1)
         {
+            SqlParameter[] SParam = new SqlParameter[1];
+            SParam[0] = new SqlParameter("@SessionID", SqlDbType.Int);
+            SParam[0].Value = sessionId;
+            DataTable val = DAL.GetDataTable("GetEntityType", SParam);
+
+            int EntityType=1;
+            if (val.Rows.Count > 0)
+            {
+                EntityType = Convert.ToInt32(Convert.IsDBNull(val.Rows[0]["EntityTypeID"]) ? -1 : val.Rows[0]["EntityTypeID"]);
+            }
             string[] VlcCommand = new string[2];
-            VlcCommand[0] = "\"C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe\"";
-            //VlcCommand[0] = "\"C:\\Program Files (x86)\\2WayLive\\2WayLivePlayer\\2WLPlayer.exe\"";
-            //VlcCommand[0] = "\"C:\\Program Files (x86)\\2WayLive\\2WL\\2WLPlayer.exe\""; 
-            VlcCommand[1] = "--rtsp-tcp --no-video-title-show --sub-filter=marq --marq-marquee=\"@2WayLive\" --marq-x 29 --marq-y 350 --marq-size=20 --marq-opacity=55  --video-title-timeout=2000 --no-video-deco --no-sout-video --network-caching=1000 --one-instance --high-priority --embedded-video --key-record=  -I --disable-qt ";
+
+            if (EntityType == 1)
+            {               
+                VlcCommand[0] = "\"C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe\"";
+                //VlcCommand[0] = "\"C:\\Program Files (x86)\\2WayLive\\2WayLivePlayer\\2WLPlayer.exe\"";
+                //VlcCommand[0] = "\"C:\\Program Files (x86)\\2WayLive\\2WL\\2WLPlayer.exe\""; 
+                VlcCommand[1] = "--rtsp-tcp --no-video-title-show --sub-filter=marq --marq-marquee=\"@2WayLive\" --marq-x 29 --marq-y 350 --marq-size=20 --marq-opacity=55  --video-title-timeout=2000 --no-video-deco --no-sout-video --network-caching=1000 --one-instance --high-priority --embedded-video --key-record=  -I --disable-qt ";
+            }
+            else if (EntityType == 2)
+            {
+                VlcCommand[0] = "\"C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe\"";
+                VlcCommand[1] = "--no-video-title-show --video-title-timeout=2000 --no-video-deco --no-sout-video --network-caching=1000 --one-instance --high-priority --embedded-video";
+            }
+
             return VlcCommand;
         }
 

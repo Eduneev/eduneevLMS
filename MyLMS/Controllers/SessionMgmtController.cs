@@ -760,7 +760,7 @@ namespace MyLMS.Controllers
         {
             // Send a command to Streaming Server with url to start recording
             String ServerIP = "18.224.156.241";
-            String ServerUrl = "http://sanat:sanat@" + ServerIP + ":8086/livestreamrecord?" +
+            String ServerUrl = "https://sanat:sanat@" + ServerIP + ":8086/livestreamrecord?" +
                 "app=" + EntityCode + "&streamname=" + url + "&action=startRecording";
             Uri u = new Uri(ServerUrl);
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(u);
@@ -771,7 +771,7 @@ namespace MyLMS.Controllers
         public string StopRecording(string url, string EntityCode)
         {
             String ServerIP = "18.224.156.241";
-            String ServerUrl = "http://sanat:sanat@" + ServerIP + ":8086/livestreamrecord?" +
+            String ServerUrl = "https://sanat:sanat@" + ServerIP + ":8086/livestreamrecord?" +
                 "app=" + EntityCode + "&streamname=" + url + "&action=stopRecording";
             Uri u = new Uri(ServerUrl);
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(u);
@@ -790,6 +790,30 @@ namespace MyLMS.Controllers
             string JSONString = string.Empty;
             JSONString = JsonConvert.SerializeObject(ClS);
             return JSONString;
+        }
+
+        /* Poll information */
+        [HttpPost]
+        public void SavePollResponse(int SessionID, int CenterID, int OptionSeq)
+        {
+            SqlParameter[] SessObj = new SqlParameter[3];
+            PollModel poll = new PollModel();
+
+            SessObj[0] = new SqlParameter("@SessionID", SqlDbType.Int);
+            SessObj[0].Value = SessionID;
+            SessObj[1] = new SqlParameter("@CenterID", SqlDbType.Int);
+            SessObj[1].Value = CenterID;
+            SessObj[2] = new SqlParameter("OptionSeq", SqlDbType.Int);
+            SessObj[2].Value = OptionSeq;
+
+            try
+            {
+                poll.SavePollResponse(SessObj);
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
     }
 
