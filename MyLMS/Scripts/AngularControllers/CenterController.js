@@ -353,7 +353,7 @@ myapp.controller('OrgCntrl', function ($scope, $http) {
         var result = "SET /a classroom=" + ClassroomID + "\n";
         result = result + "SET /a i=0\nsetlocal EnableDelayedExpansion\nSET RES=\nFOR /F %%X IN ('wmic path win32_computersystemproduct get uuid') DO (";
         result = result + "SET VAR=%%X\nIF !i! EQU 1 (SET RES=!VAR!)\nSET /a i+=1\n@echo !i!\n)\n";
-        result = result + "SET URL=https://portal.2WayLive.com/api/SetClassroomAuth/!classroom!/!RES!\ncurl !URL!";
+        result = result + "SET URL=https://portal.enlp.in/api/SetClassroomAuth/!classroom!/!RES!\ncurl !URL!";
         name = $scope.CenterName + "-" + ClassroomName + ".bat";
         var a = $('<a/>', {
             style: 'display:none',
@@ -384,7 +384,7 @@ myapp.controller('OrgCntrl', function ($scope, $http) {
                 
                 var a = $('<a/>', {
                     style: 'display:none',
-                    href: "https://portal.2WayLive.com/Scripts/2WayLive.zip",
+                    href: "https://portal.enlp.in/Scripts/2WayLive.zip",
                     download: '2WayLive.zip'
                 }).appendTo('body');
                 a[0].click();

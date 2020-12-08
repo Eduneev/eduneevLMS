@@ -118,7 +118,7 @@
     $scope.StartChat = function (SessionID, CenterID) {
         debugger;
         var promise = GetCenterNameFromSession(CenterID).then(function (response) {
-            var url = "https://portal.2waylive.com/Chat.aspx?SessionID=" + SessionID + "&CenterName=" + response + "&CenterID=" + CenterID;
+            var url = "https://portal.enlp.in/Chat.aspx?SessionID=" + SessionID + "&CenterName=" + response + "&CenterID=" + CenterID;
             var form = document.createElement("form");
             form.method = "POST";
             form.action = url;
@@ -130,7 +130,7 @@
 
     $scope.StartStudioChat = function (SessionID, StudioName) {
         //debugger;
-        var url = "https://portal.2waylive.com/StudioChat.aspx?SessionID=" + SessionID + "&StudioName=" + StudioName;
+        var url = "https://portal.enlp.in/StudioChat.aspx?SessionID=" + SessionID + "&StudioName=" + StudioName;
         var form = document.createElement("form");
         form.method = "POST";
         form.action = url;
