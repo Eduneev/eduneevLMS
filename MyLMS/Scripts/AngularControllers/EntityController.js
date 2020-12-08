@@ -81,16 +81,29 @@ myapp.controller('StudioCntrl', function ($scope, $http) {
         debugger;
         var _StudioName = $scope.StudioName;
         var _StudioLocation = $scope.StudioLocation;
+        var _SatelliteIP = $scope.SatelliteIP;
         var _Remarks = $scope.Remarks;
         var _Channel = $scope.ChannelName;
         $http({
             method: 'POST',
             url: '/Entity/SaveStudio',
-            data: { StudioName: _StudioName, StudioLocation: _StudioLocation, Remarks: _Remarks, ChannelName: _Channel }
+            data: { StudioName: _StudioName, StudioLocation: _StudioLocation, StudioIP: _SatelliteIP, Remarks: _Remarks, ChannelName: _Channel }
         }).then(function (result) {
             GetStudios();
         });
-    }
+    };
+
+    $scope.DeleteStudio = function (StudioID) {
+        if (confirm("Are you sure you want to Delete this studio?"))
+            $http({
+                method: 'POST',
+                url: '/Entity/DeleteStudio',
+                data: { StudioID: StudioID }
+            }).then(function (result) {
+                alert('Deleted Successfully!!');
+                GetStudios();
+            });
+    };
 });
 
 myapp.controller('CenterUserCntrl', function ($scope, $http) {

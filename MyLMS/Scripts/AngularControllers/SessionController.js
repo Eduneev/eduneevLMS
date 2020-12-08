@@ -118,7 +118,7 @@
     $scope.StartChat = function (SessionID, CenterID) {
         debugger;
         var promise = GetCenterNameFromSession(CenterID).then(function (response) {
-            var url = "http://portal.2waylive.com/Chat.aspx?SessionID=" + SessionID + "&CenterName=" + response + "&CenterID=" + CenterID;
+            var url = "https://portal.2waylive.com/Chat.aspx?SessionID=" + SessionID + "&CenterName=" + response + "&CenterID=" + CenterID;
             var form = document.createElement("form");
             form.method = "POST";
             form.action = url;
@@ -130,7 +130,7 @@
 
     $scope.StartStudioChat = function (SessionID, StudioName) {
         //debugger;
-        var url = "http://portal.2waylive.com/StudioChat.aspx?SessionID=" + SessionID + "&StudioName=" + StudioName;
+        var url = "https://portal.2waylive.com/StudioChat.aspx?SessionID=" + SessionID + "&StudioName=" + StudioName;
         var form = document.createElement("form");
         form.method = "POST";
         form.action = url;
@@ -266,7 +266,7 @@
                 .catch(err => {
                     alert("Unable to Connect to 2WayLiveStudio. Please manage streaming manually.")
                 });
-            obs.onConnectionOpened(() => {
+            obs.on('ConnectionOpened', () => {
                 if (btnType === 'Start') {
 
                     $http.get('/SessionMgmt/GetObsStream/' + $scope.SessionID)
@@ -274,19 +274,25 @@
                             ind = result.data.lastIndexOf('/');
                             server = result.data.substr(0, ind);
                             key = result.data.substr(ind + 1);
-                            obs.startStreaming({
+                            console.log(server, key);
+                            obs.sendCallback('StartStreaming', {
                                 "stream": {
                                     "settings": {
                                         "server": server,
                                         "key": key
                                     }
                                 }
-                            });
-                    });
+                            }, (error) => {
+                                console.log(error);
+                                });
+                        });
                 }
                 else
-                    obs.stopStreaming();
+                    obs.send('stopStreaming', (error) => {
+                    });
             });
+
+            
 
             $scope.header = 'Success Message';
             if (btnType === 'Start') {
