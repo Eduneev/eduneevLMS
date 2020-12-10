@@ -323,5 +323,24 @@ namespace MyLMS.Controllers
 
             return JSONString;
         }
+
+        [HttpGet]
+        public int GetEntityType(int id)
+        {
+            SqlParameter[] FObj = new SqlParameter[1];
+
+            FObj[0] = new SqlParameter("@SessionID", SqlDbType.Int);
+            FObj[0].Value = id;
+
+            DataTable entity = DAL.GetDataTable("GetEntityType", FObj);
+
+            int entityType = -1;
+            if (entity.Rows.Count > 0)
+            {
+                entityType = Convert.ToInt32(Convert.IsDBNull(entity.Rows[0]["EntityTypeID"]) ? "-1" : entity.Rows[0]["EntityTypeID"]);
+            }
+
+            return entityType;
+        }
     }
 }

@@ -186,6 +186,10 @@
         });
     };
 
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
     $scope.SelectSession = function (SessionID) {
         //debugger;
         $scope.SessionID = SessionID;
@@ -260,6 +264,7 @@
         }
         else {
             StartTwoWayCall(btnType, _SessionID);
+
             
             var obs = new OBSWebSocket();
             obs.connect({ address: 'localhost:4444' })
@@ -271,6 +276,7 @@
 
                     $http.get('/SessionMgmt/GetObsStream/' + $scope.SessionID)
                         .then(function (result) {
+                            /*
                             ind = result.data.lastIndexOf('/');
                             server = result.data.substr(0, ind);
                             key = result.data.substr(ind + 1);
@@ -285,11 +291,39 @@
                             }, (error) => {
                                 console.log(error);
                                 });
+                            */
+
+                            server = result.data
+                            console.log(server)
+                            /*
+                            obs.sendCallback('SetRecordingFolder', {
+                                'rec-folder': server
+                            }, (error) => {
+                                console.log(error);
+                            });
+                            */
+                            
+                            
+                            obs.sendCallback('StartStopRecording', (error) => {
+                                console.log(error);
+                            });
+                            
+
+
                         });
                 }
-                else
+                else {
+                    /*
                     obs.send('stopStreaming', (error) => {
                     });
+                    */
+                    
+                    obs.sendCallback('StartStopRecording', (error) => {
+                        console.log(error);
+                    });
+                    
+                    
+                }
             });
 
             
